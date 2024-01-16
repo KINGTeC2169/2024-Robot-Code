@@ -20,23 +20,11 @@ import edu.wpi.first.wpilibj.SerialPort;
 public final class Constants {
 
     public static final class Ports {
-        public static final int clawGrippers = 16;
-        public static final int winchMotor = 3;
-        public static final int elevatorMotor = 14;
-        public static final int wristMotor = 15;
         public static final int controller = 0;
-        public static final int buttonBoard = 10;
-        public static final int clawTwist = 9;
-        public static final int colorSensorClaw = 1;
-
-        public static final int armEncoder = 0;
-        public static final int wristEncoder = 1;
-        public static final int twistEncoder = 2;
-
-        public static final int grabberOne = 8;
-        public static final int grabberTwo = 10;
 
         public static final SerialPort arduino = new SerialPort(9600, SerialPort.Port.kUSB1);
+
+        public static final int pigeon = 3;
 
         //Swervedrive ports
         public static final int frontRightDrive = 8;
