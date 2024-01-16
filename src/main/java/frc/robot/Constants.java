@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.SerialPort;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -34,6 +35,8 @@ public final class Constants {
 
         public static final int grabberOne = 8;
         public static final int grabberTwo = 10;
+
+        public static final SerialPort arduino = new SerialPort(9600, SerialPort.Port.kUSB1);
 
         //Swervedrive ports
         public static final int frontRightDrive = 8;
