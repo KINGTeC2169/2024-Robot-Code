@@ -14,7 +14,7 @@ public class Arm {
     }
 
     public void runIntake(){
-        motor.set(1);
+        motor.set(-1);
     }
 
     public void stop(){

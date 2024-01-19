@@ -11,14 +11,13 @@ public class Claw {
 
     public Claw(int motorID){
         motor = new CANSparkMax(motorID, MotorType.kBrushless);
-
         motorEncoder = motor.getEncoder();
 
         resetEncoder();
     }
 
     public void runIntake(){
-        motor.set(0.4);
+        motor.setVoltage(4);
     }
 
     public void resetEncoder(){
