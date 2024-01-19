@@ -20,12 +20,14 @@ import edu.wpi.first.wpilibj.SerialPort;
 public final class Constants {
 
     public static final class Ports {
-
         public static final int controller = 0;
 
         public static final SerialPort arduino = new SerialPort(9600, SerialPort.Port.kUSB1);
 
-        public static final int clawID = 1;
+        public static final int pigeon = 3;
+
+        public static final int intake = 2; 
+        public static final int shooter = 4;
 
         //Swervedrive ports
         public static final int frontRightDrive = 8;
@@ -40,6 +42,12 @@ public final class Constants {
         public static final int backLeftDrive = 4;
         public static final int backLeftTurn = 3;
         public static final int backLeftAbsolute = 10;
+
+        public static int clawID;
+
+        public static int armID = 1;
+
+        
     }
 
     public static final class Motors {
@@ -91,4 +99,7 @@ public final class Constants {
     public static final class Vision {
         public static final double apriltagOffset = 20;
     }
+
+
+    
 }

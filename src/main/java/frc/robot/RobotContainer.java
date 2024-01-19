@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import frc.robot.commands.armTest;
 import frc.robot.commands.intakeTest;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -49,6 +50,7 @@ public class RobotContainer {
     // cancelling on release.
     //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     intakeController.a().whileTrue(new intakeTest());
+    intakeController.b().whileTrue(new armTest());
   }
 
   /**
