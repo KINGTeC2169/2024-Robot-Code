@@ -8,20 +8,13 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 public class Arm {
     
     private TalonFX motor;
-    private RelativeEncoder motorEncoder;
 
     public Arm(int motorID){
         motor = new TalonFX(motorID);
-
-        resetEncoder();
     }
 
     public void runIntake(){
-        motor.set(0.75);
-    }
-
-    public void resetEncoder(){
-        motorEncoder.setPosition(0);
+        motor.set(1);
     }
 
     public void stop(){

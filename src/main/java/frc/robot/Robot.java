@@ -84,8 +84,8 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    Constants.Ports.arduino.writeString("A");
-    Timer.delay(1);
+    //Constants.Ports.arduino.writeString("A");
+    //Timer.delay(1);
   }
 
   @Override
