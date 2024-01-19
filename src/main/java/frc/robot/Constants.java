@@ -26,6 +26,9 @@ public final class Constants {
 
         public static final int pigeon = 3;
 
+        public static final int intake = 2; 
+        public static final int shooter = 4;
+
         //Swervedrive ports
         public static final int frontRightDrive = 8;
         public static final int frontRightTurn = 7;
@@ -39,6 +42,8 @@ public final class Constants {
         public static final int backLeftDrive = 4;
         public static final int backLeftTurn = 3;
         public static final int backLeftAbsolute = 10;
+
+        
     }
 
     public static final class Motors {
@@ -90,4 +95,6 @@ public final class Constants {
     public static final class Vision {
         public static final double apriltagOffset = 20;
     }
+
+    
 }
