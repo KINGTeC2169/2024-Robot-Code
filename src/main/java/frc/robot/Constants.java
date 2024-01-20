@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DutyCycle;
 import edu.wpi.first.wpilibj.SerialPort;
 
 /**
@@ -97,6 +98,9 @@ public final class Constants {
         public static final int shooterTop = 15;
         public static final int shooterBot = 3;
         public static final int intake = 1;
+        public static final int leftArm = 2;
+        public static final int rightArm = 2;
+        public static final DutyCycle armEncoder = null;
     }
 
     
