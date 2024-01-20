@@ -3,10 +3,11 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.PID;
 
-public class Shooter {
+public class Shooter extends SubsystemBase {
     
     TalonFX shooterTop = new TalonFX(Constants.DeviceID.shooterBot);
     TalonFX shooterBot = new TalonFX(Constants.DeviceID.shooterTop);

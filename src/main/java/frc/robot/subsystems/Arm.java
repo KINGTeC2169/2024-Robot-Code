@@ -1,14 +1,13 @@
 package frc.robot.subsystems;
 
-import java.nio.channels.ShutdownChannelGroupException;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class Arm {
+public class Arm extends SubsystemBase {
     TalonFX leftArm = new TalonFX(Constants.DeviceID.leftArm);
     TalonFX rightArm = new TalonFX(Constants.DeviceID.rightArm);
 
