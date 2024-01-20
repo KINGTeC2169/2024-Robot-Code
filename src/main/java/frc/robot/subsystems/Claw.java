@@ -17,7 +17,7 @@ public class Claw {
     }
 
     public void runIntake(){
-        motor.setVoltage(4);
+        motor.set(0.25);
     }
 
     public void resetEncoder(){
