@@ -67,6 +67,9 @@ public class SwerveSubsystem extends SubsystemBase {
     private GenericEntry slowSpeed = tab.add("Slow Speed", 0.2).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).withPosition(2, 3).getEntry();
 
     public SwerveSubsystem() {
+
+        Pigeon.configure();
+
         odometer = new SwerveDriveOdometry(kinematics, getRotation2d(), getModulePositions(), new Pose2d(0, 0, new Rotation2d(0)));
         
         //SmartDashboard.putData("Field", field);
@@ -150,7 +153,6 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public double getHeading() {
-        //return Math.IEEEremainder(NavX.getAngle(), 360);
         return Pigeon.getAngle() % 360;
     }
     public double head180() {
@@ -159,7 +161,6 @@ public class SwerveSubsystem extends SubsystemBase {
 
     public Rotation2d getRotation2d() {
         return Pigeon.getRotation2d();
-        //return Rotation2d.fromDegrees(-getHeading());
     }
     public Rotation2d getAdjustedRotation() {
         return new Rotation2d(Pigeon.getRotation2d().getRadians() + Math.PI);
