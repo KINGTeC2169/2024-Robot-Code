@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import frc.robot.Constants;
 import frc.robot.PID;
 
 public class Shooter {
@@ -22,15 +23,15 @@ public class Shooter {
     }
 
     public double getRPM(){
-        return 600; //I'll work on this today dw
+        return ((600 * shooter.getRotorVelocity().getValue() / Constants.Motors.TalonFXCPR) * (24.0/18.0)); //I'll work on this today dw
     }
 
     public void setRPM(double rpm){
         rpmLoop.setSetpoint(rpm);
         rpmLoop.calculate(getRPM());
-        shooter.setControl(request.withOutput(rpmLoop.getOutput()/12));  
+        shooter.setControl(request.withOutput(rpmLoop.getOutput()/12)); 
     }
-    
+
     public void stopShooter() {
         rpmLoop.resetI();
         shooter.set(0); 
