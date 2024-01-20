@@ -4,10 +4,17 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.ButtonCommands.DriveTrain;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pigeon;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.SwerveSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -17,15 +24,35 @@ import frc.robot.subsystems.Pigeon;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private Pigeon pigeon = new Pigeon();
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(Constants.Ports.controller);
+  private final Pigeon pigeon = new Pigeon();
+  private final Arm arm = new Arm();
+  private final Intake intake = new Intake();
+  private final Shooter shooter = new Shooter();
+  private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+  
 
+  //Left side/Joysticks
+  private final CommandJoystick joystick = new CommandJoystick(4);
+  private final XboxController joystickButtons = new XboxController(4);
+  private final CommandJoystick leftStick = new CommandJoystick(2);
+  private final CommandJoystick rightStick = new CommandJoystick(3);
+
+  //Right side/Buttons and Controller
+  private final CommandXboxController m_driverController = new CommandXboxController(Constants.Ports.controller);
+  private final CommandXboxController buttonBoard = new CommandXboxController(1);
+  
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
+
+    swerveSubsystem.setDefaultCommand(new DriveTrain(swerveSubsystem,
+		() -> leftStick.getY(), 
+		() -> leftStick.getX(), 
+		() -> rightStick.getTwist(),
+		() -> rightStick.button(1).getAsBoolean()
+		));
 
     configureBindings();
   }
