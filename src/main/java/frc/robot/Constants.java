@@ -22,12 +22,9 @@ public final class Constants {
     public static final class Ports {
         public static final int controller = 0;
 
-        //public static final SerialPort arduino = new SerialPort(9600, SerialPort.Port.kUSB1);
+        public static final SerialPort arduino = new SerialPort(9600, SerialPort.Port.kUSB1);
 
         public static final int pigeon = 3;
-
-        public static final int intake = 2; 
-        public static final int shooter = 4;
 
         //Swervedrive ports
         public static final int frontRightDrive = 8;
@@ -43,12 +40,12 @@ public final class Constants {
         public static final int backLeftTurn = 3;
         public static final int backLeftAbsolute = 10;
 
-        public static int clawID = 1;
-
-        public static int armID = 3;
-        public static int armID1 = 15;
-
         
+    }
+    public static final class DeviceID{
+        public static final int intake = 1; 
+        public static final int shooterBot = 3;
+        public static final int shooterTop = 15;
     }
 
     public static final class Motors {
@@ -100,7 +97,6 @@ public final class Constants {
     public static final class Vision {
         public static final double apriltagOffset = 20;
     }
-
 
     
 }
