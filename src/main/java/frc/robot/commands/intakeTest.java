@@ -9,14 +9,12 @@ public class intakeTest extends Command{
     private Claw intake;
 
     public intakeTest(){
-        intake = new Claw(Constants.Ports.clawID);
-        
+        intake = new Claw(Constants.DeviceID.intake);
     }
 
     @Override
     public void execute(){
-        intake.runIntake();
-        
+        intake.runIntake();   
     }
 
     @Override

@@ -27,7 +27,7 @@ public class SwerveModule {
 
     private double wantedSpeed;
 
-    private PIDController drivePID;
+    //private PIDController drivePID;
     private PIDController turningPID;
     private CANcoderConfiguration config = new CANcoderConfiguration();
 

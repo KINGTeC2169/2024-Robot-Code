@@ -1,9 +1,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkLowLevel.MotorType;
 
 public class Arm {
     
@@ -13,8 +10,12 @@ public class Arm {
         motor = new TalonFX(motorID);
     }
 
-    public void runIntake(){
+    public void run(){
         motor.set(-1);
+    }
+
+    public void runReverse(){
+        motor.set(1);
     }
 
     public void stop(){

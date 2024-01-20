@@ -6,24 +6,24 @@ import frc.robot.subsystems.Arm;
 
 public class armTest extends Command{
 
-    private Arm arm;
-    private Arm arm1;
+    private Arm bottom;
+    private Arm top;
 
     public armTest(){
-        arm = new Arm(Constants.Ports.armID);
-        arm1 = new Arm(Constants.Ports.armID1);
+        bottom = new Arm(Constants.DeviceID.shooterBot);
+        top = new Arm(Constants.DeviceID.shooterTop);
     }
 
     @Override
     public void execute(){
-        arm.runIntake();
-        arm1.runIntake();
+        bottom.run();
+        top.runReverse();
     }
 
     @Override
     public void end(boolean interrupted){
-        arm.stop();
-        arm1.stop();
+        bottom.stop();
+        top.stop();
     }
 
     @Override
