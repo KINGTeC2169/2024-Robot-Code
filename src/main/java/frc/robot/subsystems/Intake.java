@@ -6,7 +6,7 @@ import frc.robot.Constants;
 
 public class Intake {
     
-    CANSparkMax intakeMotor = new CANSparkMax(Constants.Ports.intake, MotorType.kBrushless);
+    CANSparkMax intakeMotor = new CANSparkMax(Constants.DeviceID.intake, MotorType.kBrushless);
 
     /**Sets intake to suck in */
     public void inTake(boolean on) {
