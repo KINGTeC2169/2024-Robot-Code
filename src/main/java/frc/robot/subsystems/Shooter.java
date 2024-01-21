@@ -3,9 +3,9 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.PID;
 
 public class Shooter extends SubsystemBase {
     
@@ -14,7 +14,7 @@ public class Shooter extends SubsystemBase {
 
     final VoltageOut request = new VoltageOut(0);
     double currentPower;
-    PID rpmLoop = new PID(0, 0, 0);
+    PIDController rpmLoop = new PIDController(0, 0, 0);
 
     public void setPower(double power){
         shooterTop.set(power);
@@ -27,15 +27,12 @@ public class Shooter extends SubsystemBase {
     }
 
     public void setRPM(double rpm){
-        rpmLoop.setSetpoint(rpm);
-        rpmLoop.calculate(getRPM()[0]);
-        rpmLoop.calculate(getRPM()[1]);
-        shooterTop.setControl(request.withOutput(rpmLoop.getOutput()/12)); 
-        shooterTop.setControl(request.withOutput(rpmLoop.getOutput()/12));
+        shooterTop.setControl(request.withOutput(rpmLoop.calculate(getRPM()[0], rpm)/12)); 
+        shooterTop.setControl(request.withOutput(rpmLoop.calculate(getRPM()[1], rpm)/12));
     }
 
     public void stopShooter() {
-        rpmLoop.resetI();
+        rpmLoop.reset();
         shooterTop.set(0); 
         shooterBot.set(0);
     }
