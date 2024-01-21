@@ -6,10 +6,14 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ButtonCommands.DriveTrain;
+import frc.robot.commands.ButtonCommands.GroundPickup;
+import frc.robot.commands.ButtonCommands.Launch;
+import frc.robot.commands.ButtonCommands.RevAndAngle;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pigeon;
@@ -39,7 +43,7 @@ public class RobotContainer {
   private final CommandJoystick rightStick = new CommandJoystick(3);
 
   //Right side/Buttons and Controller
-  private final CommandXboxController m_driverController = new CommandXboxController(Constants.Ports.controller);
+  private final CommandXboxController controller = new CommandXboxController(Constants.Ports.controller);
   private final CommandXboxController buttonBoard = new CommandXboxController(1);
   
   
@@ -74,6 +78,13 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    
+    //Controller for testing until control panel is done
+    controller.a().whileTrue(Commands.run(() -> new Launch(intake))); //Launch
+    controller.b().whileTrue(Commands.run(() -> new RevAndAngle(arm, shooter, 45))); //Subwoofer
+    controller.y().whileTrue(Commands.run(() -> new RevAndAngle(arm, shooter, 90))); //Amp
+    controller.x().whileTrue(Commands.run(() -> new RevAndAngle(arm, shooter, 20))); //Podium
+    controller.rightBumper().whileTrue(Commands.run(() -> new GroundPickup(arm,intake))); //Ground pickup
   }
 
   /**
