@@ -10,7 +10,8 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.ButtonCommands.DriveTrain;
+import frc.robot.commands.DriveTrain;
+import frc.robot.commands.ButtonCommands.Angle;
 import frc.robot.commands.ButtonCommands.GroundPickup;
 import frc.robot.commands.ButtonCommands.Launch;
 import frc.robot.commands.ButtonCommands.RevAndAngle;
@@ -80,11 +81,13 @@ public class RobotContainer {
     //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     
     //Controller for testing until control panel is done
+    controller.rightBumper().whileTrue(Commands.run(() -> new Angle(arm, true))); //Move arm up
+    controller.leftBumper().whileTrue(Commands.run(() -> new Angle(arm, false))); //Move arm down
     controller.a().whileTrue(Commands.run(() -> new Launch(intake))); //Launch
     controller.b().whileTrue(Commands.run(() -> new RevAndAngle(arm, shooter, 45))); //Subwoofer
     controller.y().whileTrue(Commands.run(() -> new RevAndAngle(arm, shooter, 90))); //Amp
-    controller.x().whileTrue(Commands.run(() -> new RevAndAngle(arm, shooter, 20))); //Podium
-    controller.rightBumper().whileTrue(Commands.run(() -> new GroundPickup(arm,intake))); //Ground pickup
+    controller.start().whileTrue(Commands.run(() -> new RevAndAngle(arm, shooter, 20))); //Podium
+    controller.x().whileTrue(Commands.run(() -> new GroundPickup(arm, intake))); //Ground pickup
   }
 
   /**

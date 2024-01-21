@@ -1,4 +1,4 @@
-package frc.robot.commands.ButtonCommands;
+package frc.robot.commands;
 
 import java.util.function.Supplier;
 
