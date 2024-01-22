@@ -12,8 +12,13 @@ public class Angle extends Command {
     public Angle(Arm arm, boolean up){
         this.arm = arm;
         addRequirements(arm);
-        this.up = ((up ? 1 : 0) - 0.5)*2;
+        this.up = (up ? 1 : -1);
     }
+
+    public Angle(Arm arm, double speed){
+        
+    }
+
 
     @Override
     public void initialize(){
