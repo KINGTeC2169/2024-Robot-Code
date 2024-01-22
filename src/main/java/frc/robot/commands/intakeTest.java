@@ -9,7 +9,7 @@ public class intakeTest extends Command{
     private Claw intake;
 
     public intakeTest(){
-        intake = new Claw(Constants.DeviceID.intake);
+        intake = new Claw(Constants.Ports.intake);
     }
 
     @Override

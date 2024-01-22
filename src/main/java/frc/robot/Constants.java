@@ -40,17 +40,9 @@ public final class Constants {
         public static final int backLeftTurn = 3;
         public static final int backLeftAbsolute = 10;
 
-        
-    }
-    public static final class DeviceID{
-        public static final int intake = 1; 
+        public static final int intake = 1;
         public static final int shooterBot = 3;
         public static final int shooterTop = 15;
-    }
-
-    public static final class Motors {
-        public static final int TalonFXCPR = 2048;
-        public static final int TalonSRXCPR = 8192;
     }
 
     public static final class ModuleConstants {
@@ -67,15 +59,7 @@ public final class Constants {
 
         public static final double PTurn = 0.3;
         public static final double PDrive = 0.3;
-    }
-    public static final class PIDApriltags {
-        public static final double px = 1.25;
-        public static final double pr = 0.01;
-        public static final double py = 1;
-        public static final double xTol = 0.1;
-        public static final double yTol = 0.1;
-        public static final double rotateTol = 1;
-    }
+    }             
 
     public static final class DriveConstants {
         //These will need to be in meters
@@ -93,10 +77,4 @@ public final class Constants {
                 new Translation2d(-frontBackWheels / 2, rightLeftWheels / 2),//Back-Left
                 new Translation2d(-frontBackWheels / 2, -rightLeftWheels / 2));//Back-Right
     }
-
-    public static final class Vision {
-        public static final double apriltagOffset = 20;
-    }
-
-    
 }
