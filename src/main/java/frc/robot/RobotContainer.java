@@ -11,10 +11,13 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveTrain;
+import frc.robot.commands.ButtonCommands.Amp;
 import frc.robot.commands.ButtonCommands.Angle;
 import frc.robot.commands.ButtonCommands.GroundPickup;
 import frc.robot.commands.ButtonCommands.Launch;
+import frc.robot.commands.ButtonCommands.Podium;
 import frc.robot.commands.ButtonCommands.RevAndAngle;
+import frc.robot.commands.ButtonCommands.Subwoofer;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pigeon;
@@ -84,9 +87,9 @@ public class RobotContainer {
     controller.rightBumper().whileTrue(Commands.run(() -> new Angle(arm, true))); //Move arm up
     controller.leftBumper().whileTrue(Commands.run(() -> new Angle(arm, false))); //Move arm down
     controller.a().whileTrue(Commands.run(() -> new Launch(intake))); //Launch
-    controller.b().whileTrue(Commands.run(() -> new RevAndAngle(arm, shooter, 45))); //Subwoofer
-    controller.y().whileTrue(Commands.run(() -> new RevAndAngle(arm, shooter, 90))); //Amp
-    controller.start().whileTrue(Commands.run(() -> new RevAndAngle(arm, shooter, 20))); //Podium
+    controller.b().whileTrue(Commands.run(() -> new Subwoofer(arm, shooter))); //Subwoofer
+    controller.y().whileTrue(Commands.run(() -> new Amp(arm, shooter))); //Amp
+    controller.start().whileTrue(Commands.run(() -> new Podium(arm, shooter))); //Podium
     controller.x().whileTrue(Commands.run(() -> new GroundPickup(arm, intake))); //Ground pickup
   }
 

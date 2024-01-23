@@ -102,6 +102,4 @@ public final class Constants {
         public static final int rightArm = 2;
         public static final DutyCycle armEncoder = null;
     }
-
-    
 }
