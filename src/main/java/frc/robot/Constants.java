@@ -24,6 +24,7 @@ public final class Constants {
         public static final int controller = 0;
 
         public static final SerialPort arduino = new SerialPort(9600, SerialPort.Port.kUSB1);
+        public static final int beamBreak = 0;
 
         public static final int pigeon = 3;
 
