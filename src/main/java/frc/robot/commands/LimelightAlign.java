@@ -11,10 +11,10 @@ import frc.robot.subsystems.SwerveSubsystem;
 public class LimelightAlign extends Command {
     private SwerveSubsystem swerveSubsystem;
     private ChassisSpeeds chassisSpeeds;
-    private double lookingSpeed = 1;
     private PIDController turnController;
     private double tagHeightFt = 5.6;
     private double baseAngleDeg;
+    private double baseHeightFt;
     private double totalAngleDeg;
     private double totalDistanceFt;
 
@@ -24,6 +24,7 @@ public class LimelightAlign extends Command {
         addRequirements(swerveSubsystem);
         turnController = new PIDController(0.5,0,0);
         baseAngleDeg = 10;
+        baseHeightFt = 1.5;
     }
 
     @Override
@@ -32,13 +33,13 @@ public class LimelightAlign extends Command {
     @Override
     public void execute(){
         if(LimelightTable.getTV()) chassisSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(0, 0, turnController.calculate(LimelightTable.getTX(), 0), swerveSubsystem.getRotation2d());
-        else chassisSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(0, 0, lookingSpeed, swerveSubsystem.getRotation2d());
+        else chassisSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(0, 0, 0, swerveSubsystem.getRotation2d());
 
         SwerveModuleState[] moduleStates = DriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
         swerveSubsystem.setModuleStates(moduleStates);
 
         totalAngleDeg = baseAngleDeg+LimelightTable.getTA();
-        totalDistanceFt = tagHeightFt*Math.tan(totalAngleDeg); //Horizontal distance in feet
+        totalDistanceFt = (tagHeightFt-baseHeightFt)*Math.tan(totalAngleDeg); //Horizontal distance in feet
     }
 
     @Override
