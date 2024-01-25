@@ -4,6 +4,7 @@ import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -19,6 +20,7 @@ public class Shooter extends SubsystemBase {
     public void setPower(double power){
         shooterTop.set(power);
         shooterBot.set(power);
+        SmartDashboard.putNumber("Shooting Power", power);
     }
 
     public double[] getRPM(){

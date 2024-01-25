@@ -26,6 +26,7 @@ public final class Constants {
         public static final int rightStick = 2;
 
         public static final SerialPort arduino = new SerialPort(9600, SerialPort.Port.kUSB1);
+        public static final int beamBreak = 0;
 
         public static final int pigeon = 3;
 
@@ -91,5 +92,5 @@ public final class Constants {
         public static final int leftArm = 2;
         public static final int rightArm = 2;
         public static final DutyCycle armEncoder = null;
-    }    
+    }
 }

@@ -33,7 +33,7 @@ public class Arm extends SubsystemBase {
     public Arm() {
         
         ShuffleboardLayout currents = tab.getLayout("Arm Currents", BuiltInLayouts.kGrid).withSize(2, 1).withProperties(Map.of("Number of rows", 1)).withPosition(0, 0);
-        //elevatorMotor.configFactoryDefault();
+
         var configs = new Slot0Configs();
         configs.kP = 0.1;
         

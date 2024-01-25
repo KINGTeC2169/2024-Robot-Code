@@ -2,23 +2,20 @@ package frc.robot.commands.ButtonCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Shooter;
 
-public class Angle extends Command {
+public class Podium extends Command {
 
     private Arm arm;
-    private double up;
+    private Shooter shooter;
+    final private double desiredAngle = 20;
 
-    //It can be changed later to speed with a joystick on the right side
-    public Angle(Arm arm, boolean up){
+    public Podium(Arm arm, Shooter shooter){
         this.arm = arm;
         addRequirements(arm);
-        this.up = (up ? 1 : -1);
+        this.shooter = shooter;
+        addRequirements(shooter);
     }
-
-    public Angle(Arm arm, double speed){
-        
-    }
-
 
     @Override
     public void initialize(){
@@ -26,12 +23,13 @@ public class Angle extends Command {
 
     @Override
     public void execute(){
-        arm.setAngle(arm.getAngle() + up);
+        shooter.setRPM(2000);
+        arm.setAngle(desiredAngle);
     }
 
     @Override
     public void end(boolean interupt){
-        arm.armStop();
+        shooter.stopShooter();
     }
     
     @Override
