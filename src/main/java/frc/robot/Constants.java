@@ -22,24 +22,26 @@ public final class Constants {
 
     public static final class Ports {
         public static final int controller = 0;
+        public static final int leftStick = 1;
+        public static final int rightStick = 2;
 
         public static final SerialPort arduino = new SerialPort(9600, SerialPort.Port.kUSB1);
 
         public static final int pigeon = 3;
 
         //Swervedrive ports
-        public static final int frontRightDrive = 8;
-        public static final int frontRightTurn = 7;
-        public static final int frontRightAbsolute = 11;
-        public static final int frontLeftDrive = 6;
-        public static final int frontLeftTurn = 5;
-        public static final int frontLeftAbsolute = 13;
-        public static final int backRightDrive = 2;
-        public static final int backRightTurn = 20;
-        public static final int backRightAbsolute = 12;
-        public static final int backLeftDrive = 4;
-        public static final int backLeftTurn = 3;
-        public static final int backLeftAbsolute = 10;
+        public static final int frontLeftDrive = 2;
+        public static final int frontLeftTurn = 1;
+        public static final int frontLeftAbsolute = 12;
+        public static final int frontRightDrive = 6;
+        public static final int frontRightTurn = 5;
+        public static final int frontRightAbsolute = 10;
+        public static final int backLeftDrive = 8;
+        public static final int backLeftTurn = 7;
+        public static final int backLeftAbsolute = 9;
+        public static final int backRightDrive = 4;
+        public static final int backRightTurn = 3;
+        public static final int backRightAbsolute = 11;
 
         
     }
@@ -64,14 +66,6 @@ public final class Constants {
         public static final double PTurn = 0.3;
         public static final double PDrive = 0.3;
     }
-    public static final class PIDApriltags {
-        public static final double px = 1.25;
-        public static final double pr = 0.01;
-        public static final double py = 1;
-        public static final double xTol = 0.1;
-        public static final double yTol = 0.1;
-        public static final double rotateTol = 1;
-    }
 
     public static final class DriveConstants {
         //These will need to be in meters
@@ -90,10 +84,6 @@ public final class Constants {
                 new Translation2d(-frontBackWheels / 2, -rightLeftWheels / 2));//Back-Right
     }
 
-    public static final class Vision {
-        public static final double apriltagOffset = 20;
-    }
-
     public static final class DeviceID {
         public static final int shooterTop = 15;
         public static final int shooterBot = 3;
@@ -101,7 +91,5 @@ public final class Constants {
         public static final int leftArm = 2;
         public static final int rightArm = 2;
         public static final DutyCycle armEncoder = null;
-    }
-
-    
+    }    
 }

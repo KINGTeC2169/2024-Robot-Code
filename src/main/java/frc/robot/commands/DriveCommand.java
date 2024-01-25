@@ -11,14 +11,14 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
 import frc.robot.subsystems.SwerveSubsystem;
 
-public class DriveTrain extends Command{
+public class DriveCommand extends Command{
     
     private final SwerveSubsystem swerveSubsystem;
     private final Supplier<Double> xSpdFunction, ySpdFunction, turningSpdFunction;
     private final Supplier<Boolean> reset;
     private final SlewRateLimiter xLimiter, yLimiter, turningLimiter;
     
-    public DriveTrain(SwerveSubsystem swerveSubsystem, Supplier<Double> xSpdFunction, 
+    public DriveCommand(SwerveSubsystem swerveSubsystem, Supplier<Double> xSpdFunction, 
         Supplier<Double> ySpdFunction, Supplier<Double> turningSpdFunction, Supplier<Boolean> reset){
         this.swerveSubsystem = swerveSubsystem;
         this.xSpdFunction = xSpdFunction;
@@ -31,7 +31,7 @@ public class DriveTrain extends Command{
         addRequirements(swerveSubsystem);
     }
 
-    @Override
+	@Override
     public void initialize(){
     }
 
@@ -40,6 +40,11 @@ public class DriveTrain extends Command{
         double xSpeed = xSpdFunction.get();
         double ySpeed = ySpdFunction.get();
         double turningSpeed = -turningSpdFunction.get();
+
+        // Deadband: unsure if necessary for our controllers
+        xSpeed = Math.abs(xSpeed) > .03 ? xSpeed : 0.0;
+        ySpeed = Math.abs(ySpeed) > .03 ? ySpeed : 0.0;
+        turningSpeed = Math.abs(turningSpeed) > .02 ? turningSpeed : 0.0;
 
         xSpeed = xLimiter.calculate(xSpeed) *  Constants.ModuleConstants.maxSpeed;
         ySpeed = yLimiter.calculate(ySpeed) *  Constants.ModuleConstants.maxSpeed;
@@ -50,7 +55,7 @@ public class DriveTrain extends Command{
             swerveSubsystem.zeroHeading();
         }
 
-        ChassisSpeeds chassisSpeeds = new ChassisSpeeds(xSpeed,ySpeed,turningSpeed);
+        ChassisSpeeds chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
 
         SwerveModuleState[] moduleStates = DriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds); 
         

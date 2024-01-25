@@ -29,7 +29,7 @@ public class Arm extends SubsystemBase {
     final double armUpperLimit = 90;
 
     private ShuffleboardTab tab = Shuffleboard.getTab("Arm");
-
+    
     public Arm() {
         
         ShuffleboardLayout currents = tab.getLayout("Arm Currents", BuiltInLayouts.kGrid).withSize(2, 1).withProperties(Map.of("Number of rows", 1)).withPosition(0, 0);

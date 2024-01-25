@@ -4,13 +4,12 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.DriveTrain;
+import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ButtonCommands.Angle;
 import frc.robot.commands.ButtonCommands.GroundPickup;
 import frc.robot.commands.ButtonCommands.Launch;
@@ -35,16 +34,11 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   private final Shooter shooter = new Shooter();
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
-  
-
-  //Left side/Joysticks
-  private final CommandJoystick joystick = new CommandJoystick(4);
-  private final XboxController joystickButtons = new XboxController(4);
-  private final CommandJoystick leftStick = new CommandJoystick(2);
-  private final CommandJoystick rightStick = new CommandJoystick(3);
 
   //Right side/Buttons and Controller
   private final CommandXboxController controller = new CommandXboxController(Constants.Ports.controller);
+  private final Joystick leftStick = new Joystick(Constants.Ports.leftStick);
+  private final Joystick rightStick = new Joystick(Constants.Ports.rightStick);
   private final CommandXboxController buttonBoard = new CommandXboxController(1);
   
   
@@ -52,11 +46,11 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
 
-    swerveSubsystem.setDefaultCommand(new DriveTrain(swerveSubsystem,
+    swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
 		() -> leftStick.getY(), 
 		() -> leftStick.getX(), 
 		() -> rightStick.getTwist(),
-		() -> rightStick.button(1).getAsBoolean()
+		() -> rightStick.getRawButtonReleased(0)
 		));
 
     configureBindings();
