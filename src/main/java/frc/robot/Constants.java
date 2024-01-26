@@ -29,6 +29,7 @@ public final class Constants {
         public static final int beamBreak = 0;
 
         public static final int pigeon = 3;
+        public static final int armEncoder = 0;
 
         //Swervedrive ports
         public static final int frontLeftDrive = 2;
@@ -91,6 +92,6 @@ public final class Constants {
         public static final int intake = 1;
         public static final int leftArm = 2;
         public static final int rightArm = 2;
-        public static final DutyCycle armEncoder = null;
+        
     }
 }
