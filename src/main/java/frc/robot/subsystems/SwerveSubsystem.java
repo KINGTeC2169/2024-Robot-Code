@@ -67,6 +67,9 @@ public class SwerveSubsystem extends SubsystemBase {
     private GenericEntry slowSpeed = tab.add("Slow Speed", 0.2).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).withPosition(2, 3).getEntry();
 
     public SwerveSubsystem() {
+
+        Pigeon.configure();
+
         odometer = new SwerveDriveOdometry(kinematics, getRotation2d(), getModulePositions(), new Pose2d(0, 0, new Rotation2d(0)));
         
         //SmartDashboard.putData("Field", field);
@@ -89,7 +92,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
         tab.addDouble("Robot Heading", () -> getHeading()).withWidget(BuiltInWidgets.kGyro).withSize(3, 3).withPosition(7, 0);
 
-        //!tab.addDouble("Rotation 2D", () -> getRotation2d().getDegrees());
+        tab.addDouble("Rotation 2D", () -> getRotation2d().getDegrees());
 
         tab.addDouble("Front Left Percent", () -> frontLeft.getWantedSpeed());
         tab.addDouble("Front Right Percent", () -> frontRight.getWantedSpeed());
@@ -146,27 +149,21 @@ public class SwerveSubsystem extends SubsystemBase {
 
     public void zeroHeading() {
         System.out.println("Zeroing gyro \n.\n.\n.\n.\n.\n.\n.");
-        //NavX.reset();
+        Pigeon.reset();
     }
 
     public double getHeading() {
-        //return Math.IEEEremainder(NavX.getAngle(), 360);
-        //return NavX.getAngle() % 360;
-        return 0;
+        return Pigeon.getAngle() % 360;
     }
     public double head180() {
-        //return  Math.IEEEremainder(NavX.getAngle(), 360);
-        return 0;
+        return  Math.IEEEremainder(Pigeon.getAngle(), 360);
     }
-    
+
     public Rotation2d getRotation2d() {
-        return new Rotation2d();
-        //!return NavX.getRotation2d();
-        //return Rotation2d.fromDegrees(-getHeading());
+        return Pigeon.getRotation2d();
     }
     public Rotation2d getAdjustedRotation() {
-        return new Rotation2d();
-        //!return new Rotation2d(NavX.getRotation2d().getRadians() + Math.PI);
+        return new Rotation2d(Pigeon.getRotation2d().getRadians() + Math.PI);
     }
     
 
@@ -179,7 +176,7 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public void resetOdometry(Pose2d pose) {
-        //!odometer.resetPosition(getRotation2d(), getModulePositions(), pose);
+        odometer.resetPosition(getRotation2d(), getModulePositions(), pose);
     }
 
 
@@ -192,7 +189,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        //!odometer.update(getRotation2d(), getModulePositions());
+        odometer.update(getRotation2d(), getModulePositions());
 
         //field.setRobotPose(odometer.getPoseMeters());
         field.setRobotPose(odometer.getPoseMeters().getX(), odometer.getPoseMeters().getY(), odometer.getPoseMeters().getRotation());
