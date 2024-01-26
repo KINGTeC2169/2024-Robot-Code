@@ -10,8 +10,8 @@ public class armTest extends Command{
     private Arm top;
 
     public armTest(){
-        bottom = new Arm(Constants.Ports.shooterBot);
-        top = new Arm(Constants.Ports.shooterTop);
+        //bottom = new Arm(Constants.Ports.shooterBot);
+        //top = new Arm(Constants.Ports.shooterTop);
     }
 
     @Override
