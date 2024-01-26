@@ -21,7 +21,7 @@ public class Arm extends SubsystemBase {
     TalonFX leftArm = new TalonFX(Constants.DeviceID.leftArm);
     TalonFX rightArm = new TalonFX(Constants.DeviceID.rightArm);
 
-    DutyCycleEncoder armEncoder = new DutyCycleEncoder(Constants.DeviceID.armEncoder);
+    //DutyCycleEncoder armEncoder = new DutyCycleEncoder(Constants.DeviceID.armEncoder);
     final PositionDutyCycle request = new PositionDutyCycle(0);
     PIDController angleLoop = new PIDController(0,0,0);
 
@@ -47,7 +47,8 @@ public class Arm extends SubsystemBase {
     }
 
     public double getAngle() {
-        return (armEncoder.getAbsolutePosition() - armEncoder.getPositionOffset()) * 360;
+        //return (armEncoder.getAbsolutePosition() - armEncoder.getPositionOffset()) * 360;
+        return 0;
     }
 
 
@@ -63,6 +64,6 @@ public class Arm extends SubsystemBase {
 
     public double[] getArmCurrent(){
         return new double[]{leftArm.getSupplyCurrent().getValueAsDouble(),
-                            rightArm.getSupplyCurrent().getValueAsDouble()};  
+                            rightArm.getSupplyCurrent().getValueAsDouble()}; 
     }
 }
