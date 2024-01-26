@@ -9,25 +9,25 @@ import frc.robot.Constants;
 
 public class Intake extends SubsystemBase{
     
-    //CANSparkMax intakeMotor = new CANSparkMax(Constants.DeviceID.intake, MotorType.kBrushless);
+    CANSparkMax intakeMotor;
 
     public Intake(){
-
+        intakeMotor = new CANSparkMax(Constants.DeviceID.intake, MotorType.kBrushless);
     }
     /**Sets intake to suck in */
     public void inTake() {
-        //intakeMotor.set(0.3);
+        intakeMotor.set(0.3);
         SmartDashboard.putBoolean("Intake", true);
     }
 
     /**Sets intake to outtake */
     public void outTake(boolean on) {
-        //intakeMotor.set(-0.3);
+        intakeMotor.set(-0.3);
         SmartDashboard.putBoolean("Intake", false);
     }
 
     public void stopTake(){
-        //intakeMotor.set(0);
+        intakeMotor.set(0);
     }
 
 }
