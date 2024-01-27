@@ -7,7 +7,6 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DutyCycle;
 import edu.wpi.first.wpilibj.SerialPort;
 
 /**
@@ -22,13 +21,14 @@ public final class Constants {
 
     public static final class Ports {
         public static final int controller = 0;
-        public static final int leftStick = 1;
-        public static final int rightStick = 2;
+        public static final int leftStick = 0;
+        public static final int rightStick = 1;
 
-        public static final SerialPort arduino = new SerialPort(9600, SerialPort.Port.kUSB1);
-        public static final int beamBreak = 0;
+        //public static final SerialPort arduino = new SerialPort(9600, SerialPort.Port.kUSB1);
+        public static final int beamBreak = 1;
 
         public static final int pigeon = 3;
+        public static final int armEncoder = 0;
 
         //Swervedrive ports
         public static final int frontLeftDrive = 2;
@@ -73,24 +73,31 @@ public final class Constants {
         public static final double rightLeftWheels = Units.inchesToMeters(21.5);
         public static final double frontBackWheels = Units.inchesToMeters(21.5);
 
-        public static final double FRabsoluteOffset = -0.893;
-        public static final double FLabsoluteOffset = -1.33609;
-        public static final double BRabsoluteOffset = -0.7225;
-        public static final double BLabsoluteOffset = -1.453;
+        public static final double FRabsoluteOffset = -0.439697265625;
+        public static final double FLabsoluteOffset = -0.34423828125; //-0.14453125;
+        public static final double BRabsoluteOffset = 0.00830078125;
+        public static final double BLabsoluteOffset = 0.31396484375;
 
         public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
-                new Translation2d(frontBackWheels / 2, rightLeftWheels / 2),//Front-Left
-                new Translation2d(frontBackWheels / 2, -rightLeftWheels / 2),//Front-Right
-                new Translation2d(-frontBackWheels / 2, rightLeftWheels / 2),//Back-Left
-                new Translation2d(-frontBackWheels / 2, -rightLeftWheels / 2));//Back-Right
+                new Translation2d(-frontBackWheels / 2, -rightLeftWheels / 2),//Front-Left
+                new Translation2d(frontBackWheels / 2, rightLeftWheels / 2),//Front-Right
+                new Translation2d(-frontBackWheels / 2, -rightLeftWheels / 2),//Back-Left
+                new Translation2d(frontBackWheels / 2, rightLeftWheels / 2));//Back-Right
     }
 
     public static final class DeviceID {
         public static final int shooterTop = 15;
-        public static final int shooterBot = 3;
-        public static final int intake = 1;
-        public static final int leftArm = 2;
-        public static final int rightArm = 2;
-        public static final DutyCycle armEncoder = null;
+        public static final int shooterBot = 14;
+        public static final int intake = 13;
+        public static final int leftArm = 16;
+        public static final int rightArm = 17;
+        
+    }
+
+    public static final class Vision {
+        public static final double tagHeight = 5.5; //ft
+        public static final double mountedHeight = 1.5; //ft
+        public static final double mountedAngle = 45; //angle deg
+        public static final double launchSpeed = 75; //ft/sec
     }
 }

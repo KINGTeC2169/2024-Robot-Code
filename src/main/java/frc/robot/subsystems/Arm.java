@@ -21,7 +21,9 @@ public class Arm extends SubsystemBase {
     TalonFX leftArm = new TalonFX(Constants.DeviceID.leftArm);
     TalonFX rightArm = new TalonFX(Constants.DeviceID.rightArm);
 
-    DutyCycleEncoder armEncoder = new DutyCycleEncoder(Constants.DeviceID.armEncoder);
+    private final DutyCycleEncoder armEncoder = new DutyCycleEncoder(Constants.Ports.armEncoder);
+    //Update hex encoder
+
     final PositionDutyCycle request = new PositionDutyCycle(0);
     PIDController angleLoop = new PIDController(0,0,0);
 
@@ -31,7 +33,7 @@ public class Arm extends SubsystemBase {
     private ShuffleboardTab tab = Shuffleboard.getTab("Arm");
     
     public Arm() {
-        
+
         ShuffleboardLayout currents = tab.getLayout("Arm Currents", BuiltInLayouts.kGrid).withSize(2, 1).withProperties(Map.of("Number of rows", 1)).withPosition(0, 0);
 
         var configs = new Slot0Configs();
@@ -63,6 +65,6 @@ public class Arm extends SubsystemBase {
 
     public double[] getArmCurrent(){
         return new double[]{leftArm.getSupplyCurrent().getValueAsDouble(),
-                            rightArm.getSupplyCurrent().getValueAsDouble()};  
+                            rightArm.getSupplyCurrent().getValueAsDouble()}; 
     }
 }

@@ -17,12 +17,12 @@ public class Launch extends Command {
 
     @Override
     public void execute() { 
-        intake.inTake(true);
+        intake.inTake();
     }
 
     @Override
     public void end(boolean interupt) {
-		intake.inTake(false);
+		intake.stopTake();
 	}
 
     @Override

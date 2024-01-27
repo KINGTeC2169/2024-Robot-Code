@@ -100,12 +100,12 @@ public class SwerveSubsystem extends SubsystemBase {
         tab.addDouble("Back Right Percent", () -> backRight.getWantedSpeed());
         tab.addDouble("180 Head", () -> head180());
 
-        //tab.addDouble("Abs Front Left", () -> frontLeft.getAbsoluteTurnPosition());
-        //tab.addDouble("Abs Front Right", () -> frontRight.getAbsoluteTurnPosition());
-        //tab.addDouble("Abs Back Left", () -> backLeft.getAbsoluteTurnPosition());
-        //tab.addDouble("Abs Back Right", () -> backRight.getAbsoluteTurnPosition());
-        //tab.addDouble("X", () -> odometer.getPoseMeters().getX()).withPosition(8, 3);
-        //tab.addDouble("Y", () -> odometer.getPoseMeters().getY()).withPosition(9, 3);
+        tab.addDouble("Abs Front Left", () -> frontLeft.getAbsoluteTurnPosition());
+        tab.addDouble("Abs Front Right", () -> frontRight.getAbsoluteTurnPosition());
+        tab.addDouble("Abs Back Left", () -> backLeft.getAbsoluteTurnPosition());
+        tab.addDouble("Abs Back Right", () -> backRight.getAbsoluteTurnPosition());
+        tab.addDouble("X", () -> odometer.getPoseMeters().getX()).withPosition(8, 3);
+        tab.addDouble("Y", () -> odometer.getPoseMeters().getY()).withPosition(9, 3);
 
         tab.add(field).withPosition(2, 0).withSize(5, 3);
 
@@ -200,7 +200,7 @@ public class SwerveSubsystem extends SubsystemBase {
         
         //SmartDashboard.putData("Field", field);
     
-        /*
+        
         SmartDashboard.putNumber("Front Left", frontLeft.getTurnPosition());
         SmartDashboard.putNumber("Front Right", frontRight.getTurnPosition());
         SmartDashboard.putNumber("Back Left", backLeft.getTurnPosition());
@@ -212,7 +212,11 @@ public class SwerveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Front left speed", frontLeft.getDriveVelocity());
         SmartDashboard.putNumber("Error", backLeft.getError());
         SmartDashboard.putNumber("Error", Math.abs(backRight.getWantedSpeed() - backRight.getDrivePosition()));
-        */
+        
+        SmartDashboard.putNumber("Back Left getDrivePosition", backLeft.getDrivePosition());
+        SmartDashboard.putNumber("Back Right getDrivePosition", backRight.getDrivePosition());
+        SmartDashboard.putNumber("Front Left getDrivePosition", frontLeft.getDrivePosition());
+        SmartDashboard.putNumber("Front Right getDrivePosition", frontRight.getDrivePosition());
     }
 
     public void stopModules() {
