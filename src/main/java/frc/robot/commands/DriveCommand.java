@@ -53,9 +53,9 @@ public class DriveCommand extends Command{
         turningSpeed = turningLimiter.calculate(turningSpeed) * ModuleConstants.maxNeoRadPerSec;
 
         if (isSlow.get()){
-            xSpeed *= 0.2;
-            xSpeed *= 0.2;
-            xSpeed *= 0.2;
+            xSpeed *= swerveSubsystem.getSlowSpeed();
+            ySpeed *= swerveSubsystem.getSlowSpeed();
+            turningSpeed *= swerveSubsystem.getSlowSpeed();
         }
 
         if (reset.get()){
