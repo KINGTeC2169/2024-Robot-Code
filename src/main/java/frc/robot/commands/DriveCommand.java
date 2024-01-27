@@ -15,16 +15,18 @@ public class DriveCommand extends Command{
     
     private final SwerveSubsystem swerveSubsystem;
     private final Supplier<Double> xSpdFunction, ySpdFunction, turningSpdFunction;
-    private final Supplier<Boolean> reset;
+    private final Supplier<Boolean> reset, isSlow;
     private final SlewRateLimiter xLimiter, yLimiter, turningLimiter;
     
     public DriveCommand(SwerveSubsystem swerveSubsystem, Supplier<Double> xSpdFunction, 
-        Supplier<Double> ySpdFunction, Supplier<Double> turningSpdFunction, Supplier<Boolean> reset){
+        Supplier<Double> ySpdFunction, Supplier<Double> turningSpdFunction, Supplier<Boolean> reset, 
+        Supplier<Boolean> isSlow){
         this.swerveSubsystem = swerveSubsystem;
         this.xSpdFunction = xSpdFunction;
         this.ySpdFunction = ySpdFunction;
         this.turningSpdFunction = turningSpdFunction;
         this.reset = reset;
+        this.isSlow = isSlow;
         this.xLimiter = new SlewRateLimiter(5);
         this.yLimiter = new SlewRateLimiter(5);
         this.turningLimiter = new SlewRateLimiter(5);
@@ -49,6 +51,12 @@ public class DriveCommand extends Command{
         xSpeed = xLimiter.calculate(xSpeed) *  Constants.ModuleConstants.maxSpeed;
         ySpeed = yLimiter.calculate(ySpeed) *  Constants.ModuleConstants.maxSpeed;
         turningSpeed = turningLimiter.calculate(turningSpeed) * ModuleConstants.maxNeoRadPerSec;
+
+        if (isSlow.get()){
+            xSpeed *= 0.2;
+            xSpeed *= 0.2;
+            xSpeed *= 0.2;
+        }
 
         if (reset.get()){
             swerveSubsystem.resetEncoders();

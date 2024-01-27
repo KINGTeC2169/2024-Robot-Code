@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -39,7 +40,7 @@ public class RobotContainer {
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
   //Right side/Buttons and Controller
-  private final CommandXboxController controller = new CommandXboxController(Constants.Ports.controller);
+  private final XboxController controller = new XboxController(Constants.Ports.controller);
   private final Joystick leftStick = new Joystick(Constants.Ports.leftStick);
   private final Joystick rightStick = new Joystick(Constants.Ports.rightStick);
   private final CommandXboxController buttonBoard = new CommandXboxController(1);
@@ -50,10 +51,11 @@ public class RobotContainer {
     // Configure the trigger bindings
 
     swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
-		() -> leftStick.getY(), 
-		() -> leftStick.getX(), 
-		() -> rightStick.getTwist(),
-		() -> rightStick.getRawButtonReleased(0)
+		() -> controller.getLeftX(), 
+		() -> controller.getLeftY(), 
+		() -> controller.getRightX(),
+		() -> rightStick.getRawButtonReleased(0),
+    () -> controller.getAButton()
 		));
 
     configureBindings();
@@ -78,13 +80,13 @@ public class RobotContainer {
     //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     
     //Controller for testing until control panel is done
-    controller.rightBumper().whileTrue(Commands.run(() -> new Angle(arm, true))); //Move arm up
-    controller.leftBumper().whileTrue(Commands.run(() -> new Angle(arm, false))); //Move arm down
-    controller.a().whileTrue(Commands.run(() -> new Launch(intake))); //Launch
-    controller.b().whileTrue(Commands.run(() -> new Subwoofer(arm, shooter))); //Subwoofer
-    controller.y().whileTrue(Commands.run(() -> new Amp(arm, shooter))); //Amp
-    controller.start().whileTrue(Commands.run(() -> new Podium(arm, shooter))); //Podium
-    controller.x().whileTrue(Commands.run(() -> new GroundPickup(arm, intake))); //Ground pickup
+    // controller.rightBumper().whileTrue(Commands.run(() -> new Angle(arm, true))); //Move arm up
+    // controller.leftBumper().whileTrue(Commands.run(() -> new Angle(arm, false))); //Move arm down
+    // controller.a().whileTrue(Commands.run(() -> new Launch(intake))); //Launch
+    // controller.b().whileTrue(Commands.run(() -> new Subwoofer(arm, shooter))); //Subwoofer
+    // controller.y().whileTrue(Commands.run(() -> new Amp(arm, shooter))); //Amp
+    // controller.start().whileTrue(Commands.run(() -> new Podium(arm, shooter))); //Podium
+    // controller.x().whileTrue(Commands.run(() -> new GroundPickup(arm, intake))); //Ground pickup
   }
 
   /**
