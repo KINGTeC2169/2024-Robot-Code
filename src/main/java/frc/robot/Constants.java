@@ -7,7 +7,6 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DutyCycle;
 import edu.wpi.first.wpilibj.SerialPort;
 
 /**
@@ -26,7 +25,7 @@ public final class Constants {
         public static final int rightStick = 2;
 
         public static final SerialPort arduino = new SerialPort(9600, SerialPort.Port.kUSB1);
-        public static final int beamBreak = 0;
+        public static final int beamBreak = 1;
 
         public static final int pigeon = 3;
         public static final int armEncoder = 0;
