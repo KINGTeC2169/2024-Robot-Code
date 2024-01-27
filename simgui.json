@@ -27,6 +27,22 @@
     "types": {
       "/FMSInfo": "FMSInfo",
       "/Shuffleboard/Swerve/Field": "Field2d"
+    },
+    "windows": {
+      "/Shuffleboard/Swerve/Field": {
+        "bottom": 544,
+        "builtin": "2024 Crescendo",
+        "height": 8.013679504394531,
+        "left": 46,
+        "right": 1088,
+        "top": 36,
+        "units": "meters",
+        "width": 16.541748046875,
+        "window": {
+          "name": "Field View",
+          "visible": true
+        }
+      }
     }
   },
   "NetworkTables": {
@@ -36,8 +52,22 @@
     "Retained Values": {
       "open": false
     },
-    "Transitory Values": {
-      "open": false
+    "transitory": {
+      "LiveWindow": {
+        ".status": {
+          "open": true
+        },
+        "open": true
+      },
+      "PathPlanner": {
+        "HotReload": {
+          "open": true
+        },
+        "open": true
+      },
+      "Shuffleboard": {
+        "open": true
+      }
     }
   },
   "NetworkTables Info": {
@@ -45,5 +75,23 @@
   },
   "NetworkTables View": {
     "visible": false
+  },
+  "Plot": {
+    "Plot <0>": {
+      "plots": [
+        {
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 326
+        }
+      ],
+      "window": {
+        "visible": false
+      }
+    }
   }
 }

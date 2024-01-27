@@ -15,6 +15,8 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
+import frc.robot.Constants;
+import frc.robot.Constants.Conversions;
 
 import static frc.robot.Constants.ModuleConstants.*;
 
@@ -106,7 +108,8 @@ public class SwerveModule {
     }
 
     public SwerveModuleState getState() {
-        return new SwerveModuleState(getDriveVelocity(), new Rotation2d(getTurnPosition()));
+        return new SwerveModuleState(Conversions.rotationsToMeters(driveMotor.getPosition().getValue(), Constants.ModuleConstants.wheelDiameter), 
+        new Rotation2d(getTurnPosition()));
     }
     public SwerveModulePosition getModulePosition() {
         return new SwerveModulePosition(getDrivePosition(), getRotation2d());
@@ -136,7 +139,6 @@ public class SwerveModule {
         state = SwerveModuleState.optimize(state, getState().angle);
 
         driveMotor.set(-state.speedMetersPerSecond / maxSpeed);
-        System.out.println(-state.speedMetersPerSecond / maxSpeed);
         turnMotor.set(turningPID.calculate(getTurnPosition(), state.angle.getRadians()));
     }
 
