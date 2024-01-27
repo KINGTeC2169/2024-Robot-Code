@@ -38,7 +38,7 @@ public class LimelightAlign extends Command {
         SwerveModuleState[] moduleStates = DriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
         swerveSubsystem.setModuleStates(moduleStates);
 
-        totalAngleDeg = baseAngleDeg+LimelightTable.getTA();
+        totalAngleDeg = baseAngleDeg+LimelightTable.getTY();
         totalDistanceFt = (tagHeightFt-baseHeightFt)*Math.tan(totalAngleDeg); //Horizontal distance in feet
     }
 
