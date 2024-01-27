@@ -93,4 +93,11 @@ public final class Constants {
         public static final int rightArm = 2;
         
     }
+
+    public static final class Vision {
+        public static final double tagHeight = 5.5; //ft
+        public static final double mountedHeight = 1.5; //ft
+        public static final double mountedAngle = 45; //angle deg
+        public static final double launchSpeed = 75; //ft/sec
+    }
 }

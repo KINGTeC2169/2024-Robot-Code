@@ -12,19 +12,12 @@ public class LimelightAlign extends Command {
     private SwerveSubsystem swerveSubsystem;
     private ChassisSpeeds chassisSpeeds;
     private PIDController turnController;
-    private double tagHeightFt = 5.6;
-    private double baseAngleDeg;
-    private double baseHeightFt;
-    private double totalAngleDeg;
-    private double totalDistanceFt;
 
 
     public LimelightAlign(SwerveSubsystem swerveSubsystem){
         this.swerveSubsystem = swerveSubsystem;
         addRequirements(swerveSubsystem);
         turnController = new PIDController(0.5,0,0);
-        baseAngleDeg = 10;
-        baseHeightFt = 1.5;
     }
 
     @Override
@@ -37,9 +30,6 @@ public class LimelightAlign extends Command {
 
         SwerveModuleState[] moduleStates = DriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
         swerveSubsystem.setModuleStates(moduleStates);
-
-        totalAngleDeg = baseAngleDeg+LimelightTable.getTY();
-        totalDistanceFt = (tagHeightFt-baseHeightFt)*Math.tan(totalAngleDeg); //Horizontal distance in feet
     }
 
     @Override
