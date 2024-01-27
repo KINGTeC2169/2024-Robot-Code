@@ -21,7 +21,7 @@ public class Arm extends SubsystemBase {
     TalonFX leftArm = new TalonFX(Constants.DeviceID.leftArm);
     TalonFX rightArm = new TalonFX(Constants.DeviceID.rightArm);
 
-    //private final DutyCycleEncoder armEncoder = new DutyCycleEncoder(Constants.Ports.armEncoder);
+    private final DutyCycleEncoder armEncoder = new DutyCycleEncoder(Constants.Ports.armEncoder);
     //Update hex encoder
 
     final PositionDutyCycle request = new PositionDutyCycle(0);
@@ -49,8 +49,7 @@ public class Arm extends SubsystemBase {
     }
 
     public double getAngle() {
-        //return (armEncoder.getAbsolutePosition() - armEncoder.getPositionOffset()) * 360;
-        return 0;
+        return (armEncoder.getAbsolutePosition() - armEncoder.getPositionOffset()) * 360;
     }
 
 
