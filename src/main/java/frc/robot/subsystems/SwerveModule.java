@@ -66,35 +66,42 @@ public class SwerveModule {
 
     }
 
+    //Returns wheel rotation 0->1
     public double getDrivePosition() {
         return -driveMotor.getRotorPosition().getValueAsDouble() * (0.32 / 13824);
     }
 
-    /**Returns position of turn encoder in radians. Counterclockwise is positive, accumulates. */
+    //Returns position of turn encoder in rotations. Counterclockwise is positive, accumulates. 
     public double getTurnPosition() {
-        return turnEncoder.getPosition();
+        return turnEncoder.getPosition() ;
     }
+
+    //Returns Rotation2d
     public Rotation2d getRotation2d() {
-        return Rotation2d.fromRadians(getTurnPosition());
+        return Rotation2d.fromRotations(getTurnPosition());
     }
 
-    
+    //Returns RPM of Motor
     public double getDriveVelocity() {
-        return driveMotor.getRotorVelocity().getValueAsDouble();
+        return driveMotor.getRotorVelocity().getValueAsDouble() * 60;
     }
 
+    //Returns RPM of motor
     public double getTurnVelocity() {
         return turnEncoder.getVelocity();
     }
 
+    //Returns Rotations
     public double getAbsoluteTurnPosition() {
         return absoluteEncoder.getAbsolutePosition().getValueAsDouble();
     }
 
+    //Returns current
     public double getDriveCurrent() {
         return driveMotor.getSupplyCurrent().getValueAsDouble();
     }
 
+    //Returns current
     public double getTurnCurrent() {
         return turnMotor.getOutputCurrent();
     }
@@ -129,7 +136,7 @@ public class SwerveModule {
         driveMotor.set(((state.speedMetersPerSecond / maxSpeed) * 0.94) - 0.06);
         }
         
-        turnMotor.set(turningPID.calculate(getTurnPosition(), state.angle.getRadians()));
+        turnMotor.set(turningPID.calculate(getTurnPosition(), state.angle.getRotations()));
 
     }
     public void setState(SwerveModuleState state) {

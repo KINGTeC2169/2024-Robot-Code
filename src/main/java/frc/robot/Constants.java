@@ -21,10 +21,10 @@ public final class Constants {
 
     public static final class Ports {
         public static final int controller = 0;
-        public static final int leftStick = 1;
-        public static final int rightStick = 2;
+        public static final int leftStick = 0;
+        public static final int rightStick = 1;
 
-        public static final SerialPort arduino = new SerialPort(9600, SerialPort.Port.kUSB1);
+        //public static final SerialPort arduino = new SerialPort(9600, SerialPort.Port.kUSB1);
         public static final int beamBreak = 1;
 
         public static final int pigeon = 3;
@@ -73,16 +73,16 @@ public final class Constants {
         public static final double rightLeftWheels = Units.inchesToMeters(21.5);
         public static final double frontBackWheels = Units.inchesToMeters(21.5);
 
-        public static final double FRabsoluteOffset = -0.893;
-        public static final double FLabsoluteOffset = -1.33609;
-        public static final double BRabsoluteOffset = -0.7225;
-        public static final double BLabsoluteOffset = -1.453;
+        public static final double FRabsoluteOffset = -0.439697265625;
+        public static final double FLabsoluteOffset = -0.34423828125; //-0.14453125;
+        public static final double BRabsoluteOffset = 0.00830078125;
+        public static final double BLabsoluteOffset = 0.31396484375;
 
         public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
-                new Translation2d(frontBackWheels / 2, rightLeftWheels / 2),//Front-Left
-                new Translation2d(frontBackWheels / 2, -rightLeftWheels / 2),//Front-Right
-                new Translation2d(-frontBackWheels / 2, rightLeftWheels / 2),//Back-Left
-                new Translation2d(-frontBackWheels / 2, -rightLeftWheels / 2));//Back-Right
+                new Translation2d(-frontBackWheels / 2, -rightLeftWheels / 2),//Front-Left
+                new Translation2d(frontBackWheels / 2, rightLeftWheels / 2),//Front-Right
+                new Translation2d(-frontBackWheels / 2, -rightLeftWheels / 2),//Back-Left
+                new Translation2d(frontBackWheels / 2, rightLeftWheels / 2));//Back-Right
     }
 
     public static final class DeviceID {
