@@ -1,0 +1,49 @@
+{
+  "HALProvider": {
+    "Other Devices": {
+      "Talon FX (v6)[2]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[4]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[6]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[8]": {
+        "header": {
+          "open": true
+        }
+      }
+    }
+  },
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/Swerve/Field": "Field2d"
+    }
+  },
+  "NetworkTables": {
+    "Persistent Values": {
+      "open": false
+    },
+    "Retained Values": {
+      "open": false
+    },
+    "Transitory Values": {
+      "open": false
+    }
+  },
+  "NetworkTables Info": {
+    "visible": true
+  },
+  "NetworkTables View": {
+    "visible": false
+  }
+}

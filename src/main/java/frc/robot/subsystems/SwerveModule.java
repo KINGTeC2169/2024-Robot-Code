@@ -100,7 +100,7 @@ public class SwerveModule {
     }
 
     public void resetEncoders() {
-        //driveMotor.setSelectedSensorPosition(0);
+        driveMotor.setPosition(0);
         turnEncoder.setPosition(getAbsoluteTurnPosition());
         System.out.println("RESETTING ENCODERS \nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS");
     }
@@ -136,6 +136,7 @@ public class SwerveModule {
         state = SwerveModuleState.optimize(state, getState().angle);
 
         driveMotor.set(-state.speedMetersPerSecond / maxSpeed);
+        System.out.println(-state.speedMetersPerSecond / maxSpeed);
         turnMotor.set(turningPID.calculate(getTurnPosition(), state.angle.getRadians()));
     }
 

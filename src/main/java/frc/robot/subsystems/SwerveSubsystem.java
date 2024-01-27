@@ -52,7 +52,7 @@ public class SwerveSubsystem extends SubsystemBase {
     private SwerveModule backRight = new SwerveModule(
     Ports.backRightDrive,
     Ports.backRightTurn, 
-    false, false,
+    true, false,
     Ports.backRightAbsolute,
     DriveConstants.BRabsoluteOffset,
     false);
@@ -100,10 +100,10 @@ public class SwerveSubsystem extends SubsystemBase {
         tab.addDouble("Back Right Percent", () -> backRight.getWantedSpeed());
         tab.addDouble("180 Head", () -> head180());
 
-        //tab.addDouble("Abs Front Left", () -> frontLeft.getAbsoluteTurnPosition());
-        //tab.addDouble("Abs Front Right", () -> frontRight.getAbsoluteTurnPosition());
-        //tab.addDouble("Abs Back Left", () -> backLeft.getAbsoluteTurnPosition());
-        //tab.addDouble("Abs Back Right", () -> backRight.getAbsoluteTurnPosition());
+        tab.addDouble("Abs Front Left", () -> frontLeft.getAbsoluteTurnPosition());
+        tab.addDouble("Abs Front Right", () -> frontRight.getAbsoluteTurnPosition());
+        tab.addDouble("Abs Back Left", () -> backLeft.getAbsoluteTurnPosition());
+        tab.addDouble("Abs Back Right", () -> backRight.getAbsoluteTurnPosition());
         //tab.addDouble("X", () -> odometer.getPoseMeters().getX()).withPosition(8, 3);
         //tab.addDouble("Y", () -> odometer.getPoseMeters().getY()).withPosition(9, 3);
 

@@ -15,16 +15,18 @@ public class DriveCommand extends Command{
     
     private final SwerveSubsystem swerveSubsystem;
     private final Supplier<Double> xSpdFunction, ySpdFunction, turningSpdFunction;
-    private final Supplier<Boolean> reset;
+    private final Supplier<Boolean> reset, isSlow;
     private final SlewRateLimiter xLimiter, yLimiter, turningLimiter;
     
     public DriveCommand(SwerveSubsystem swerveSubsystem, Supplier<Double> xSpdFunction, 
-        Supplier<Double> ySpdFunction, Supplier<Double> turningSpdFunction, Supplier<Boolean> reset){
+        Supplier<Double> ySpdFunction, Supplier<Double> turningSpdFunction, Supplier<Boolean> reset,
+        Supplier<Boolean> isSlow){
         this.swerveSubsystem = swerveSubsystem;
         this.xSpdFunction = xSpdFunction;
         this.ySpdFunction = ySpdFunction;
         this.turningSpdFunction = turningSpdFunction;
         this.reset = reset;
+        this.isSlow = isSlow;
         this.xLimiter = new SlewRateLimiter(5);
         this.yLimiter = new SlewRateLimiter(5);
         this.turningLimiter = new SlewRateLimiter(5);
@@ -42,13 +44,19 @@ public class DriveCommand extends Command{
         double turningSpeed = -turningSpdFunction.get();
 
         // Deadband: unsure if necessary for our controllers
-        xSpeed = Math.abs(xSpeed) > .03 ? xSpeed : 0.0;
-        ySpeed = Math.abs(ySpeed) > .03 ? ySpeed : 0.0;
+        xSpeed = Math.abs(xSpeed) > .05 ? xSpeed : 0.0;
+        ySpeed = Math.abs(ySpeed) > .05 ? ySpeed : 0.0;
         turningSpeed = Math.abs(turningSpeed) > .02 ? turningSpeed : 0.0;
 
         xSpeed = xLimiter.calculate(xSpeed) *  Constants.ModuleConstants.maxSpeed;
         ySpeed = yLimiter.calculate(ySpeed) *  Constants.ModuleConstants.maxSpeed;
         turningSpeed = turningLimiter.calculate(turningSpeed) * ModuleConstants.maxNeoRadPerSec;
+
+        if (isSlow.get()){
+            xSpeed *= swerveSubsystem.getSlowSpeed();
+            ySpeed *= swerveSubsystem.getSlowSpeed();
+            turningSpeed *= swerveSubsystem.getSlowSpeed();
+        }
 
         if (reset.get()){
             swerveSubsystem.resetEncoders();

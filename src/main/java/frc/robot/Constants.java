@@ -7,7 +7,6 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DutyCycle;
 import edu.wpi.first.wpilibj.SerialPort;
 
 /**
@@ -76,10 +75,10 @@ public final class Constants {
         public static final double rightLeftWheels = Units.inchesToMeters(21.5);
         public static final double frontBackWheels = Units.inchesToMeters(21.5);
 
-        public static final double FRabsoluteOffset = -0.893;
-        public static final double FLabsoluteOffset = -1.33609;
-        public static final double BRabsoluteOffset = -0.7225;
-        public static final double BLabsoluteOffset = -1.453;
+        public static final double FRabsoluteOffset = -0.425537109375;
+        public static final double FLabsoluteOffset = -0.144775390625; //-0.14453125;
+        public static final double BRabsoluteOffset = 0.418212890625;
+        public static final double BLabsoluteOffset = 0.401123046875;
 
         public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
                 new Translation2d(frontBackWheels / 2, rightLeftWheels / 2),//Front-Left

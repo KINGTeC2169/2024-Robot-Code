@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.math.proto.Controller;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -40,7 +41,7 @@ public class RobotContainer {
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
   //Right side/Buttons and Controller
-  private final CommandXboxController controller = new CommandXboxController(Constants.Ports.controller);
+  private final XboxController controller = new XboxController(Constants.Ports.controller);
   private final Joystick leftStick = new Joystick(Constants.Ports.leftStick);
   private final Joystick rightStick = new Joystick(Constants.Ports.rightStick);
   private final CommandXboxController buttonBoard = new CommandXboxController(1);
@@ -51,10 +52,11 @@ public class RobotContainer {
     // Configure the trigger bindings
 
     swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
-		() -> controller.getLeftY(), 
 		() -> controller.getLeftX(), 
+		() -> controller.getLeftY(), 
 		() -> controller.getRightX(),
-		() -> rightStick.getRawButtonReleased(0)
+		() -> rightStick.getRawButtonReleased(0),
+    () -> controller.getAButton()
 		));
 
     configureBindings();
