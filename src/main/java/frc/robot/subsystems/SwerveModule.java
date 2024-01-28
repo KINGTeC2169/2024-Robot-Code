@@ -14,7 +14,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.util.Units;
 import frc.robot.Constants;
 import frc.robot.Constants.Conversions;
 
@@ -48,7 +47,7 @@ public class SwerveModule {
 
         //Configuration for CANCoder
         AbsoluteConfig = new CANcoderConfiguration();
-        AbsoluteConfig.MagnetSensor.MagnetOffset = Units.radiansToDegrees(absoluteOffset);
+        AbsoluteConfig.MagnetSensor.MagnetOffset = absoluteOffset;
         absoluteEncoder = new CANcoder(canCoderID);
         absoluteEncoder.getConfigurator().apply(AbsoluteConfig);
 
@@ -72,12 +71,12 @@ public class SwerveModule {
         return -driveMotor.getRotorPosition().getValueAsDouble() * (0.32 / 13824);
     }
 
-    /**Returns position of turn encoder in radians. Counterclockwise is positive, accumulates. */
+    /**Returns position of turn encoder in rotations. Counterclockwise is positive, accumulates. */
     public double getTurnPosition() {
         return turnEncoder.getPosition();
     }
     public Rotation2d getRotation2d() {
-        return Rotation2d.fromRadians(getTurnPosition());
+        return Rotation2d.fromRotations(getTurnPosition());
     }
 
     
