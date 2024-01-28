@@ -4,14 +4,17 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommand;
-
+import frc.robot.commands.TestCommand;
 import frc.robot.commands.ButtonCommands.Amp;
 import frc.robot.commands.ButtonCommands.Angle;
 import frc.robot.commands.ButtonCommands.GroundPickup;
@@ -44,11 +47,18 @@ public class RobotContainer {
   private final Joystick leftStick = new Joystick(Constants.Ports.leftStick);
   private final Joystick rightStick = new Joystick(Constants.Ports.rightStick);
   private final CommandXboxController buttonBoard = new CommandXboxController(1);
+
+  private ShuffleboardTab tab = Shuffleboard.getTab("Shuffleboard");
+
+  private GenericEntry songChoice = tab.add("Song Choice", 0.0).getEntry();
   
+  private Command themeSong;  
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
+
+    themeSong = new TestCommand(swerveSubsystem, "src\\main\\deploy\\ThunderStruck.mid");
 
     swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
 		() -> controller.getLeftX(), 
@@ -97,5 +107,14 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return null;
+  }
+
+  public Command getTestCommand(){
+    if (songChoice.getDouble(0) == 1.0){
+      return themeSong;
+    }
+    else{
+      return null;
+    }
   }
 }

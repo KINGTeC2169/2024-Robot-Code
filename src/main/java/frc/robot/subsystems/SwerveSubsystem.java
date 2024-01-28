@@ -21,6 +21,8 @@ import frc.robot.Constants.ModuleConstants;
 import frc.robot.Constants.Ports;
 import java.util.Map;
 
+import com.ctre.phoenix6.Orchestra;
+
 
 public class SwerveSubsystem extends SubsystemBase {
 
@@ -66,11 +68,18 @@ public class SwerveSubsystem extends SubsystemBase {
     private GenericEntry mediumSpeed = tab.add("Medium Speed", 0.5).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).withPosition(4, 3).getEntry();
     private GenericEntry slowSpeed = tab.add("Slow Speed", 0.2).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).withPosition(2, 3).getEntry();
 
+    private Orchestra player = new Orchestra();
+
     public SwerveSubsystem() {
 
         Pigeon.configure();
 
         odometer = new SwerveDriveOdometry(kinematics, getRotation2d(), getModulePositions(), new Pose2d(0, 0, new Rotation2d(0)));
+
+        player.addInstrument(frontLeft.getTalonFX());
+        player.addInstrument(frontRight.getTalonFX());
+        player.addInstrument(backLeft.getTalonFX());
+        player.addInstrument(backRight.getTalonFX());
         
         //SmartDashboard.putData("Field", field);
         
@@ -145,6 +154,14 @@ public class SwerveSubsystem extends SubsystemBase {
         backRight.getModulePosition()
         };
         
+    }
+
+    public void playSong(String filePath){
+        player.loadMusic(filePath);
+    }
+
+    public void stopSong(){
+        player.stop();
     }
 
     public void zeroHeading() {
