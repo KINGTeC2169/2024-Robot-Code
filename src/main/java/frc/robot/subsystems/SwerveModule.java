@@ -66,7 +66,7 @@ public class SwerveModule {
         resetEncoders();
 
     }
-
+    /**Returns position of drive motor in rotations. */
     public double getDrivePosition() {
         return -driveMotor.getRotorPosition().getValueAsDouble() * (0.32 / 13824);
     }
@@ -75,45 +75,56 @@ public class SwerveModule {
     public double getTurnPosition() {
         return turnEncoder.getPosition();
     }
+
+    /**Returns the Rotation2d position of the robot. */
     public Rotation2d getRotation2d() {
         return Rotation2d.fromRotations(getTurnPosition());
     }
 
-    
+    /**Returns the drive motor velocity in rotations. */
     public double getDriveVelocity() {
         return driveMotor.getRotorVelocity().getValueAsDouble();
     }
 
+    /**Returns the velocity of the turn motor in rpm. */
     public double getTurnVelocity() {
         return turnEncoder.getVelocity();
     }
 
+    /**Returns absolute turn postion of the CANcoder in rotations. */
     public double getAbsoluteTurnPosition() {
         return absoluteEncoder.getAbsolutePosition().getValueAsDouble();
     }
 
+    /**Returns the supply current of the drive motor in amps. */
     public double getDriveCurrent() {
         return driveMotor.getSupplyCurrent().getValueAsDouble();
     }
 
+    /**Returns the output current of the turn motor in amps. */
     public double getTurnCurrent() {
         return turnMotor.getOutputCurrent();
     }
 
+    /**Resets encoders */
     public void resetEncoders() {
         driveMotor.setPosition(0);
         turnEncoder.setPosition(getAbsoluteTurnPosition());
         System.out.println("RESETTING ENCODERS \nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS");
     }
 
+    /**Returns the state of the swerve module. */
     public SwerveModuleState getState() {
         return new SwerveModuleState(Conversions.rotationsToMeters(driveMotor.getPosition().getValue(), Constants.ModuleConstants.wheelDiameter), 
         new Rotation2d(getTurnPosition()));
     }
+
+    /**Returns swerve module positon. */
     public SwerveModulePosition getModulePosition() {
         return new SwerveModulePosition(getDrivePosition(), getRotation2d());
     }
 
+    /**Sets the desired state of the swerve module. */
     public void setDesiredState(SwerveModuleState state) {
         if (Math.abs(state.speedMetersPerSecond) < 0.001) {
             stop();
