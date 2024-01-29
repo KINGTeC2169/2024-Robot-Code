@@ -19,6 +19,7 @@ import frc.robot.commands.ButtonCommands.Amp;
 import frc.robot.commands.ButtonCommands.Angle;
 import frc.robot.commands.ButtonCommands.GroundPickup;
 import frc.robot.commands.ButtonCommands.Launch;
+import frc.robot.commands.ButtonCommands.LimelightAlign;
 import frc.robot.commands.ButtonCommands.Podium;
 import frc.robot.commands.ButtonCommands.Subwoofer;
 import frc.robot.subsystems.Arm;
@@ -90,13 +91,15 @@ public class RobotContainer {
     //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     
     //Controller for testing until control panel is done
-    // controller.rightBumper().whileTrue(Commands.run(() -> new Angle(arm, true))); //Move arm up
+    //controller.rightBumper().whileTrue(Commands.run(() -> new Angle(arm, true))); //Move arm up
     // controller.leftBumper().whileTrue(Commands.run(() -> new Angle(arm, false))); //Move arm down
-    // controller.a().whileTrue(Commands.run(() -> new Launch(intake))); //Launch
+    //controller.a().whileTrue(Commands.run(() -> new Launch(intake))); //Launch
     // controller.b().whileTrue(Commands.run(() -> new Subwoofer(arm, shooter))); //Subwoofer
     // controller.y().whileTrue(Commands.run(() -> new Amp(arm, shooter))); //Amp
     // controller.start().whileTrue(Commands.run(() -> new Podium(arm, shooter))); //Podium
     // controller.x().whileTrue(Commands.run(() -> new GroundPickup(arm, intake))); //Ground pickup
+    //controller.leftBumper().whileTrue(Commands.run(() -> new LimelightAlign(swerveSubsystem, arm, shooter)));
+    
   }
 
   /**
