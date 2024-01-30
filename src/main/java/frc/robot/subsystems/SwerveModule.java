@@ -14,8 +14,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import frc.robot.Constants;
-import frc.robot.Constants.Conversions;
+import edu.wpi.first.math.util.Units;
 
 import static frc.robot.Constants.ModuleConstants.*;
 
@@ -67,61 +66,49 @@ public class SwerveModule {
 
     }
 
-    public TalonFX getTalonFX(){
-        return driveMotor;
-    }
-
-    //Returns wheel rotation 0->1
     public double getDrivePosition() {
         return -driveMotor.getRotorPosition().getValueAsDouble() * (0.32 / 13824);
     }
 
-    //Returns position of turn encoder in rotations. Counterclockwise is positive, accumulates. 
+    /**Returns position of turn encoder in rotations. Counterclockwise is positive, accumulates. */
     public double getTurnPosition() {
-        return turnEncoder.getPosition() ;
+        return turnEncoder.getPosition();
     }
 
-    //Returns Rotation2d
     public Rotation2d getRotation2d() {
         return Rotation2d.fromRotations(getTurnPosition());
     }
 
-    //Returns RPM of Motor
+    
     public double getDriveVelocity() {
-        return driveMotor.getRotorVelocity().getValueAsDouble() * 60;
+        return driveMotor.getRotorVelocity().getValueAsDouble();
     }
 
-    //Returns RPM of motor
     public double getTurnVelocity() {
         return turnEncoder.getVelocity();
     }
 
-    //Returns Rotations
     public double getAbsoluteTurnPosition() {
         return absoluteEncoder.getAbsolutePosition().getValueAsDouble();
     }
 
-    //Returns current
     public double getDriveCurrent() {
         return driveMotor.getSupplyCurrent().getValueAsDouble();
     }
 
-    //Returns current
     public double getTurnCurrent() {
         return turnMotor.getOutputCurrent();
     }
 
     public void resetEncoders() {
-        //driveMotor.setSelectedSensorPosition(0);
+        driveMotor.setPosition(0);
         turnEncoder.setPosition(getAbsoluteTurnPosition());
         System.out.println("RESETTING ENCODERS \nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS");
     }
 
     public SwerveModuleState getState() {
-        return new SwerveModuleState(Conversions.rotationsToMeters(driveMotor.getPosition().getValue(), Constants.ModuleConstants.wheelDiameter), 
-        new Rotation2d(getTurnPosition()));
+        return new SwerveModuleState(getDriveVelocity(), new Rotation2d(getTurnPosition()));
     }
-    
     public SwerveModulePosition getModulePosition() {
         return new SwerveModulePosition(getDrivePosition(), getRotation2d());
     }
@@ -143,13 +130,14 @@ public class SwerveModule {
         driveMotor.set(((state.speedMetersPerSecond / maxSpeed) * 0.94) - 0.06);
         }
         
-        turnMotor.set(turningPID.calculate(getTurnPosition(), state.angle.getRotations()));
+        turnMotor.set(turningPID.calculate(getTurnPosition(), state.angle.getRadians()));
 
     }
     public void setState(SwerveModuleState state) {
         state = SwerveModuleState.optimize(state, getState().angle);
 
         driveMotor.set(-state.speedMetersPerSecond / maxSpeed);
+        System.out.println(-state.speedMetersPerSecond / maxSpeed);
         turnMotor.set(turningPID.calculate(getTurnPosition(), state.angle.getRadians()));
     }
 

@@ -21,8 +21,6 @@ import frc.robot.Constants.ModuleConstants;
 import frc.robot.Constants.Ports;
 import java.util.Map;
 
-import com.ctre.phoenix6.Orchestra;
-
 
 public class SwerveSubsystem extends SubsystemBase {
 
@@ -54,7 +52,7 @@ public class SwerveSubsystem extends SubsystemBase {
     private SwerveModule backRight = new SwerveModule(
     Ports.backRightDrive,
     Ports.backRightTurn, 
-    false, false,
+    true, false,
     Ports.backRightAbsolute,
     DriveConstants.BRabsoluteOffset,
     false);
@@ -68,18 +66,11 @@ public class SwerveSubsystem extends SubsystemBase {
     private GenericEntry mediumSpeed = tab.add("Medium Speed", 0.5).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).withPosition(4, 3).getEntry();
     private GenericEntry slowSpeed = tab.add("Slow Speed", 0.2).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).withPosition(2, 3).getEntry();
 
-    private Orchestra player = new Orchestra();
-
     public SwerveSubsystem() {
 
         Pigeon.configure();
 
         odometer = new SwerveDriveOdometry(kinematics, getRotation2d(), getModulePositions(), new Pose2d(0, 0, new Rotation2d(0)));
-
-        player.addInstrument(frontLeft.getTalonFX());
-        player.addInstrument(frontRight.getTalonFX());
-        player.addInstrument(backLeft.getTalonFX());
-        player.addInstrument(backRight.getTalonFX());
         
         //SmartDashboard.putData("Field", field);
         
@@ -113,8 +104,8 @@ public class SwerveSubsystem extends SubsystemBase {
         tab.addDouble("Abs Front Right", () -> frontRight.getAbsoluteTurnPosition());
         tab.addDouble("Abs Back Left", () -> backLeft.getAbsoluteTurnPosition());
         tab.addDouble("Abs Back Right", () -> backRight.getAbsoluteTurnPosition());
-        tab.addDouble("X", () -> odometer.getPoseMeters().getX()).withPosition(8, 3);
-        tab.addDouble("Y", () -> odometer.getPoseMeters().getY()).withPosition(9, 3);
+        //tab.addDouble("X", () -> odometer.getPoseMeters().getX()).withPosition(8, 3);
+        //tab.addDouble("Y", () -> odometer.getPoseMeters().getY()).withPosition(9, 3);
 
         tab.add(field).withPosition(2, 0).withSize(5, 3);
 
@@ -154,14 +145,6 @@ public class SwerveSubsystem extends SubsystemBase {
         backRight.getModulePosition()
         };
         
-    }
-
-    public void playSong(String filePath){
-        player.loadMusic(filePath);
-    }
-
-    public void stopSong(){
-        player.stop();
     }
 
     public void zeroHeading() {
@@ -217,7 +200,7 @@ public class SwerveSubsystem extends SubsystemBase {
         
         //SmartDashboard.putData("Field", field);
     
-        
+        /*
         SmartDashboard.putNumber("Front Left", frontLeft.getTurnPosition());
         SmartDashboard.putNumber("Front Right", frontRight.getTurnPosition());
         SmartDashboard.putNumber("Back Left", backLeft.getTurnPosition());
@@ -229,11 +212,7 @@ public class SwerveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Front left speed", frontLeft.getDriveVelocity());
         SmartDashboard.putNumber("Error", backLeft.getError());
         SmartDashboard.putNumber("Error", Math.abs(backRight.getWantedSpeed() - backRight.getDrivePosition()));
-        
-        SmartDashboard.putNumber("Back Left getDrivePosition", backLeft.getDrivePosition());
-        SmartDashboard.putNumber("Back Right getDrivePosition", backRight.getDrivePosition());
-        SmartDashboard.putNumber("Front Left getDrivePosition", frontLeft.getDrivePosition());
-        SmartDashboard.putNumber("Front Right getDrivePosition", frontRight.getDrivePosition());
+        */
     }
 
     public void stopModules() {

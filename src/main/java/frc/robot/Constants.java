@@ -64,7 +64,7 @@ public final class Constants {
         public static final double driveEncoderRPMToMeterPerSec = driveEncoderToMeter / 60;
         public static final double turnEncoderRPMToRadPerSec = turnEncoderToRadian / 60;
 
-        public static final double PTurn = 0.3;
+        public static final double PTurn = 0.4;
         public static final double PDrive = 0.3;
     }
 
@@ -73,16 +73,16 @@ public final class Constants {
         public static final double rightLeftWheels = Units.inchesToMeters(21.5);
         public static final double frontBackWheels = Units.inchesToMeters(21.5);
 
-        public static final double FRabsoluteOffset = -0.439697265625;
-        public static final double FLabsoluteOffset = -0.34423828125; //-0.14453125;
-        public static final double BRabsoluteOffset = 0.00830078125;
-        public static final double BLabsoluteOffset = 0.31396484375;
+        public static final double FRabsoluteOffset = -0.4267578125; //-0.42333984375;
+        public static final double FLabsoluteOffset = -0.1416015625; //-0.140625;
+        public static final double BRabsoluteOffset = 0.418212890625; //-0.418701171875;
+        public static final double BLabsoluteOffset = 0.3955078125; //0.388427734375;
 
         public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
-                new Translation2d(-frontBackWheels / 2, -rightLeftWheels / 2),//Front-Left
-                new Translation2d(frontBackWheels / 2, rightLeftWheels / 2),//Front-Right
-                new Translation2d(-frontBackWheels / 2, -rightLeftWheels / 2),//Back-Left
-                new Translation2d(frontBackWheels / 2, rightLeftWheels / 2));//Back-Right
+                new Translation2d(frontBackWheels / 2, rightLeftWheels / 2),//Front-Left
+                new Translation2d(frontBackWheels / 2, -rightLeftWheels / 2),//Front-Right
+                new Translation2d(-frontBackWheels / 2, rightLeftWheels / 2),//Back-Left
+                new Translation2d(-frontBackWheels / 2, -rightLeftWheels / 2));//Back-Right
     }
 
     public static final class DeviceID {

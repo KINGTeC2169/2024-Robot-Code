@@ -16,7 +16,7 @@ public class TestCommand extends Command{
 
     @Override
     public void initialize(){
-        drivetrain.playSong(songPath);
+        //drivetrain.playSong(songPath);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class TestCommand extends Command{
 
     @Override
     public void end(boolean interrupted) {
-        drivetrain.stopSong();
+        //drivetrain.stopSong();
     }
 
     @Override

@@ -61,8 +61,8 @@ public class RobotContainer {
     themeSong = new TestCommand(swerveSubsystem, "src\\main\\deploy\\ThunderStruck.mid");
 
     swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
-		() -> controller.getLeftX(), 
 		() -> controller.getLeftY(), 
+		() -> controller.getLeftX(), 
 		() -> controller.getRightX(),
 		() -> rightStick.getRawButtonReleased(0),
     () -> controller.getAButton()
@@ -90,13 +90,13 @@ public class RobotContainer {
     //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     
     //Controller for testing until control panel is done
-    // controller.rightBumper().whileTrue(Commands.run(() -> new Angle(arm, true))); //Move arm up
-    // controller.leftBumper().whileTrue(Commands.run(() -> new Angle(arm, false))); //Move arm down
+    //controller.rightBumper().whileTrue(Commands.run(() -> new Angle(arm, true))); //Move arm up
+    //controller.getLeftBumper().whileTrue(Commands.run(() -> new Angle(arm, false))); //Move arm down
     // controller.a().whileTrue(Commands.run(() -> new Launch(intake))); //Launch
     // controller.b().whileTrue(Commands.run(() -> new Subwoofer(arm, shooter))); //Subwoofer
     // controller.y().whileTrue(Commands.run(() -> new Amp(arm, shooter))); //Amp
     // controller.start().whileTrue(Commands.run(() -> new Podium(arm, shooter))); //Podium
-    // controller.x().whileTrue(Commands.run(() -> new GroundPickup(arm, intake))); //Ground pickup
+    // controller.getXButton().whileTrue(new GroundPickup(arm, intake))); //Ground pickup
   }
 
   /**
