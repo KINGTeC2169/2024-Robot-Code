@@ -1,11 +1,14 @@
-package frc.robot.commands;
+package frc.robot.commands.ButtonCommands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.LimelightTable;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public class LimelightAlign extends Command {
@@ -13,10 +16,16 @@ public class LimelightAlign extends Command {
     private ChassisSpeeds chassisSpeeds;
     private PIDController turnController;
 
+    private Arm arm;
+    private Shooter shooter;
 
-    public LimelightAlign(SwerveSubsystem swerveSubsystem){
+    public LimelightAlign(SwerveSubsystem swerveSubsystem, Arm arm, Shooter shooter){
         this.swerveSubsystem = swerveSubsystem;
         addRequirements(swerveSubsystem);
+        this.arm = arm;
+        addRequirements(arm);
+        this.shooter = shooter;
+        addRequirements(shooter);
         turnController = new PIDController(0.5,0,0);
     }
 
@@ -30,6 +39,9 @@ public class LimelightAlign extends Command {
 
         SwerveModuleState[] moduleStates = DriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
         swerveSubsystem.setModuleStates(moduleStates);
+
+        arm.setAngle(LimelightTable.aimShot());
+        shooter.setRPM(Constants.Vision.shootRPM);
     }
 
     @Override
