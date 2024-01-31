@@ -198,6 +198,7 @@ public class SwerveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Y", odometer.getPoseMeters().getY());
         SmartDashboard.putNumber("Pose angle", odometer.getPoseMeters().getRotation().getDegrees());
         
+        SmartDashboard.putNumber("BackRight TurnEncoder", frontRight.getTurnPosition()); //Actually backRight wheel that was called frontRight
         //SmartDashboard.putData("Field", field);
     
         /*
@@ -264,6 +265,11 @@ public class SwerveSubsystem extends SubsystemBase {
         frontRight.activeStop(1);
         backLeft.activeStop(1);
         backRight.activeStop(-1);
+    }
+
+    public void oneRotation(){
+        frontRight.oneRotation();
+        System.out.println("RUNNING ONE ROTATION");
     }
 
 }

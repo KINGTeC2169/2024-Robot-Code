@@ -52,10 +52,12 @@ public class DriveCommand extends Command{
         ySpeed = yLimiter.calculate(ySpeed) *  Constants.ModuleConstants.maxSpeed;
         turningSpeed = turningLimiter.calculate(turningSpeed) * ModuleConstants.maxNeoRadPerSec;
 
+        
         if (isSlow.get()){
             xSpeed *= swerveSubsystem.getSlowSpeed();
             ySpeed *= swerveSubsystem.getSlowSpeed();
             turningSpeed *= swerveSubsystem.getSlowSpeed();
+            //swerveSubsystem.oneRotation(); For testing yesterday. 
         }
 
         if (reset.get()){
@@ -68,6 +70,7 @@ public class DriveCommand extends Command{
         SwerveModuleState[] moduleStates = DriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds); 
         
         swerveSubsystem.setModuleStates(moduleStates);
+
     }
     
     @Override

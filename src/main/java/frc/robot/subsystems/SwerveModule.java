@@ -181,4 +181,8 @@ public class SwerveModule {
         turnMotor.set(turningPID.calculate(getTurnPosition(), state.angle.getRadians()));
     }
 
+    public void oneRotation(){ 
+        turnMotor.set(0.03);
+    }
+
 }   
