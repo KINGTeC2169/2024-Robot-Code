@@ -55,8 +55,11 @@ public class Arm extends SubsystemBase {
 
     public void setAngle(double angle) {
         
-        leftArm.setControl(request.withPosition(angleLoop.calculate(getAngle(), angle)/12));
-        rightArm.setControl(request.withPosition(angleLoop.calculate(getAngle(), angle)/12));
+        //leftArm.setControl(request.withPosition(angleLoop.calculate(getAngle(), angle)/12));
+        //rightArm.setControl(request.withPosition(angleLoop.calculate(getAngle(), angle)/12));
+
+        leftArm.setPosition(angle);
+        rightArm.setPosition(angle);
     }
 
     public void setAngleNoPID(double speed){
