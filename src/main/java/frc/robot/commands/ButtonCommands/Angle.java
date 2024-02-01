@@ -1,24 +1,21 @@
 package frc.robot.commands.ButtonCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.Arm;
 
 public class Angle extends Command {
 
     private Arm arm;
-    private double up;
+    private double speed;
+    private CommandXboxController controller;
 
     //It can be changed later to speed with a joystick on the right side
-    public Angle(Arm arm, boolean up){
+    public Angle(Arm arm, CommandXboxController controller){
         this.arm = arm;
         addRequirements(arm);
-        this.up = (up ? 1 : -1);
+        this.controller = controller;
     }
-
-    public Angle(Arm arm, double speed){
-        
-    }
-
 
     @Override
     public void initialize(){
@@ -26,7 +23,8 @@ public class Angle extends Command {
 
     @Override
     public void execute(){
-        arm.setAngle(arm.getAngle() + up);
+        speed = controller.getLeftY();
+        arm.setAngleNoPID(speed);
     }
 
     @Override

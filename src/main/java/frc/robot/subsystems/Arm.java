@@ -28,7 +28,7 @@ public class Arm extends SubsystemBase {
     PIDController angleLoop = new PIDController(0,0,0);
 
     final double armLowerLimit = 0;
-    final double armUpperLimit = 90;
+    final double armUpperLimit = 100; //Whatever is need for amp
 
     private ShuffleboardTab tab = Shuffleboard.getTab("Arm");
     
@@ -49,13 +49,23 @@ public class Arm extends SubsystemBase {
     }
 
     public double getAngle() {
-        return (armEncoder.getAbsolutePosition() - armEncoder.getPositionOffset()) * 360;
+        return (armEncoder.getAbsolutePosition() - armEncoder.getPositionOffset()) * 360; //todo: test how much is 1 rotation
     }
 
 
     public void setAngle(double angle) {
+        
         leftArm.setControl(request.withPosition(angleLoop.calculate(getAngle(), angle)/12));
         rightArm.setControl(request.withPosition(angleLoop.calculate(getAngle(), angle)/12));
+    }
+
+    public void setAngleNoPID(double speed){
+        if((this.getAngle() > armLowerLimit && speed < 0) || (speed > 0 && this.getAngle() < armUpperLimit)){
+            leftArm.set(speed);
+            rightArm.set(speed);
+        } else {
+            this.armStop();
+        }
     }
 
     public void armStop(){
