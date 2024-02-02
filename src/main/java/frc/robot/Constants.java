@@ -27,22 +27,22 @@ public final class Constants {
         //public static final SerialPort arduino = new SerialPort(9600, SerialPort.Port.kUSB1);
         public static final int beamBreak = 1;
 
-        public static final int pigeon = 3;
-        public static final int armEncoder = 0;
+        public static final int pigeon = 20;
+        public static final int armEncoder = 21;
 
         //Swervedrive ports
-        public static final int frontLeftDrive = 2;
-        public static final int frontLeftTurn = 1;
-        public static final int frontLeftAbsolute = 12;
-        public static final int frontRightDrive = 6;
-        public static final int frontRightTurn = 5;
-        public static final int frontRightAbsolute = 10;
-        public static final int backLeftDrive = 8;
-        public static final int backLeftTurn = 7;
-        public static final int backLeftAbsolute = 9;
-        public static final int backRightDrive = 4;
-        public static final int backRightTurn = 3;
-        public static final int backRightAbsolute = 11;
+        public static final int frontLeftDrive = 3;
+        public static final int frontLeftTurn = 2;
+        public static final int frontLeftAbsolute = 10;
+        public static final int frontRightDrive = 5;
+        public static final int frontRightTurn = 4;
+        public static final int frontRightAbsolute = 11;
+        public static final int backLeftDrive = 7;
+        public static final int backLeftTurn = 6;
+        public static final int backLeftAbsolute = 12;
+        public static final int backRightDrive = 9;
+        public static final int backRightTurn = 8;
+        public static final int backRightAbsolute = 13;
 
         
     }

@@ -81,6 +81,10 @@ public class SwerveModule {
         return Rotation2d.fromRotations(getTurnPosition());
     }
 
+    public Rotation2d getCANcoder(){
+        return Rotation2d.fromRotations(absoluteEncoder.getAbsolutePosition().getValue());
+    }
+
     public double getDriveVelocity() {
         return driveMotor.getVelocity().getValueAsDouble();
     }
@@ -90,7 +94,7 @@ public class SwerveModule {
     }
 
     public double getAbsoluteTurnPosition() {
-        return absoluteEncoder.getAbsolutePosition().getValueAsDouble();
+        return Units.rotationsToRadians(absoluteEncoder.getAbsolutePosition().getValueAsDouble());
     }
 
     public double getDriveCurrent() {
