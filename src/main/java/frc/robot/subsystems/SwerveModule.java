@@ -1,6 +1,6 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.configs.CANcoderConfiguration;
+import com.ctre.phoenix6.configs.MagnetSensorConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.CANcoder;
@@ -32,7 +32,7 @@ public class SwerveModule {
 
     private PIDController drivePID;
     private PIDController turningPID;
-    private CANcoderConfiguration AbsoluteConfig;
+    private MagnetSensorConfigs AbsoluteConfig;
     private TalonFXConfiguration driveConfig;
 
     private VelocityVoltage driveVelocity = new VelocityVoltage(0);
@@ -41,18 +41,18 @@ public class SwerveModule {
                 boolean turnMotorReversed, int canCoderID, double absoluteOffset, 
                 SensorDirectionValue cancoderDirection) {
 
+        //Confgure CANCoder
         absoluteEncoder = new CANcoder(canCoderID);
-        AbsoluteConfig = new CANcoderConfiguration();
-        AbsoluteConfig.MagnetSensor.SensorDirection = cancoderDirection;
-        AbsoluteConfig.MagnetSensor.MagnetOffset = absoluteOffset;
-        absoluteEncoder.getConfigurator().apply(AbsoluteConfig);
+        AbsoluteConfig = new MagnetSensorConfigs();
+        absoluteEncoder.getConfigurator().apply(AbsoluteConfig.withMagnetOffset(absoluteOffset).withSensorDirection(cancoderDirection));
 
+        //Configure drive motor
         driveConfig = new TalonFXConfiguration();
         driveConfig.MotorOutput.Inverted = driveMotorDirection;
-
         driveMotor = new TalonFX(driveMotorID);
         driveMotor.getConfigurator().apply(driveConfig);
         
+        //Configure turn motor
         turnMotor = new CANSparkMax(turnMotorID, MotorType.kBrushless);
         turnEncoder = turnMotor.getEncoder();
         turnEncoder.setPositionConversionFactor(turnEncoderToRadian);
@@ -81,10 +81,6 @@ public class SwerveModule {
         return Rotation2d.fromRotations(getTurnPosition());
     }
 
-    public Rotation2d getCANcoder(){
-        return Rotation2d.fromRotations(absoluteEncoder.getAbsolutePosition().getValue());
-    }
-
     public double getDriveVelocity() {
         return driveMotor.getVelocity().getValueAsDouble();
     }
@@ -105,6 +101,7 @@ public class SwerveModule {
         return turnMotor.getOutputCurrent();
     }
 
+    //Resets the turn encoder to the absolute turn position and the drive motor to 0
     public void resetEncoders() {
         driveMotor.setPosition(0);
         turnEncoder.setPosition(getAbsoluteTurnPosition());
