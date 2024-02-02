@@ -21,6 +21,9 @@ import frc.robot.Constants.ModuleConstants;
 import frc.robot.Constants.Ports;
 import java.util.Map;
 
+import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.SensorDirectionValue;
+
 
 public class SwerveSubsystem extends SubsystemBase {
 
@@ -28,34 +31,34 @@ public class SwerveSubsystem extends SubsystemBase {
     private SwerveModule frontLeft = new SwerveModule(
     Ports.frontLeftDrive,
     Ports.frontLeftTurn, 
-    true, false,
+    InvertedValue.Clockwise_Positive, true,
     Ports.frontLeftAbsolute,
     DriveConstants.FLabsoluteOffset,
-    false);
+    SensorDirectionValue.CounterClockwise_Positive);
 
     private SwerveModule frontRight = new SwerveModule(
     Ports.frontRightDrive,
     Ports.frontRightTurn, 
-    false, false,
+    InvertedValue.Clockwise_Positive, true,
     Ports.frontRightAbsolute,
     DriveConstants.FRabsoluteOffset,
-    false);
+    SensorDirectionValue.CounterClockwise_Positive);
 
     private SwerveModule backLeft = new SwerveModule(
     Ports.backLeftDrive,
     Ports.backLeftTurn, 
-    true, false,
+    InvertedValue.Clockwise_Positive, true,
     Ports.backLeftAbsolute,
     DriveConstants.BLabsoluteOffset,
-    false);
+    SensorDirectionValue.CounterClockwise_Positive);
 
     private SwerveModule backRight = new SwerveModule(
     Ports.backRightDrive,
     Ports.backRightTurn, 
-    true, false,
+    InvertedValue.Clockwise_Positive, true,
     Ports.backRightAbsolute,
     DriveConstants.BRabsoluteOffset,
-    false);
+    SensorDirectionValue.CounterClockwise_Positive);
 
     public SwerveDriveKinematics kinematics = DriveConstants.DRIVE_KINEMATICS;
     private final SwerveDriveOdometry odometer;
@@ -266,10 +269,4 @@ public class SwerveSubsystem extends SubsystemBase {
         backLeft.activeStop(1);
         backRight.activeStop(-1);
     }
-
-    public void oneRotation(){
-        frontRight.oneRotation();
-        System.out.println("RUNNING ONE ROTATION");
-    }
-
 }

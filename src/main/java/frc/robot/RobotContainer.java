@@ -23,7 +23,7 @@ import frc.robot.commands.ButtonCommands.LimelightAlign;
 import frc.robot.commands.ButtonCommands.Podium;
 import frc.robot.commands.ButtonCommands.Subwoofer;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Intake;
+//import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pigeon;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -39,16 +39,16 @@ public class RobotContainer {
 
   private final Pigeon pigeon = new Pigeon();
   private final Arm arm = new Arm();
-  private final Intake intake = new Intake();
+  //private final Intake intake = new Intake();
   private final Shooter shooter = new Shooter();
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
   //Right side/Buttons and Controller
-  private final CommandXboxController controller = new CommandXboxController(2169);
+  private final CommandXboxController controller = new CommandXboxController(5);
   private final XboxController driveController = new XboxController(Constants.Ports.controller);
   private final Joystick leftStick = new Joystick(Constants.Ports.leftStick);
   private final Joystick rightStick = new Joystick(Constants.Ports.rightStick);
-  private final CommandXboxController buttonBoard = new CommandXboxController(1);
+  private final CommandXboxController buttonBoard = new CommandXboxController(4);
 
   private ShuffleboardTab tab = Shuffleboard.getTab("Shuffleboard");
 
@@ -94,11 +94,11 @@ public class RobotContainer {
     //Controller for testing until control panel is done
     controller.rightBumper().whileTrue(Commands.run(() -> new Angle(arm, true))); //Move arm up
     controller.leftBumper().whileTrue(Commands.run(() -> new Angle(arm, false))); //Move arm down
-    controller.a().whileTrue(Commands.run(() -> new Launch(intake))); //Launch
+    //controller.a().whileTrue(Commands.run(() -> new Launch(intake))); //Launch
     controller.b().whileTrue(Commands.run(() -> new Subwoofer(arm, shooter))); //Subwoofer
     controller.y().whileTrue(Commands.run(() -> new Amp(arm, shooter))); //Amp
     controller.start().whileTrue(Commands.run(() -> new Podium(arm, shooter))); //Podium
-    controller.x().whileTrue(new GroundPickup(arm, intake)); //Ground pickup
+    //controller.x().whileTrue(new GroundPickup(arm, intake)); //Ground pickup
   }
 
   /**

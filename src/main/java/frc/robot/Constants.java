@@ -57,26 +57,26 @@ public final class Constants {
         public static final double maxSpeed = 4.96824;
         public static final double maxNeoRadPerSec = 2 * 2 * Math.PI;
         public static final double wheelDiameter = 0.1016;//Units.inchesToMeters(4.0);
-        public static final double driveGearRatio = 1 / 6.75;
-        public static final double turnGearRatio = 1 / 6.28; //1 / 12.8 Old value
+        public static final double driveGearRatio = 1 / 6.12;
+        public static final double turnGearRatio = 1 / 12.8;
         public static final double driveEncoderToMeter = driveGearRatio * Math.PI * wheelDiameter;
         public static final double turnEncoderToRadian = turnGearRatio * 2 * Math.PI;
         public static final double driveEncoderRPMToMeterPerSec = driveEncoderToMeter / 60;
         public static final double turnEncoderRPMToRadPerSec = turnEncoderToRadian / 60;
 
-        public static final double PTurn = 0.4;
+        public static final double PTurn = 0.35;
         public static final double PDrive = 0.3;
     }
 
     public static final class DriveConstants {
         //These will need to be in meters
-        public static final double rightLeftWheels = Units.inchesToMeters(21.5);
-        public static final double frontBackWheels = Units.inchesToMeters(21.5);
+        public static final double rightLeftWheels = Units.inchesToMeters(23);
+        public static final double frontBackWheels = Units.inchesToMeters(23);
 
-        public static final double FRabsoluteOffset = -0.4267578125; //-0.42333984375;
-        public static final double FLabsoluteOffset = -0.1416015625; //-0.140625;
-        public static final double BRabsoluteOffset = 0.418212890625; //-0.418701171875;
-        public static final double BLabsoluteOffset = 0.3955078125; //0.388427734375;
+        public static final double FRabsoluteOffset = -0.425537109375; //-0.426025390625; 
+        public static final double FLabsoluteOffset = -0.141357421875; //-0.14306640625;
+        public static final double BRabsoluteOffset = 0.421142578125; //0.418701171875;
+        public static final double BLabsoluteOffset = 0.401123046875; //0.4013671875;
 
         public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
                 new Translation2d(frontBackWheels / 2, rightLeftWheels / 2),//Front-Left
@@ -86,11 +86,11 @@ public final class Constants {
     }
 
     public static final class DeviceID {
-        public static final int shooterTop = 15;
+        public static final int shooterTop = 16;
         public static final int shooterBot = 14;
-        public static final int intake = 13;
-        public static final int leftArm = 16;
-        public static final int rightArm = 17;
+        public static final int intake = 15;
+        public static final int leftArm = 17;
+        public static final int rightArm = 18;
         
     }
 

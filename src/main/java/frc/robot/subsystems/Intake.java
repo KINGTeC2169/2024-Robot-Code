@@ -9,7 +9,7 @@ import frc.robot.Constants;
 
 public class Intake extends SubsystemBase{
     
-    CANSparkMax intakeMotor;
+    private CANSparkMax intakeMotor;
 
     public Intake(){
         intakeMotor = new CANSparkMax(Constants.DeviceID.intake, MotorType.kBrushless);
