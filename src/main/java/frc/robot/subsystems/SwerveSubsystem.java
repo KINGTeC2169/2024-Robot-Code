@@ -21,9 +21,6 @@ import frc.robot.Constants.ModuleConstants;
 import frc.robot.Constants.Ports;
 import java.util.Map;
 
-import com.ctre.phoenix6.signals.InvertedValue;
-import com.ctre.phoenix6.signals.SensorDirectionValue;
-
 
 public class SwerveSubsystem extends SubsystemBase {
 
@@ -31,34 +28,34 @@ public class SwerveSubsystem extends SubsystemBase {
     private SwerveModule frontLeft = new SwerveModule(
     Ports.frontLeftDrive,
     Ports.frontLeftTurn, 
-    InvertedValue.Clockwise_Positive, true,
+    true, false,
     Ports.frontLeftAbsolute,
     DriveConstants.FLabsoluteOffset,
-    SensorDirectionValue.CounterClockwise_Positive);
+    false);
 
     private SwerveModule frontRight = new SwerveModule(
     Ports.frontRightDrive,
     Ports.frontRightTurn, 
-    InvertedValue.Clockwise_Positive, true,
+    false, false,
     Ports.frontRightAbsolute,
     DriveConstants.FRabsoluteOffset,
-    SensorDirectionValue.CounterClockwise_Positive);
+    false);
 
     private SwerveModule backLeft = new SwerveModule(
     Ports.backLeftDrive,
     Ports.backLeftTurn, 
-    InvertedValue.Clockwise_Positive, true,
+    true, false,
     Ports.backLeftAbsolute,
     DriveConstants.BLabsoluteOffset,
-    SensorDirectionValue.CounterClockwise_Positive);
+    false);
 
     private SwerveModule backRight = new SwerveModule(
     Ports.backRightDrive,
     Ports.backRightTurn, 
-    InvertedValue.Clockwise_Positive, true,
+    false, false,
     Ports.backRightAbsolute,
     DriveConstants.BRabsoluteOffset,
-    SensorDirectionValue.CounterClockwise_Positive);
+    false);
 
     public SwerveDriveKinematics kinematics = DriveConstants.DRIVE_KINEMATICS;
     private final SwerveDriveOdometry odometer;
@@ -70,9 +67,6 @@ public class SwerveSubsystem extends SubsystemBase {
     private GenericEntry slowSpeed = tab.add("Slow Speed", 0.2).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).withPosition(2, 3).getEntry();
 
     public SwerveSubsystem() {
-
-        Pigeon.configure();
-
         odometer = new SwerveDriveOdometry(kinematics, getRotation2d(), getModulePositions(), new Pose2d(0, 0, new Rotation2d(0)));
         
         //SmartDashboard.putData("Field", field);
@@ -103,10 +97,10 @@ public class SwerveSubsystem extends SubsystemBase {
         tab.addDouble("Back Right Percent", () -> backRight.getWantedSpeed());
         tab.addDouble("180 Head", () -> head180());
 
-        tab.addDouble("Abs Front Left", () -> frontLeft.getAbsoluteTurnPosition());
-        tab.addDouble("Abs Front Right", () -> frontRight.getAbsoluteTurnPosition());
-        tab.addDouble("Abs Back Left", () -> backLeft.getAbsoluteTurnPosition());
-        tab.addDouble("Abs Back Right", () -> backRight.getAbsoluteTurnPosition());
+        //tab.addDouble("Abs Front Left", () -> frontLeft.getAbsoluteTurnPosition());
+        //tab.addDouble("Abs Front Right", () -> frontRight.getAbsoluteTurnPosition());
+        //tab.addDouble("Abs Back Left", () -> backLeft.getAbsoluteTurnPosition());
+        //tab.addDouble("Abs Back Right", () -> backRight.getAbsoluteTurnPosition());
         //tab.addDouble("X", () -> odometer.getPoseMeters().getX()).withPosition(8, 3);
         //tab.addDouble("Y", () -> odometer.getPoseMeters().getY()).withPosition(9, 3);
 
@@ -156,6 +150,7 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public double getHeading() {
+        //return Math.IEEEremainder(NavX.getAngle(), 360);
         return Pigeon.getAngle() % 360;
     }
     public double head180() {
@@ -164,6 +159,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     public Rotation2d getRotation2d() {
         return Pigeon.getRotation2d();
+        //return Rotation2d.fromDegrees(-getHeading());
     }
     public Rotation2d getAdjustedRotation() {
         return new Rotation2d(Pigeon.getRotation2d().getRadians() + Math.PI);
@@ -201,7 +197,6 @@ public class SwerveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Y", odometer.getPoseMeters().getY());
         SmartDashboard.putNumber("Pose angle", odometer.getPoseMeters().getRotation().getDegrees());
         
-        SmartDashboard.putNumber("BackRight TurnEncoder", frontRight.getTurnPosition()); //Actually backRight wheel that was called frontRight
         //SmartDashboard.putData("Field", field);
     
         /*
@@ -269,4 +264,5 @@ public class SwerveSubsystem extends SubsystemBase {
         backLeft.activeStop(1);
         backRight.activeStop(-1);
     }
+
 }

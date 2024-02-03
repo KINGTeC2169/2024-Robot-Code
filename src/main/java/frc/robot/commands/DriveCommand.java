@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
+import frc.robot.subsystems.Pigeon;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public class DriveCommand extends Command{
