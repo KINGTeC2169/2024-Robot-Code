@@ -58,14 +58,7 @@ public class LimelightTable {
      * @return shooting angle to hit a point
      */
     public static double getShootingAngle(double[] target){
-        double a = 1, offset = 1, digits = 1;
-        while(abs(offset) > 0.00001) {
-            offset = target[1]-(Vision.mountedHeight+(Vision.launchSpeed*sin(a*0.0174533))*((target[0])/(Vision.launchSpeed*cos(a*0.0174533)))+(-16.09*pow(((target[0])/(Vision.launchSpeed*cos(a*0.0174533))),2)));
-            if(abs(offset) < 1/digits) digits*=10;
-            if(offset > 0) a += 1/digits;
-            else a -= 1/digits;
-        }
-        return a;
+        return atan((pow(Vision.launchSpeed, 2) * (-target[0] + sqrt((pow(target[0], 2)) - (4 * ((Vision.gravity * ((pow(target[0], 2)))) / (2 * (pow(Vision.launchSpeed, 2)))) * (((Vision.gravity * ((pow(target[0], 2)))) / (2 * (pow(Vision.launchSpeed, 2)))) - target[1] + Vision.mountedHeight)))) / (Vision.gravity * (pow(target[0], 2)))))*180/PI;
     }
 
     //Averages the top and bottom of the speaker to get an aiming distance

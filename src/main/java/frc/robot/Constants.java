@@ -144,5 +144,6 @@ public final class Constants {
         public static final double mountedHeight = 1.5; //ft
         public static final double mountedAngle = 45; //angle deg
         public static final double launchSpeed = 75; //ft/sec
+        public static final double gravity = -32.19;
     }
 }
