@@ -14,15 +14,18 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommand;
-import frc.robot.commands.TestCommand;
+import frc.robot.commands.MusicCommand;
 import frc.robot.commands.ButtonCommands.Amp;
 import frc.robot.commands.ButtonCommands.Angle;
 import frc.robot.commands.ButtonCommands.GroundPickup;
 import frc.robot.commands.ButtonCommands.Launch;
 import frc.robot.commands.ButtonCommands.LimelightAlign;
 import frc.robot.commands.ButtonCommands.Podium;
+import frc.robot.commands.ButtonCommands.Safe;
+import frc.robot.commands.ButtonCommands.Stop;
 import frc.robot.commands.ButtonCommands.Subwoofer;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Intake;
 //import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pigeon;
 import frc.robot.subsystems.Shooter;
@@ -39,7 +42,7 @@ public class RobotContainer {
 
   private final Pigeon pigeon = new Pigeon();
   private final Arm arm = new Arm();
-  //private final Intake intake = new Intake();
+  private final Intake intake = new Intake();
   private final Shooter shooter = new Shooter();
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
@@ -60,7 +63,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
 
-    themeSong = new TestCommand(swerveSubsystem, "src\\main\\deploy\\ThunderStruck.mid");
+    themeSong = new MusicCommand(swerveSubsystem, "src\\main\\deploy\\ThunderStruck.chrp");
 
     swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
 		() -> driveController.getLeftY(), 
@@ -99,6 +102,17 @@ public class RobotContainer {
     // controller.y().whileTrue(Commands.run(() -> new Amp(arm, shooter))); //Amp
     // controller.start().whileTrue(Commands.run(() -> new Podium(arm, shooter))); //Podium
     //controller.x().whileTrue(new GroundPickup(arm, intake)); //Ground pickup
+
+    //Button board
+    buttonBoard.button(1).whileTrue(new Launch(intake));
+		buttonBoard.button(2).whileTrue(new Subwoofer(arm, shooter));
+		buttonBoard.button(3).whileTrue(new Amp(arm, shooter));
+		buttonBoard.button(4).whileTrue(new Podium(arm, shooter));
+		buttonBoard.button(5).whileTrue(new GroundPickup(arm, intake));
+		buttonBoard.button(6).whileTrue(new Safe(arm, intake));
+		buttonBoard.button(7).onTrue(new Stop(arm, shooter, intake));
+		buttonBoard.button(8).onTrue(new LimelightAlign(swerveSubsystem, arm, shooter));
+
   }
 
   /**
