@@ -7,9 +7,6 @@ package frc.robot;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ctre.phoenix.music.Orchestra;
-import com.ctre.phoenix6.hardware.TalonFX;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -28,12 +25,6 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
   private Command m_testCommand;
 
-  TalonFX[] motors = { new TalonFX(3), new TalonFX(5), new TalonFX(7), new TalonFX(9)};
-
-  private Orchestra orchestra;
-  String[] songs = new String[] {"ThunderStruck.chrp"};
-
-
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -45,21 +36,11 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
-
-    ArrayList<TalonFX> instruments = new ArrayList<TalonFX>();
-    for (int i = 0; i < motors.length; ++i) {
-      instruments.add(motors[i]);
-    }
-
+    /* 
     List ins = new ArrayList<TalonFX>(instruments);
     orchestra = new Orchestra(ins); 
+    */
 
-
-  }
-
-  private void loadSong() {
-    orchestra.loadMusic(songs[0]);
-    System.out.println("Song selected is: " + songs[0]);
   }
 
   /**
@@ -119,8 +100,6 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     //Constants.Ports.arduino.writeString("A");
     //Timer.delay(1);
-    
-    orchestra.play();
 
   }
 

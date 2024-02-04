@@ -1,14 +1,20 @@
 package frc.robot.commands;
 
+import java.util.ArrayList;
+
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.music.Orchestra;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SwerveSubsystem;
 
-public class TestCommand extends Command{
+public class MusicCommand extends Command{
 
     private SwerveSubsystem drivetrain;
+    private Orchestra orchestra;
     private String songPath;
 
-    public TestCommand(SwerveSubsystem drivetrain, String songPath){
+    public MusicCommand(SwerveSubsystem drivetrain, String songPath){
         this.drivetrain = drivetrain;
         this.songPath = songPath;
         addRequirements(drivetrain);
@@ -16,7 +22,14 @@ public class TestCommand extends Command{
 
     @Override
     public void initialize(){
-        //drivetrain.playSong(songPath);
+
+        orchestra.addInstrument(new TalonFX(3));
+        orchestra.addInstrument(new TalonFX(5));
+        orchestra.addInstrument(new TalonFX(7));
+        orchestra.addInstrument(new TalonFX(9));
+        orchestra.loadMusic(songPath);
+        orchestra.play();
+        
     }
 
     @Override

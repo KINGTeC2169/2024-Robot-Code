@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommand;
-import frc.robot.commands.TestCommand;
+import frc.robot.commands.MusicCommand;
 import frc.robot.commands.ButtonCommands.Amp;
 import frc.robot.commands.ButtonCommands.Angle;
 import frc.robot.commands.ButtonCommands.GroundPickup;
@@ -63,7 +63,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
 
-    themeSong = new TestCommand(swerveSubsystem, "src\\main\\deploy\\ThunderStruck.mid");
+    themeSong = new MusicCommand(swerveSubsystem, "src\\main\\deploy\\ThunderStruck.chrp");
 
     swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
 		() -> driveController.getLeftY(), 
