@@ -28,12 +28,14 @@ public class MusicCommand extends Command{
         orchestra.addInstrument(new TalonFX(7));
         orchestra.addInstrument(new TalonFX(9));
         orchestra.loadMusic(songPath);
-        orchestra.play();
         
+
     }
 
     @Override
-    public void execute(){}
+    public void execute(){
+        orchestra.play();
+    }
 
     @Override
     public void end(boolean interrupted) {
