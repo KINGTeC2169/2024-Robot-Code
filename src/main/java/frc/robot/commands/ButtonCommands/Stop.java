@@ -1,7 +1,6 @@
 package frc.robot.commands.ButtonCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -10,7 +9,6 @@ public class Stop extends Command{
     private Arm arm;
     private Shooter shooter;
     private Intake intake;
-    final private double desiredAngle = 20;
 
     public Stop(Arm arm, Shooter shooter, Intake intake){
         this.arm = arm;
