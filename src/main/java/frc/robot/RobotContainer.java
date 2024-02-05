@@ -95,7 +95,7 @@ public class RobotContainer {
     //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     
     //Controller for testing until control panel is done
-    // controller.rightBumper().whileTrue(Commands.run(() -> new Angle(arm, true))); //Move arm up
+    controller.rightBumper().whileTrue(Commands.run(() -> new Angle(arm, true))); //Move arm up
     // controller.leftBumper().whileTrue(Commands.run(() -> new Angle(arm, false))); //Move arm down
     // controller.a().whileTrue(Commands.run(() -> new Launch(intake))); //Launch
     // controller.b().whileTrue(Commands.run(() -> new Subwoofer(arm, shooter))); //Subwoofer
