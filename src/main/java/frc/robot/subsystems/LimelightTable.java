@@ -5,6 +5,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.Vision;
 
 
@@ -64,8 +65,8 @@ public class LimelightTable {
     //Averages the top and bottom of the speaker to get an aiming distance
     public static double aimShot(){
         double distance = getDistance();
-        double max = getShootingAngle(new double[]{distance-1.5, 6.90625});
-        double min = getShootingAngle(new double[]{distance,6.5});
-        return (max+min)/2;
+        double finalAim = getShootingAngle(new double[]{distance, 6.90625});
+        SmartDashboard.putNumber("Shot", aimShot());
+        return finalAim;
     }
 }
