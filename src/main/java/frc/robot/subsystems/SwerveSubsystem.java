@@ -153,6 +153,7 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public double getHeading() {
+        //return Math.IEEEremainder(NavX.getAngle(), 360);
         return Pigeon.getAngle() % 360;
     }
     public double head180() {
@@ -161,6 +162,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     public Rotation2d getRotation2d() {
         return Pigeon.getRotation2d();
+        //return Rotation2d.fromDegrees(-getHeading());
     }
     public Rotation2d getAdjustedRotation() {
         return new Rotation2d(Pigeon.getRotation2d().getRadians() + Math.PI);

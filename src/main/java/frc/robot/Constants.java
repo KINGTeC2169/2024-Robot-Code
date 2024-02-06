@@ -20,6 +20,10 @@ import edu.wpi.first.wpilibj.SerialPort;
 public final class Constants {
 
     public static final class Ports {
+        public static final int clawGrippers = 16;
+        public static final int winchMotor = 3;
+        public static final int elevatorMotor = 14;
+        public static final int wristMotor = 15;
         public static final int controller = 0;
         public static final int leftStick = 1;
         public static final int rightStick = 2;
@@ -30,20 +34,25 @@ public final class Constants {
         public static final int pigeon = 3;
 
         //Swervedrive ports
-        public static final int frontLeftDrive = 2;
-        public static final int frontLeftTurn = 1;
-        public static final int frontLeftAbsolute = 12;
-        public static final int frontRightDrive = 6;
-        public static final int frontRightTurn = 5;
-        public static final int frontRightAbsolute = 10;
-        public static final int backLeftDrive = 8;
-        public static final int backLeftTurn = 7;
-        public static final int backLeftAbsolute = 9;
-        public static final int backRightDrive = 4;
-        public static final int backRightTurn = 3;
-        public static final int backRightAbsolute = 11;
+        public static final int frontLeftDrive = 3;
+        public static final int frontLeftTurn = 2;
+        public static final int frontLeftAbsolute = 10;
+        public static final int frontRightDrive = 5;
+        public static final int frontRightTurn = 4;
+        public static final int frontRightAbsolute = 11;
+        public static final int backLeftDrive = 7;
+        public static final int backLeftTurn = 6;
+        public static final int backLeftAbsolute = 12;
+        public static final int backRightDrive = 9;
+        public static final int backRightTurn = 8;
+        public static final int backRightAbsolute = 13;
 
         
+    }
+
+    public static final class Motors {
+        public static final int TalonFXCPR = 2048;
+        public static final int TalonSRXCPR = 8192;
     }
 
     public static final class ModuleConstants {
@@ -51,34 +60,26 @@ public final class Constants {
         public static final double maxSpeed = 4.96824;
         public static final double maxNeoRadPerSec = 2 * 2 * Math.PI;
         public static final double wheelDiameter = 0.1016;//Units.inchesToMeters(4.0);
-        public static final double driveGearRatio = 1 / 6.75;
+        public static final double driveGearRatio = 1 / 6.12;
         public static final double turnGearRatio = 1 / 12.8;
         public static final double driveEncoderToMeter = driveGearRatio * Math.PI * wheelDiameter;
         public static final double turnEncoderToRadian = turnGearRatio * 2 * Math.PI;
         public static final double driveEncoderRPMToMeterPerSec = driveEncoderToMeter / 60;
         public static final double turnEncoderRPMToRadPerSec = turnEncoderToRadian / 60;
 
-        public static final double PTurn = 0.3;
+        public static final double PTurn = 0.31;
         public static final double PDrive = 0.3;
-    }
-    public static final class PIDApriltags {
-        public static final double px = 1.25;
-        public static final double pr = 0.01;
-        public static final double py = 1;
-        public static final double xTol = 0.1;
-        public static final double yTol = 0.1;
-        public static final double rotateTol = 1;
     }
 
     public static final class DriveConstants {
         //These will need to be in meters
-        public static final double rightLeftWheels = Units.inchesToMeters(21.5);
-        public static final double frontBackWheels = Units.inchesToMeters(21.5);
+        public static final double rightLeftWheels = Units.inchesToMeters(23);
+        public static final double frontBackWheels = Units.inchesToMeters(23);
 
-        public static final double FRabsoluteOffset = -0.426025390625;
-        public static final double FLabsoluteOffset = 0.357666015625; //-0.14453125;
-        public static final double BRabsoluteOffset = 0.41845703125;
-        public static final double BLabsoluteOffset = -0.098388671875;
+        public static final double FRabsoluteOffset = -0.464795239269733; //-0.464795239269733; 
+        public static final double FLabsoluteOffset = 0.857493527233601; //-0.862095460295677; 
+        public static final double BRabsoluteOffset = 0.513882525265217; //0.513882525265217; 
+        public static final double BLabsoluteOffset = -2.520325340330601; //2.517257384955883; 
 
         public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
                 new Translation2d(frontBackWheels / 2, -rightLeftWheels / 2),//Front-Left
@@ -87,51 +88,13 @@ public final class Constants {
                 new Translation2d(-frontBackWheels / 2, rightLeftWheels / 2));//Back-Right
     }
 
-    public static final class Conversions {
-    
-        /**
-         * @param wheelRPS Wheel Velocity: (in Rotations per Second)
-         * @param circumference Wheel Circumference: (in Meters)
-         * @return Wheel Velocity: (in Meters per Second)
-         */
-        public static double RPSToMPS(double wheelRPS, double circumference){
-            double wheelMPS = wheelRPS * circumference;
-            return wheelMPS;
-        }
-    
-        /**
-         * @param wheelMPS Wheel Velocity: (in Meters per Second)
-         * @param circumference Wheel Circumference: (in Meters)
-         * @return Wheel Velocity: (in Rotations per Second)
-         */
-        public static double MPSToRPS(double wheelMPS, double circumference){
-            double wheelRPS = wheelMPS / circumference;
-            return wheelRPS;
-        }
-    
-        /**
-         * @param wheelRotations Wheel Position: (in Rotations)
-         * @param circumference Wheel Circumference: (in Meters)
-         * @return Wheel Distance: (in Meters)
-         */
-        public static double rotationsToMeters(double wheelRotations, double circumference){
-            double wheelMeters = wheelRotations * circumference;
-            return wheelMeters;
-        }
-    
-        /**
-         * @param wheelMeters Wheel Distance: (in Meters)
-         * @param circumference Wheel Circumference: (in Meters)
-         * @return Wheel Position: (in Rotations)
-         */
-        public static double metersToRotations(double wheelMeters, double circumference){
-            double wheelRotations = wheelMeters / circumference;
-            return wheelRotations;
-        }
-    }
     public static final class Vision {
-        public static final double apriltagOffset = 20;
+        public static final double shootRPM = 2400; //USED FOR ALL SHOTS
+        public static final double tagHeight = 5.5; //ft
+        public static final double mountedHeight = 1.5; //ft
+        public static final double mountedAngle = 45; //angle deg
+        public static final double launchSpeed = 75; //ft/sec
+        public static final double gravity = -32.19;
     }
 
-    
 }
