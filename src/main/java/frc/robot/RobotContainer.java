@@ -66,10 +66,10 @@ public class RobotContainer {
     themeSong = new MusicCommand(swerveSubsystem, "src\\main\\deploy\\ThunderStruck.chrp");
 
     swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
-		() -> driveController.getLeftY(), 
-		() -> driveController.getLeftX(), 
-		() -> driveController.getRightX(),
-		() -> rightStick.getRawButtonReleased(0),
+    () -> driveController.getLeftY(),
+    () -> driveController.getLeftX(),
+    () -> driveController.getRightX(),
+		() -> driveController.getStartButton(),
     () -> driveController.getAButton()
 		));
 
