@@ -4,14 +4,16 @@
 
 package frc.robot;
 
-import frc.robot.Constants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.subsystems.Pigeon;
+import frc.robot.subsystems.SwerveSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -21,15 +23,30 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(0);
+  private final Pigeon pigeon = new Pigeon();
+  private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
+  //Right side/Buttons and Controller
+  //private final CommandXboxController controller = new CommandXboxController(4);
+  private final XboxController driveController = new XboxController(Constants.Ports.controller);
+  private final Joystick leftStick = new Joystick(Constants.Ports.leftStick);
+  private final Joystick rightStick = new Joystick(Constants.Ports.rightStick);
+  private final CommandXboxController buttonBoard = new CommandXboxController(3);
+
+  private ShuffleboardTab tab = Shuffleboard.getTab("Shuffleboard");
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
+
+    swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
+    () -> driveController.getLeftY(),
+    () -> driveController.getLeftX(),
+    () -> driveController.getRightX(),
+		() -> driveController.getStartButton(),
+    () -> !driveController.getRightBumper()
+		));
 
     configureBindings();
   }
@@ -51,6 +68,16 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    
+    //Controller for testing until control panel is done
+    //controller.rightBumper().whileTrue(Commands.run(() -> new Angle(arm, true))); //Move arm up
+    // controller.leftBumper().whileTrue(Commands.run(() -> new Angle(arm, false))); //Move arm down
+    // controller.a().whileTrue(Commands.run(() -> new Launch(intake))); //Launch
+    // controller.b().whileTrue(Commands.run(() -> new Subwoofer(arm, shooter))); //Subwoofer
+    // controller.y().whileTrue(Commands.run(() -> new Amp(arm, shooter))); //Amp
+    // controller.start().whileTrue(Commands.run(() -> new Podium(arm, shooter))); //Podium
+    //controller.x().whileTrue(new GroundPickup(arm, intake)); //Ground pickup
+
   }
 
   /**
@@ -60,6 +87,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return null;
   }
 }
