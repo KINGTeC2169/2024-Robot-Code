@@ -27,7 +27,7 @@ public final class Constants {
         //public static final SerialPort arduino = new SerialPort(9600, SerialPort.Port.kUSB1);
         public static final int beamBreak = 1;
 
-        public static final int pigeon = 20;
+        public static final int pigeon = 14;
         public static final int armEncoder = 21;
 
         //Swervedrive ports
@@ -64,7 +64,7 @@ public final class Constants {
         public static final double driveEncoderRPMToMeterPerSec = driveEncoderToMeter / 60;
         public static final double turnEncoderRPMToRadPerSec = turnEncoderToRadian / 60;
 
-        public static final double PTurn = 0.35;
+        public static final double PTurn = 0.31;
         public static final double PDrive = 0.3;
     }
 

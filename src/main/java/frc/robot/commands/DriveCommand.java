@@ -44,6 +44,8 @@ public class DriveCommand extends Command{
         double ySpeed = ySpdFunction.get();
         double turningSpeed = -turningSpdFunction.get();
 
+        ChassisSpeeds chassisSpeeds;
+
         // Deadband: unsure if necessary for our controllers
         xSpeed = Math.abs(xSpeed) > .05 ? xSpeed : 0.0;
         ySpeed = Math.abs(ySpeed) > .05 ? ySpeed : 0.0;
@@ -66,7 +68,7 @@ public class DriveCommand extends Command{
             swerveSubsystem.zeroHeading();
         }
 
-        ChassisSpeeds chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
+        chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, Pigeon.getRotation2d());
 
         SwerveModuleState[] moduleStates = DriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds); 
         
