@@ -16,14 +16,14 @@ public class armTest extends Command{
 
     @Override
     public void execute(){
-        bottom.run();
-        top.runReverse();
+        //bottom.run();
+        //top.runReverse();
     }
 
     @Override
     public void end(boolean interrupted){
-        bottom.stop();
-        top.stop();
+        //bottom.stop();
+        //top.stop();
     }
 
     @Override

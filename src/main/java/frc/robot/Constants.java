@@ -20,18 +20,15 @@ import edu.wpi.first.wpilibj.SerialPort;
 public final class Constants {
 
     public static final class Ports {
-        public static final int clawGrippers = 16;
-        public static final int winchMotor = 3;
-        public static final int elevatorMotor = 14;
-        public static final int wristMotor = 15;
         public static final int controller = 0;
         public static final int leftStick = 1;
         public static final int rightStick = 2;
 
-        public static final SerialPort arduino = new SerialPort(9600, SerialPort.Port.kUSB1);
-        public static final int beamBreak = 0;
+        //public static final SerialPort arduino = new SerialPort(9600, SerialPort.Port.kUSB1);
+        public static final int beamBreak = 1;
 
-        public static final int pigeon = 3;
+        public static final int pigeon = 14;
+        public static final int armEncoder = 21;
 
         //Swervedrive ports
         public static final int frontLeftDrive = 3;
@@ -88,6 +85,14 @@ public final class Constants {
                 new Translation2d(-frontBackWheels / 2, rightLeftWheels / 2));//Back-Right
     }
 
+    public static final class DeviceID {
+        public static final int shooterTop = 16;
+        public static final int shooterBot = 14;
+        public static final int intake = 15;
+        public static final int leftArm = 17;
+        public static final int rightArm = 18;
+        
+    }
     public static final class Vision {
         public static final double shootRPM = 2400; //USED FOR ALL SHOTS
         public static final double tagHeight = 5.5; //ft
