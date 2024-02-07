@@ -3,29 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.354605173665323,
-        "y": 5.553919733431884
+        "x": 2.2397307353856415,
+        "y": 4.08519490024762
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6561314639216957,
-        "y": 5.553919733431884
+        "x": 3.239730735385642,
+        "y": 3.58519490024762
+      },
+      "isLocked": false,
+      "linkedName": "Gap 2"
+    },
+    {
+      "anchor": {
+        "x": 5.0,
+        "y": 5.0
+      },
+      "prevControl": {
+        "x": 4.0,
+        "y": 6.0
+      },
+      "nextControl": {
+        "x": 6.0,
+        "y": 4.0
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.1910974627636457,
-        "y": 5.534466424383086
+        "x": 7.0,
+        "y": 1.0
       },
       "prevControl": {
-        "x": 1.8798445179828747,
-        "y": 5.524739769858687
+        "x": 6.75,
+        "y": 2.5
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Gap 1"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -39,13 +55,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "3 Ring Center",
   "previewStartingState": {
-    "rotation": 178.3634229583538,
+    "rotation": 180.0,
     "velocity": 0
   },
   "useDefaultConstraints": false

@@ -46,7 +46,7 @@ public class RobotContainer {
 
   //Right side/Buttons and Controller
   //private final CommandXboxController controller = new CommandXboxController(4);
-  private final XboxController driveController = new XboxController(Constants.Ports.controller);
+  //private final XboxController driveController = new XboxController(Constants.Ports.controller);
   private final Joystick leftStick = new Joystick(Constants.Ports.leftStick);
   private final Joystick rightStick = new Joystick(Constants.Ports.rightStick);
   private final CommandXboxController buttonBoard = new CommandXboxController(3);
@@ -64,11 +64,11 @@ public class RobotContainer {
     themeSong = new MusicCommand(swerveSubsystem, "src\\main\\deploy\\ThunderStruck.chrp");
 
     swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
-    () -> driveController.getLeftY(),
-    () -> driveController.getLeftX(),
-    () -> driveController.getRightX(),
-		() -> driveController.getStartButton(),
-    () -> !driveController.getRightBumper()
+    () -> leftStick.getY(),
+    () -> leftStick.getX(),
+    () -> rightStick.getTwist(),
+		() -> rightStick.getRawButton(1),
+    () -> !leftStick.getRawButton(1)
 		));
 
     configureBindings();

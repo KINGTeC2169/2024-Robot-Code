@@ -131,7 +131,7 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public double getSlowSpeed() {
-        return slowSpeed.getDouble(0.2);
+        return slowSpeed.getDouble(0.35);
     }
     
     public SwerveModulePosition[] getModulePositions() {

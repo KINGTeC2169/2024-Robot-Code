@@ -21,8 +21,8 @@ public final class Constants {
 
     public static final class Ports {
         public static final int controller = 0;
-        public static final int leftStick = 1;
-        public static final int rightStick = 2;
+        public static final int leftStick = 0;
+        public static final int rightStick = 1;
 
         //public static final SerialPort arduino = new SerialPort(9600, SerialPort.Port.kUSB1);
         public static final int beamBreak = 1;
