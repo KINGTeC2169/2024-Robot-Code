@@ -8,6 +8,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -43,8 +44,8 @@ public class Shooter extends SubsystemBase {
         tab.addBoolean("Shooter Ready", () -> shooterReady());
         tab.addDouble("Shoot RPM Top", () -> getRPM()[0]);
         tab.addDouble("Shoot RPM Bot", () -> getRPM()[1]);
-        tab.addDouble("Shoot Power Top", () -> getShootCurrent()[0]);
-        tab.addDouble("Shoot Power Bot", () -> getShootCurrent()[1]);
+        tab.addDouble("Shoot Top Volt", () -> getShootVoltage()[0]).withWidget(BuiltInWidgets.kVoltageView);
+        tab.addDouble("Shoot Bot Volt", () -> getShootVoltage()[1]).withWidget(BuiltInWidgets.kVoltageView);
         
 
     }
@@ -52,12 +53,17 @@ public class Shooter extends SubsystemBase {
     public void setPower(double power){
         shooterTop.set(power);
         shooterBot.set(power);
-        SmartDashboard.putNumber("Request ShotPow", power);
+        SmartDashboard.putNumber("Request ShotSpeed", power);
     }
 
     public double[] getShootCurrent(){
         return new double[]{shooterTop.getSupplyCurrent().getValueAsDouble(),
                             shooterBot.getSupplyCurrent().getValueAsDouble()}; 
+    }
+
+    public double[] getShootVoltage(){
+        return new double[]{shooterTop.getSupplyVoltage().getValueAsDouble(),
+                            shooterBot.getSupplyVoltage().getValueAsDouble()}; 
     }
 
     public double[] getRPM(){

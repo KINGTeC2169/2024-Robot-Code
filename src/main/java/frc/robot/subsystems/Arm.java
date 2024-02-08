@@ -48,8 +48,8 @@ public class Arm extends SubsystemBase {
 
         tab.addDouble("Absolute Angle", () -> getAngle()).withPosition(7, 2);
         tab.addBoolean("Arm Ready", () -> armReady());
-        currents.addDouble("Left Arm Current", () -> getArmCurrent()[0]).withWidget(BuiltInWidgets.kVoltageView);
-        currents.addDouble("Right Arm Current", () -> getArmCurrent()[1]).withWidget(BuiltInWidgets.kVoltageView);
+        currents.addDouble("Left Arm Volt", () -> getArmVoltage()[0]).withWidget(BuiltInWidgets.kVoltageView);
+        currents.addDouble("Right Arm Volt", () -> getArmVoltage()[1]).withWidget(BuiltInWidgets.kVoltageView);
 
     }
 
@@ -89,5 +89,10 @@ public class Arm extends SubsystemBase {
     public double[] getArmCurrent(){
         return new double[]{leftArm.getSupplyCurrent().getValueAsDouble(),
                             rightArm.getSupplyCurrent().getValueAsDouble()}; 
+    }
+
+    public double[] getArmVoltage(){
+        return new double[]{leftArm.getSupplyVoltage().getValueAsDouble(),
+                            rightArm.getSupplyVoltage().getValueAsDouble()}; 
     }
 }
