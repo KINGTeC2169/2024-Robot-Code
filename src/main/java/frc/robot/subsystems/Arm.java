@@ -27,6 +27,8 @@ public class Arm extends SubsystemBase {
     final PositionDutyCycle request = new PositionDutyCycle(0);
     PIDController angleLoop = new PIDController(0,0,0);
 
+    double setAngle;
+
     final double armLowerLimit = 0;
     final double armUpperLimit = 100; //Whatever is need for amp
 
@@ -42,9 +44,12 @@ public class Arm extends SubsystemBase {
         leftArm.getConfigurator().apply(configs,0.050);
         rightArm.getConfigurator().apply(configs,0.050);
         
+        setAngle = 0;
+
         tab.addDouble("Absolute Angle", () -> getAngle()).withPosition(7, 2);
-        currents.addDouble("Left Arm Current", () -> getArmCurrent()[0]).withWidget(BuiltInWidgets.kVoltageView);
-        currents.addDouble("Right Arm Current", () -> getArmCurrent()[1]).withWidget(BuiltInWidgets.kVoltageView);
+        tab.addBoolean("Arm Ready", () -> armReady());
+        currents.addDouble("Left Arm Volt", () -> getArmVoltage()[0]).withWidget(BuiltInWidgets.kVoltageView);
+        currents.addDouble("Right Arm Volt", () -> getArmVoltage()[1]).withWidget(BuiltInWidgets.kVoltageView);
 
     }
 
@@ -54,12 +59,17 @@ public class Arm extends SubsystemBase {
 
 
     public void setAngle(double angle) {
-        
+        setAngle = angle;
+
         //leftArm.setControl(request.withPosition(angleLoop.calculate(getAngle(), angle)/12));
         //rightArm.setControl(request.withPosition(angleLoop.calculate(getAngle(), angle)/12));
 
         leftArm.setPosition(angle);
         rightArm.setPosition(angle);
+    }
+
+    public boolean armReady(){
+        return setAngle == getAngle();
     }
 
     public void setAngleNoPID(double speed){
@@ -79,5 +89,10 @@ public class Arm extends SubsystemBase {
     public double[] getArmCurrent(){
         return new double[]{leftArm.getSupplyCurrent().getValueAsDouble(),
                             rightArm.getSupplyCurrent().getValueAsDouble()}; 
+    }
+
+    public double[] getArmVoltage(){
+        return new double[]{leftArm.getSupplyVoltage().getValueAsDouble(),
+                            rightArm.getSupplyVoltage().getValueAsDouble()}; 
     }
 }
