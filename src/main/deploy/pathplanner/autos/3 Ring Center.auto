@@ -5,7 +5,7 @@
       "x": 1.3837851372385206,
       "y": 5.544193078907484
     },
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
@@ -32,7 +32,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": null
+            "pathName": "Second Ring"
           }
         },
         {
@@ -50,7 +50,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": null
+            "pathName": "Third Rotation"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": null
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.2
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Fourth Ring"
           }
         }
       ]

@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.181370808239247,
-        "y": 5.038407043638732
+        "x": 2.181399402722783,
+        "y": 5.03840648378704
       },
       "isLocked": false,
       "linkedName": "Gap 1"
     },
     {
       "anchor": {
-        "x": 2.2397307353856415,
-        "y": 4.08519490024762
+        "x": 2.1910974627636457,
+        "y": 4.094921554772019
       },
       "prevControl": {
-        "x": 2.2397307353856415,
-        "y": 4.7271540988579615
+        "x": 2.1910974627636457,
+        "y": 4.73688075338236
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0,
+    "rotation": 0.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "3 Ring Center",
   "previewStartingState": {
-    "rotation": 180.0,
+    "rotation": 0.0,
     "velocity": 0
   },
   "useDefaultConstraints": false
