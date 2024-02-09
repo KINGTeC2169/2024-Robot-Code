@@ -86,6 +86,10 @@ public class Arm extends SubsystemBase {
         rightArm.set(0);
     }
 
+    public boolean off(){
+        return getArmVoltage()[0] == 0 && getArmVoltage()[1] == 0;
+    }
+
     public double[] getArmCurrent(){
         return new double[]{leftArm.getSupplyCurrent().getValueAsDouble(),
                             rightArm.getSupplyCurrent().getValueAsDouble()}; 

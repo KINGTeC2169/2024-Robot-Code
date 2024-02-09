@@ -1,4 +1,4 @@
-package frc.robot.commands.ButtonCommands;
+package frc.robot.commands.ButtonCommands.ShootingPos;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;

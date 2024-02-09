@@ -1,4 +1,4 @@
-package frc.robot.commands.ButtonCommands;
+package frc.robot.commands.ButtonCommands.ShootingPos;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -46,11 +46,11 @@ public class LimelightAlign extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        swerveSubsystem.stopModules();
+        arm.armStop();
     }
 
     @Override
     public boolean isFinished() {
-        return arm.armReady();
+        return arm.armReady() && shooter.shooterReady();
     }
 }
