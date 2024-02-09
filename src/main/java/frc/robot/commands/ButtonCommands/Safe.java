@@ -33,7 +33,7 @@ public class Safe extends Command {
     
     @Override
 	public boolean isFinished() {
-		return true;
+		return arm.getAngle() == 10;
 	}
 }
 

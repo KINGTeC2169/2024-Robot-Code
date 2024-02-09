@@ -30,11 +30,10 @@ public class Amp extends Command {
 
     @Override
     public void end(boolean interupt){
-        shooter.stopShooter();
     }
     
     @Override
 	public boolean isFinished() {
-		return true;
+		return arm.getAngle() == desiredAngle && shooter.shooterReady();
 	}
 }

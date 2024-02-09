@@ -44,6 +44,6 @@ public class Angle extends Command {
     
     @Override
 	public boolean isFinished() {
-		return true;
+		return arm.armReady();
 	}
 }

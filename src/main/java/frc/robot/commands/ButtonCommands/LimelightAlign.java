@@ -51,6 +51,6 @@ public class LimelightAlign extends Command {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return arm.armReady();
     }
 }
