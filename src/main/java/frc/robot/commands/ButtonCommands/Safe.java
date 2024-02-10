@@ -8,6 +8,7 @@ public class Safe extends Command {
 
     private Arm arm;
     private Intake intake;
+    final private double desiredAngle = 10;
 
     public Safe(Arm arm, Intake intake){
         this.arm = arm;
@@ -22,7 +23,7 @@ public class Safe extends Command {
 
     @Override
     public void execute(){
-        arm.setAngle(10);
+        arm.setAngle(desiredAngle);
         intake.stopTake();
     }
 
@@ -33,7 +34,7 @@ public class Safe extends Command {
     
     @Override
 	public boolean isFinished() {
-		return true;
+		return arm.getAngle() == 10;
 	}
 }
 

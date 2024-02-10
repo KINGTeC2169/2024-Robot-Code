@@ -22,7 +22,6 @@ public class Launch extends Command {
 
     @Override
     public void end(boolean interupt) {
-		intake.stopTake();
 	}
 
     @Override

@@ -1,17 +1,17 @@
-package frc.robot.commands.ButtonCommands;
+package frc.robot.commands.ButtonCommands.ShootingPos;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Shooter;
 
-public class Amp extends Command {
+public class Subwoofer extends Command {
 
     private Arm arm;
     private Shooter shooter;
-    final private double desiredAngle = 90;
+    final private double desiredAngle = 45;
 
-    public Amp(Arm arm, Shooter shooter){
+    public Subwoofer(Arm arm, Shooter shooter){
         this.arm = arm;
         addRequirements(arm);
         this.shooter = shooter;
@@ -30,11 +30,11 @@ public class Amp extends Command {
 
     @Override
     public void end(boolean interupt){
-        shooter.stopShooter();
+        arm.armStop();
     }
     
     @Override
 	public boolean isFinished() {
-		return true;
+		return arm.armReady() && shooter.shooterReady();
 	}
 }

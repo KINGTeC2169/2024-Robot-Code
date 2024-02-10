@@ -61,11 +61,11 @@ public class Arm extends SubsystemBase {
     public void setAngle(double angle) {
         setAngle = angle;
 
-        //leftArm.setControl(request.withPosition(angleLoop.calculate(getAngle(), angle)/12));
-        //rightArm.setControl(request.withPosition(angleLoop.calculate(getAngle(), angle)/12));
+        leftArm.setControl(request.withPosition(angleLoop.calculate(getAngle(), angle)/12));
+        rightArm.setControl(request.withPosition(angleLoop.calculate(getAngle(), angle)/12));
 
-        leftArm.setPosition(angle);
-        rightArm.setPosition(angle);
+        //leftArm.setPosition(angle);
+        //rightArm.setPosition(angle);
     }
 
     public boolean armReady(){
@@ -84,6 +84,10 @@ public class Arm extends SubsystemBase {
     public void armStop(){
         leftArm.set(0);
         rightArm.set(0);
+    }
+
+    public boolean off(){
+        return getArmVoltage()[0] == 0 && getArmVoltage()[1] == 0;
     }
 
     public double[] getArmCurrent(){

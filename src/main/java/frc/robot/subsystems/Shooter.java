@@ -89,7 +89,11 @@ public class Shooter extends SubsystemBase {
         shooterBot.set(0);
     }
 
-    public double[] getTopVoltage() {    
+    public boolean off(){
+        return getVoltage()[0] == 0 && getVoltage()[1] == 0;
+    }
+
+    public double[] getVoltage() {    
         return new double[]{shooterTop.getSupplyVoltage().getValueAsDouble(),
                             shooterBot.getSupplyVoltage().getValueAsDouble()};
     }

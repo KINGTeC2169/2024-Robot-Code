@@ -1,4 +1,4 @@
-package frc.robot.commands.ButtonCommands;
+package frc.robot.commands.ButtonCommands.ShootingPos;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -44,6 +44,6 @@ public class Angle extends Command {
     
     @Override
 	public boolean isFinished() {
-		return true;
+		return arm.armReady();
 	}
 }
