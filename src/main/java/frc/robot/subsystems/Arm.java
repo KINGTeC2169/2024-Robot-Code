@@ -46,7 +46,7 @@ public class Arm extends SubsystemBase {
         
         setAngle = 0;
 
-        tab.addDouble("Absolute Angle", () -> getAngle()).withPosition(7, 2);
+        tab.addDouble("Absolute Angle", () -> getAngle());
         tab.addBoolean("Arm Ready", () -> armReady());
         currents.addDouble("Left Arm Volt", () -> getArmVoltage()[0]).withWidget(BuiltInWidgets.kVoltageView);
         currents.addDouble("Right Arm Volt", () -> getArmVoltage()[1]).withWidget(BuiltInWidgets.kVoltageView);
@@ -54,7 +54,7 @@ public class Arm extends SubsystemBase {
     }
 
     public double getAngle() {
-        return (armEncoder.getAbsolutePosition() - armEncoder.getPositionOffset()) * 360; //todo: test how much is 1 rotation
+        return (armEncoder.getAbsolutePosition() - armEncoder.getPositionOffset()); //todo: test how much is 1 rotation
     }
 
 
@@ -63,9 +63,7 @@ public class Arm extends SubsystemBase {
 
         leftArm.setControl(request.withPosition(angleLoop.calculate(getAngle(), angle)/12));
         rightArm.setControl(request.withPosition(angleLoop.calculate(getAngle(), angle)/12));
-
-        //leftArm.setPosition(angle);
-        //rightArm.setPosition(angle);
+        
     }
 
     public boolean armReady(){
@@ -87,6 +85,7 @@ public class Arm extends SubsystemBase {
     }
 
     public boolean off(){
+
         return getArmVoltage()[0] == 0 && getArmVoltage()[1] == 0;
     }
 

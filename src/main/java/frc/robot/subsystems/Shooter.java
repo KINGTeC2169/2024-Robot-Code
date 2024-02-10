@@ -90,7 +90,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public boolean off(){
-        return getVoltage()[0] == 0 && getVoltage()[1] == 0;
+        return getVoltage()[0] < 5 && getVoltage()[1] < 5; //Change these values to resting voltages.
     }
 
     public double[] getVoltage() {    
