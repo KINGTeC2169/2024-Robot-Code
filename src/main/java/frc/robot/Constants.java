@@ -50,6 +50,8 @@ public final class Constants {
     public static final class Motors {
         public static final int TalonFXCPR = 2048;
         public static final int TalonSRXCPR = 8192;
+
+        public static final double armGearBox = 36;
     }
 
     public static final class ModuleConstants {

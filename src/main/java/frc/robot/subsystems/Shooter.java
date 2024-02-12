@@ -67,8 +67,8 @@ public class Shooter extends SubsystemBase {
     }
 
     public double[] getRPM(){
-        return new double[]{((600 * shooterTop.getRotorVelocity().getValue() / Constants.Motors.TalonFXCPR) * (24.0/18.0)),
-                            ((600 * shooterBot.getRotorVelocity().getValue() / Constants.Motors.TalonFXCPR) * (24.0/18.0))};
+        return new double[]{((60 * shooterTop.getRotorVelocity().getValue())),
+                            ((60 * shooterBot.getRotorVelocity().getValue()))};
     }
 
     public void setRPM(double rpm){
@@ -76,7 +76,7 @@ public class Shooter extends SubsystemBase {
         setRPM = rpm;
 
         shooterTop.setControl(request.withOutput(rpmLoop.calculate(getRPM()[0], rpm)/12)); 
-        shooterTop.setControl(request.withOutput(rpmLoop.calculate(getRPM()[1], rpm)/12));
+        shooterBot.setControl(request.withOutput(rpmLoop.calculate(getRPM()[1], rpm)/12));
     }
 
     public boolean shooterReady(){
