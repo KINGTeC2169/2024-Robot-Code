@@ -19,6 +19,7 @@ import frc.robot.commands.ButtonCommands.Launch;
 import frc.robot.commands.ButtonCommands.Safe;
 import frc.robot.commands.ButtonCommands.Stop;
 import frc.robot.commands.ButtonCommands.ShootingPos.Amp;
+import frc.robot.commands.ButtonCommands.ShootingPos.Angle;
 import frc.robot.commands.ButtonCommands.ShootingPos.LimelightAlign;
 import frc.robot.commands.ButtonCommands.ShootingPos.Podium;
 import frc.robot.commands.ButtonCommands.ShootingPos.Subwoofer;
@@ -44,7 +45,7 @@ public class RobotContainer {
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
   //Right side/Buttons and Controller
-  //private final CommandXboxController controller = new CommandXboxController(4);
+  private final CommandXboxController controller = new CommandXboxController(0);
   //private final XboxController driveController = new XboxController(Constants.Ports.controller);
   private final Joystick leftStick = new Joystick(Constants.Ports.leftStick);
   private final Joystick rightStick = new Joystick(Constants.Ports.rightStick);
@@ -99,7 +100,7 @@ public class RobotContainer {
     // controller.y().whileTrue(Commands.run(() -> new Amp(arm, shooter))); //Amp
     // controller.start().whileTrue(Commands.run(() -> new Podium(arm, shooter))); //Podium
     //controller.x().whileTrue(new GroundPickup(arm, intake)); //Ground pickup
-
+    controller.a().whileTrue(new Angle(arm, controller));
     //Button board
     buttonBoard.button(1).whileTrue(new Launch(intake));
 		buttonBoard.button(2).whileTrue(new Subwoofer(arm, shooter));
