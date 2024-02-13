@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.74,
+      "y": 6.69
+    },
+    "rotation": -29.89030954036566
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Waypoint 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Waypoint 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Waypoint 3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Waypoint 4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Waypoint 5"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

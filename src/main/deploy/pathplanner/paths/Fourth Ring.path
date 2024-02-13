@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.5329491536637985,
-        "y": 4.648505043309309
+        "x": 4.360141421704645,
+        "y": 4.766060716955557
       },
       "isLocked": false,
       "linkedName": "Gap 3"
@@ -60,9 +60,6 @@
   },
   "reversed": false,
   "folder": "3 Ring Center",
-  "previewStartingState": {
-    "rotation": -50.0,
-    "velocity": 0
-  },
+  "previewStartingState": null,
   "useDefaultConstraints": false
 }

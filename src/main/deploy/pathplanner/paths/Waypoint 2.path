@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.218432010323736,
-        "y": 5.544193078907484
+        "x": 1.811757936312081,
+        "y": 7.246357620677327
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.5199583005801087,
-        "y": 5.544193078907484
+        "x": 1.8053090568795853,
+        "y": 7.256068476458465
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Gapp 1"
     },
     {
       "anchor": {
-        "x": 2.132737535617251,
-        "y": 5.544193078907484
+        "x": 2.171031266996991,
+        "y": 6.97983148796553
       },
       "prevControl": {
-        "x": 1.82148459083648,
-        "y": 5.534466424383085
+        "x": 1.7081348252715325,
+        "y": 6.959873404583095
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Gap 1"
+      "linkedName": "Gapp 2"
     }
   ],
   "rotationTargets": [],
@@ -39,14 +39,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "3 Ring Center",
+  "folder": "2 Ring Amp",
   "previewStartingState": {
-    "rotation": 0.0,
+    "rotation": -90.0,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

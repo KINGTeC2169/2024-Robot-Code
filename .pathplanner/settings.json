@@ -1,9 +1,10 @@
 {
-  "robotWidth": 0.7493,
-  "robotLength": 0.7493,
+  "robotWidth": 0.889,
+  "robotLength": 0.889,
   "holonomicMode": true,
   "pathFolders": [
-    "3 Ring Center"
+    "3 Ring Center",
+    "2 Ring Amp"
   ],
   "autoFolders": [],
   "defaultMaxVel": 3.0,
