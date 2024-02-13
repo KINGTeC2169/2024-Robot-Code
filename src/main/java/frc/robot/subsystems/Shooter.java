@@ -26,7 +26,7 @@ public class Shooter extends SubsystemBase {
 
     final VoltageOut request = new VoltageOut(0);
     double currentPower;
-    PIDController rpmLoop = new PIDController(0, 0, 0);
+    PIDController rpmLoop = new PIDController(0.5, 0, 0);
 
     private ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
     
@@ -46,7 +46,6 @@ public class Shooter extends SubsystemBase {
         tab.addDouble("Shoot RPM Bot", () -> getRPM()[1]);
         tab.addDouble("Shoot Top Volt", () -> getShootVoltage()[0]).withWidget(BuiltInWidgets.kVoltageView);
         tab.addDouble("Shoot Bot Volt", () -> getShootVoltage()[1]).withWidget(BuiltInWidgets.kVoltageView);
-        
 
     }
 

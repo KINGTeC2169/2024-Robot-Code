@@ -100,7 +100,14 @@ public class RobotContainer {
     // controller.y().whileTrue(Commands.run(() -> new Amp(arm, shooter))); //Amp
     // controller.start().whileTrue(Commands.run(() -> new Podium(arm, shooter))); //Podium
     //controller.x().whileTrue(new GroundPickup(arm, intake)); //Ground pickup
-    controller.a().whileTrue(new Angle(arm, controller));
+    controller.rightBumper().whileTrue(new Launch(intake)); //Move arm up
+    controller.leftBumper().whileTrue(new Subwoofer(arm, shooter)); //Move arm down
+    controller.a().whileTrue(new Amp(arm, shooter)); //Launch
+    controller.b().whileTrue(new Podium(arm, shooter)); //Subwoofer
+    controller.y().whileTrue(new GroundPickup(arm, intake)); //Amp
+    controller.start().whileTrue(new Safe(arm, intake)); //Podium
+    controller.x().whileTrue(new Stop(shooter,intake)); //Ground pickup
+    //controller.a().whileFalse(new LimelightAlign(swerveSubsystem, arm, shooter));
     //Button board
     buttonBoard.button(1).whileTrue(new Launch(intake));
 		buttonBoard.button(2).whileTrue(new Subwoofer(arm, shooter));
@@ -108,7 +115,7 @@ public class RobotContainer {
 		buttonBoard.button(4).whileTrue(new Podium(arm, shooter));
 		buttonBoard.button(5).whileTrue(new GroundPickup(arm, intake));
 		buttonBoard.button(6).whileTrue(new Safe(arm, intake));
-		buttonBoard.button(7).onTrue(new Stop(arm, shooter, intake));
+		buttonBoard.button(7).onTrue(new Stop(shooter,intake));
 		buttonBoard.button(8).onTrue(new LimelightAlign(swerveSubsystem, arm, shooter));
 
   }

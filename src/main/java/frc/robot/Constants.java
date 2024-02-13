@@ -88,10 +88,10 @@ public final class Constants {
     }
 
     public static final class DeviceID {
-        public static final int shooterTop = 16;
+        public static final int shooterTop = 1;
         public static final int shooterBot = 14;
         public static final int intake = 15;
-        public static final int leftArm = 1;
+        public static final int leftArm = 16;
         public static final int rightArm = 18;
         
     }

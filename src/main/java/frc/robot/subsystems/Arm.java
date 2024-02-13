@@ -50,9 +50,10 @@ public class Arm extends SubsystemBase {
         
         setAngle = 0;
 
-        zero = getOGAngle();
+        zero = 0;
 
         tab.addDouble("Absolute Angle", () -> getAngle());
+        tab.addDouble("Zero Angle", () -> zero);
         tab.addBoolean("Arm Ready", () -> armReady());
         currents.addDouble("Left Arm Volt", () -> getArmVoltage()[0]).withWidget(BuiltInWidgets.kVoltageView);
         currents.addDouble("Right Arm Volt", () -> getArmVoltage()[1]).withWidget(BuiltInWidgets.kVoltageView);
