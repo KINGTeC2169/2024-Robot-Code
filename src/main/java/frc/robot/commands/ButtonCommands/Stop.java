@@ -6,13 +6,10 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
 public class Stop extends Command{
-    private Arm arm;
     private Shooter shooter;
     private Intake intake;
 
     public Stop(Arm arm, Shooter shooter, Intake intake){
-        this.arm = arm;
-        addRequirements(arm);
         this.shooter = shooter;
         addRequirements(shooter);
         this.intake = intake;
@@ -25,7 +22,6 @@ public class Stop extends Command{
 
     @Override
     public void execute(){
-        arm.armStop();
         shooter.stopShooter();
         intake.stopTake();
     }
@@ -36,6 +32,6 @@ public class Stop extends Command{
     
     @Override
 	public boolean isFinished() {
-		return arm.off() && shooter.off() && intake.off();
+		return shooter.off() && intake.off();
 	}
 }

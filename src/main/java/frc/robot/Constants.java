@@ -50,6 +50,8 @@ public final class Constants {
     public static final class Motors {
         public static final int TalonFXCPR = 2048;
         public static final int TalonSRXCPR = 8192;
+
+        public static final double armGearBox = 36;
     }
 
     public static final class ModuleConstants {
@@ -89,7 +91,7 @@ public final class Constants {
         public static final int shooterTop = 16;
         public static final int shooterBot = 14;
         public static final int intake = 15;
-        public static final int leftArm = 17;
+        public static final int leftArm = 1;
         public static final int rightArm = 18;
         
     }
@@ -135,7 +137,6 @@ public final class Constants {
             double wheelRotations = wheelMeters / circumference;
             return wheelRotations;
         }
-
     }
 
     public static final class Vision {

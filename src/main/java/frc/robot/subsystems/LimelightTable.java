@@ -22,6 +22,9 @@ public class LimelightTable {
         tab.addNumber("TS", () -> getTS());
         tab.addBoolean("canSeeTag", () -> getTV());
         tab.addNumber("TagID", () -> getID());
+        tab.addNumber("Distance", () -> getDistance());
+        tab.addNumber("Aim shot", () -> aimShot());
+
     }
 
     public static double getTX(){
