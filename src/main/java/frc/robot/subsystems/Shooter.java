@@ -87,17 +87,27 @@ public class Shooter extends SubsystemBase {
 
         setRPM = rpm;
 
-        shooterTop.setControl(new VoltageOut(11));
-        shooterBot.setControl(new VoltageOut(11));
+        shooterTop.set(0.7);
+        shooterBot.set(0.7);
+        //shooterTop.setControl(new VoltageOut(11));
+        //shooterBot.setControl(new VoltageOut(11));
         //shooterTop.setControl(m_velocity.withVelocity(rpm));
         //shooterBot.setControl(m_velocity.withVelocity(rpm));
         //shooterTop.setControl(request.withOutput(getPID()[0])); 
         //shooterBot.setControl(request.withOutput(getPID()[1]));
     }
 
+    public void setAmpRPM(double rpm){
+        setRPM = rpm;
+
+        shooterTop.set(0.1);
+        shooterBot.set(0.1);
+    }
+
 
     public boolean shooterReady(){
-        return Math.abs(getRPM()[0]-setRPM) < 30 && Math.abs(getRPM()[1]-setRPM) < 30;
+        //return Math.abs(getRPM()[0]-setRPM) < 30 && Math.abs(getRPM()[1]-setRPM) < 30;
+        return getRPM()[0] > 1000 && getRPM()[1] > 1000;
     }
 
     public void stopShooter() {

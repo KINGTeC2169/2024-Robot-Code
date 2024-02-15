@@ -107,6 +107,11 @@ public class RobotContainer {
     controller.y().whileTrue(new GroundPickup(arm, intake)); //Amp
     controller.start().whileTrue(new Safe(arm, intake)); //Podium
     controller.x().whileTrue(new Stop(shooter,intake)); //Ground pickup
+    controller.rightTrigger(0.2).whileTrue(new Launch(intake));
+    controller.leftTrigger(0.2).whileTrue(new Launch(intake));
+    
+
+
     //controller.a().whileFalse(new LimelightAlign(swerveSubsystem, arm, shooter));
     //Button board
     buttonBoard.button(1).whileTrue(new Launch(intake));

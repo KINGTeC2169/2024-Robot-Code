@@ -50,7 +50,7 @@ public class Arm extends SubsystemBase {
         
         setAngle = 0;
 
-        zero = 0;
+        zero = getOGAngle();
 
         tab.addDouble("Absolute Angle", () -> getAngle());
         tab.addDouble("Zero Angle", () -> zero);
@@ -80,15 +80,29 @@ public class Arm extends SubsystemBase {
         leftArm.setControl(request.withPosition(angleLoop.calculate(getAngle(), angle)/12));
         rightArm.setControl(request.withPosition(angleLoop.calculate(getAngle(), angle)/12));
         
-
+        //Backup plan:
+        /*
+        
+         
+        if(getAngle() > setAngle){
+            leftArm.set(-0.1);
+            rightArm.set(-0.1);
+        } else if(getAngle() < setAngle){
+            leftArm.set(0.1);
+            rightArm.set(0.1);
+        } else {
+            leftArm.set(0);
+            rightArm.set(0);
+        }
+        */
     }
 
     public boolean armReady(){
         return setAngle == getAngle();
     }
 
-    public void setAngleNoPID(double speed){
-        if(true){ //((this.getAngle() > armLowerLimit && speed < 0) || (speed > 0 && this.getAngle() < armUpperLimit)){
+    public void setSpeedNoPID(double speed){
+        if((this.getAngle() > armLowerLimit && speed < 0) || (speed > 0 && this.getAngle() < armUpperLimit)){
             leftArm.set(speed);
             rightArm.set(speed);
         } else { 
