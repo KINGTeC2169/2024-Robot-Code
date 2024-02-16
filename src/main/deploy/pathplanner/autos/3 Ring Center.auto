@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3837851372385206,
-      "y": 5.544193078907484
+      "x": 1.34,
+      "y": 5.54
     },
     "rotation": 0.0
   },
@@ -11,6 +11,12 @@
     "type": "sequential",
     "data": {
       "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "Podium Launch"
+          }
+        },
         {
           "type": "path",
           "data": {
@@ -20,13 +26,19 @@
         {
           "type": "named",
           "data": {
-            "name": null
+            "name": "Ground Pickup"
           }
         },
         {
           "type": "wait",
           "data": {
             "waitTime": 0.2
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Rev and Launch 1"
           }
         },
         {
@@ -38,7 +50,7 @@
         {
           "type": "named",
           "data": {
-            "name": null
+            "name": "Ground Pickup"
           }
         },
         {
@@ -56,7 +68,7 @@
         {
           "type": "named",
           "data": {
-            "name": null
+            "name": "Rev and Launch 1"
           }
         },
         {
@@ -69,6 +81,12 @@
           "type": "path",
           "data": {
             "pathName": "Fourth Ring"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Ground Pickup"
           }
         }
       ]

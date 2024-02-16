@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.828866254888908,
-        "y": 7.363077474970116
+        "x": 5.791964176520946,
+        "y": 7.548267936042045
       },
       "isLocked": false,
       "linkedName": "Gapp 4"
     },
     {
       "anchor": {
-        "x": 3.6500956414235106,
-        "y": 6.3125987863350135
+        "x": 3.8738086954846893,
+        "y": 6.983737948518551
       },
       "prevControl": {
-        "x": 4.681121021009815,
-        "y": 6.818384821603766
+        "x": 4.928738746366382,
+        "y": 7.4461660034431185
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Gapp 3"
     }
   ],
   "rotationTargets": [],
@@ -39,7 +39,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 11.309932474020252,
+    "rotation": 34.78,
     "rotateFast": false
   },
   "reversed": false,

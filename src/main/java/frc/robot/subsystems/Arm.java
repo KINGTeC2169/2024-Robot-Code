@@ -7,6 +7,10 @@ import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.CvSink;
+import edu.wpi.first.cscore.MjpegServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
@@ -32,6 +36,9 @@ public class Arm extends SubsystemBase {
 
     double setAngle;
     double zero;
+
+    UsbCamera frontCamera = new UsbCamera("Front Camera", 1);
+
 
     //Degrees to rotations
     final double oneRotation = Constants.Motors.armGearBox;

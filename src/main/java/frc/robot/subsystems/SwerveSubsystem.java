@@ -164,9 +164,9 @@ public class SwerveSubsystem extends SubsystemBase {
     public Rotation2d getAdjustedRotation() {
         return new Rotation2d(Pigeon.getRotation2d().getRadians() + Math.PI);
     }
-    
 
     public void resetPose(Pose2d pose) {
+        odometer.resetPosition(getRotation2d(), getModulePositions(), pose);
     }
 
     public Pose2d getPose() {

@@ -4,6 +4,13 @@
 
 package frc.robot;
 
+import java.util.HashMap;
+
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.PathPlannerTrajectory;
+
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -23,6 +30,7 @@ import frc.robot.commands.ButtonCommands.ShootingPos.Amp;
 import frc.robot.commands.ButtonCommands.ShootingPos.Angle;
 import frc.robot.commands.ButtonCommands.ShootingPos.LimelightAlign;
 import frc.robot.commands.ButtonCommands.ShootingPos.Podium;
+import frc.robot.commands.ButtonCommands.ShootingPos.RevAndAngle;
 import frc.robot.commands.ButtonCommands.ShootingPos.Subwoofer;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Intake;
@@ -56,13 +64,26 @@ public class RobotContainer {
 
   private GenericEntry songChoice = tab.add("Song Choice", 0.0).getEntry();
   
-  private Command themeSong;  
+  private Command themeSong; 
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    
+    // Register Named Commands
+    NamedCommands.registerCommand("Ground Pickup", new GroundPickup(arm, intake));
+    NamedCommands.registerCommand("Amp Launch", new Amp(arm, shooter));
+    NamedCommands.registerCommand("Podium Launch", new Podium(arm, shooter));
+    NamedCommands.registerCommand("Rev and Launch 1", new RevAndAngle(arm, shooter, 0)); 
+    NamedCommands.registerCommand("Rev and Launch 2", new RevAndAngle(arm, shooter, 0));
+    
+    //Initalize autos
+    //PathPlannerAuto ampPath = PathPlannerAuto.getPathGroupFromAutoFile("2 Ring Amp");
+
     // Configure the trigger bindings
 
     themeSong = new MusicCommand(swerveSubsystem, "src\\main\\deploy\\ThunderStruck.chrp");
+
+    HashMap<String, Command> ampMap = new HashMap<String, Command>();
 
     swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
     () -> leftStick.getY(),
