@@ -40,7 +40,7 @@ public class Robot extends TimedRobot {
     List ins = new ArrayList<TalonFX>(instruments);
     orchestra = new Orchestra(ins); 
     */
-
+    
   }
 
   /**
@@ -111,6 +111,7 @@ public class Robot extends TimedRobot {
     if (m_testCommand != null){
       m_testCommand.schedule();
     }
+    
   }
 
   /** This function is called periodically during test mode. */

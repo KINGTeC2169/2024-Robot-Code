@@ -109,7 +109,9 @@ public class Arm extends SubsystemBase {
     public void setAngleNoPID(double angle){
 
         setAngle = angle;
-        
+
+        //Individual control:
+        /* 
         if((angle >= armLowerLimit && getEncoderAngle()[0] > angle)){
             leftArm.set(0.003);
         } else if(angle <= armUpperLimit && getEncoderAngle()[0] < angle){
@@ -123,6 +125,17 @@ public class Arm extends SubsystemBase {
         } else if(angle <= armUpperLimit && getEncoderAngle()[0] < angle){
             rightArm.set(-0.003);
         } else {
+            rightArm.set(0);
+        }*/
+
+        if((angle >= armLowerLimit && getEncoderAngle()[0] > angle)){
+            leftArm.set(0.003);
+            rightArm.set(-0.003);
+        } else if(angle <= armUpperLimit && getEncoderAngle()[0] < angle){
+            leftArm.set(-0.003);
+            rightArm.set(0.003);
+        } else {
+            leftArm.set(0);
             rightArm.set(0);
         }
         
