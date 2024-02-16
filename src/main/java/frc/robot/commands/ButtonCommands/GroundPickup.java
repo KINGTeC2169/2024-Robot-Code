@@ -33,6 +33,6 @@ public class GroundPickup extends Command {
     
     @Override
 	public boolean isFinished() {
-		return arm.getAngle() == 0 && intake.off();
+		return arm.armReady() && intake.off();
 	}
 }

@@ -21,7 +21,10 @@ public class Arm extends SubsystemBase {
     TalonFX leftArm = new TalonFX(Constants.DeviceID.leftArm);
     TalonFX rightArm = new TalonFX(Constants.DeviceID.rightArm);
 
-    //private final DutyCycleEncoder armEncoder = new DutyCycleEncoder(Constants.Ports.armEncoder);
+    private final DutyCycleEncoder rightArmEncoder = new DutyCycleEncoder(Constants.Ports.rightArmEncoder);
+    private final DutyCycleEncoder leftArmEncoder = new DutyCycleEncoder(Constants.Ports.leftArmEncoder);
+    private final double leftZero;
+    private final double rightZero;
     //Update hex encoder
 
     final PositionDutyCycle request = new PositionDutyCycle(0);
@@ -40,8 +43,6 @@ public class Arm extends SubsystemBase {
     
     public Arm() {
 
-        ShuffleboardLayout currents = tab.getLayout("Arm Currents", BuiltInLayouts.kGrid).withSize(2, 1).withProperties(Map.of("Number of rows", 1)).withPosition(0, 0);
-
         var configs = new Slot0Configs();
         configs.kP = 0.5;
         
@@ -49,41 +50,45 @@ public class Arm extends SubsystemBase {
         rightArm.getConfigurator().apply(configs,0.050);
         
         setAngle = 0;
+        leftZero = getEncoderAngle()[0];
+        rightZero = getEncoderAngle()[1];
 
-        zero = getOGAngle();
+        tab.addDouble("Angle Left 0", () -> leftZero);
+        tab.addDouble("Angle Right 0", () -> rightZero);
+        tab.addDouble("Angle Left", () -> getEncoderAngle()[0]);
+        tab.addDouble("Angle Right", () -> getEncoderAngle()[1]);
 
-        tab.addDouble("Absolute Angle", () -> getAngle());
-        tab.addDouble("Zero Angle", () -> zero);
         tab.addBoolean("Arm Ready", () -> armReady());
-        currents.addDouble("Left Arm Volt", () -> getArmVoltage()[0]).withWidget(BuiltInWidgets.kVoltageView);
-        currents.addDouble("Right Arm Volt", () -> getArmVoltage()[1]).withWidget(BuiltInWidgets.kVoltageView);
+        tab.addBoolean("Arm On", () -> !off());
+        
+        tab.addDouble("Voltage Left", () -> getArmVoltage()[0]);
+        tab.addDouble("Voltage Right", () -> getArmVoltage()[1]);
+        tab.addDouble("Current Left", () -> getArmCurrent()[0]);
+        tab.addDouble("Current Right", () -> getArmCurrent()[1]);
+
+
 
     }
 
-    public double getEncoderAngle() {
-        //return (armEncoder.getAbsolutePosition() - armEncoder.getPositionOffset()); //todo: test how much is 1 rotation
-        return 0;
+    public double[] getEncoderAngle() {
+        return new double[]{(leftArmEncoder.getAbsolutePosition() - leftArmEncoder.getPositionOffset()),
+                            (rightArmEncoder.getAbsolutePosition() - rightArmEncoder.getPositionOffset())}; //todo: test how much is 1 rotation
     }
-
-    public double getOGAngle(){
-        return leftArm.getPosition().getValueAsDouble();
-    }
-
+    /* 
     public double getAngle() {
         return leftArm.getPosition().getValueAsDouble()-zero;
-    }
+    } 
+    */
 
     //Rotations
     public void setAngle(double angle) {
         setAngle = angle;
 
-        leftArm.setControl(request.withPosition(angleLoop.calculate(getAngle(), angle)/12));
-        rightArm.setControl(request.withPosition(angleLoop.calculate(getAngle(), angle)/12));
+        leftArm.setControl(request.withPosition(angleLoop.calculate(getEncoderAngle()[0], angle)/12));
+        rightArm.setControl(request.withPosition(angleLoop.calculate(getEncoderAngle()[1], angle)/12));
         
         //Backup plan:
         /*
-        
-         
         if(getAngle() > setAngle){
             leftArm.set(-0.1);
             rightArm.set(-0.1);
@@ -98,15 +103,27 @@ public class Arm extends SubsystemBase {
     }
 
     public boolean armReady(){
-        return setAngle == getAngle();
+        return setAngle == getEncoderAngle()[0] && setAngle == getEncoderAngle()[1];
     }
 
-    public void setSpeedNoPID(double speed){
-        if((this.getAngle() > armLowerLimit && speed < 0) || (speed > 0 && this.getAngle() < armUpperLimit)){
-            leftArm.set(speed);
-            rightArm.set(speed);
-        } else { 
-            this.armStop();
+    public void setAngleNoPID(double angle){
+
+        setAngle = angle;
+        
+        if((angle >= armLowerLimit && getEncoderAngle()[0] > angle)){
+            leftArm.set(0.003);
+        } else if(angle <= armUpperLimit && getEncoderAngle()[0] < angle){
+            leftArm.set(-0.003);
+        } else {
+            leftArm.set(0);
+        }
+
+        if((angle >= armLowerLimit && getEncoderAngle()[0] > angle)){
+            rightArm.set(0.003);
+        } else if(angle <= armUpperLimit && getEncoderAngle()[0] < angle){
+            rightArm.set(-0.003);
+        } else {
+            rightArm.set(0);
         }
         
     }
@@ -116,6 +133,10 @@ public class Arm extends SubsystemBase {
         rightArm.set(0);
     }
 
+
+
+
+    //Extra:
     public boolean off(){
 
         return getArmVoltage()[0] < 5 && getArmVoltage()[1] < 5; //Todo: find rest voltage
@@ -130,4 +151,6 @@ public class Arm extends SubsystemBase {
         return new double[]{leftArm.getSupplyVoltage().getValueAsDouble(),
                             rightArm.getSupplyVoltage().getValueAsDouble()}; 
     }
+
+    
 }
