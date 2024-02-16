@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommand;
@@ -93,26 +94,20 @@ public class RobotContainer {
     //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     
     //Controller for testing until control panel is done
-    //controller.rightBumper().whileTrue(Commands.run(() -> new Angle(arm, true))); //Move arm up
-    // controller.leftBumper().whileTrue(Commands.run(() -> new Angle(arm, false))); //Move arm down
-    // controller.a().whileTrue(Commands.run(() -> new Launch(intake))); //Launch
-    // controller.b().whileTrue(Commands.run(() -> new Subwoofer(arm, shooter))); //Subwoofer
-    // controller.y().whileTrue(Commands.run(() -> new Amp(arm, shooter))); //Amp
-    // controller.start().whileTrue(Commands.run(() -> new Podium(arm, shooter))); //Podium
-    //controller.x().whileTrue(new GroundPickup(arm, intake)); //Ground pickup
-    controller.rightBumper().whileTrue(new Launch(intake)); //Move arm up
-    controller.leftBumper().whileTrue(new Subwoofer(arm, shooter)); //Move arm down
-    controller.a().whileTrue(new Amp(arm, shooter)); //Launch
-    controller.b().whileTrue(new Podium(arm, shooter)); //Subwoofer
-    controller.y().whileTrue(new GroundPickup(arm, intake)); //Amp
-    controller.start().whileTrue(new Safe(arm, intake)); //Podium
-    controller.x().whileTrue(new Stop(shooter,intake)); //Ground pickup
-    controller.rightTrigger(0.2).whileTrue(new Launch(intake));
-    controller.leftTrigger(0.2).whileTrue(new Launch(intake));
-    
 
+    controller.povDown().whileTrue(new GroundPickup(arm, intake));
+    controller.povUp().whileTrue(new Podium(arm, shooter));
+    controller.povLeft().whileTrue(new Subwoofer(arm, shooter));
+    controller.povRight().whileTrue(new Amp(arm, shooter));
+    controller.back().whileTrue(new LimelightAlign(swerveSubsystem, arm, shooter));
+    controller.leftBumper().whileTrue(Commands.run(() -> intake.outTake()));
+    controller.rightBumper().whileTrue(Commands.run(() -> shooter.setRPM(4400)));
+    controller.y().whileTrue(Commands.run(() -> arm.armStop()));
+    controller.x().whileTrue(new Safe(arm, intake));
+    controller.a().whileTrue(new Launch(intake));
+    controller.b().whileTrue(new Stop(shooter, intake));
+    controller.start().whileTrue(new Angle(arm, controller));
 
-    //controller.a().whileFalse(new LimelightAlign(swerveSubsystem, arm, shooter));
     //Button board
     buttonBoard.button(1).whileTrue(new Launch(intake));
 		buttonBoard.button(2).whileTrue(new Subwoofer(arm, shooter));
