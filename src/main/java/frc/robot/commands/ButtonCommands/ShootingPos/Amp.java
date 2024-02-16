@@ -24,7 +24,7 @@ public class Amp extends Command {
 
     @Override
     public void execute(){
-        shooter.setRPM(Constants.Vision.shootRPM);
+        shooter.setAmpRPM(Constants.Vision.shootRPM);
         arm.setAngle(desiredAngle);
     }
 

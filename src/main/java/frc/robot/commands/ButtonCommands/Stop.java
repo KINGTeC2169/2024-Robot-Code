@@ -9,7 +9,7 @@ public class Stop extends Command{
     private Shooter shooter;
     private Intake intake;
 
-    public Stop(Arm arm, Shooter shooter, Intake intake){
+    public Stop(Shooter shooter, Intake intake){
         this.shooter = shooter;
         addRequirements(shooter);
         this.intake = intake;

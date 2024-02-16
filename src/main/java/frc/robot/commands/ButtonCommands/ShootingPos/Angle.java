@@ -31,9 +31,13 @@ public class Angle extends Command {
             speed = -controller.getLeftTriggerAxis();
         } else{*/
             // If no triggers pressed, use left stick to determine arm angle
-        speed = controller.getRightY();
+        if(!(Math.abs(controller.getRightY()) < 0.05)){
+        //speed = controller.getRightY();
+            arm.setAngleNoPID(-controller.getRightY()/2.0);
         
-        
+        } else{
+            arm.setAngleNoPID(0);
+        }
         
         arm.setAngle(speed*25);
         //arm.setAngleNoPID(speed);

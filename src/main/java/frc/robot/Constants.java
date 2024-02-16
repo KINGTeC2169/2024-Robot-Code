@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DutyCycle;
 import edu.wpi.first.wpilibj.SerialPort;
 
 /**
@@ -26,9 +27,9 @@ public final class Constants {
 
         //public static final SerialPort arduino = new SerialPort(9600, SerialPort.Port.kUSB1);
         public static final int beamBreak = 1;
-
+        public static final int rightArmEncoder = 21;
+        public static final int leftArmEncoder = 22;
         public static final int pigeon = 14;
-        public static final int armEncoder = 21;
 
         //Swervedrive ports
         public static final int frontLeftDrive = 3;
@@ -43,6 +44,7 @@ public final class Constants {
         public static final int backRightDrive = 9;
         public static final int backRightTurn = 8;
         public static final int backRightAbsolute = 13;
+        
 
         
     }
@@ -88,16 +90,16 @@ public final class Constants {
     }
 
     public static final class DeviceID {
-        public static final int shooterTop = 16;
+        public static final int shooterTop = 1;
         public static final int shooterBot = 14;
         public static final int intake = 15;
-        public static final int leftArm = 1;
+        public static final int leftArm = 16;
         public static final int rightArm = 18;
         
     }
 
     public static final class Vision {
-        public static final double shootRPM = 2400; //USED FOR ALL SHOTS
+        public static final double shootRPM = 300; //Do not change. Currently about 5000 TODO: Make it adjustable
         public static final double tagHeight = 5.5; //ft
         public static final double mountedHeight = 1.5; //ft
         public static final double mountedAngle = 45; //angle deg
