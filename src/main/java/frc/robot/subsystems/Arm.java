@@ -77,6 +77,11 @@ public class Arm extends SubsystemBase {
 
     }
 
+    public void setSpeed(double speed){
+        leftArm.set(speed/10);
+        rightArm.set(-speed/10);
+    }
+
     public double[] getEncoderAngle() {
         return new double[]{(leftArmEncoder.getAbsolutePosition() - leftArmEncoder.getPositionOffset()),
                             (rightArmEncoder.getAbsolutePosition() - rightArmEncoder.getPositionOffset())}; //todo: test how much is 1 rotation

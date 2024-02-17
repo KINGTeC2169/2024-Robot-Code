@@ -23,16 +23,11 @@ public class Angle extends Command {
 
     @Override
     public void execute(){
-        /*if(controller.rightTrigger(0.05).getAsBoolean()){
-            // If RT pressed more than halfway, arm move up (using trigger values)
-            speed = controller.getRightTriggerAxis();
-        } else if(controller.leftTrigger(0.05).getAsBoolean()){
-            // If LT pressed more than halfway, arm move down (using trigger values)
-            speed = -controller.getLeftTriggerAxis();
-        } else{*/
-            // If no triggers pressed, use left stick to determine arm angle
+
+        /* 
         if(!(Math.abs(controller.getRightY()) < 0.05)){
         //speed = controller.getRightY();
+        
             arm.setAngleNoPID(-controller.getRightY()/2.0);
         
         } else{
@@ -41,6 +36,9 @@ public class Angle extends Command {
         
         arm.setAngle(speed*25);
         //arm.setAngleNoPID(speed);
+        */
+
+        arm.setSpeed(controller.getRightY()*-1);
     }
 
     @Override
