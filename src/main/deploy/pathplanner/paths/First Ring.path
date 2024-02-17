@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3366071176522334,
-        "y": 5.543376849528887
+        "x": 1.390261287645306,
+        "y": 5.544193078907484
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.638133407908606,
-        "y": 5.543376849528887
+        "x": 1.6917875779016787,
+        "y": 5.544193078907484
       },
       "isLocked": false,
       "linkedName": null
@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "3 Ring Center",
+  "folder": null,
   "previewStartingState": {
     "rotation": 0.0,
     "velocity": 0

@@ -24,13 +24,13 @@ public final class Constants {
         
         public static final int leftStick = 0;
         public static final int rightStick = 1;
-        public static final int controller = 2;
-        public static final int buttons = 3;
+        public static final int controller = 3;
+        public static final int buttons = 2;
 
         //public static final SerialPort arduino = new SerialPort(9600, SerialPort.Port.kUSB1);
-        public static final int beamBreak = 1;
-        public static final int rightArmEncoder = 21;
-        public static final int leftArmEncoder = 22;
+        //public static final int beamBreak = 1;
+        public static final int rightArmEncoder = 8;
+        public static final int leftArmEncoder = 9;
         public static final int pigeon = 14;
 
         //Swervedrive ports
@@ -101,9 +101,11 @@ public final class Constants {
     }
 
     public static final class Vision {
+
+        //7 3/4 from edge
         public static final double shootRPM = 300; //Do not change. Currently about 5000 TODO: Make it adjustable
         public static final double tagHeight = 5.5; //ft
-        public static final double mountedHeight = 1.5; //ft
+        public static final double mountedHeight = 1.177; //ft
         public static final double mountedAngle = 45; //angle deg
         public static final double launchSpeed = 75; //ft/sec
         public static final double gravity = -32.19;

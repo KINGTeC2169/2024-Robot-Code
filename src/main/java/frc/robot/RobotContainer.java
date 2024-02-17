@@ -135,6 +135,7 @@ public class RobotContainer {
     */
 
     //Testing controls:
+    controller.leftBumper().whileTrue(Commands.run(() -> arm.armStop())); 
     controller.rightBumper().whileTrue(new Angle(arm, controller));
     controller.b().whileTrue(Commands.run(() -> shooter.setRPM(4400)));
     controller.a().whileTrue(Commands.run(() -> shooter.stopShooter()));
@@ -152,7 +153,7 @@ public class RobotContainer {
     buttonBoard.button(7).whileTrue(new LimelightAlign(swerveSubsystem, arm, shooter));
     buttonBoard.button(8).whileTrue(new Podium(arm, shooter));
     buttonBoard.button(9).whileTrue(new Stop(shooter, intake));
-    buttonBoard.button(10).whileTrue(new ArmStop(arm));
+    buttonBoard.button(10).onTrue(Commands.run(() -> arm.armStop()));
     buttonBoard.button(11).whileTrue(Commands.run(() -> intake.outTake()));
   }
 
@@ -167,11 +168,6 @@ public class RobotContainer {
   }
 
   public Command getTestCommand(){
-    if (songChoice.getDouble(0) == 1.0){
-      return themeSong;
-    }
-    else{
       return null;
-    }
   }
 }
