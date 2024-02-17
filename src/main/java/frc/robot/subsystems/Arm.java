@@ -78,8 +78,8 @@ public class Arm extends SubsystemBase {
     }
 
     public void setSpeed(double speed){
-        leftArm.set(speed);
-        rightArm.set(-speed);
+        leftArm.set(speed * 0.1);
+        rightArm.set(-speed * 0.1);
     }
 
     public double[] getEncoderAngle() {
@@ -154,12 +154,13 @@ public class Arm extends SubsystemBase {
     }
 
     public void armStop(){
-        leftArm.set(0);
-        rightArm.set(0);
+        double stopLeftPos = leftArmEncoder.get();
+        double stopRightPos = rightArmEncoder.get();
+        leftArm.set(angleLoop.calculate(stopLeftPos, leftArm.getPosition().getValue()));
+        rightArm.set(angleLoop.calculate(stopRightPos, rightArm.getPosition().getValue()));
+        // leftArm.set(0);
+        // rightArm.set(0);
     }
-
-
-
 
     //Extra:
     public boolean off(){
