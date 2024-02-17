@@ -16,18 +16,20 @@ public class DriveCommand extends Command{
     
     private final SwerveSubsystem swerveSubsystem;
     private final Supplier<Double> xSpdFunction, ySpdFunction, turningSpdFunction;
-    private final Supplier<Boolean> reset, isSlow;
+    private final Supplier<Boolean> resetEncoder, resetPigeon, isSlow, isFast;
     private final SlewRateLimiter xLimiter, yLimiter, turningLimiter;
     
     public DriveCommand(SwerveSubsystem swerveSubsystem, Supplier<Double> xSpdFunction, 
-        Supplier<Double> ySpdFunction, Supplier<Double> turningSpdFunction, Supplier<Boolean> reset, 
-        Supplier<Boolean> isSlow){
+        Supplier<Double> ySpdFunction, Supplier<Double> turningSpdFunction, Supplier<Boolean> resetEncoder, 
+        Supplier<Boolean> resetPigeon, Supplier<Boolean> isSlow, Supplier<Boolean> isFast){
         this.swerveSubsystem = swerveSubsystem;
         this.xSpdFunction = xSpdFunction;
         this.ySpdFunction = ySpdFunction;
         this.turningSpdFunction = turningSpdFunction;
-        this.reset = reset;
+        this.resetEncoder = resetEncoder;
+        this.resetPigeon = resetPigeon;
         this.isSlow = isSlow;
+        this.isFast = isFast;
         this.xLimiter = new SlewRateLimiter(5);
         this.yLimiter = new SlewRateLimiter(5);
         this.turningLimiter = new SlewRateLimiter(5);
@@ -63,10 +65,21 @@ public class DriveCommand extends Command{
             //swerveSubsystem.oneRotation(); For testing yesterday. 
         }
 
-        if (reset.get()){
-            swerveSubsystem.resetEncoders();
-            swerveSubsystem.zeroHeading();
+        else if (isFast.get()){
+            xSpeed *= swerveSubsystem.getFastSpeed();
+            ySpeed *= swerveSubsystem.getFastSpeed();
+            turningSpeed *= swerveSubsystem.getFastSpeed(); 
         }
+
+        else {
+            xSpeed *= swerveSubsystem.getMediumSpeed();
+            ySpeed *= swerveSubsystem.getMediumSpeed();
+            turningSpeed *= swerveSubsystem.getMediumSpeed();
+        }
+
+        if (resetEncoder.get()) swerveSubsystem.resetEncoders();
+
+        if (resetPigeon.get()) swerveSubsystem.zeroHeading();
 
         chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, Pigeon.getRotation2d());
 
