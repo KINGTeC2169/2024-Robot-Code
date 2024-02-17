@@ -78,8 +78,8 @@ public class Arm extends SubsystemBase {
     }
 
     public void setSpeed(double speed){
-        leftArm.set(speed/10);
-        rightArm.set(-speed/10);
+        leftArm.set(speed);
+        rightArm.set(-speed);
     }
 
     public double[] getEncoderAngle() {

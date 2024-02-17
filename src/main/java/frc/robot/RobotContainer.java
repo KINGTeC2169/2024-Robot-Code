@@ -164,11 +164,6 @@ public class RobotContainer {
   }
 
   public Command getTestCommand(){
-    if (songChoice.getDouble(0) == 1.0){
-      return themeSong;
-    }
-    else{
       return null;
-    }
   }
 }

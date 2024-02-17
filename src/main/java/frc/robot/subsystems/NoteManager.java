@@ -6,11 +6,12 @@ import frc.robot.Constants;
 
 public class NoteManager extends SubsystemBase {
 
-    private DigitalInput beamBreak = new DigitalInput(Constants.Ports.beamBreak);
+    //private DigitalInput beamBreak = new DigitalInput(Constants.Ports.beamBreak);
 
     /**Returns true if there is something in the beambreak */
     public boolean isBall() {
-        return !beamBreak.get();
+        //return !beamBreak.get();
+        return true;
     }
     
 }

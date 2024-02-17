@@ -28,9 +28,9 @@ public final class Constants {
         public static final int buttons = 3;
 
         //public static final SerialPort arduino = new SerialPort(9600, SerialPort.Port.kUSB1);
-        public static final int beamBreak = 1;
-        public static final int rightArmEncoder = 21;
-        public static final int leftArmEncoder = 22;
+        //public static final int beamBreak = 1;
+        public static final int rightArmEncoder = 8;
+        public static final int leftArmEncoder = 9;
         public static final int pigeon = 14;
 
         //Swervedrive ports
