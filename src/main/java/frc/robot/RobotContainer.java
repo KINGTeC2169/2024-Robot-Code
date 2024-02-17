@@ -11,6 +11,7 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.PathPlannerTrajectory;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -114,6 +115,8 @@ public class RobotContainer {
     // cancelling on release.
     //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
 
+    //Jalol controls:
+    /* 
     controller.povDown().whileTrue(Commands.run(() -> intake.outTake()));
     controller.povUp().whileTrue(new Safe(arm, intake));
     controller.back().whileTrue(new Stop(shooter, intake));
@@ -126,6 +129,16 @@ public class RobotContainer {
     controller.x().whileTrue(new LimelightAlign(swerveSubsystem, arm, shooter));
     controller.a().whileTrue(new Podium(arm, shooter));
     controller.b().whileTrue(new Amp(arm, shooter));
+    */
+
+    //Testing controls:
+    controller.rightBumper().whileTrue(new Angle(arm, controller));
+    controller.b().whileTrue(Commands.run(() -> shooter.setRPM(4400)));
+    controller.a().whileTrue(Commands.run(() -> shooter.stopShooter()));
+    controller.x().whileTrue(Commands.run(() -> intake.outTake()));
+    controller.y().whileTrue(Commands.run(() -> intake.inTake()));
+
+
 
     buttonBoard.button(1).whileTrue(new GroundPickup(arm, intake));
     buttonBoard.button(2).whileTrue(new Safe(arm, intake));
