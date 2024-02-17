@@ -63,6 +63,8 @@ public class Arm extends SubsystemBase {
         tab.addDouble("Angle Right", () -> getEncoderAngle()[1]);
         tab.addDouble("Angle Left Off", () -> getOffAngle()[0]);
         tab.addDouble("Angle Right Off", () -> getOffAngle()[1]);
+        tab.addDouble("Left Encoder Angle", () -> getAngle()[0]);
+        tab.addDouble("Right Encoder Angle", () -> getAngle()[1]);
         
 
         tab.addBoolean("Arm Ready", () -> armReady());
@@ -78,18 +80,23 @@ public class Arm extends SubsystemBase {
     }
 
     public void setSpeed(double speed){
-        leftArm.set(speed * 0.1);
-        rightArm.set(-speed * 0.1);
-    }
+        leftArm.set(speed * 0.25);
+        rightArm.set(-speed * 0.25);
+    }         
 
     public double[] getOffAngle() {
         return new double[]{(leftArmEncoder.getPositionOffset()),
                             (rightArmEncoder.getPositionOffset())}; //todo: test how much is 1 rotation
     }
 
+    public double[] getAngle(){
+        return new double[]{(leftArmEncoder.getAbsolutePosition()),
+                            (rightArmEncoder.getAbsolutePosition())};
+    }
+
     public double[] getEncoderAngle() {
         return new double[]{(leftArmEncoder.getAbsolutePosition() - leftArmEncoder.getPositionOffset()),
-                            (rightArmEncoder.getAbsolutePosition() - rightArmEncoder.getPositionOffset())}; //todo: test how much is 1 rotation
+                            (rightArmEncoder.getAbsolutePosition() - rightArmEncoder.getPositionOffset())}; //TODO: test how much is 1 rotation
     }
     /* 
     public double getAngle() {
@@ -101,8 +108,8 @@ public class Arm extends SubsystemBase {
     public void setAngle(double angle) {
         setAngle = angle;
 
-        leftArm.setControl(request.withPosition(angleLoop.calculate(getEncoderAngle()[0], angle)/12));
-        rightArm.setControl(request.withPosition(angleLoop.calculate(getEncoderAngle()[1], angle)/12));
+        leftArm.setControl(request.withPosition(angleLoop.calculate(getOffAngle()[0], angle)/12));
+        rightArm.setControl(request.withPosition(angleLoop.calculate(getOffAngle()[1], angle)/12));
         
         //Backup plan:
         /*
@@ -130,7 +137,7 @@ public class Arm extends SubsystemBase {
         //Individual control:
         /* 
         if((angle >= armLowerLimit && getEncoderAngle()[0] > angle)){
-            leftArm.set(0.003);
+            leftArm.set(0.003)
         } else if(angle <= armUpperLimit && getEncoderAngle()[0] < angle){
             leftArm.set(-0.003);
         } else {
@@ -141,16 +148,16 @@ public class Arm extends SubsystemBase {
             rightArm.set(0.003);
         } else if(angle <= armUpperLimit && getEncoderAngle()[0] < angle){
             rightArm.set(-0.003);
-        } else {
+        } else { 
             rightArm.set(0);
         }*/
 
-        if((angle >= armLowerLimit && getEncoderAngle()[0] > angle)){
-            leftArm.set(speed/10);
-            rightArm.set(-speed/10);
-        } else if(angle <= armUpperLimit && getEncoderAngle()[0] < angle){
-            leftArm.set(-speed/10);
-            rightArm.set(speed/10);
+        if((angle >= armLowerLimit && getOffAngle()[0] > angle)){
+            leftArm.set(speed/3);
+            rightArm.set(-speed/3);
+        } else if(angle <= armUpperLimit && getOffAngle()[0] < angle){
+            leftArm.set(-speed/3);
+            rightArm.set(speed/3);
         } else {
             leftArm.set(0);
             rightArm.set(0);
@@ -159,12 +166,12 @@ public class Arm extends SubsystemBase {
     }
 
     public void armStop(){
-        double stopLeftPos = leftArmEncoder.get();
-        double stopRightPos = rightArmEncoder.get();
-        leftArm.set(angleLoop.calculate(stopLeftPos, leftArm.getPosition().getValue()));
-        rightArm.set(angleLoop.calculate(stopRightPos, rightArm.getPosition().getValue()));
-        // leftArm.set(0);
-        // rightArm.set(0);
+        // double stopLeftPos = leftArmEncoder.get();
+        // double stopRightPos = rightArmEncoder.get();
+        // leftArm.set(angleLoop.calculate(stopLeftPos, leftArm.getPosition().getValue()));
+        // rightArm.set(angleLoop.calculate(stopRightPos, rightArm.getPosition().getValue()));
+        leftArm.set(0);
+        rightArm.set(0);
     }
 
     //Extra:

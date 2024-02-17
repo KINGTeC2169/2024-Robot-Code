@@ -31,7 +31,6 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    CameraServer.startAutomaticCapture();
 
     /* 
     List ins = new ArrayList<TalonFX>(instruments);
@@ -104,11 +103,6 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
-    m_testCommand = m_robotContainer.getTestCommand();
-    if (m_testCommand != null){
-      m_testCommand.schedule();
-    }
-    
   }
 
   /** This function is called periodically during test mode. */

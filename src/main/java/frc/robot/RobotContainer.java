@@ -6,6 +6,7 @@ package frc.robot;
 
 import java.util.HashMap;
 
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.PathPlannerPath;
@@ -26,6 +27,7 @@ import frc.robot.commands.DriveCommand;
 import frc.robot.commands.MusicCommand;
 import frc.robot.commands.ButtonCommands.ArmStop;
 import frc.robot.commands.ButtonCommands.GroundPickup;
+import frc.robot.commands.ButtonCommands.IntakeNote;
 import frc.robot.commands.ButtonCommands.Launch;
 import frc.robot.commands.ButtonCommands.Safe;
 import frc.robot.commands.ButtonCommands.Stop;
@@ -140,10 +142,11 @@ public class RobotContainer {
     controller.povLeft().whileTrue(Commands.run(() -> arm.setAngleNoPID(0.05, -controller.getLeftY())));
     controller.b().whileTrue(Commands.run(() -> shooter.setRPM(4400)));
     controller.a().whileTrue(Commands.run(() -> shooter.stopShooter()));
-    controller.x().whileTrue(Commands.run(() -> intake.outTake()));
     controller.y().whileTrue(Commands.run(() -> intake.inTake()));
-    controller.povDown().whileTrue(Commands.run(() -> intake.stopTake()));
-
+    controller.y().whileFalse(Commands.run(() -> intake.stopTake()));
+    controller.x().whileTrue(Commands.run(() -> intake.outTake()));
+    controller.x().whileFalse(Commands.run(() -> intake.stopTake()));
+    //controller.povUp().whileTrue(new IntakeNote(intake, controller));
 
 
     buttonBoard.button(1).whileTrue(new GroundPickup(arm, intake));
@@ -154,7 +157,7 @@ public class RobotContainer {
     buttonBoard.button(6).whileTrue(new Launch(intake));
     buttonBoard.button(7).whileTrue(new LimelightAlign(swerveSubsystem, arm, shooter));
     buttonBoard.button(8).whileTrue(new Podium(arm, shooter));
-    buttonBoard.button(9).whileTrue(new Stop(shooter, intake));
+    buttonBoard.button(9).whileTrue(new Stop(shooter, intake)); 
     buttonBoard.button(10).onTrue(Commands.run(() -> arm.armStop()));
     buttonBoard.button(11).whileTrue(Commands.run(() -> intake.outTake()));
   }
@@ -166,10 +169,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return null;
-  }
-
-  public Command getTestCommand(){
-      return null;
+    return new PathPlannerAuto("Test");
   }
 }

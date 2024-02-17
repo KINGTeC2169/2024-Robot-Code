@@ -10,6 +10,7 @@ import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -34,7 +35,8 @@ public class Shooter extends SubsystemBase {
     PIDController rpmLoop = new PIDController(0.2, 0, 0);
 
     private ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
-    
+
+     private  GenericEntry shooterSpeed = tab.add("Shooter Speed", 0.5).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).getEntry();
 
     public Shooter(){
 
@@ -87,8 +89,8 @@ public class Shooter extends SubsystemBase {
 
         setRPM = rpm;
 
-        shooterTop.set(0.3);
-        shooterBot.set(0.3);
+        shooterTop.set(shooterSpeed.getDouble(0.5));
+        shooterBot.set(shooterSpeed.getDouble(0.5));
         //shooterTop.setControl(new VoltageOut(11));
         //shooterBot.setControl(new VoltageOut(11));
         //shooterTop.setControl(m_velocity.withVelocity(rpm));
