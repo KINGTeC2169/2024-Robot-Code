@@ -92,7 +92,9 @@ public class RobotContainer {
     () -> leftStick.getX(),
     () -> rightStick.getTwist(),
 		() -> rightStick.getRawButton(1),
-    () -> !leftStick.getRawButton(1)
+    () -> rightStick.getRawButton(0),
+    () -> leftStick.getRawButton(1),
+    () -> leftStick.getRawButton(0)
 		));
 
     configureBindings();

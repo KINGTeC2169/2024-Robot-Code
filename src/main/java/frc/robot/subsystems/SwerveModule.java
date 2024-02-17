@@ -78,13 +78,13 @@ public class SwerveModule {
 
     //These commands are for tuning the pid controller
 
-    // public void updateDrivePID(double kp){
-    //    driveMotor.config_kP(0, kp);
-    // }
+    public void updateDrivePID(double kp){
+       driveMotor.config_kP(0, kp);
+    }
 
-    // public void updateTurnPID(double kp){
-    //     turningPID.setP(kp);
-    // }
+    public void updateTurnPID(double kp){
+        turningPID.setP(kp);
+    }
 
     public double getDrivePosition() {
         //return driveMotor.getSelectedSensorPosition() * driveEncoderToMeter;
