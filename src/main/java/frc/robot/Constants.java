@@ -68,8 +68,8 @@ public final class Constants {
         public static final double driveEncoderRPMToMeterPerSec = driveEncoderToMeter / 60;
         public static final double turnEncoderRPMToRadPerSec = turnEncoderToRadian / 60;
 
-        public static final double PTurn = 0.31;
-        public static final double PDrive = 10;
+        public static double PTurn = 0.31;
+        public static double PDrive = 10;
     }
 
     public static final class DriveConstants {
