@@ -37,9 +37,6 @@ public class Arm extends SubsystemBase {
     double setAngle;
     double zero;
 
-    UsbCamera frontCamera = new UsbCamera("Front Camera", 1);
-
-
     //Degrees to rotations
     final double oneRotation = Constants.Motors.armGearBox;
 
@@ -64,6 +61,9 @@ public class Arm extends SubsystemBase {
         tab.addDouble("Angle Right 0", () -> rightZero);
         tab.addDouble("Angle Left", () -> getEncoderAngle()[0]);
         tab.addDouble("Angle Right", () -> getEncoderAngle()[1]);
+        tab.addDouble("Angle Left Off", () -> getOffAngle()[0]);
+        tab.addDouble("Angle Right Off", () -> getOffAngle()[1]);
+        
 
         tab.addBoolean("Arm Ready", () -> armReady());
         tab.addBoolean("Arm On", () -> !off());
@@ -80,6 +80,11 @@ public class Arm extends SubsystemBase {
     public void setSpeed(double speed){
         leftArm.set(speed * 0.1);
         rightArm.set(-speed * 0.1);
+    }
+
+    public double[] getOffAngle() {
+        return new double[]{(leftArmEncoder.getPositionOffset()),
+                            (rightArmEncoder.getPositionOffset())}; //todo: test how much is 1 rotation
     }
 
     public double[] getEncoderAngle() {
@@ -118,7 +123,7 @@ public class Arm extends SubsystemBase {
         return setAngle == getEncoderAngle()[0] && setAngle == getEncoderAngle()[1];
     }
 
-    public void setAngleNoPID(double angle){
+    public void setAngleNoPID(double angle, double speed){
 
         setAngle = angle;
 
@@ -141,11 +146,11 @@ public class Arm extends SubsystemBase {
         }*/
 
         if((angle >= armLowerLimit && getEncoderAngle()[0] > angle)){
-            leftArm.set(0.003);
-            rightArm.set(-0.003);
+            leftArm.set(speed/10);
+            rightArm.set(-speed/10);
         } else if(angle <= armUpperLimit && getEncoderAngle()[0] < angle){
-            leftArm.set(-0.003);
-            rightArm.set(0.003);
+            leftArm.set(-speed/10);
+            rightArm.set(speed/10);
         } else {
             leftArm.set(0);
             rightArm.set(0);

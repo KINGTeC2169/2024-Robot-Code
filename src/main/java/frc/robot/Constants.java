@@ -24,8 +24,8 @@ public final class Constants {
         
         public static final int leftStick = 0;
         public static final int rightStick = 1;
-        public static final int controller = 3;
-        public static final int buttons = 2;
+        public static final int controller = 2;
+        public static final int buttons = 3;
 
         //public static final SerialPort arduino = new SerialPort(9600, SerialPort.Port.kUSB1);
         //public static final int beamBreak = 1;
@@ -92,11 +92,11 @@ public final class Constants {
     }
 
     public static final class DeviceID {
-        public static final int shooterTop = 1;
-        public static final int shooterBot = 14;
-        public static final int intake = 15;
-        public static final int leftArm = 16;
-        public static final int rightArm = 18;
+        public static final int shooterTop = 17;
+        public static final int shooterBot = 18;
+        public static final int intake = 19;
+        public static final int leftArm = 15;
+        public static final int rightArm = 16;
         
     }
 

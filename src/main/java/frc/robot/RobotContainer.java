@@ -64,9 +64,9 @@ public class RobotContainer {
 
   private ShuffleboardTab tab = Shuffleboard.getTab("Shuffleboard");
 
-  private GenericEntry songChoice = tab.add("Song Choice", 0.0).getEntry();
+  //private GenericEntry songChoice = tab.add("Song Choice", 0.0).getEntry();
   
-  private Command themeSong; 
+  //private Command themeSong; 
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -83,7 +83,7 @@ public class RobotContainer {
 
     // Configure the trigger bindings
 
-    themeSong = new MusicCommand(swerveSubsystem, "src\\main\\deploy\\ThunderStruck.chrp");
+    //themeSong = new MusicCommand(swerveSubsystem, "src\\main\\deploy\\ThunderStruck.chrp");
 
     HashMap<String, Command> ampMap = new HashMap<String, Command>();
 
@@ -135,10 +135,12 @@ public class RobotContainer {
     //Testing controls:
     controller.leftBumper().whileTrue(Commands.run(() -> arm.armStop())); 
     controller.rightBumper().whileTrue(new Angle(arm, controller));
+    controller.povLeft().whileTrue(Commands.run(() -> arm.setAngleNoPID(0.05, -controller.getLeftY())));
     controller.b().whileTrue(Commands.run(() -> shooter.setRPM(4400)));
     controller.a().whileTrue(Commands.run(() -> shooter.stopShooter()));
     controller.x().whileTrue(Commands.run(() -> intake.outTake()));
     controller.y().whileTrue(Commands.run(() -> intake.inTake()));
+    controller.povDown().whileTrue(Commands.run(() -> intake.stopTake()));
 
 
 

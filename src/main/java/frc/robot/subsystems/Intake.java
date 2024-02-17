@@ -26,13 +26,13 @@ public class Intake extends SubsystemBase{
     }
     /**Sets intake to suck in */
     public void inTake() {
-        intakeMotor.set(0.3);
+        intakeMotor.set(-0.18);
         SmartDashboard.putBoolean("Intake", true);
     }
 
     /**Sets intake to outtake */
     public void outTake() {
-        intakeMotor.set(-0.3);
+        intakeMotor.set(0.18);
         SmartDashboard.putBoolean("Intake", false);
     }
 

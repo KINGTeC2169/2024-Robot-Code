@@ -87,8 +87,8 @@ public class Shooter extends SubsystemBase {
 
         setRPM = rpm;
 
-        shooterTop.set(0.7);
-        shooterBot.set(0.7);
+        shooterTop.set(0.3);
+        shooterBot.set(0.3);
         //shooterTop.setControl(new VoltageOut(11));
         //shooterBot.setControl(new VoltageOut(11));
         //shooterTop.setControl(m_velocity.withVelocity(rpm));
