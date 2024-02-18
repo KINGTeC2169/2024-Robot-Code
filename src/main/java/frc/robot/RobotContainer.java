@@ -139,7 +139,7 @@ public class RobotContainer {
     //Testing controls:
     controller.leftBumper().whileTrue(Commands.run(() -> arm.armStop())); 
     controller.rightBumper().whileTrue(new Angle(arm, controller));
-    controller.povLeft().whileTrue(Commands.run(() -> arm.setAngleNoPID(0.05, -controller.getLeftY())));
+    controller.povLeft().whileTrue(Commands.run(() -> arm.setAngle(-controller.getRightY())));
     controller.b().whileTrue(Commands.run(() -> shooter.setRPM(4400)));
     controller.a().whileTrue(Commands.run(() -> shooter.stopShooter()));
     controller.y().whileTrue(Commands.run(() -> intake.inTake()));

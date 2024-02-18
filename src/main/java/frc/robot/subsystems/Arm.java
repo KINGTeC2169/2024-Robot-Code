@@ -12,6 +12,7 @@ import edu.wpi.first.cscore.CvSink;
 import edu.wpi.first.cscore.MjpegServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
@@ -22,28 +23,34 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Arm extends SubsystemBase {
+
+    private ShuffleboardTab tab = Shuffleboard.getTab("Arm");
+
     TalonFX leftArm = new TalonFX(Constants.DeviceID.leftArm);
     TalonFX rightArm = new TalonFX(Constants.DeviceID.rightArm);
 
-    private final DutyCycleEncoder rightArmEncoder = new DutyCycleEncoder(Constants.Ports.rightArmEncoder);
-    private final DutyCycleEncoder leftArmEncoder = new DutyCycleEncoder(Constants.Ports.leftArmEncoder);
-    private final double leftZero;
-    private final double rightZero;
+    //Master = left, follower = right
+    private final DutyCycleEncoder followEncoder = new DutyCycleEncoder(Constants.Ports.rightArmEncoder);
+    private final DutyCycleEncoder masterEncoder = new DutyCycleEncoder(Constants.Ports.leftArmEncoder);
     //Update hex encoder
 
     final PositionDutyCycle request = new PositionDutyCycle(0);
     PIDController angleLoop = new PIDController(0.5,0,0);
+    private GenericEntry angleP = tab.add("angleP", 0.5).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).getEntry();
+    private GenericEntry angleI = tab.add("angleI", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).getEntry();
+    private GenericEntry angleD = tab.add("angleD", 0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).getEntry();
 
     double setAngle;
-    double zero;
+    double difference;
 
     //Degrees to rotations
     final double oneRotation = Constants.Motors.armGearBox;
 
-    final double armLowerLimit = 0;
-    final double armUpperLimit = (100/360); //Whatever is need for amp
+    final double zero = 0.04; //zero angle
+    final double armLowerLimit = 0.96;
+    final double armUpperLimit = 0.66; //Whatever is need for amp
 
-    private ShuffleboardTab tab = Shuffleboard.getTab("Arm");
+    
     
     public Arm() {
 
@@ -53,18 +60,9 @@ public class Arm extends SubsystemBase {
         leftArm.getConfigurator().apply(configs,0.050);
         rightArm.getConfigurator().apply(configs,0.050);
         
-        setAngle = 0;
-        leftZero = getEncoderAngle()[0];
-        rightZero = getEncoderAngle()[1];
-
-        tab.addDouble("Angle Left 0", () -> leftZero);
-        tab.addDouble("Angle Right 0", () -> rightZero);
-        tab.addDouble("Angle Left", () -> getEncoderAngle()[0]);
-        tab.addDouble("Angle Right", () -> getEncoderAngle()[1]);
-        tab.addDouble("Angle Left Off", () -> getOffAngle()[0]);
-        tab.addDouble("Angle Right Off", () -> getOffAngle()[1]);
-        tab.addDouble("Left Encoder Angle", () -> getAngle()[0]);
-        tab.addDouble("Right Encoder Angle", () -> getAngle()[1]);
+        difference = getAngle()-getFollowAngle();
+        
+        tab.addDouble("Master Angle", () -> getAngle());
         
 
         tab.addBoolean("Arm Ready", () -> armReady());
@@ -84,86 +82,31 @@ public class Arm extends SubsystemBase {
         rightArm.set(-speed * 0.25);
     }         
 
-    public double[] getOffAngle() {
-        return new double[]{(leftArmEncoder.getPositionOffset()),
-                            (rightArmEncoder.getPositionOffset())}; //todo: test how much is 1 rotation
+    public double getAngle(){
+        return 1 - masterEncoder.getAbsolutePosition();
     }
 
-    public double[] getAngle(){
-        return new double[]{(leftArmEncoder.getAbsolutePosition()),
-                            (rightArmEncoder.getAbsolutePosition())};
+    public double getFollowAngle(){
+        return followEncoder.getAbsolutePosition();
     }
 
-    public double[] getEncoderAngle() {
-        return new double[]{(leftArmEncoder.getAbsolutePosition() - leftArmEncoder.getPositionOffset()),
-                            (rightArmEncoder.getAbsolutePosition() - rightArmEncoder.getPositionOffset())}; //TODO: test how much is 1 rotation
+    //Used to correct the follow motor
+    public double getDifference(){
+        return (getAngle() - getFollowAngle()) - difference;
     }
-    /* 
-    public double getAngle() {
-        return leftArm.getPosition().getValueAsDouble()-zero;
-    } 
-    */
 
     //Rotations
     public void setAngle(double angle) {
         setAngle = angle;
 
-        leftArm.setControl(request.withPosition(angleLoop.calculate(getOffAngle()[0], angle)/12));
-        rightArm.setControl(request.withPosition(angleLoop.calculate(getOffAngle()[1], angle)/12));
-        
-        //Backup plan:
-        /*
-        if(getAngle() > setAngle){
-            leftArm.set(-0.1);
-            rightArm.set(-0.1);
-        } else if(getAngle() < setAngle){
-            leftArm.set(0.1);
-            rightArm.set(0.1);
-        } else {
-            leftArm.set(0);
-            rightArm.set(0);
-        }
-        */
+        leftArm.setControl(request.withPosition(angleLoop.calculate(getAngle(), angle)/12));
+        rightArm.setControl(request.withPosition(angleLoop.calculate(getAngle(), angle)/12));
     }
 
     public boolean armReady(){
-        return setAngle == getEncoderAngle()[0] && setAngle == getEncoderAngle()[1];
+        return setAngle == getAngle();
     }
 
-    public void setAngleNoPID(double angle, double speed){
-
-        setAngle = angle;
-
-        //Individual control:
-        /* 
-        if((angle >= armLowerLimit && getEncoderAngle()[0] > angle)){
-            leftArm.set(0.003)
-        } else if(angle <= armUpperLimit && getEncoderAngle()[0] < angle){
-            leftArm.set(-0.003);
-        } else {
-            leftArm.set(0);
-        }
-
-        if((angle >= armLowerLimit && getEncoderAngle()[0] > angle)){
-            rightArm.set(0.003);
-        } else if(angle <= armUpperLimit && getEncoderAngle()[0] < angle){
-            rightArm.set(-0.003);
-        } else { 
-            rightArm.set(0);
-        }*/
-
-        if((angle >= armLowerLimit && getOffAngle()[0] > angle)){
-            leftArm.set(speed/3);
-            rightArm.set(-speed/3);
-        } else if(angle <= armUpperLimit && getOffAngle()[0] < angle){
-            leftArm.set(-speed/3);
-            rightArm.set(speed/3);
-        } else {
-            leftArm.set(0);
-            rightArm.set(0);
-        }
-        
-    }
 
     public void armStop(){
         // double stopLeftPos = leftArmEncoder.get();
@@ -177,7 +120,7 @@ public class Arm extends SubsystemBase {
     //Extra:
     public boolean off(){
 
-        return getArmVoltage()[0] < 5 && getArmVoltage()[1] < 5; //Todo: find rest voltage
+        return zero == getAngle(); //Todo: find rest voltage
     }
 
     public double[] getArmCurrent(){
