@@ -26,7 +26,7 @@ public class LimelightAlign extends Command {
         addRequirements(arm);
         this.shooter = shooter;
         addRequirements(shooter);
-        turnController = new PIDController(0.5,0,0);
+        turnController = new PIDController(0.075,0,0);
     }
 
     @Override
@@ -34,14 +34,14 @@ public class LimelightAlign extends Command {
 
     @Override
     public void execute(){
-        if(LimelightTable.getTV()) chassisSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(0, 0, turnController.calculate(LimelightTable.getTX(), 0), swerveSubsystem.getRotation2d());
+        if(LimelightTable.getTV()) chassisSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(0, 0, -turnController.calculate(LimelightTable.getTX(), 0), swerveSubsystem.getRotation2d());
         else chassisSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(0, 0, 0, swerveSubsystem.getRotation2d());
 
         SwerveModuleState[] moduleStates = DriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
         swerveSubsystem.setModuleStates(moduleStates);
 
-        arm.setPosition(LimelightTable.aimShot());
-        shooter.setRPM(Constants.Vision.shootRPM);
+        //arm.setPosition(LimelightTable.aimShot());
+        //shooter.setRPM(Constants.Vision.shootRPM);
     }
 
     @Override

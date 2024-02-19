@@ -66,7 +66,7 @@ public class LimelightTable {
     }
     
     public static double getDistance(){
-        return getHeightDif() * Math.tan(getAngle()); //Horizontal distance in feet
+        return (getHeightDif()/Math.sin(getAngle()*0.0174533)); //Horizontal distance in feet
     }
 
     /**
