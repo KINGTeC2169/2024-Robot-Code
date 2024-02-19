@@ -24,6 +24,7 @@ public class LimelightTable {
         tab.addNumber("TagID", () -> getID());
         tab.addNumber("Distance", () -> getDistance());
         tab.addNumber("Aim shot", () -> aimShot());
+        tab.addNumber("Angle", () -> Vision.mountedAngle+LimelightTable.getTY());
 
     }
 
