@@ -69,7 +69,7 @@ public class LimelightTable {
     public static double aimShot(){
         double distance = getDistance();
         double finalAim = getShootingAngle(new double[]{distance, 6.90625});
-        SmartDashboard.putNumber("Shot", aimShot());
+        //SmartDashboard.putNumber("Shot", aimShot());
         return finalAim;
     }
 }

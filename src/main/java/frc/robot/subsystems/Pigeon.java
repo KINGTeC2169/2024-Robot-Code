@@ -11,7 +11,7 @@ import frc.robot.Constants;
 public class Pigeon {
     
     private static Pigeon2 pigeon = new Pigeon2(Constants.Ports.pigeon);
-    private ShuffleboardTab tab = Shuffleboard.getTab("NavX");
+    private ShuffleboardTab tab = Shuffleboard.getTab("Pigeon");
 
     public Pigeon(){
         tab.addDouble("Yaw", () -> getYaw());

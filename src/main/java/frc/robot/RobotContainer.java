@@ -29,6 +29,7 @@ import frc.robot.commands.ButtonCommands.ShootingPos.RevAndAngle;
 import frc.robot.commands.ButtonCommands.ShootingPos.Subwoofer;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LimelightTable;
 import frc.robot.subsystems.Pigeon;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -42,6 +43,7 @@ import frc.robot.subsystems.SwerveSubsystem;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
+  private final LimelightTable limelight = new LimelightTable();
   private final Pigeon pigeon = new Pigeon();
   private final Arm arm = new Arm();
   private final Intake intake = new Intake();
