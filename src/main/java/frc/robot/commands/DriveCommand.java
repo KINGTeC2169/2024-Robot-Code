@@ -77,9 +77,13 @@ public class DriveCommand extends Command{
             turningSpeed *= swerveSubsystem.getMediumSpeed();
         }
 
-        if (resetEncoder.get()) swerveSubsystem.resetEncoders();
+        if (resetEncoder.get()) {
+            swerveSubsystem.resetEncoders();
+        }
 
-        if (resetPigeon.get()) swerveSubsystem.zeroHeading();
+        if (resetPigeon.get()) {
+            swerveSubsystem.zeroHeading();
+        }
 
         chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, Pigeon.getRotation2d());
 

@@ -116,7 +116,7 @@ public class SwerveSubsystem extends SubsystemBase {
         // Configure AutoBuilder last
         AutoBuilder.configureHolonomic(
             this::getPose, // Robot pose supplier
-            this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
+            this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
             this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
             new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
@@ -199,15 +199,11 @@ public class SwerveSubsystem extends SubsystemBase {
         return new Rotation2d(Pigeon.getRotation2d().getRadians() + Math.PI);
     }
 
-    public void resetPose(Pose2d pose) {
-        odometer.resetPosition(getRotation2d(), getModulePositions(), pose);
-    }
-
     public ChassisSpeeds getRobotRelativeSpeeds(){
         return kinematics.toChassisSpeeds(getModuleStates()[0], 
-                                                                getModuleStates()[1], 
-                                                                getModuleStates()[2], 
-                                                                getModuleStates()[3]);
+                                          getModuleStates()[1], 
+                                          getModuleStates()[2], 
+                                          getModuleStates()[3]);
     }
 
     public void driveRobotRelative(ChassisSpeeds speeds){

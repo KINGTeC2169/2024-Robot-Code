@@ -83,10 +83,10 @@ public class RobotContainer {
     () -> leftStick.getY(),
     () -> leftStick.getX(),
     () -> rightStick.getTwist(),
-		() -> rightStick.getRawButton(1),
-    () -> rightStick.getRawButton(0),
-    () -> leftStick.getRawButton(1),
-    () -> leftStick.getRawButton(0)
+		() -> rightStick.getRawButton(2),
+    () -> rightStick.getRawButton(1),
+    () -> leftStick.getRawButton(2),
+    () -> leftStick.getRawButton(1)
 		));
 
     configureBindings();
@@ -127,9 +127,9 @@ public class RobotContainer {
     */
 
     //Testing controls:
-    controller.leftBumper().whileTrue(Commands.run(() -> arm.activeStop())); 
-    controller.rightBumper().whileTrue(new Angle(arm, controller));
-    controller.povLeft().whileTrue(Commands.run(() -> arm.setPosition(-controller.getRightY())));
+    controller.rightBumper().whileFalse(Commands.run(() -> arm.activeStop())); 
+    //controller.rightBumper().whileTrue(new Angle(arm, controller));
+    controller.rightBumper().whileTrue(Commands.run(() -> arm.setPosition(-controller.getRightY())));
     controller.b().whileTrue(Commands.run(() -> shooter.setRPM(4400)));
     controller.a().whileTrue(Commands.run(() -> shooter.stopShooter()));
     controller.y().whileTrue(Commands.run(() -> intake.inTake()));

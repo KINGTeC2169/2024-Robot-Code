@@ -66,8 +66,8 @@ public final class Constants {
     }
 
     public static final class ArmConstants {
-        public static final double leftEncoderOffset = 0;
-        public static final double rightEncoderOffset = 0;
+        public static final double leftEncoderOffset = 0.980212024505301;
+        public static final double rightEncoderOffset = 0.347491458687286;
 
         public static final double armGearBox = 36;
     }
