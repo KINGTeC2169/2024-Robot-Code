@@ -45,7 +45,7 @@ public class LimelightTable {
     }
 
     public static double getID(){
-        return table.getEntry("ID").getDouble(0);
+        return table.getEntry("tid").getDouble(0);
     }
 
     public static boolean getTV(){
