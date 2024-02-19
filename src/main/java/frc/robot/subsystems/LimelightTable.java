@@ -55,9 +55,13 @@ public class LimelightTable {
     public static double getAngle(){
         return Vision.mountedAngle+LimelightTable.getTY();
     }
+
+    public static double getHeightDif(){
+        return Vision.tagHeight-Vision.mountedHeight;
+    }
     
     public static double getDistance(){
-        return (Vision.tagHeight-Vision.mountedHeight)*Math.tan(getAngle()); //Horizontal distance in feet
+        return getHeightDif() * Math.tan(getAngle()); //Horizontal distance in feet
     }
 
     /**
