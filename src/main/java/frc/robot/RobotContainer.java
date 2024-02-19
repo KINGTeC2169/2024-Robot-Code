@@ -6,26 +6,16 @@ package frc.robot;
 
 import java.util.HashMap;
 
-import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.path.PathPlannerPath;
-import com.pathplanner.lib.path.PathPlannerTrajectory;
 
-import edu.wpi.first.math.controller.ArmFeedforward;
-import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommand;
-import frc.robot.commands.MusicCommand;
-import frc.robot.commands.ButtonCommands.ArmStop;
 import frc.robot.commands.ButtonCommands.GroundPickup;
 import frc.robot.commands.ButtonCommands.IntakeNote;
 import frc.robot.commands.ButtonCommands.Launch;
@@ -63,8 +53,6 @@ public class RobotContainer {
   private final Joystick rightStick = new Joystick(Constants.Ports.rightStick);
   private final CommandXboxController controller = new CommandXboxController(Constants.Ports.controller);
   private final CommandXboxController buttonBoard = new CommandXboxController(Constants.Ports.buttons);
-
-  private ShuffleboardTab tab = Shuffleboard.getTab("Shuffleboard");
 
   //private GenericEntry songChoice = tab.add("Song Choice", 0.0).getEntry();
   
@@ -137,9 +125,9 @@ public class RobotContainer {
     */
 
     //Testing controls:
-    controller.leftBumper().whileTrue(Commands.run(() -> arm.armStop())); 
+    controller.leftBumper().whileTrue(Commands.run(() -> arm.activeStop())); 
     controller.rightBumper().whileTrue(new Angle(arm, controller));
-    controller.povLeft().whileTrue(Commands.run(() -> arm.setAngle(-controller.getRightY())));
+    controller.povLeft().whileTrue(Commands.run(() -> arm.setPosition(-controller.getRightY())));
     controller.b().whileTrue(Commands.run(() -> shooter.setRPM(4400)));
     controller.a().whileTrue(Commands.run(() -> shooter.stopShooter()));
     controller.y().whileTrue(Commands.run(() -> intake.inTake()));
@@ -158,7 +146,7 @@ public class RobotContainer {
     buttonBoard.button(7).whileTrue(new LimelightAlign(swerveSubsystem, arm, shooter));
     buttonBoard.button(8).whileTrue(new Podium(arm, shooter));
     buttonBoard.button(9).whileTrue(new Stop(shooter, intake)); 
-    buttonBoard.button(10).onTrue(Commands.run(() -> arm.armStop()));
+    buttonBoard.button(10).onTrue(Commands.run(() -> arm.activeStop()));
     buttonBoard.button(11).whileTrue(Commands.run(() -> intake.outTake()));
   }
 

@@ -23,7 +23,7 @@ public class Safe extends Command {
 
     @Override
     public void execute(){
-        arm.setAngle(desiredAngle);
+        arm.setPosition(desiredAngle);
         intake.stopTake();
     }
 
@@ -34,7 +34,7 @@ public class Safe extends Command {
     
     @Override
 	public boolean isFinished() {
-		return arm.armReady();
+		return arm.isReady();
 	}
 }
 

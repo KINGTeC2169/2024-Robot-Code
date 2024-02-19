@@ -33,7 +33,7 @@ public final class Constants {
         public static final int leftArmEncoder = 9;
         public static final int pigeon = 14;
 
-        //Swervedrive ports
+        //Swervedrive CAN ids
         public static final int frontLeftDrive = 3;
         public static final int frontLeftTurn = 2;
         public static final int frontLeftAbsolute = 10;
@@ -47,13 +47,25 @@ public final class Constants {
         public static final int backRightTurn = 8;
         public static final int backRightAbsolute = 13;
         
+        //DIO ports
+        public static final int beamBreak = 0;
 
+        //Shooter CAN ids
+        public static final int shooterTop = 17;
+        public static final int shooterBot = 18;
+
+        //Intake CAN id
+        public static final int intake = 19;
+
+        //Arm CAN ids
+        public static final int leftArm = 15;
+        public static final int rightArm = 16;
         
     }
 
-    public static final class Motors {
-        public static final int TalonFXCPR = 2048;
-        public static final int TalonSRXCPR = 8192;
+    public static final class ArmConstants {
+        public static final double leftEncoderOffset = 0;
+        public static final double rightEncoderOffset = 0;
 
         public static final double armGearBox = 36;
     }
@@ -70,8 +82,8 @@ public final class Constants {
         public static final double driveEncoderRPMToMeterPerSec = driveEncoderToMeter / 60;
         public static final double turnEncoderRPMToRadPerSec = turnEncoderToRadian / 60;
 
-        public static double PTurn = 0.31;
-        public static double PDrive = 10;
+        public static final double PTurn = 0.31;
+        public static final double PDrive = 10;
     }
 
     public static final class DriveConstants {
@@ -89,15 +101,6 @@ public final class Constants {
                 new Translation2d(frontBackWheels / 2, -rightLeftWheels / 2),//Front-Right
                 new Translation2d(-frontBackWheels / 2, rightLeftWheels / 2),//Back-Left
                 new Translation2d(-frontBackWheels / 2, -rightLeftWheels / 2));//Back-Right
-    }
-
-    public static final class DeviceID {
-        public static final int shooterTop = 17;
-        public static final int shooterBot = 18;
-        public static final int intake = 19;
-        public static final int leftArm = 15;
-        public static final int rightArm = 16;
-        
     }
 
     public static final class Vision {

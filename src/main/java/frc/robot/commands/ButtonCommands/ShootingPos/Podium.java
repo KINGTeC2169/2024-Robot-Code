@@ -25,16 +25,16 @@ public class Podium extends Command {
     @Override
     public void execute(){
         shooter.setRPM(Constants.Vision.shootRPM);
-        arm.setAngle(desiredAngle);
+        arm.setPosition(desiredAngle);
     }
 
     @Override
     public void end(boolean interupt){
-        arm.armStop();
+        arm.activeStop();
     }
     
     @Override
 	public boolean isFinished() {
-		return arm.armReady() && shooter.shooterReady();
+		return arm.isReady() && shooter.shooterReady();
 	}
 }

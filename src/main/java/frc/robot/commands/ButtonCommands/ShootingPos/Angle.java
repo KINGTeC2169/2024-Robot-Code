@@ -43,11 +43,11 @@ public class Angle extends Command {
 
     @Override
     public void end(boolean interupt){
-        arm.armStop();
+        arm.activeStop();
     }
     
     @Override
 	public boolean isFinished() {
-		return arm.armReady();
+		return arm.isReady();
 	}
 }

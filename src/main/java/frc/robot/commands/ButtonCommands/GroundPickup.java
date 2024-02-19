@@ -22,17 +22,17 @@ public class GroundPickup extends Command {
 
     @Override
     public void execute(){
-        arm.setAngle(desiredAngle);
+        arm.setPosition(desiredAngle);
         intake.inTake();
     }
 
     @Override
     public void end(boolean interupt){
-        arm.armStop();
+        arm.activeStop();
     }
     
     @Override
 	public boolean isFinished() {
-		return arm.armReady() && intake.off();
+		return arm.isReady() && !intake.isOn();
 	}
 }

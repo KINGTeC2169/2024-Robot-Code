@@ -1,0 +1,33 @@
+{
+  "HALProvider": {
+    "Other Devices": {
+      "window": {
+        "visible": false
+      }
+    }
+  },
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/Arm/Arm PID": "PIDController",
+      "/Shuffleboard/Arm/PIDController[1]": "PIDController",
+      "/Shuffleboard/Swerve/Field": "Field2d"
+    }
+  },
+  "NetworkTables": {
+    "Retained Values": {
+      "open": false
+    },
+    "transitory": {
+      "Shuffleboard": {
+        "Shooter": {
+          "open": true
+        },
+        "open": true
+      }
+    }
+  },
+  "NetworkTables Info": {
+    "visible": true
+  }
+}

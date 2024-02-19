@@ -96,18 +96,18 @@ public class SwerveSubsystem extends SubsystemBase {
 
         tab.addDouble("Robot Heading", () -> getHeading()).withWidget(BuiltInWidgets.kGyro).withSize(3, 3).withPosition(7, 0);
 
-        tab.addDouble("Rotation 2D", () -> getRotation2d().getDegrees());
+        //tab.addDouble("Rotation 2D", () -> getRotation2d().getDegrees());
 
-        tab.addDouble("Front Left Percent", () -> frontLeft.getWantedSpeed());
-        tab.addDouble("Front Right Percent", () -> frontRight.getWantedSpeed());
-        tab.addDouble("Back Left Percent", () -> backLeft.getWantedSpeed());
-        tab.addDouble("Back Right Percent", () -> backRight.getWantedSpeed());
-        tab.addDouble("180 Head", () -> head180());
+        // tab.addDouble("Front Left Percent", () -> frontLeft.getWantedSpeed());
+        // tab.addDouble("Front Right Percent", () -> frontRight.getWantedSpeed());
+        // tab.addDouble("Back Left Percent", () -> backLeft.getWantedSpeed());
+        // tab.addDouble("Back Right Percent", () -> backRight.getWantedSpeed());
+        // tab.addDouble("180 Head", () -> head180());
 
-        tab.addDouble("Abs Front Left", () -> frontLeft.getAbsoluteTurnPosition());
-        tab.addDouble("Abs Front Right", () -> frontRight.getAbsoluteTurnPosition());
-        tab.addDouble("Abs Back Left", () -> backLeft.getAbsoluteTurnPosition());
-        tab.addDouble("Abs Back Right", () -> backRight.getAbsoluteTurnPosition());
+        // tab.addDouble("Abs Front Left", () -> frontLeft.getAbsoluteTurnPosition());
+        // tab.addDouble("Abs Front Right", () -> frontRight.getAbsoluteTurnPosition());
+        // tab.addDouble("Abs Back Left", () -> backLeft.getAbsoluteTurnPosition());
+        // tab.addDouble("Abs Back Right", () -> backRight.getAbsoluteTurnPosition());
         //tab.addDouble("X", () -> odometer.getPoseMeters().getX()).withPosition(8, 3);
         //tab.addDouble("Y", () -> odometer.getPoseMeters().getY()).withPosition(9, 3);
 
@@ -204,14 +204,14 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public ChassisSpeeds getRobotRelativeSpeeds(){
-        return DriveConstants.DRIVE_KINEMATICS.toChassisSpeeds(getModuleStates()[0], 
+        return kinematics.toChassisSpeeds(getModuleStates()[0], 
                                                                 getModuleStates()[1], 
                                                                 getModuleStates()[2], 
                                                                 getModuleStates()[3]);
     }
 
     public void driveRobotRelative(ChassisSpeeds speeds){
-        setModuleStates(DriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(speeds));
+        setModuleStates(kinematics.toSwerveModuleStates(speeds));
       }
 
     public Pose2d getPose() {

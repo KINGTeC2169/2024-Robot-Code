@@ -31,6 +31,6 @@ public class Stop extends Command{
     
     @Override
 	public boolean isFinished() {
-		return shooter.off() && intake.off();
+		return shooter.off() && !intake.isOn();
 	}
 }

@@ -3,13 +3,10 @@ package frc.robot.subsystems;
 import java.util.Map;
 
 import com.ctre.phoenix6.configs.Slot0Configs;
-import com.ctre.phoenix6.controls.DifferentialDutyCycle;
-import com.ctre.phoenix6.controls.DifferentialVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
@@ -22,8 +19,8 @@ import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
     
-    TalonFX shooterTop = new TalonFX(Constants.DeviceID.shooterTop);
-    TalonFX shooterBot = new TalonFX(Constants.DeviceID.shooterBot);
+    TalonFX shooterTop = new TalonFX(Constants.Ports.shooterTop);
+    TalonFX shooterBot = new TalonFX(Constants.Ports.shooterBot);
 
     final VelocityVoltage m_velocity = new VelocityVoltage(0);
     final VelocityVoltage m_velocity1 = new VelocityVoltage(0);
@@ -32,11 +29,10 @@ public class Shooter extends SubsystemBase {
 
     final VoltageOut request = new VoltageOut(0);
     double currentPower;
-    PIDController rpmLoop = new PIDController(0.2, 0, 0);
 
     private ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
 
-     private  GenericEntry shooterSpeed = tab.add("Shooter Speed", 0.5).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).getEntry();
+    private GenericEntry shooterSpeed = tab.add("Shooter Speed", 0.5).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).withPosition(4, 0).getEntry();
 
     public Shooter(){
 
@@ -48,13 +44,18 @@ public class Shooter extends SubsystemBase {
 
         setRPM = 300;
 
-        tab.addBoolean("Shooter Ready", () -> shooterReady());
-        tab.addDouble("Shoot RPM Top", () -> getRPM()[0]);
-        tab.addDouble("Shoot RPM Bot", () -> getRPM()[1]);
-        tab.addDouble("Shoot Top Volt", () -> getShootVoltage()[0]);
-        tab.addDouble("Shoot Bot Volt", () -> getShootVoltage()[1]);
-        tab.addDouble("PID top", () -> getPID()[0]);
-        tab.addDouble("PID bot", () -> getPID()[1]);
+        ShuffleboardLayout topMotor = tab.getLayout("Top Motor", BuiltInLayouts.kList).withPosition(0, 0).withSize(2, 4);
+        topMotor.addDouble("Top Motor RPM", () -> getRPM()[0]).withWidget(BuiltInWidgets.kDial).withProperties(Map.of("Max", 4000));
+        topMotor.addDouble("Top Motor Voltage", () -> getShootVoltage()[0]).withWidget(BuiltInWidgets.kVoltageView);
+        topMotor.addDouble("Top Motor Current", () -> getShootCurrent()[0]).withWidget(BuiltInWidgets.kDial);
+
+        ShuffleboardLayout bottomMotor = tab.getLayout("Bottom Motor", BuiltInLayouts.kList).withPosition(2, 0).withSize(2, 4);
+        bottomMotor.addDouble("Bottom Motor RPM", () -> getRPM()[1]).withWidget(BuiltInWidgets.kDial).withProperties(Map.of("Max", 4000));
+        bottomMotor.addDouble("Bottom Motor Voltage", () -> getShootVoltage()[1]).withWidget(BuiltInWidgets.kVoltageView);
+        bottomMotor.addDouble("Bottom Motor Current", () -> getShootCurrent()[0]).withWidget(BuiltInWidgets.kDial);
+
+        tab.addBoolean("Shooter Ready", () -> shooterReady()).withPosition(6, 0);
+
     }
 
     public void setPower(double power){
@@ -76,13 +77,6 @@ public class Shooter extends SubsystemBase {
     public double[] getRPM(){
         return new double[]{((60 * shooterTop.getRotorVelocity().getValue())),
                             ((60 * shooterBot.getRotorVelocity().getValue()))};
-    }
-
-    public double[] getPID(){
-        double rpm = 300;
-
-        return new double[]{rpmLoop.calculate(getRPM()[0], rpm),
-                            rpmLoop.calculate(getRPM()[1], rpm)};
     }
 
     public void setRPM(double rpm){
@@ -113,7 +107,6 @@ public class Shooter extends SubsystemBase {
     }
 
     public void stopShooter() {
-        rpmLoop.reset();
         shooterTop.set(0); 
         shooterBot.set(0);
     }

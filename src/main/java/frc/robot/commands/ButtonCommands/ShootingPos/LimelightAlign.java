@@ -40,17 +40,17 @@ public class LimelightAlign extends Command {
         SwerveModuleState[] moduleStates = DriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
         swerveSubsystem.setModuleStates(moduleStates);
 
-        arm.setAngle(LimelightTable.aimShot());
+        arm.setPosition(LimelightTable.aimShot());
         shooter.setRPM(Constants.Vision.shootRPM);
     }
 
     @Override
     public void end(boolean interrupted) {
-        arm.armStop();
+        arm.activeStop();
     }
 
     @Override
     public boolean isFinished() {
-        return arm.armReady() && shooter.shooterReady();
+        return arm.isReady() && shooter.shooterReady();
     }
 }

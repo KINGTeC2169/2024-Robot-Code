@@ -16,7 +16,7 @@ public class ArmStop extends Command{
 
     @Override
     public void execute(){
-        arm.armStop();
+        arm.activeStop();
     }
 
     @Override
@@ -25,6 +25,6 @@ public class ArmStop extends Command{
     
     @Override
 	public boolean isFinished() {
-		return arm.off();
+		return arm.isReady();
 	}
 }
