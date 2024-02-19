@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import static java.lang.Math.*;
+
+import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -13,9 +15,11 @@ import frc.robot.Constants.Vision;
 public class LimelightTable {
     private static NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     private ShuffleboardTab tab = Shuffleboard.getTab("Limelight");
+    private HttpCamera limelightCam = new HttpCamera("limelight", "http://10.21.69.33:5800");
 
     //This constructor adds data to the Limelight Shuffleboard tab
     public LimelightTable(){
+        tab.add("Limelight", limelightCam);
         tab.addNumber("TX", () -> getTX());
         tab.addNumber("TY", () -> getTY());
         tab.addNumber("TA", () -> getTA());
@@ -24,7 +28,7 @@ public class LimelightTable {
         tab.addNumber("TagID", () -> getID());
         tab.addNumber("Distance", () -> getDistance());
         tab.addNumber("Aim shot", () -> aimShot());
-        tab.addNumber("Angle", () -> Vision.mountedAngle+LimelightTable.getTY());
+        tab.addDouble("Angle", () -> (Vision.mountedAngle + LimelightTable.getTY()));
 
     }
 
