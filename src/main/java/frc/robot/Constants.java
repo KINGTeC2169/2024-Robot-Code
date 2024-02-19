@@ -7,8 +7,8 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DutyCycle;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -60,6 +60,8 @@ public final class Constants {
         //Arm CAN ids
         public static final int leftArm = 15;
         public static final int rightArm = 16;
+
+        public static final Port arduino = SerialPort.Port.kUSB1;
         
     }
 
