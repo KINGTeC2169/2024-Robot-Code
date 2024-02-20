@@ -9,8 +9,11 @@ import java.util.HashMap;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -50,15 +53,14 @@ public class RobotContainer {
   private final Shooter shooter = new Shooter();
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
-  //Driver Station:
+  //Driver Station controllers
   private final Joystick leftStick = new Joystick(Constants.Ports.leftStick);
   private final Joystick rightStick = new Joystick(Constants.Ports.rightStick);
   private final CommandXboxController controller = new CommandXboxController(Constants.Ports.controller);
   private final CommandXboxController buttonBoard = new CommandXboxController(Constants.Ports.buttons);
 
-  //private GenericEntry songChoice = tab.add("Song Choice", 0.0).getEntry();
-  
-  //private Command themeSong; 
+  private ShuffleboardTab tab = Shuffleboard.getTab("Auto Chooser");
+  private GenericEntry autoChoice = tab.add("Auto Choice", 0).withPosition(3, 0).getEntry();
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -69,15 +71,13 @@ public class RobotContainer {
     NamedCommands.registerCommand("Podium Launch", new Podium(arm, shooter));
     NamedCommands.registerCommand("Rev and Launch 1", new RevAndAngle(arm, shooter, 0)); 
     NamedCommands.registerCommand("Rev and Launch 2", new RevAndAngle(arm, shooter, 0));
-    
-    //Initalize autos
-    //PathPlannerAuto ampPath = PathPlannerAuto.getPathGroupFromAutoFile("2 Ring Amp");
-
-    // Configure the trigger bindings
 
     //themeSong = new MusicCommand(swerveSubsystem, "src\\main\\deploy\\ThunderStruck.chrp");
+    tab.addString("Auto 1.0", () -> "Test auto").withSize(3, 1).withPosition(0, 0);
+    tab.addString("Auto 2.0", () -> "Not test auto").withSize(3, 1).withPosition(0, 1);
+    tab.addString("Auto 0.0", () -> "null").withSize(3, 1).withPosition(0, 2);
 
-    HashMap<String, Command> ampMap = new HashMap<String, Command>();
+
 
     swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
     () -> leftStick.getY(),
@@ -89,6 +89,7 @@ public class RobotContainer {
     () -> leftStick.getRawButton(1)
 		));
 
+    // Configure the trigger bindings
     configureBindings();
   }
 
@@ -102,13 +103,6 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    //new Trigger(m_exampleSubsystem::exampleCondition)
-    //    .onTrue(new ExampleCommand(m_exampleSubsystem));
-
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
 
     //Jalol controls:
     /* 
@@ -158,7 +152,21 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return new PathPlannerAuto("Test");
+    if (autoChoice.getDouble(0.0) == 1.0){
+      return new PathPlannerAuto("Test");
+    }
+
+    else if (autoChoice.getDouble(0.0) == 2.0){
+      
+    }
+
+    else if (autoChoice.getDouble(0.0) == 3.0){
+      
+    }
+
+    else if (autoChoice.getDouble(0.0) == 4.0){
+      
+    }
+    return null;
   }
 }

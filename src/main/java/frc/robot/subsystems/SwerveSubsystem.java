@@ -111,7 +111,7 @@ public class SwerveSubsystem extends SubsystemBase {
         //tab.addDouble("X", () -> odometer.getPoseMeters().getX()).withPosition(8, 3);
         //tab.addDouble("Y", () -> odometer.getPoseMeters().getY()).withPosition(9, 3);
 
-        tab.add(field).withPosition(3, 0).withSize(5, 3);
+        tab.add(field).withPosition(2, 0).withSize(5, 3);
 
         // Configure AutoBuilder last
         AutoBuilder.configureHolonomic(
