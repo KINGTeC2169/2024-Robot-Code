@@ -81,15 +81,15 @@ public class SwerveSubsystem extends SubsystemBase {
         ShuffleboardLayout driveCurrents = tab.getLayout("Drive Currents", BuiltInLayouts.kGrid).withSize(2, 2).withProperties(Map.of("Number of rows", 2)).withPosition(0, 0);
         ShuffleboardLayout turnCurrents = tab.getLayout("Turn Currents", BuiltInLayouts.kGrid).withSize(2, 2).withProperties(Map.of("Number of rows", 2)).withPosition(0, 2);
 
-        driveCurrents.addDouble("Front Left", () -> frontLeft.getDriveCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL"));
-        driveCurrents.addDouble("Front Right", () -> frontRight.getDriveCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL"));
-        driveCurrents.addDouble("Back Left", () -> backLeft.getDriveCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL"));
-        driveCurrents.addDouble("Back Right", () -> backRight.getDriveCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL"));
+        driveCurrents.addDouble("Front Left", () -> frontLeft.getDriveCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL", "Max", 100));
+        driveCurrents.addDouble("Front Right", () -> frontRight.getDriveCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL", "Max", 100));
+        driveCurrents.addDouble("Back Left", () -> backLeft.getDriveCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL", "Max", 100));
+        driveCurrents.addDouble("Back Right", () -> backRight.getDriveCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL", "Max", 100));
 
-        turnCurrents.addDouble("Front Left", () -> frontLeft.getTurnCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL"));
-        turnCurrents.addDouble("Front Right", () -> frontRight.getTurnCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL"));
-        turnCurrents.addDouble("Back Left", () -> backLeft.getTurnCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL"));
-        turnCurrents.addDouble("Back Right", () -> backRight.getTurnCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL"));
+        turnCurrents.addDouble("Front Left", () -> frontLeft.getTurnCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL", "Max", 100));
+        turnCurrents.addDouble("Front Right", () -> frontRight.getTurnCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL", "Max", 100));
+        turnCurrents.addDouble("Back Left", () -> backLeft.getTurnCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL", "Max", 100));
+        turnCurrents.addDouble("Back Right", () -> backRight.getTurnCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL", "Max", 100));
 
 
         //tab.add("Test", "Balls").withWidget(BuiltInWidgets.kComboBoxChooser);
@@ -111,7 +111,7 @@ public class SwerveSubsystem extends SubsystemBase {
         //tab.addDouble("X", () -> odometer.getPoseMeters().getX()).withPosition(8, 3);
         //tab.addDouble("Y", () -> odometer.getPoseMeters().getY()).withPosition(9, 3);
 
-        tab.add(field).withPosition(2, 0).withSize(5, 3);
+        tab.add(field).withPosition(3, 0).withSize(5, 3);
 
         // Configure AutoBuilder last
         AutoBuilder.configureHolonomic(

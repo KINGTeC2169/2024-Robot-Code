@@ -46,12 +46,12 @@ public class Shooter extends SubsystemBase {
 
         ShuffleboardLayout topMotor = tab.getLayout("Top Motor", BuiltInLayouts.kList).withPosition(0, 0).withSize(2, 4);
         topMotor.addDouble("Top Motor RPM", () -> getRPM()[0]).withWidget(BuiltInWidgets.kDial).withProperties(Map.of("Max", 4000));
-        topMotor.addDouble("Top Motor Voltage", () -> getShootVoltage()[0]).withWidget(BuiltInWidgets.kVoltageView);
+        topMotor.addDouble("Top Motor Voltage", () -> getShootVoltage()[0]).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Max", 12));
         topMotor.addDouble("Top Motor Current", () -> getShootCurrent()[0]).withWidget(BuiltInWidgets.kDial);
 
         ShuffleboardLayout bottomMotor = tab.getLayout("Bottom Motor", BuiltInLayouts.kList).withPosition(2, 0).withSize(2, 4);
         bottomMotor.addDouble("Bottom Motor RPM", () -> getRPM()[1]).withWidget(BuiltInWidgets.kDial).withProperties(Map.of("Max", 4000));
-        bottomMotor.addDouble("Bottom Motor Voltage", () -> getShootVoltage()[1]).withWidget(BuiltInWidgets.kVoltageView);
+        bottomMotor.addDouble("Bottom Motor Voltage", () -> getShootVoltage()[1]).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Max", 12));
         bottomMotor.addDouble("Bottom Motor Current", () -> getShootCurrent()[0]).withWidget(BuiltInWidgets.kDial);
 
         tab.addBoolean("Shooter Ready", () -> shooterReady()).withPosition(6, 0);

@@ -49,12 +49,12 @@ public class Arm extends SubsystemBase {
         tab.add("Arm PID", armPID).withSize(2, 2).withPosition(0, 0);
 
         ShuffleboardLayout leftMotor = tab.getLayout("Left Motor", BuiltInLayouts.kList).withPosition(2, 0).withSize(2, 4).withProperties(Map.of("Number of columns", 1, "Number of rows", 3));
-        leftMotor.addDouble("Voltage", () -> getVoltage()[0]).withWidget(BuiltInWidgets.kVoltageView).withPosition(0, 1);
+        leftMotor.addDouble("Voltage", () -> getVoltage()[0]).withWidget(BuiltInWidgets.kVoltageView).withPosition(0, 1).withProperties(Map.of("Max", 12));
         leftMotor.addDouble("Encoder Position", () -> getPosition()[0]).withWidget(BuiltInWidgets.kDial).withPosition(0, 2).withProperties(Map.of("Max", 1, "Min", -1));
         leftMotor.addDouble("Current", () -> getCurrent()[0]).withWidget(BuiltInWidgets.kDial).withPosition(0, 0);
 
         ShuffleboardLayout rightMotor = tab.getLayout("Right Motor", BuiltInLayouts.kList).withPosition(4, 0).withSize(2, 4).withProperties(Map.of("Number of columns", 1, "Number of rows", 3));
-        rightMotor.addDouble("Voltage", () -> getVoltage()[1]).withWidget(BuiltInWidgets.kVoltageView).withPosition(0, 1);
+        rightMotor.addDouble("Voltage", () -> getVoltage()[1]).withWidget(BuiltInWidgets.kVoltageView).withPosition(0, 1).withProperties(Map.of("Max", 12));
         rightMotor.addDouble("Current", () -> getCurrent()[1]).withWidget(BuiltInWidgets.kDial).withPosition(0, 0);
         rightMotor.addDouble("Encoder Position", () -> getPosition()[1]).withWidget(BuiltInWidgets.kDial).withPosition(0, 2).withProperties(Map.of("Max", 1, "Min", -1));
 

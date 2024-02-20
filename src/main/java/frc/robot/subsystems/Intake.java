@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -26,7 +25,7 @@ public class Intake extends SubsystemBase{
         intakeMotor = new TalonFX(Constants.Ports.intake);
         beamBreak = new DigitalInput(Constants.Ports.beamBreak);
 
-        tab.addDouble("Intake Voltage", () -> getVoltage()).withWidget(BuiltInWidgets.kVoltageView).withSize(2, 1).withPosition(0, 0);
+        tab.addDouble("Intake Voltage", () -> getVoltage()).withWidget(BuiltInWidgets.kVoltageView).withSize(2, 1).withPosition(0, 0).withProperties(Map.of("Max", 12));
         tab.addBoolean("Has note", () -> hasNote()).withPosition(2, 0);
         tab.addBoolean("Intake On", () -> isOn()).withWidget(BuiltInWidgets.kBooleanBox).withPosition(3, 0);
         intakeSpeed = tab.add("Intake Speed", 0.2).withWidget(BuiltInWidgets.kNumberSlider).withPosition(4, 0).withSize(2, 1).withProperties(Map.of("Min", 0)).getEntry();

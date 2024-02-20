@@ -2,9 +2,12 @@ package frc.robot.subsystems;
 
 import static java.lang.Math.*;
 
+import java.util.Map;
+
 import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,17 +22,19 @@ public class LimelightTable {
 
     //This constructor adds data to the Limelight Shuffleboard tab
     public LimelightTable(){
-        tab.add("Limelight", limelightCam);
-        tab.addNumber("TX", () -> getTX());
-        tab.addNumber("TY", () -> getTY());
-        tab.addNumber("TA", () -> getTA());
-        tab.addNumber("TS", () -> getTS());
-        tab.addBoolean("canSeeTag", () -> getTV());
-        tab.addNumber("TagID", () -> getID());
-        tab.addNumber("Distance", () -> getDistance());
-        tab.addNumber("Aim shot", () -> aimShot());
-        tab.addDouble("Angle", () -> (getAngle()));
-        tab.addDouble("HeightDif", () -> getHeightDif());
+        tab.addNumber("TX", () -> getTX()).withPosition(0, 0);
+        tab.addNumber("TY", () -> getTY()).withPosition(1, 0);
+        tab.addNumber("TA", () -> getTA()).withPosition(0, 1);
+        tab.addNumber("TS", () -> getTS()).withPosition(1, 1);
+        tab.addBoolean("canSeeTag", () -> getTV()).withPosition(0, 2);
+        tab.addNumber("TagID", () -> getID()).withPosition(1, 2);
+
+        tab.add("Limelight", limelightCam).withWidget(BuiltInWidgets.kCameraStream).withSize(3, 3).withPosition(2, 0).withProperties(Map.of("Show Controls", false));
+
+        tab.addNumber("Distance", () -> getDistance()).withPosition(5, 0);
+        tab.addNumber("Aim shot", () -> aimShot()).withPosition(6, 0);
+        tab.addDouble("Angle", () -> (getAngle())).withPosition(5, 1);
+        tab.addDouble("HeightDif", () -> getHeightDif()).withPosition(6, 1);
 
     }
 
