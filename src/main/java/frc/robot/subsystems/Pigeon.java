@@ -20,38 +20,47 @@ public class Pigeon {
         tab.addDouble("Angle", () -> getAngle());
     }
 
+    /**Returns Yaw/X. */
     public static double getX(){
         return pigeon.getYaw().getValueAsDouble();
     }
 
+    /**Returns Pitch/Y. */
     public static double getY(){
         return pigeon.getPitch().getValueAsDouble();
     }
 
+    /**Returns the roll. */
     public static double getRoll(){
         return pigeon.getRoll().getValueAsDouble();
     }
 
+    /**Returns Pitch/Y. */
     public static double getPitch(){
         return pigeon.getPitch().getValueAsDouble();
     }
 
+    /**Returns Yaw/X. */
     public static double getYaw(){
         return pigeon.getYaw().getValueAsDouble();
     }
 
+    /**Returns the rotation2d. */
     public static Rotation2d getRotation2d(){
         return pigeon.getRotation2d();
     }
 
+    /**Returns the heading of the robot in degrees. */
     public static double getAngle(){
         return pigeon.getAngle();
     }
 
+    /**Resets the pigeon. */
     public static void reset(){
         pigeon.reset();
     }
 
+    /**Reconfigures the pigeon. */
     public static void configure(){
         pigeon.getConfigurator().apply(new Pigeon2Configuration());
     }

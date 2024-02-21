@@ -152,22 +152,27 @@ public class SwerveSubsystem extends SubsystemBase {
         }).start();
     }
 
+    /**Returns the field. */
     public Field2d getField() {
         return field;
     }
 
+    /**Returns the fast speed, which is adjustable via the slider on shuffleboard.*/
     public double getFastSpeed() {
         return fastSpeed.getDouble(0.8);
     }
 
+    /**Returns the medium speed, which is adjustable via the slider on shuffleboard.*/
     public double getMediumSpeed() {
         return mediumSpeed.getDouble(0.65);
     }
 
+    /**Returns the slow speed, which is adjustable via the slider on shuffleboard.*/
     public double getSlowSpeed() {
         return slowSpeed.getDouble(0.3);
     }
     
+    /**Returns the Module positions of the 4 swerve modules in the order frontLeft, frontRight, backLeft, backRight.*/
     public SwerveModulePosition[] getModulePositions() {
         return new SwerveModulePosition[] {
         frontLeft.getModulePosition(),
@@ -178,27 +183,25 @@ public class SwerveSubsystem extends SubsystemBase {
         
     }
 
+    /**Resets the Pigeon.*/
     public void zeroHeading() {
         System.out.println("Zeroing gyro \n.\n.\n.\n.\n.\n.\n.");
         Pigeon.reset();
     }
 
+    /**Returns the heading of the pigeon.*/
     public double getHeading() {
         //return Math.IEEEremainder(NavX.getAngle(), 360);
         return Pigeon.getAngle() % 360;
     }
-    public double head180() {
-        return  Math.IEEEremainder(Pigeon.getAngle(), 360);
-    }
 
+    /**Returns the rotation2d from the pigeon.*/
     public Rotation2d getRotation2d() {
         return Pigeon.getRotation2d();
         //return Rotation2d.fromDegrees(-getHeading());
     }
-    public Rotation2d getAdjustedRotation() {
-        return new Rotation2d(Pigeon.getRotation2d().getRadians() + Math.PI);
-    }
 
+    /**Returns chassis speeds that are relative to the robot's front.*/
     public ChassisSpeeds getRobotRelativeSpeeds(){
         return kinematics.toChassisSpeeds(getModuleStates()[0], 
                                           getModuleStates()[1], 
@@ -206,20 +209,23 @@ public class SwerveSubsystem extends SubsystemBase {
                                           getModuleStates()[3]);
     }
 
+    /**Sets swerve module states relative to the robot's front. */
     public void driveRobotRelative(ChassisSpeeds speeds){
         setModuleStates(kinematics.toSwerveModuleStates(speeds));
-      }
+    }
 
+    /**Returns the odometer's position in the form of a Pose2d. */
     public Pose2d getPose() {
         //return NavX.getPose();
         return odometer.getPoseMeters();
     }
 
+    /**Resets the position of the odometer using the rotation2d of the pigeon, the module positions, and a pose2d. */
     public void resetOdometry(Pose2d pose) {
         odometer.resetPosition(getRotation2d(), getModulePositions(), pose);
     }
 
-
+    /**Resets the encoders of the 4 swerve modules. */
     public void resetEncoders() {
         frontLeft.resetEncoders();
         frontRight.resetEncoders();
@@ -255,6 +261,7 @@ public class SwerveSubsystem extends SubsystemBase {
         */
     }
 
+    /**Stops all 4 swerve modules. */
     public void stopModules() {
         frontLeft.stop();
         frontRight.stop();
@@ -273,6 +280,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     }
 
+    /**Sets modules states for autos only. */
     public void setAutoModuleStates(SwerveModuleState[] states) {
 
         SwerveDriveKinematics.desaturateWheelSpeeds(states, ModuleConstants.maxSpeed);
@@ -283,6 +291,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     }
 
+    /**Gets all 4 swerve module states. */
     public SwerveModuleState[] getModuleStates() {
         return new SwerveModuleState[] {
             frontLeft.getState(),
@@ -291,12 +300,14 @@ public class SwerveSubsystem extends SubsystemBase {
             backRight.getState()};
     }
 
+    /**Stops the wheels. Untested. Not used.*/
     public void fullStop() {
         frontLeft.fullStop();
         frontRight.fullStop();
         backLeft.fullStop();
         backRight.fullStop();
     }
+
     /**Puts wheels in 'X' position and sets driving to a velocity-PID loop set at 0m/s */
     public void setActiveStop() {
         System.out.println("1\n1\n1\n1\n1\n1\n1\n1");

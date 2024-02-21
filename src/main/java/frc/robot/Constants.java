@@ -27,10 +27,6 @@ public final class Constants {
         public static final int controller = 2;
         public static final int buttons = 3;
 
-        //public static final SerialPort arduino = new SerialPort(9600, SerialPort.Port.kUSB1);
-        //public static final int beamBreak = 1;
-        public static final int rightArmEncoder = 8;
-        public static final int leftArmEncoder = 9;
         public static final int pigeon = 14;
 
         //Swervedrive CAN ids
@@ -49,6 +45,8 @@ public final class Constants {
         
         //DIO ports
         public static final int beamBreak = 0;
+        public static final int rightArmEncoder = 8;
+        public static final int leftArmEncoder = 9;
 
         //Shooter CAN ids
         public static final int shooterTop = 17;

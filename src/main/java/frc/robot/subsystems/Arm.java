@@ -84,8 +84,8 @@ public class Arm extends SubsystemBase {
 
     public void setPosition(double position) {
         setPosition = position;
-        leftArm.setVoltage(armPID.calculate(getPosition()[0], position));
-        rightArm.setVoltage(armPID.calculate(getPosition()[1], position));
+        leftArm.set(armPID.calculate(getPosition()[0], position));
+        rightArm.set(armPID.calculate(getPosition()[1], position));
     }
 
     public void activeStop(){

@@ -45,7 +45,6 @@ import frc.robot.subsystems.SwerveSubsystem;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-
   private final LimelightTable limelight = new LimelightTable();
   private final Pigeon pigeon = new Pigeon();
   private final Arm arm = new Arm();
@@ -59,6 +58,7 @@ public class RobotContainer {
   private final CommandXboxController controller = new CommandXboxController(Constants.Ports.controller);
   private final CommandXboxController buttonBoard = new CommandXboxController(Constants.Ports.buttons);
 
+  //Shuffleboard
   private ShuffleboardTab tab = Shuffleboard.getTab("Auto Chooser");
   private GenericEntry autoChoice = tab.add("Auto Choice", 0).withPosition(3, 0).getEntry();
   
@@ -76,8 +76,6 @@ public class RobotContainer {
     tab.addString("Auto 1.0", () -> "Test auto").withSize(3, 1).withPosition(0, 0);
     tab.addString("Auto 2.0", () -> "Not test auto").withSize(3, 1).withPosition(0, 1);
     tab.addString("Auto 0.0", () -> "null").withSize(3, 1).withPosition(0, 2);
-
-
 
     swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
     () -> leftStick.getY(),

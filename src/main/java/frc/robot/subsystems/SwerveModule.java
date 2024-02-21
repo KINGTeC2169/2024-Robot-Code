@@ -76,16 +76,11 @@ public class SwerveModule {
 
     }
 
-    //These commands are for tuning the pid controller
-
-    public void updateDrivePID(double kp){
-       driveMotor.config_kP(0, kp);
-    }
-
-    public void updateTurnPID(double kp){
-        turningPID.setP(kp);
-    }
-
+    /**
+     * Gets the drive position from the drive encoder
+     * 
+     * @return drivePosition -the position of the relative encoder
+     */
     public double getDrivePosition() {
         //return driveMotor.getSelectedSensorPosition() * driveEncoderToMeter;
         return -driveMotor.getSelectedSensorPosition() * (0.32 / 13824);
@@ -95,46 +90,57 @@ public class SwerveModule {
     public double getTurnPosition() {
         return turnEncoder.getPosition();
     }
+
+    /**Returns the rotation2d of the swerve module.*/
     public Rotation2d getRotation2d() {
         //return Rotation2d.fromDegrees(getTurnPosition());
         return Rotation2d.fromRadians(getTurnPosition());
     }
 
-    
+    /**Returns the velocity of the drive motor. */
     public double getDriveVelocity() {
         return driveMotor.getSelectedSensorVelocity() * driveEncoderRPMToMeterPerSec;
     }
 
+    /**Returns the velocity of the turn motor. */
     public double getTurnVelocity() {
         return turnEncoder.getVelocity();
         //>return turnMotor.getSelectedSensorVelocity();
     }
 
+    /**Returns the absolute position of the CANcoder. */
     public double getAbsoluteTurnPosition() {
         return absoluteEncoder.getAbsolutePosition();
     }
 
+    /**Returns the current of the drive motor. */
     public double getDriveCurrent() {
         return driveMotor.getSupplyCurrent();
     }
 
+    /**Returns the current of the turn motor. */
     public double getTurnCurrent() {
         return turnMotor.getOutputCurrent();
     }
 
+    /**Resets the relative turn motor encoder to the absolute turn position of the CANcoder. */
     public void resetEncoders() {
         driveMotor.setSelectedSensorPosition(0);
         turnEncoder.setPosition(getAbsoluteTurnPosition());
         System.out.println("RESETTING ENCODERS \nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS");
     }
 
+    /**Returns the state of the swerve module. */
     public SwerveModuleState getState() {
         return new SwerveModuleState(getDriveVelocity(), new Rotation2d(getTurnPosition()));
     }
+
+    /**Get the module position. */
     public SwerveModulePosition getModulePosition() {
         return new SwerveModulePosition(getDrivePosition(), getRotation2d());
     }
 
+    /**Sets the desired state of the swerve module. */
     public void setDesiredState(SwerveModuleState state) {
         if (Math.abs(state.speedMetersPerSecond) < 0.001) {
             stop();
@@ -159,6 +165,8 @@ public class SwerveModule {
         turnMotor.set(turningPID.calculate(getTurnPosition(), state.angle.getRadians()));
 
     }
+
+    /**Sets the state of the swerve module. */
     public void setState(SwerveModuleState state) {
         state = SwerveModuleState.optimize(state, getState().angle);
 
@@ -167,14 +175,12 @@ public class SwerveModule {
         turnMotor.set(turningPID.calculate(getTurnPosition(), state.angle.getRadians()));
     }
 
-    public double getError() {
-        return driveMotor.getClosedLoopError();
-    }
-
+    /**Returns the wanted speed. */
     public double getWantedSpeed() {
         return wantedSpeed;
     }
 
+    /**Stops the swerve module. */
     public void stop() {
         wantedSpeed = 0;
         //driveMotor.set(ControlMode.Velocity, 0);
@@ -193,6 +199,7 @@ public class SwerveModule {
         turnMotor.set(0);
     }
 
+    /**Sets the velocity of the drive motor to 0 and the speed of the turn motor to 0. */
     public void fullStop() {
         driveMotor.set(ControlMode.Velocity, 0);
         turnMotor.set(0);
@@ -207,5 +214,4 @@ public class SwerveModule {
         driveMotor.set(ControlMode.PercentOutput, 0);
         turnMotor.set(turningPID.calculate(getTurnPosition(), state.angle.getRadians()));
     }
-
 }
