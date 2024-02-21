@@ -4,14 +4,11 @@
 
 package frc.robot;
 
-import java.util.HashMap;
-
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,12 +17,10 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ButtonCommands.GroundPickup;
-import frc.robot.commands.ButtonCommands.IntakeNote;
 import frc.robot.commands.ButtonCommands.Launch;
 import frc.robot.commands.ButtonCommands.Safe;
 import frc.robot.commands.ButtonCommands.Stop;
 import frc.robot.commands.ButtonCommands.ShootingPos.Amp;
-import frc.robot.commands.ButtonCommands.ShootingPos.Angle;
 import frc.robot.commands.ButtonCommands.ShootingPos.LimelightAlign;
 import frc.robot.commands.ButtonCommands.ShootingPos.Podium;
 import frc.robot.commands.ButtonCommands.ShootingPos.RevAndAngle;
