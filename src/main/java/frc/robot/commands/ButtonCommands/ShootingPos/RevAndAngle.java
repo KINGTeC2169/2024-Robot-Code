@@ -36,6 +36,6 @@ public class RevAndAngle extends Command {
     
     @Override
 	public boolean isFinished() {
-		return arm.isReady() && shooter.shooterReady();
+		return arm.isReady();
 	}
 }

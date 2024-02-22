@@ -4,14 +4,11 @@
 
 package frc.robot;
 
-import java.util.HashMap;
-
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,12 +17,10 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ButtonCommands.GroundPickup;
-import frc.robot.commands.ButtonCommands.IntakeNote;
 import frc.robot.commands.ButtonCommands.Launch;
 import frc.robot.commands.ButtonCommands.Safe;
 import frc.robot.commands.ButtonCommands.Stop;
 import frc.robot.commands.ButtonCommands.ShootingPos.Amp;
-import frc.robot.commands.ButtonCommands.ShootingPos.Angle;
 import frc.robot.commands.ButtonCommands.ShootingPos.LimelightAlign;
 import frc.robot.commands.ButtonCommands.ShootingPos.Podium;
 import frc.robot.commands.ButtonCommands.ShootingPos.RevAndAngle;
@@ -45,7 +40,6 @@ import frc.robot.subsystems.SwerveSubsystem;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-
   private final LimelightTable limelight = new LimelightTable();
   private final Pigeon pigeon = new Pigeon();
   private final Arm arm = new Arm();
@@ -59,6 +53,7 @@ public class RobotContainer {
   private final CommandXboxController controller = new CommandXboxController(Constants.Ports.controller);
   private final CommandXboxController buttonBoard = new CommandXboxController(Constants.Ports.buttons);
 
+  //Shuffleboard
   private ShuffleboardTab tab = Shuffleboard.getTab("Auto Chooser");
   private GenericEntry autoChoice = tab.add("Auto Choice", 0).withPosition(3, 0).getEntry();
   
@@ -76,8 +71,6 @@ public class RobotContainer {
     tab.addString("Auto 1.0", () -> "Test auto").withSize(3, 1).withPosition(0, 0);
     tab.addString("Auto 2.0", () -> "Not test auto").withSize(3, 1).withPosition(0, 1);
     tab.addString("Auto 0.0", () -> "null").withSize(3, 1).withPosition(0, 2);
-
-
 
     swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
     () -> leftStick.getY(),
@@ -124,9 +117,9 @@ public class RobotContainer {
     controller.rightBumper().whileFalse(Commands.run(() -> arm.activeStop())); 
     //controller.rightBumper().whileTrue(new Angle(arm, controller));
     controller.rightBumper().whileTrue(Commands.run(() -> arm.setPosition(-controller.getRightY())));
-    controller.b().whileTrue(Commands.run(() -> shooter.setRPM(4400)));
-    controller.a().whileTrue(Commands.run(() -> shooter.stopShooter()));
-    controller.y().whileTrue(Commands.run(() -> intake.inTake()));
+    controller.b().whileTrue(new RevAndAngle(arm, shooter, 0.5));
+    controller.a().whileTrue(new RevAndAngle(arm, shooter, 0.75));
+    controller.y().whileTrue(new RevAndAngle(arm, shooter, 0.25));
     controller.y().whileFalse(Commands.run(() -> intake.stopTake()));
     controller.x().whileTrue(Commands.run(() -> intake.outTake()));
     controller.x().whileFalse(Commands.run(() -> intake.stopTake()));

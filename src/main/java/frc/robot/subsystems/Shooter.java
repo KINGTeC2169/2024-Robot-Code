@@ -3,8 +3,6 @@ package frc.robot.subsystems;
 import java.util.Map;
 
 import com.ctre.phoenix6.configs.Slot0Configs;
-import com.ctre.phoenix6.controls.VelocityVoltage;
-import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.networktables.GenericEntry;
@@ -21,13 +19,9 @@ public class Shooter extends SubsystemBase {
     
     TalonFX shooterTop = new TalonFX(Constants.Ports.shooterTop);
     TalonFX shooterBot = new TalonFX(Constants.Ports.shooterBot);
-
-    final VelocityVoltage m_velocity = new VelocityVoltage(0);
-    final VelocityVoltage m_velocity1 = new VelocityVoltage(0);
     double setRPM;
     double setPower;
 
-    final VoltageOut request = new VoltageOut(0);
     double currentPower;
 
     private ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
@@ -46,12 +40,12 @@ public class Shooter extends SubsystemBase {
 
         ShuffleboardLayout topMotor = tab.getLayout("Top Motor", BuiltInLayouts.kList).withPosition(0, 0).withSize(2, 4);
         topMotor.addDouble("Top Motor RPM", () -> getRPM()[0]).withWidget(BuiltInWidgets.kDial).withProperties(Map.of("Max", 4000));
-        topMotor.addDouble("Top Motor Voltage", () -> getShootVoltage()[0]).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Max", 12));
+        topMotor.addDouble("Top Motor Voltage", () -> getVoltage()[0]).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Max", 12));
         topMotor.addDouble("Top Motor Current", () -> getShootCurrent()[0]).withWidget(BuiltInWidgets.kDial);
 
         ShuffleboardLayout bottomMotor = tab.getLayout("Bottom Motor", BuiltInLayouts.kList).withPosition(2, 0).withSize(2, 4);
         bottomMotor.addDouble("Bottom Motor RPM", () -> getRPM()[1]).withWidget(BuiltInWidgets.kDial).withProperties(Map.of("Max", 4000));
-        bottomMotor.addDouble("Bottom Motor Voltage", () -> getShootVoltage()[1]).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Max", 12));
+        bottomMotor.addDouble("Bottom Motor Voltage", () -> getVoltage()[1]).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Max", 12));
         bottomMotor.addDouble("Bottom Motor Current", () -> getShootCurrent()[0]).withWidget(BuiltInWidgets.kDial);
 
         tab.addBoolean("Shooter Ready", () -> shooterReady()).withPosition(6, 0);
@@ -69,9 +63,9 @@ public class Shooter extends SubsystemBase {
                             shooterBot.getSupplyCurrent().getValueAsDouble()}; 
     }
 
-    public double[] getShootVoltage(){
+    public double[] getVoltage() {    
         return new double[]{shooterTop.getSupplyVoltage().getValueAsDouble(),
-                            shooterBot.getSupplyVoltage().getValueAsDouble()}; 
+                            shooterBot.getSupplyVoltage().getValueAsDouble()};
     }
     
     public double[] getRPM(){
@@ -114,10 +108,4 @@ public class Shooter extends SubsystemBase {
     public boolean off(){
         return getVoltage()[0] < 5 && getVoltage()[1] < 5; //Change these values to resting voltages.
     }
-
-    public double[] getVoltage() {    
-        return new double[]{shooterTop.getSupplyVoltage().getValueAsDouble(),
-                            shooterBot.getSupplyVoltage().getValueAsDouble()};
-    }
-
 }

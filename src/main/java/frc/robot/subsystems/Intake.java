@@ -42,22 +42,27 @@ public class Intake extends SubsystemBase{
         intakeMotor.set(outtakeSpeed.getDouble(0.05));
     }
 
+    /**Stops the intake. */
     public void stopTake(){
         intakeMotor.set(0);
     }
 
+    /**Returns the velocity of the intake motor. */
     public double getSpeed(){
         return intakeMotor.getVelocity().getValueAsDouble();
     }
 
+    /**Returns the voltage of the intake motor. */
     public double getVoltage(){
         return intakeMotor.getSupplyVoltage().getValueAsDouble();
     }
 
+    /**Returns true of the intake is on. */
     public boolean isOn(){
         return Math.abs(getSpeed()) > 0;
     }
 
+    /**Returns true of the intake has a note. */
     public boolean hasNote(){
         return !beamBreak.get();
     }
