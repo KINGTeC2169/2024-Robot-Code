@@ -45,8 +45,7 @@ public final class Constants {
         
         //DIO ports
         public static final int beamBreak = 0;
-        public static final int rightArmEncoder = 8;
-        public static final int leftArmEncoder = 9;
+        public static final int armEncoder = 9;
 
         //Shooter CAN ids
         public static final int shooterTop = 17;
@@ -64,8 +63,7 @@ public final class Constants {
     }
 
     public static final class ArmConstants {
-        public static final double leftEncoderOffset = 0.980212024505301;
-        public static final double rightEncoderOffset = 0.347491458687286;
+        public static final double armEncoderOffset = 0.980212024505301;
 
         public static final double armGearBox = 36;
     }

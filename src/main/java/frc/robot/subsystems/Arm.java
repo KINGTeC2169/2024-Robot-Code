@@ -5,6 +5,7 @@ import java.util.Map;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
@@ -23,8 +24,7 @@ public class Arm extends SubsystemBase {
     TalonFX rightArm = new TalonFX(Constants.Ports.rightArm);
 
     //Master = left, follower = right
-    private  DutyCycleEncoder rightEncoder = new DutyCycleEncoder(Constants.Ports.rightArmEncoder);
-    private  DutyCycleEncoder leftEncoder = new DutyCycleEncoder(Constants.Ports.leftArmEncoder);
+    private  DutyCycleEncoder encoder = new DutyCycleEncoder(Constants.Ports.armEncoder);
     //Update hex encoder
 
     private PIDController armPID;
@@ -41,8 +41,7 @@ public class Arm extends SubsystemBase {
         rightArm.getConfigurator().apply(configs);
 
 
-        leftEncoder.setPositionOffset(Constants.ArmConstants.leftEncoderOffset);
-        rightEncoder.setPositionOffset(Constants.ArmConstants.rightEncoderOffset);
+        encoder.setPositionOffset(Constants.ArmConstants.armEncoderOffset);
         
         armPID = new PIDController(0.5, 0, 0);
 
@@ -50,26 +49,22 @@ public class Arm extends SubsystemBase {
 
         ShuffleboardLayout leftMotor = tab.getLayout("Left Motor", BuiltInLayouts.kList).withPosition(2, 0).withSize(2, 4).withProperties(Map.of("Number of columns", 1, "Number of rows", 3));
         leftMotor.addDouble("Voltage", () -> getVoltage()[0]).withWidget(BuiltInWidgets.kVoltageView).withPosition(0, 1).withProperties(Map.of("Max", 12));
-        leftMotor.addDouble("Encoder Position", () -> getPosition()[0]).withWidget(BuiltInWidgets.kDial).withPosition(0, 2).withProperties(Map.of("Max", 1, "Min", -1));
         leftMotor.addDouble("Current", () -> getCurrent()[0]).withWidget(BuiltInWidgets.kDial).withPosition(0, 0);
 
         ShuffleboardLayout rightMotor = tab.getLayout("Right Motor", BuiltInLayouts.kList).withPosition(4, 0).withSize(2, 4).withProperties(Map.of("Number of columns", 1, "Number of rows", 3));
         rightMotor.addDouble("Voltage", () -> getVoltage()[1]).withWidget(BuiltInWidgets.kVoltageView).withPosition(0, 1).withProperties(Map.of("Max", 12));
         rightMotor.addDouble("Current", () -> getCurrent()[1]).withWidget(BuiltInWidgets.kDial).withPosition(0, 0);
-        rightMotor.addDouble("Encoder Position", () -> getPosition()[1]).withWidget(BuiltInWidgets.kDial).withPosition(0, 2).withProperties(Map.of("Max", 1, "Min", -1));
 
-        tab.addDouble("Set Position Left", () -> armPID.calculate(getPosition()[0], setPosition));
-        tab.addDouble("Set Position Right", () -> armPID.calculate(getPosition()[1], setPosition));
+        tab.addDouble("Encoder Position", () -> getPosition()).withWidget(BuiltInWidgets.kDial).withSize(2, 2).withProperties(Map.of("Max", 1, "Min", -1)).withPosition(0, 2);
     }
 
     public void setSpeed(double speed){
         leftArm.set(speed * 0.25);
-        rightArm.set(-speed * 0.25);
+        rightArm.set(speed * 0.25);
     }         
 
-    public double[] getPosition(){
-        return new double[] {(-1 * (leftEncoder.getAbsolutePosition() - leftEncoder.getPositionOffset())),
-                             (rightEncoder.getAbsolutePosition() - rightEncoder.getPositionOffset())};
+    public double getPosition(){
+        return encoder.getAbsolutePosition();
     }
 
     public double[] getCurrent(){
@@ -84,13 +79,13 @@ public class Arm extends SubsystemBase {
 
     public void setPosition(double position) {
         setPosition = position;
-        leftArm.set(armPID.calculate(getPosition()[0], position));
-        rightArm.set(armPID.calculate(getPosition()[1], position));
+        leftArm.set(armPID.calculate(getPosition(), position));
+        rightArm.set(-armPID.calculate(getPosition(),  position));
     }
 
     public void activeStop(){
-        leftArm.set(armPID.calculate(getPosition()[0], setPosition));
-        rightArm.set(armPID.calculate(getPosition()[1], setPosition));
+        leftArm.set(armPID.calculate(getPosition(), setPosition));
+        rightArm.set(armPID.calculate(getPosition(), setPosition));
     }
 
     //Use activeStop() intead!
@@ -100,6 +95,6 @@ public class Arm extends SubsystemBase {
     }
 
     public boolean isReady(){
-        return setPosition == getPosition()[0] && setPosition == getPosition()[1];
+        return setPosition == getPosition();
     }
 }

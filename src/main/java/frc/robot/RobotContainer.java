@@ -117,9 +117,9 @@ public class RobotContainer {
     controller.rightBumper().whileFalse(Commands.run(() -> arm.activeStop())); 
     //controller.rightBumper().whileTrue(new Angle(arm, controller));
     controller.rightBumper().whileTrue(Commands.run(() -> arm.setPosition(-controller.getRightY())));
-    controller.b().whileTrue(Commands.run(() -> shooter.setRPM(4400)));
-    controller.a().whileTrue(Commands.run(() -> shooter.stopShooter()));
-    controller.y().whileTrue(Commands.run(() -> intake.inTake()));
+    controller.b().whileTrue(new RevAndAngle(arm, shooter, 0.5));
+    controller.a().whileTrue(new RevAndAngle(arm, shooter, 0.75));
+    controller.y().whileTrue(new RevAndAngle(arm, shooter, 0.25));
     controller.y().whileFalse(Commands.run(() -> intake.stopTake()));
     controller.x().whileTrue(Commands.run(() -> intake.outTake()));
     controller.x().whileFalse(Commands.run(() -> intake.stopTake()));
