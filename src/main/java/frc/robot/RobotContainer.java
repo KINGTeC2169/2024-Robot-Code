@@ -20,11 +20,8 @@ import frc.robot.commands.ButtonCommands.GroundPickup;
 import frc.robot.commands.ButtonCommands.Launch;
 import frc.robot.commands.ButtonCommands.Safe;
 import frc.robot.commands.ButtonCommands.Stop;
-import frc.robot.commands.ButtonCommands.ShootingPos.Amp;
 import frc.robot.commands.ButtonCommands.ShootingPos.LimelightAlign;
-import frc.robot.commands.ButtonCommands.ShootingPos.Podium;
 import frc.robot.commands.ButtonCommands.ShootingPos.RevAndAngle;
-import frc.robot.commands.ButtonCommands.ShootingPos.Subwoofer;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LimelightTable;
@@ -62,8 +59,8 @@ public class RobotContainer {
     
     // Register Named Commands
     NamedCommands.registerCommand("Ground Pickup", new GroundPickup(arm, intake));
-    NamedCommands.registerCommand("Amp Launch", new Amp(arm, shooter));
-    NamedCommands.registerCommand("Podium Launch", new Podium(arm, shooter));
+    NamedCommands.registerCommand("Amp Launch", new RevAndAngle(arm, shooter, Constants.Angles.amp));
+    NamedCommands.registerCommand("Podium Launch", new RevAndAngle(arm, shooter, Constants.Angles.podium));
     NamedCommands.registerCommand("Rev and Launch 1", new RevAndAngle(arm, shooter, 0)); 
     NamedCommands.registerCommand("Rev and Launch 2", new RevAndAngle(arm, shooter, 0));
 
@@ -128,12 +125,12 @@ public class RobotContainer {
 
     buttonBoard.button(1).whileTrue(new GroundPickup(arm, intake));
     buttonBoard.button(2).whileTrue(new Safe(arm, intake));
-    buttonBoard.button(3).whileTrue(new Subwoofer(arm, shooter));
-    buttonBoard.button(4).whileTrue(new Amp(arm, shooter));
+    buttonBoard.button(3).whileTrue(new RevAndAngle(arm, shooter, Constants.Angles.subwoofer));
+    buttonBoard.button(4).whileTrue(new RevAndAngle(arm, shooter, Constants.Angles.amp));
     buttonBoard.button(5).whileTrue(Commands.run(() -> shooter.setRPM(4400)));
     buttonBoard.button(6).whileTrue(new Launch(intake));
     buttonBoard.button(7).whileTrue(new LimelightAlign(swerveSubsystem, arm, shooter));
-    buttonBoard.button(8).whileTrue(new Podium(arm, shooter));
+    buttonBoard.button(8).whileTrue(new RevAndAngle(arm, shooter, Constants.Angles.podium));
     buttonBoard.button(9).whileTrue(new Stop(shooter, intake)); 
     buttonBoard.button(10).onTrue(Commands.run(() -> arm.activeStop()));
     buttonBoard.button(11).whileTrue(Commands.run(() -> intake.outTake()));
