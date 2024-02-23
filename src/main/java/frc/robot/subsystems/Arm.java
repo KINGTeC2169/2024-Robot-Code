@@ -79,6 +79,9 @@ public class Arm extends SubsystemBase {
 
     public void setPosition(double position) {
         setPosition = position;
+        if (position > 0.5){
+            position = 0;
+        }
         leftArm.set(armPID.calculate(getPosition(), position));
         rightArm.set(-armPID.calculate(getPosition(),  position));
     }

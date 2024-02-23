@@ -7,7 +7,6 @@ import frc.robot.subsystems.Intake;
 public class GroundPickup extends Command {
     private Arm arm;
     private Intake intake;
-    final private double desiredAngle = 0;
 
     public GroundPickup(Arm arm, Intake intake){
         this.arm = arm;
@@ -22,7 +21,7 @@ public class GroundPickup extends Command {
 
     @Override
     public void execute(){
-        arm.setPosition(desiredAngle);
+        arm.setPosition(0);
         intake.inTake();
     }
 
