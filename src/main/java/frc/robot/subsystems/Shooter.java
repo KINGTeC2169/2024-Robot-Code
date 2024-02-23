@@ -4,6 +4,9 @@ import java.util.Map;
 
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
@@ -17,24 +20,30 @@ import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
     
-    TalonFX shooterTop = new TalonFX(Constants.Ports.shooterTop);
-    TalonFX shooterBot = new TalonFX(Constants.Ports.shooterBot);
-    double setRPM;
-    double setPower;
+    private CANSparkMax shooterTop;
+    private CANSparkMax shooterBot;
+    private double setRPM;
+    private double setPower;
 
-    double currentPower;
+    private double currentPower;
+
+    private RelativeEncoder topEncoder;
+    private RelativeEncoder bottomEncoder;
 
     private ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
 
     private GenericEntry shooterSpeed = tab.add("Shooter Speed", 0.5).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).withPosition(4, 0).getEntry();
 
     public Shooter(){
-
-        var configs = new Slot0Configs();
-        configs.kP = 0.1;
         
-        shooterTop.getConfigurator().apply(configs,0.050);
-        shooterBot.getConfigurator().apply(configs,0.050);
+        shooterTop = new CANSparkMax(Constants.Ports.shooterTop, MotorType.kBrushless);
+        shooterBot = new CANSparkMax(Constants.Ports.shooterBot, MotorType.kBrushless);
+
+        shooterTop.restoreFactoryDefaults();
+        shooterBot.restoreFactoryDefaults();
+
+        topEncoder = shooterTop.getEncoder();
+        bottomEncoder = shooterBot.getEncoder();
 
         setRPM = 300;
 
@@ -52,25 +61,29 @@ public class Shooter extends SubsystemBase {
 
     }
 
+    /**Sets the power as a double between -1 and 1*/
     public void setPower(double power){
         shooterTop.set(power);
         shooterBot.set(power);
         SmartDashboard.putNumber("Request ShotSpeed", power);
     }
 
+    /**Gets the current from the top and bottom motors as a double array */
     public double[] getShootCurrent(){
-        return new double[]{shooterTop.getSupplyCurrent().getValueAsDouble(),
-                            shooterBot.getSupplyCurrent().getValueAsDouble()}; 
+        return new double[]{shooterTop.getOutputCurrent(),
+                            shooterBot.getOutputCurrent()}; 
     }
 
+    /**Gets the voltage from the top and bottom motors as a double array */
     public double[] getVoltage() {    
-        return new double[]{shooterTop.getSupplyVoltage().getValueAsDouble(),
-                            shooterBot.getSupplyVoltage().getValueAsDouble()};
+        return new double[]{shooterTop.getBusVoltage(),
+                            shooterBot.getBusVoltage()};
     }
     
+    /**Gets the rpm from the top and bottom motors as a double array*/
     public double[] getRPM(){
-        return new double[]{((60 * shooterTop.getRotorVelocity().getValue())),
-                            ((60 * shooterBot.getRotorVelocity().getValue()))};
+        return new double[]{(topEncoder.getVelocity()),
+                            (bottomEncoder.getVelocity())};
     }
 
     public void setRPM(double rpm){
