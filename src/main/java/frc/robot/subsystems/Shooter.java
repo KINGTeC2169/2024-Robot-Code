@@ -2,8 +2,6 @@ package frc.robot.subsystems;
 
 import java.util.Map;
 
-import com.ctre.phoenix6.configs.Slot0Configs;
-import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -22,10 +20,6 @@ public class Shooter extends SubsystemBase {
     
     private CANSparkMax shooterTop;
     private CANSparkMax shooterBot;
-    private double setRPM;
-    private double setPower;
-
-    private double currentPower;
 
     private RelativeEncoder topEncoder;
     private RelativeEncoder bottomEncoder;
@@ -44,8 +38,6 @@ public class Shooter extends SubsystemBase {
 
         topEncoder = shooterTop.getEncoder();
         bottomEncoder = shooterBot.getEncoder();
-
-        setRPM = 300;
 
         ShuffleboardLayout topMotor = tab.getLayout("Top Motor", BuiltInLayouts.kList).withPosition(0, 0).withSize(2, 4);
         topMotor.addDouble("Top Motor RPM", () -> getRPM()[0]).withWidget(BuiltInWidgets.kDial).withProperties(Map.of("Max", 4000));
@@ -88,10 +80,8 @@ public class Shooter extends SubsystemBase {
 
     public void setRPM(double rpm){
 
-        setRPM = rpm;
-
-        shooterTop.set(shooterSpeed.getDouble(0.5));
-        shooterBot.set(shooterSpeed.getDouble(0.5));
+        shooterTop.set(rpm);
+        shooterBot.set(rpm);
         //shooterTop.setControl(new VoltageOut(11));
         //shooterBot.setControl(new VoltageOut(11));
         //shooterTop.setControl(m_velocity.withVelocity(rpm));
@@ -100,8 +90,12 @@ public class Shooter extends SubsystemBase {
         //shooterBot.setControl(request.withOutput(getPID()[1]));
     }
 
-    public void setAmpRPM(double rpm){
-        setRPM = rpm;
+    public void setRPM(){
+        shooterTop.set(shooterSpeed.getDouble(0.5));
+        shooterBot.set(shooterSpeed.getDouble(0.5));
+    }
+
+    public void setAmpRPM(){
 
         shooterTop.set(0.1);
         shooterBot.set(0.1);
