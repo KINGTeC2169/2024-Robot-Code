@@ -10,11 +10,19 @@ public class LEDs {
         arduino.writeString("A");
     }
 
-    public static void red(){
+    public static void green(){
         arduino.writeString("B");
     }
 
+    public static void red(){
+        arduino.writeString("C");
+    }
+
+    public static void blue(){
+        arduino.writeString("D");
+    }
+
     public static void off(){
-        arduino.writeString("Z");
+        arduino.writeString("E");
     }
 }
