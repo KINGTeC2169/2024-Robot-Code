@@ -91,10 +91,10 @@ public class Shooter extends SubsystemBase {
         shooterBot.set(shooterSpeed.getDouble(0.5));
     }
 
-    public void setAmpRPM(){
+    public void setAmpRPM(double rpm){
 
-        shooterTop.set(0.1);
-        shooterBot.set(0.1);
+        shooterTop.set(rpm);
+        shooterBot.set(rpm);
     }
 
 

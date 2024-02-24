@@ -63,7 +63,7 @@ public final class Constants {
     }
 
     public static final class ArmConstants {
-        public static final double armEncoderOffset = 0.980212024505301;
+        public static final double armEncoderOffset = 0.258745031468626;
 
         public static final double armGearBox = 36;
     }
@@ -110,5 +110,12 @@ public final class Constants {
         public static final double mountedAngle = 45; //angle deg
         public static final double launchSpeed = 75; //ft/sec
         public static final double gravity = -32.19;
+    }
+
+    public static final class Angles{
+        public static final double subwoofer = 45;
+        public static final double podium = 20;
+        public static final double amp = 90;
+
     }
 }

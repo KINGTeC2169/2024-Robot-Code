@@ -1,6 +1,7 @@
 package frc.robot.commands.ButtonCommands.ShootingPos;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Shooter;
 
@@ -23,7 +24,7 @@ public class Amp extends Command {
 
     @Override
     public void execute(){
-        shooter.setAmpRPM();
+        shooter.setAmpRPM(Constants.Vision.shootRPM);
         arm.setPosition(desiredAngle);
     }
 
