@@ -135,6 +135,13 @@ public class Arm extends SubsystemBase {
         return new double[]{x,y};
     }
 
+    public static double[] predictArmPositionAim(double aim){
+        double position = aimToArm(aim);
+        double x = ArmConstants.distance*Math.cos(2*Math.PI*(position-0.25) + ArmConstants.armOffset) + Vision.toShaftX;
+        double y = ArmConstants.distance*Math.cos(2*Math.PI*(position-0.25) + ArmConstants.armOffset) + Vision.toShaftY;
+        return new double[]{x,y};
+    }
+
     /**
      * Converts aim to position of the arm
      * @param aim angle IN DEGREES we want to aim
@@ -146,7 +153,7 @@ public class Arm extends SubsystemBase {
 
         double slope1 = Math.tan(-aim);
         double totalOffset = Math.atan(-1/slope1);
-        double encoderRad = totalOffset - ArmConstants.shooterOffset - ArmConstants.armOffset; //Radians
+        double encoderRad = totalOffset - ArmConstants.shooterOffset; //Radians  - ArmConstants.armOffset
         double encoderRot = (encoderRad/(2*Math.PI) + 0.25); //Rotations
             
         if(encoderRot < 0) encoderRot += 0.5;
@@ -162,7 +169,7 @@ public class Arm extends SubsystemBase {
     public static double armToAim(double position){
         double encoderRad = 2*Math.PI*(position-0.25);
 
-        double slope = -1/Math.tan(encoderRad + ArmConstants.shooterOffset + ArmConstants.armOffset);
+        double slope = -1/Math.tan(encoderRad + ArmConstants.shooterOffset);//ArmConstants.armOffset
 
         double aim = -(Math.atan(slope) * (180/Math.PI));
 

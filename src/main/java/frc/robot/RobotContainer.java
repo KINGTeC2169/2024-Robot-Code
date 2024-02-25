@@ -21,6 +21,7 @@ import frc.robot.commands.ButtonCommands.Launch;
 import frc.robot.commands.ButtonCommands.Safe;
 import frc.robot.commands.ButtonCommands.Stop;
 import frc.robot.commands.ButtonCommands.ShootingPos.LimelightAlign;
+import frc.robot.commands.ButtonCommands.ShootingPos.RevAndAim;
 import frc.robot.commands.ButtonCommands.ShootingPos.RevAndAngle;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Intake;
@@ -117,7 +118,10 @@ public class RobotContainer {
     controller.b().whileTrue(new RevAndAngle(arm, shooter, 0.0625));
     controller.a().whileTrue(new RevAndAngle(arm, shooter, 0.125));
     controller.y().whileTrue(new RevAndAngle(arm, shooter, 0.1875));
-    //controller.povUp().whileTrue(new IntakeNote(intake, controller));
+    //controller.povUp().whileTrue(new RevAndAim(arm,shooter,0.15));
+    controller.povUp().whileTrue(Commands.run(() -> intake.inTake()));
+    controller.povUp().whileFalse(Commands.run(() -> intake.stopTake()));
+    controller.povDown().whileTrue(new Launch(intake));
 
 
     buttonBoard.button(1).whileTrue(new GroundPickup(arm, intake));

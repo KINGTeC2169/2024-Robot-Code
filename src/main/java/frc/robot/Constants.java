@@ -52,7 +52,7 @@ public final class Constants {
         public static final int shooterBot = 18;
 
         //Intake CAN id
-        public static final int intake = 19;
+        public static final int intake = 19; 
 
         //Arm CAN ids
         public static final int leftArm = 15;
