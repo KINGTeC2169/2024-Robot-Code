@@ -50,11 +50,12 @@ public class Shooter extends SubsystemBase {
     }
 
     /**Sets the power as a double between -1 and 1*/
+    /* 
     public void setPower(double power){
         shooterTop.set(power);
         shooterBot.set(power);
         SmartDashboard.putNumber("Request ShotSpeed", power);
-    }
+    }*/
 
     /**Gets the current from the top and bottom motors as a double array */
     public double[] getShootCurrent(){
@@ -76,8 +77,10 @@ public class Shooter extends SubsystemBase {
 
     public void setRPM(double rpm){
 
-        shooterTop.set(rpm);
-        shooterBot.set(rpm);
+        double power = rpm/6350;
+
+        shooterTop.set(power);
+        shooterBot.set(power);
         //shooterTop.setControl(new VoltageOut(11));
         //shooterBot.setControl(new VoltageOut(11));
         //shooterTop.setControl(m_velocity.withVelocity(rpm));

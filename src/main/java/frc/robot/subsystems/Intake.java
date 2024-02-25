@@ -34,7 +34,7 @@ public class Intake extends SubsystemBase{
         intakeSpeed = tab.add("Intake Speed", 0.2).withWidget(BuiltInWidgets.kNumberSlider).withPosition(4, 0).withSize(2, 1).withProperties(Map.of("Min", 0)).getEntry();
         outtakeSpeed = tab.add("Outtake Speed", 0.05).withWidget(BuiltInWidgets.kNumberSlider).withPosition(6, 0).withSize(2, 1).withProperties(Map.of("Min", 0)).getEntry();
         
-        tab.addDouble("Intake RPM", () -> 60 * intakeMotor.getRotorVelocity().getValue());
+        tab.addDouble("Intake RPM", () -> 60 * intakeMotor.getRotorVelocity().getValue()).withPosition(0, 1);
     }
     /**Sets intake to suck in */
     public void inTake() {
