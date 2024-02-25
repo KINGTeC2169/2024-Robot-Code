@@ -103,6 +103,17 @@ public class Arm extends SubsystemBase {
         return setPosition == getPosition();
     }
 
+
+    /**
+     * Gets the arm position in space (used for limelight) NOT encoder position
+     * @return x,y distance compared to the point of rotation 
+     */
+    public double[] getArmPosition(){
+        double x = 24.821*Math.cos(2*Math.PI*(getPosition()-0.25) + ArmConstants.armOffset);
+        double y = 24.821*Math.cos(2*Math.PI*(getPosition()-0.25) + ArmConstants.armOffset);
+        return new double[]{x,y};
+    }
+
     /**
      * Converts aim to position of the arm
      * @param aim angle IN DEGREES we want to aim
