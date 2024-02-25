@@ -64,8 +64,12 @@ public final class Constants {
 
     public static final class ArmConstants {
         public static final double armEncoderOffset = 0.258745031468626;
+        public static final double shooterOffset = 0.4103968962; // (90-66.486)*0.0174533 RAD
+        public static final double armOffset = 0.1504823526;//8.622*0.0174533 RAD
 
-        public static final double armGearBox = 36;
+        public static final double armGearBox = 201.6; //48 * (84/20)\
+
+
     }
 
     public static final class ModuleConstants {
@@ -104,9 +108,9 @@ public final class Constants {
     public static final class Vision {
 
         //7 3/4 from edge
-        public static final double shootRPM = 300; //Do not change. Currently about 5000 TODO: Make it adjustable
+        public static final double shootRPM = 5000; //Do not change. Currently about 5000 TODO: Make it adjustable
         public static final double tagHeight = 5.5; //ft
-        public static final double mountedHeight = 1.177; //ft
+        public static final double mountedHeight = 1.0; //ft
         public static final double mountedAngle = 45; //angle deg
         public static final double launchSpeed = 75; //ft/sec
         public static final double gravity = -32.19;
@@ -116,6 +120,9 @@ public final class Constants {
         public static final double subwoofer = 45;
         public static final double podium = 20;
         public static final double amp = 90;
+        public static final double safe = 15;
 
     }
+
+    
 }

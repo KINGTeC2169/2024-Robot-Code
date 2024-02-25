@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.ArmConstants;
 
 public class Arm extends SubsystemBase {
 
@@ -80,7 +81,9 @@ public class Arm extends SubsystemBase {
     public void setPosition(double position) {
         setPosition = position;
         if (position > 0.5){
-            position = 0;
+            position = 0.45;
+        }else if (position < 0.25){
+            position = 0.25;
         }
         leftArm.set(armPID.calculate(getPosition(), position));
         rightArm.set(-armPID.calculate(getPosition(),  position));
@@ -99,5 +102,39 @@ public class Arm extends SubsystemBase {
 
     public boolean isReady(){
         return setPosition == getPosition();
+    }
+
+    /**
+     * Converts aim to position of the arm
+     * @param aim angle IN DEGREES we want to aim
+     * @return position of the arm IN ROTATIONS
+     */
+    public double aimToArm(double aim){
+
+        aim *= 0.0174533;
+
+        double slope1 = Math.tan(-aim);
+        double totalOffset = Math.atan(-1/slope1);
+        double encoderRad = totalOffset - ArmConstants.shooterOffset - ArmConstants.armOffset; //Radians
+        double encoderRot = (encoderRad/(2*Math.PI) + 0.25); //Rotations
+            
+        if(encoderRot < 0) encoderRot += 0.5;
+            
+        return encoderRot;
+    }
+
+    /**
+     * Converts aim to position of the arm
+     * @param position position of the arm IN ROTATIONS
+     * @return aim angle IN DEGREES
+     */
+    public double armToAim(double position){
+        double encoderRad = 2*Math.PI*(position-0.25);
+
+        double slope = -1/Math.tan(encoderRad + ArmConstants.shooterOffset + ArmConstants.armOffset);
+
+        double aim = -(Math.atan(slope) * (180/Math.PI));
+
+        return aim;
     }
 }
