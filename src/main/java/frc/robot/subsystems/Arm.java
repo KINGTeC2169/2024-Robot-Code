@@ -109,8 +109,8 @@ public class Arm extends SubsystemBase {
      * @return x,y distance compared to the point of rotation 
      */
     public double[] getArmPosition(){
-        double x = 24.821*Math.cos(2*Math.PI*(getPosition()-0.25) + ArmConstants.armOffset);
-        double y = 24.821*Math.cos(2*Math.PI*(getPosition()-0.25) + ArmConstants.armOffset);
+        double x = ArmConstants.distance*Math.cos(2*Math.PI*(getPosition()-0.25) + ArmConstants.armOffset);
+        double y = ArmConstants.distance*Math.cos(2*Math.PI*(getPosition()-0.25) + ArmConstants.armOffset);
         return new double[]{x,y};
     }
 
