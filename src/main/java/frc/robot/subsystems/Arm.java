@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.Vision;
 
 public class Arm extends SubsystemBase {
 
@@ -56,6 +57,9 @@ public class Arm extends SubsystemBase {
         rightMotor.addDouble("Current", () -> getCurrent()[1]).withWidget(BuiltInWidgets.kDial).withPosition(0, 0);
 
         tab.addDouble("Encoder Position", () -> getPosition()).withWidget(BuiltInWidgets.kDial).withSize(2, 2).withProperties(Map.of("Max", 1, "Min", -1)).withPosition(0, 2);
+        tab.addDouble("Exact Encoder Position", () -> getPosition()); //Don't change right now
+        tab.addDouble("Aim", () -> armToAim(getPosition()));
+    
     }
 
     public void setSpeed(double speed){
@@ -79,13 +83,19 @@ public class Arm extends SubsystemBase {
 
     public void setPosition(double position) {
         setPosition = position;
-        if (position > 0.5){
+        if (position > 0.45){
             position = 0.45;
         }else if (position < 0.25){
             position = 0.25;
         }
         leftArm.set(armPID.calculate(getPosition(), position));
         rightArm.set(-armPID.calculate(getPosition(),  position));
+    }
+
+    //AIM = DEGREES, ARM = ROTATIONS
+    public void setAim(double aim) {
+        double position = aimToArm(aim);
+        setPosition(position);
     }
 
     public void activeStop(){
@@ -109,8 +119,19 @@ public class Arm extends SubsystemBase {
      * @return x,y distance compared to the point of rotation 
      */
     public double[] getArmPosition(){
-        double x = ArmConstants.distance*Math.cos(2*Math.PI*(getPosition()-0.25) + ArmConstants.armOffset);
-        double y = ArmConstants.distance*Math.cos(2*Math.PI*(getPosition()-0.25) + ArmConstants.armOffset);
+        double x = ArmConstants.distance*Math.cos(2*Math.PI*(getPosition()-0.25) + ArmConstants.armOffset) + Vision.toShaftX;
+        double y = ArmConstants.distance*Math.cos(2*Math.PI*(getPosition()-0.25) + ArmConstants.armOffset) + Vision.toShaftY;
+        return new double[]{x,y};
+    }
+
+    /**
+     * Gets the arm position in space (used for limelight) NOT encoder position
+     * @param position position of the arm
+     * @return x,y distance compared to the point of rotation 
+     */
+    public static double[] predictArmPosition(double position){
+        double x = ArmConstants.distance*Math.cos(2*Math.PI*(position-0.25) + ArmConstants.armOffset) + Vision.toShaftX;
+        double y = ArmConstants.distance*Math.cos(2*Math.PI*(position-0.25) + ArmConstants.armOffset) + Vision.toShaftY;
         return new double[]{x,y};
     }
 
@@ -119,7 +140,7 @@ public class Arm extends SubsystemBase {
      * @param aim angle IN DEGREES we want to aim
      * @return position of the arm IN ROTATIONS
      */
-    public double aimToArm(double aim){
+    public static double aimToArm(double aim){
 
         aim *= 0.0174533;
 
@@ -138,7 +159,7 @@ public class Arm extends SubsystemBase {
      * @param position position of the arm IN ROTATIONS
      * @return aim angle IN DEGREES
      */
-    public double armToAim(double position){
+    public static double armToAim(double position){
         double encoderRad = 2*Math.PI*(position-0.25);
 
         double slope = -1/Math.tan(encoderRad + ArmConstants.shooterOffset + ArmConstants.armOffset);

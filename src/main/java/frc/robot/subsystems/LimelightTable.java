@@ -86,9 +86,8 @@ public class LimelightTable {
     public static double aimShot(){
         double distance = getDistance();
         double firstAim = getShootingAngle(new double[]{distance, 6.90625-Vision.mountedHeight});
-        double secondAim = getShootingAngle(new double[]{distance, 6.90625-Vision.mountedHeight});
-        double thirdAim = getShootingAngle(new double[]{distance, 6.90625});
-        //SmartDashboard.putNumber("Shot", aimShot());
+        double secondAim = getShootingAngle(new double[]{distance-Arm.predictArmPosition(firstAim)[0], 6.90625-Vision.mountedHeight-Arm.predictArmPosition(firstAim)[1]});
+        double thirdAim = getShootingAngle(new double[]{distance-Arm.predictArmPosition(firstAim)[0], 6.90625-Vision.mountedHeight-Arm.predictArmPosition(secondAim)[1]});
         return thirdAim;
     }
 }

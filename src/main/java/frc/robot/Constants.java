@@ -66,7 +66,7 @@ public final class Constants {
         public static final double armEncoderOffset = 0.258745031468626;
         public static final double shooterOffset = 0.4103968962; // (90-66.486)*0.0174533 RAD
         public static final double armOffset = 0.1504823526;//8.622*0.0174533 RAD
-        public static final double distance = 24.821; //Distance from hex shaft to point of shot
+        public static final double distance = 2.06841667; //ft Distance from hex shaft to point of shot 24.821in
 
         public static final double armGearBox = 201.6; //48 * (84/20)
 
@@ -113,8 +113,11 @@ public final class Constants {
         public static final double tagHeight = 5.5; //ft
         public static final double mountedHeight = 1.0; //ft
         public static final double mountedAngle = 45; //angle deg
+        public static final double toShaftX = -0.1146; //ft
+        public static final double toShaftY = 0.28125; //ft
         public static final double launchSpeed = 75; //ft/sec
         public static final double gravity = -32.19;
+
     }
 
     public static final class Angles{
