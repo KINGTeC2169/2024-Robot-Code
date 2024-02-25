@@ -7,7 +7,6 @@ import frc.robot.subsystems.Arm;
 public class Angle extends Command {
 
     private Arm arm;
-    private double speed;
     private CommandXboxController controller;
 
     //It can be changed later to speed with a joystick on the right side
