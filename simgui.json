@@ -11,6 +11,7 @@
       "/FMSInfo": "FMSInfo",
       "/Shuffleboard/Arm/Arm PID": "PIDController",
       "/Shuffleboard/Arm/PIDController[1]": "PIDController",
+      "/Shuffleboard/Swerve Module/PIDController[2]": "PIDController",
       "/Shuffleboard/Swerve/Field": "Field2d"
     }
   },

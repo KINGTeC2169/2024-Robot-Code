@@ -7,8 +7,11 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SerialPort.Port;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -58,12 +61,12 @@ public final class Constants {
         public static final int leftArm = 15;
         public static final int rightArm = 16;
 
-        public static final Port arduino = SerialPort.Port.kUSB1;
+        public static final Port arduino = SerialPort.Port.kUSB1; //Arduino USB port
         
     }
 
     public static final class ArmConstants {
-        public static final double armEncoderOffset = 0.258745031468626;
+        public static final double armEncoderOffset = 0; //Make sure to subtract by 0.25
         public static final double shooterOffset = 0.4103968962; // (90-66.486)*0.0174533 RAD
         public static final double armOffset = 0.1504823526;//8.622*0.0174533 RAD
         public static final double distance = 2.06841667; //ft Distance from hex shaft to point of shot 24.821in
@@ -85,8 +88,11 @@ public final class Constants {
         public static final double driveEncoderRPMToMeterPerSec = driveEncoderToMeter / 60;
         public static final double turnEncoderRPMToRadPerSec = turnEncoderToRadian / 60;
 
-        public static final double PTurn = 0.31;
-        public static final double PDrive = 10;
+        public static final ShuffleboardTab tab = Shuffleboard.getTab("Swerve Module");
+
+        public static double PDrive = tab.add("Drive P", 0.0).getEntry().getDouble(0.0);
+
+        public static double PTurn = 0.31;
     }
 
     public static final class DriveConstants {

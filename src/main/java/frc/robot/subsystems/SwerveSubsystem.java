@@ -91,25 +91,7 @@ public class SwerveSubsystem extends SubsystemBase {
         turnCurrents.addDouble("Back Left", () -> backLeft.getTurnCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL", "Max", 100));
         turnCurrents.addDouble("Back Right", () -> backRight.getTurnCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL", "Max", 100));
 
-
-        //tab.add("Test", "Balls").withWidget(BuiltInWidgets.kComboBoxChooser);
-
         tab.addDouble("Robot Heading", () -> getHeading()).withWidget(BuiltInWidgets.kGyro).withSize(3, 3).withPosition(7, 0);
-
-        //tab.addDouble("Rotation 2D", () -> getRotation2d().getDegrees());
-
-        // tab.addDouble("Front Left Percent", () -> frontLeft.getWantedSpeed());
-        // tab.addDouble("Front Right Percent", () -> frontRight.getWantedSpeed());
-        // tab.addDouble("Back Left Percent", () -> backLeft.getWantedSpeed());
-        // tab.addDouble("Back Right Percent", () -> backRight.getWantedSpeed());
-        // tab.addDouble("180 Head", () -> head180());
-
-        // tab.addDouble("Abs Front Left", () -> frontLeft.getAbsoluteTurnPosition());
-        // tab.addDouble("Abs Front Right", () -> frontRight.getAbsoluteTurnPosition());
-        // tab.addDouble("Abs Back Left", () -> backLeft.getAbsoluteTurnPosition());
-        // tab.addDouble("Abs Back Right", () -> backRight.getAbsoluteTurnPosition());
-        //tab.addDouble("X", () -> odometer.getPoseMeters().getX()).withPosition(8, 3);
-        //tab.addDouble("Y", () -> odometer.getPoseMeters().getY()).withPosition(9, 3);
 
         tab.add(field).withPosition(2, 0).withSize(5, 3);
 

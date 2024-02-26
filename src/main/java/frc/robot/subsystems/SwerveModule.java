@@ -15,6 +15,11 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import frc.robot.Constants;
 
 import static frc.robot.Constants.ModuleConstants.*;
 
@@ -66,11 +71,9 @@ public class SwerveModule {
         //Creating and configuring PID controllers
         turningPID = new PIDController(PTurn, 0, 0);
         turningPID.enableContinuousInput(-Math.PI, Math.PI);
+        Constants.ModuleConstants.tab.add(turningPID).withWidget(BuiltInWidgets.kPIDController);
 
-        driveMotor.config_kP(0, PDrive);
-        
-        //drivePID = new PIDController(PDrive, 0, 0);
-
+        driveMotor.config_kP(0, Constants.ModuleConstants.PDrive);
 
         resetEncoders();
 

@@ -68,7 +68,7 @@ public class Arm extends SubsystemBase {
     }         
 
     public double getPosition(){
-        return encoder.getAbsolutePosition();
+        return encoder.getAbsolutePosition() - encoder.getPositionOffset(); //To change direction, 0.5 - (encoder.getAbsolutePosition - encoder.getPositionOffset())
     }
 
     public double[] getCurrent(){
