@@ -115,7 +115,7 @@ public final class Constants {
     public static final class Vision {
 
         //7 3/4 from edge
-        public static final double shootRPM = 5000; //Do not change. Currently about 5000 TODO: Make it adjustable
+        public static final double shootRPM = 2000; //Do not change. Currently about 5000 TODO: Make it adjustable
         public static final double tagHeight = 5.5; //ft
         public static final double mountedHeight = 1.0; //ft
         public static final double mountedAngle = 45; //angle deg

@@ -5,6 +5,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.Vision;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.LimelightTable;
 import frc.robot.subsystems.Shooter;
@@ -40,7 +41,7 @@ public class LimelightAlign extends Command {
         swerveSubsystem.setModuleStates(moduleStates);
 
         arm.setAim(LimelightTable.aimShot());
-        //shooter.setRPM(Constants.Vision.shootRPM);
+        shooter.setRPM(Vision.shootRPM);
     }
 
     @Override

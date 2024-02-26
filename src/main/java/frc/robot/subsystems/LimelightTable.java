@@ -85,9 +85,10 @@ public class LimelightTable {
     //Averages the top and bottom of the speaker to get an aiming distance
     public static double aimShot(){
         double distance = getDistance();
-        double firstAim = getShootingAngle(new double[]{distance, 6.90625-Vision.mountedHeight});
-        double secondAim = getShootingAngle(new double[]{distance-Arm.predictArmPosition(firstAim)[0], 6.90625-Vision.mountedHeight-Arm.predictArmPosition(firstAim)[1]});
-        double thirdAim = getShootingAngle(new double[]{distance-Arm.predictArmPosition(secondAim)[0], 6.90625-Vision.mountedHeight-Arm.predictArmPosition(secondAim)[1]});
-        return thirdAim;
+        double aim = getShootingAngle(new double[]{distance, 6.90625-Vision.mountedHeight});
+        for(int i = 0; i < 8; i++){
+            aim = getShootingAngle(new double[]{distance-Arm.predictArmPosition(aim)[0], 6.90625-Vision.mountedHeight-Arm.predictArmPosition(aim)[1]});
+        }
+        return aim;
     }
 }
