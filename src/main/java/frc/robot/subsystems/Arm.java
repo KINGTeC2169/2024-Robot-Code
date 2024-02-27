@@ -64,8 +64,8 @@ public class Arm extends SubsystemBase {
     }
 
     public void setSpeed(double speed){
-        leftArm.set(-speed);
-        rightArm.set(-speed);
+        leftArm.set(speed);
+        rightArm.set(speed);
     }         
 
     public double getPosition(){
