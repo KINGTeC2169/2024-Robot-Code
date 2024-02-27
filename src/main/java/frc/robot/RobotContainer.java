@@ -64,11 +64,13 @@ public class RobotContainer {
     NamedCommands.registerCommand("Podium Launch", new RevAndAngle(arm, shooter, Constants.Angles.podium));
     NamedCommands.registerCommand("Rev and Launch 1", new RevAndAngle(arm, shooter, 0)); 
     NamedCommands.registerCommand("Rev and Launch 2", new RevAndAngle(arm, shooter, 0));
+    NamedCommands.registerCommand("Rev and Launch 3", new RevAndAngle(arm, shooter, 0));
 
     //themeSong = new MusicCommand(swerveSubsystem, "src\\main\\deploy\\ThunderStruck.chrp");
     tab.addString("Auto 1.0", () -> "3 Ring Center").withSize(3, 1).withPosition(0, 0);
     tab.addString("Auto 2.0", () -> "2 Ring Amp").withSize(3, 1).withPosition(0, 1);
-    tab.addString("Auto 0.0", () -> "Just Drive").withSize(3, 1).withPosition(0, 2);
+    tab.addString("Auto 3.0", () -> "2 Ring Source").withSize(3, 1).withPosition(0, 2);
+    tab.addString("Auto 0.0", () -> "Just Drive").withSize(3, 1).withPosition(0, 3);
 
     swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
     () -> leftStick.getY(),
@@ -156,7 +158,7 @@ public class RobotContainer {
     }
 
     else if (autoChoice.getDouble(0.0) == 3.0){
-      
+      return new PathPlannerAuto("2 Ring Source");
     }
 
     else if (autoChoice.getDouble(0.0) == 4.0){

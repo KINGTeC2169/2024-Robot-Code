@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.74,
+      "y": 4.41
+    },
+    "rotation": 30.71
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Point 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Point 2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Rev and Launch 3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Point 3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Rev and Launch 3"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
