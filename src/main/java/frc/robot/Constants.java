@@ -48,7 +48,7 @@ public final class Constants {
         
         //DIO ports
         public static final int beamBreak = 0;
-        public static final int armEncoder = 9;
+        public static final int armEncoder = 8;
 
         //Shooter CAN ids
         public static final int shooterTop = 17;
@@ -66,7 +66,7 @@ public final class Constants {
     }
 
     public static final class ArmConstants {
-        public static final double armEncoderOffset = 0; //Make sure to subtract by 0.25
+        public static final double armEncoderOffset = 0.229493280737332 - 0.25; //Make sure to subtract by 0.25
         public static final double shooterOffset = 0.4103968962; // (90-66.486)*0.0174533 RAD
         public static final double armOffset = 0.1504823526;//8.622*0.0174533 RAD
         public static final double distance = 2.06841667; //ft Distance from hex shaft to point of shot 24.821in
@@ -100,10 +100,10 @@ public final class Constants {
         public static final double rightLeftWheels = Units.inchesToMeters(23);
         public static final double frontBackWheels = Units.inchesToMeters(23);
 
-        public static final double FRabsoluteOffset = -0.464795239269733; //-0.464795239269733; 
-        public static final double FLabsoluteOffset = 0.857493527233601; //-0.862095460295677; 
-        public static final double BRabsoluteOffset = 0.513882525265217; //0.513882525265217; 
-        public static final double BLabsoluteOffset = -2.520325340330601; //2.517257384955883; 
+        public static final double FRabsoluteOffset = 2.672189131379128; //-0.464795239269733; 
+        public static final double FLabsoluteOffset = 0.958736054599285; //-0.862095460295677; 
+        public static final double BRabsoluteOffset = 2.56174273788929; //0.513882525265217; 
+        public static final double BLabsoluteOffset = 2.501917608082294; //2.517257384955883; 
 
         public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
                 new Translation2d(frontBackWheels / 2, rightLeftWheels / 2),//Front-Left

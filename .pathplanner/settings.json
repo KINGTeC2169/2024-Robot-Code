@@ -3,8 +3,9 @@
   "robotLength": 0.91,
   "holonomicMode": true,
   "pathFolders": [
+    "2 Ring Amp",
     "3 Ring Center",
-    "2 Ring Amp"
+    "2 Ring Source"
   ],
   "autoFolders": [],
   "defaultMaxVel": 3.0,
