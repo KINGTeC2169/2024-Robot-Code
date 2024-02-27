@@ -91,6 +91,12 @@ public class SwerveSubsystem extends SubsystemBase {
         turnCurrents.addDouble("Back Left", () -> backLeft.getTurnCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL", "Max", 100));
         turnCurrents.addDouble("Back Right", () -> backRight.getTurnCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL", "Max", 100));
 
+        tab.addDouble("Front Left Absolute", () -> frontLeft.getAbsoluteTurnPosition());
+        tab.addDouble("Front Right Absolute", () -> frontRight.getAbsoluteTurnPosition());
+        tab.addDouble("Back Left Absolute", () -> backLeft.getAbsoluteTurnPosition());
+        tab.addDouble("Back Right Absolute", () -> backRight.getAbsoluteTurnPosition());
+        
+
         tab.addDouble("Robot Heading", () -> getHeading()).withWidget(BuiltInWidgets.kGyro).withSize(3, 3).withPosition(7, 0);
 
         tab.add(field).withPosition(2, 0).withSize(5, 3);
