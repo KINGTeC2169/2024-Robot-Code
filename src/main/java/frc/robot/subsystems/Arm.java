@@ -59,6 +59,7 @@ public class Arm extends SubsystemBase {
         tab.addDouble("Encoder Position", () -> getPosition()).withWidget(BuiltInWidgets.kDial).withSize(2, 2).withProperties(Map.of("Max", 1, "Min", -1)).withPosition(0, 2);
         tab.addDouble("Exact Encoder Position", () -> getPosition()); //Don't change right now
         tab.addDouble("Aim", () -> armToAim(getPosition()));
+        tab.addDouble("Converted Position", () -> aimToArm(armToAim(getPosition())));
     
     }
 
