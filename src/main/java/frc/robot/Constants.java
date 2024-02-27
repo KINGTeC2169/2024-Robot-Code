@@ -48,7 +48,7 @@ public final class Constants {
         
         //DIO ports
         public static final int beamBreak = 0;
-        public static final int armEncoder = 9;
+        public static final int armEncoder = 8;
 
         //Shooter CAN ids
         public static final int shooterTop = 17;
@@ -66,7 +66,7 @@ public final class Constants {
     }
 
     public static final class ArmConstants {
-        public static final double armEncoderOffset = 0; //Make sure to subtract by 0.25
+        public static final double armEncoderOffset = 0.229493280737332 - 0.25; //Make sure to subtract by 0.25
         public static final double shooterOffset = 0.4103968962; // (90-66.486)*0.0174533 RAD
         public static final double armOffset = 0.1504823526;//8.622*0.0174533 RAD
         public static final double distance = 2.06841667; //ft Distance from hex shaft to point of shot 24.821in
