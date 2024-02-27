@@ -126,6 +126,7 @@ public class RobotContainer {
     controller.povUp().whileFalse(Commands.run(() -> intake.stopTake()));
     controller.x().whileTrue(Commands.run(() -> shooter.setRPM(4000)));
     controller.x().whileFalse(Commands.run(() -> shooter.setRPM(0)));
+    controller.povRight().whileTrue(new RevAndAim(arm, shooter, 40));
     controller.povDown().whileTrue(new Launch(intake));
     controller.povLeft().whileTrue(new LimelightAlign(swerveSubsystem, arm, shooter));
 
