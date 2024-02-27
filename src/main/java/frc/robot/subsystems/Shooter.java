@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.Vision;
 
 public class Shooter extends SubsystemBase {
     
@@ -50,12 +51,12 @@ public class Shooter extends SubsystemBase {
     }
 
     /**Sets the power as a double between -1 and 1*/
-    /* 
+    
     public void setPower(double power){
-        shooterTop.set(power);
-        shooterBot.set(power);
+        shooterTop.set(-power);
+        shooterBot.set(-power);
         SmartDashboard.putNumber("Request ShotSpeed", power);
-    }*/
+    }
 
     /**Gets the current from the top and bottom motors as a double array */
     public double[] getShootCurrent(){
@@ -78,32 +79,22 @@ public class Shooter extends SubsystemBase {
     public void setRPM(double rpm){
 
         double power = rpm/6350;
-
-        shooterTop.set(-power);
-        shooterBot.set(-power);
-        //shooterTop.setControl(new VoltageOut(11));
-        //shooterBot.setControl(new VoltageOut(11));
-        //shooterTop.setControl(m_velocity.withVelocity(rpm));
-        //shooterBot.setControl(m_velocity.withVelocity(rpm));
-        //shooterTop.setControl(request.withOutput(getPID()[0])); 
-        //shooterBot.setControl(request.withOutput(getPID()[1]));
+        power = Vision.shootRPM;
+        setPower(power);
     }
 
     public void setRPM(){
-        shooterTop.set(shooterSpeed.getDouble(0.5));
-        shooterBot.set(shooterSpeed.getDouble(0.5));
+        
+        setPower(shooterSpeed.getDouble(0.5));
     }
 
-    public void setAmpRPM(double rpm){
-
-        shooterTop.set(rpm);
-        shooterBot.set(rpm);
+    public void setAmpRPM(){
+        setPower(0.1);
     }
 
 
     public boolean shooterReady(){
-        //return Math.abs(getRPM()[0]-setRPM) < 30 && Math.abs(getRPM()[1]-setRPM) < 30;
-        return getRPM()[0] > 1000 && getRPM()[1] > 1000;
+        return getRPM()[0] > Vision.shootRPM && getRPM()[1] > Vision.shootRPM;
     }
 
     public void stopShooter() {
