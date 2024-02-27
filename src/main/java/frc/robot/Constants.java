@@ -65,6 +65,16 @@ public final class Constants {
         
     }
 
+    public static final class AutoAngles{
+
+        public static final double top = 0.3;
+        
+           
+
+
+
+    }
+
     public static final class ArmConstants {
         public static final double armEncoderOffset = 0.229493280737332 - 0.25; //Make sure to subtract by 0.25
         public static final double shooterOffset = 0.4103968962; // (90-66.486)*0.0174533 RAD
@@ -100,10 +110,10 @@ public final class Constants {
         public static final double rightLeftWheels = Units.inchesToMeters(23);
         public static final double frontBackWheels = Units.inchesToMeters(23);
 
-        public static final double FRabsoluteOffset = 2.672189131379128; //-0.464795239269733; 
-        public static final double FLabsoluteOffset = 0.958736054599285; //-0.862095460295677; 
-        public static final double BRabsoluteOffset = 2.56174273788929; //0.513882525265217; 
-        public static final double BLabsoluteOffset = 2.501917608082294; //2.517257384955883; 
+        public static final double FRabsoluteOffset = -0.470931150019169; //2.672189131379128; 
+        public static final double FLabsoluteOffset = -2.178248316049576; //0.958736054599285; 
+        public static final double BRabsoluteOffset = 0.572173677384853; //0.513882525265217; 
+        public static final double BLabsoluteOffset = 0.628930851817131; //2.517257384955883; 
 
         public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
                 new Translation2d(frontBackWheels / 2, rightLeftWheels / 2),//Front-Left
@@ -129,7 +139,7 @@ public final class Constants {
     public static final class Angles{
         public static final double subwoofer = 45;
         public static final double podium = 20;
-        public static final double amp = 90;
+        public static final double amp = 80;
         public static final double safe = 15;
 
     }
