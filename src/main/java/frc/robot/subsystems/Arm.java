@@ -68,7 +68,7 @@ public class Arm extends SubsystemBase {
     }         
 
     public double getPosition(){
-        return encoder.getAbsolutePosition() - encoder.getPositionOffset(); //To change direction, 0.5 - (encoder.getAbsolutePosition - encoder.getPositionOffset())
+        return 0.5 - (encoder.getAbsolutePosition() - encoder.getPositionOffset()); //To change direction, 0.5 - (encoder.getAbsolutePosition - encoder.getPositionOffset())
     }
 
     public double[] getCurrent(){
@@ -83,13 +83,13 @@ public class Arm extends SubsystemBase {
 
     public void setPosition(double position) {
         setPosition = position;
-        if (position > 0.45){
-            position = 0.45;
-        }else if (position < 0.25){
-            position = 0.25;
+        if (position > 0.40){
+            position = 0.40;
+        }else if (position < 0.28){
+            position = 0.28;
         }
         leftArm.set(armPID.calculate(getPosition(), position));
-        rightArm.set(-armPID.calculate(getPosition(),  position));
+        rightArm.set(armPID.calculate(getPosition(),  position));
     }
 
     //AIM = DEGREES, ARM = ROTATIONS
