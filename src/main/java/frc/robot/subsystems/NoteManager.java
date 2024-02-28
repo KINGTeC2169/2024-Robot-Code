@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 
 public class NoteManager{
     
-    private static boolean note;
+    private static boolean note = false;
 
     /**This tells the shooter that there isn't a note in the intake */
     public static void setFalse(){

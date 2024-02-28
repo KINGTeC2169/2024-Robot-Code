@@ -32,10 +32,11 @@ public class RevAndAim extends Command {
     @Override
     public void end(boolean interupt){
         arm.activeStop();
+        shooter.setRPM(0);
     }
     
     @Override
 	public boolean isFinished() {
-		return arm.isReady();
+		return false;
 	}
 }

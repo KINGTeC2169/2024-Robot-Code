@@ -79,7 +79,6 @@ public class Shooter extends SubsystemBase {
     public void setRPM(double rpm){
 
         double power = rpm/6350;
-        power = Vision.shootRPM;
         setPower(power);
     }
 

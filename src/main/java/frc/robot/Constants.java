@@ -137,10 +137,10 @@ public final class Constants {
     }
 
     public static final class Angles{
-        public static final double subwoofer = 45;
+        public static final double subwoofer = 39.2;
         public static final double podium = 20;
-        public static final double amp = 80;
-        public static final double safe = 15;
+        public static final double amp = -2;
+        public static final double safe = 35;
 
     }
 

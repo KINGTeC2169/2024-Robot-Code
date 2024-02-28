@@ -15,6 +15,7 @@ import frc.robot.Constants.Vision;
 
 
 public class LimelightTable {
+    private static double finalAim;
     private static NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     private ShuffleboardTab tab = Shuffleboard.getTab("Limelight");
     private HttpCamera limelightCam = new HttpCamera("limelight", "http://10.21.69.33:5800");
@@ -34,7 +35,7 @@ public class LimelightTable {
         tab.addNumber("Aim shot", () -> aimShot()).withPosition(6, 0);
         tab.addDouble("Angle", () -> (getAngle())).withPosition(5, 1);
         tab.addDouble("HeightDif", () -> getHeightDif()).withPosition(6, 1);
-
+        tab.addNumber("Aim shot1", () -> finalAim).withPosition(6, 0);
     }
 
     public static double getTX(){
@@ -89,6 +90,7 @@ public class LimelightTable {
         for(int i = 0; i < 8; i++){
             aim = getShootingAngle(new double[]{distance-Arm.predictArmPosition(aim)[0], 6.90625-Vision.mountedHeight-Arm.predictArmPosition(aim)[1]});
         }
-        return aim;
+        finalAim = aim;
+        return finalAim;
     }
 }

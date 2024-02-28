@@ -20,7 +20,7 @@ public class Intake extends SubsystemBase{
     private GenericEntry outtakeSpeed;
 
     private boolean note;
-    private double rpmIntake;
+    private double rpmIntake = 750;
 
     private ShuffleboardTab tab = Shuffleboard.getTab("Intake");
 
@@ -34,14 +34,17 @@ public class Intake extends SubsystemBase{
         intakeSpeed = tab.add("Intake Speed", 0.2).withWidget(BuiltInWidgets.kNumberSlider).withPosition(4, 0).withSize(2, 1).withProperties(Map.of("Min", 0)).getEntry();
         outtakeSpeed = tab.add("Outtake Speed", 0.05).withWidget(BuiltInWidgets.kNumberSlider).withPosition(6, 0).withSize(2, 1).withProperties(Map.of("Min", 0)).getEntry();
         
-        tab.addDouble("Intake RPM", () -> 60 * intakeMotor.getRotorVelocity().getValue()).withPosition(0, 1);
+        tab.addDouble("Intake RPM", () -> getRPM()).withPosition(0, 1);
     }
+
     /**Sets intake to suck in */
     public void inTake() {
-        intakeMotor.set(-intakeSpeed.getDouble(0.2));
-        if(intakeMotor.getRotorVelocity().getValue() < rpmIntake){
-            NoteManager.setTrue();
-        }
+        intakeMotor.set(-0.3);
+        
+    }
+
+    public double getRPM(){
+        return -(60 * intakeMotor.getRotorVelocity().getValue());
     }
 
     /**Sets intake to outtake */

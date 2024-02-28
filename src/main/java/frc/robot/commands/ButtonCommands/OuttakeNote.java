@@ -6,12 +6,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.NoteManager;
 
-public class IntakeNote extends Command {
+public class OuttakeNote extends Command {
     private Intake intake;
 
     private boolean started;
 
-    public IntakeNote(Intake intake){
+    public OuttakeNote(Intake intake){
         this.intake = intake;
         addRequirements(intake);
     }
@@ -23,7 +23,7 @@ public class IntakeNote extends Command {
 
     @Override
     public void execute() { 
-        intake.inTake();
+        intake.outTake();
         if(intake.getRPM() > 1500){
             started = true;
         }
@@ -34,8 +34,8 @@ public class IntakeNote extends Command {
 
     @Override
     public void end(boolean interupt) {
-        intake.outTake();
-        Timer.delay(0.01);
+        //intake.Take();
+        //Timer.delay(0.01);
         intake.stopTake();
 	}
 

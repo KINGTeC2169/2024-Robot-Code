@@ -44,7 +44,7 @@ public class Arm extends SubsystemBase {
 
         encoder.setPositionOffset(Constants.ArmConstants.armEncoderOffset);
         
-        armPID = new PIDController(0.5, 0, 0);
+        armPID = new PIDController(1.95, 0.075, 0);
 
         tab.add("Arm PID", armPID).withSize(2, 2).withPosition(0, 0);
 
@@ -69,7 +69,12 @@ public class Arm extends SubsystemBase {
     }         
 
     public double getPosition(){
-        return 0.5 - (encoder.getAbsolutePosition() - encoder.getPositionOffset()); //To change direction, 0.5 - (encoder.getAbsolutePosition - encoder.getPositionOffset())
+        double pos = 0.5 - (encoder.getAbsolutePosition() - encoder.getPositionOffset());
+        if(pos < 0){
+            pos += 1;
+            Math.abs(pos);
+        }
+        return pos; //To change direction, 0.5 - (encoder.getAbsolutePosition - encoder.getPositionOffset())
     }
 
     public double[] getCurrent(){
@@ -86,8 +91,8 @@ public class Arm extends SubsystemBase {
         setPosition = position;
         if (position > 0.40){
             position = 0.40;
-        }else if (position < 0.28){
-            position = 0.28;
+        }else if (position < 0.29){
+            position = 0.29;
         }
         leftArm.set(armPID.calculate(getPosition(), position));
         rightArm.set(armPID.calculate(getPosition(),  position));
@@ -100,6 +105,11 @@ public class Arm extends SubsystemBase {
     }
 
     public void activeStop(){
+        if (setPosition > 0.40){
+            setPosition = 0.40;
+        }else if (setPosition < 0.29){
+            setPosition = 0.29;
+        }
         leftArm.set(armPID.calculate(getPosition(), setPosition));
         rightArm.set(armPID.calculate(getPosition(), setPosition));
     }
@@ -111,7 +121,7 @@ public class Arm extends SubsystemBase {
     }
 
     public boolean isReady(){
-        return setPosition == getPosition();
+        return Math.abs(setPosition-getPosition())< 0.2;
     }
 
 
