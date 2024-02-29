@@ -1,17 +1,15 @@
 package frc.robot.commands.ButtonCommands;
 
-import edu.wpi.first.units.Time;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.NoteManager;
 
-public class IntakeNote extends Command {
+public class Pickup extends Command {
     private Intake intake;
 
     private boolean started;
 
-    public IntakeNote(Intake intake){
+    public Pickup(Intake intake){
         this.intake = intake;
         addRequirements(intake);
     }
@@ -19,6 +17,7 @@ public class IntakeNote extends Command {
     @Override
     public void initialize(){
         started = false;
+        NoteManager.setFalse();
     }
 
     @Override
@@ -27,20 +26,18 @@ public class IntakeNote extends Command {
         if(intake.getRPM() > 1500){
             started = true;
         }
-        if(intake.getRPM() < 1000 && started){
-            //NoteManager.setTrue();
+        if(intake.getRPM() < 800 && started){
+            NoteManager.setTrue();
         }
     }
 
     @Override
     public void end(boolean interupt) {
-        intake.outTake();
-        Timer.delay(0.01);
         intake.stopTake();
 	}
 
     @Override
 	public boolean isFinished() {
-		return false;//NoteManager.hasNote()
+		return false || NoteManager.hasNote();
 	}
 }

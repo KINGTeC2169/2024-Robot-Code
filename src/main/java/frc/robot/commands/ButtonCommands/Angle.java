@@ -2,19 +2,16 @@ package frc.robot.commands.ButtonCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Intake;
 
-public class Safe extends Command {
+public class Angle extends Command {
 
     private Arm arm;
-    private Intake intake;
-    final private double desiredAngle = 10;
+    private double angle;
 
-    public Safe(Arm arm, Intake intake){
+    public Angle(Arm arm, double angle){
         this.arm = arm;
         addRequirements(arm);
-        this.intake = intake;
-        addRequirements(intake);
+        this.angle = angle;
     }
 
     @Override
@@ -23,13 +20,12 @@ public class Safe extends Command {
 
     @Override
     public void execute(){
-        arm.setPosition(desiredAngle);
-        intake.stopTake();
+        arm.setPosition(angle);
     }
 
     @Override
     public void end(boolean interupt){
-        
+        arm.activeStop();
     }
     
     @Override
@@ -37,4 +33,3 @@ public class Safe extends Command {
 		return arm.isReady();
 	}
 }
-

@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.Positions;
 import frc.robot.Constants.Vision;
 
 public class Arm extends SubsystemBase {
@@ -105,10 +106,12 @@ public class Arm extends SubsystemBase {
     }
 
     public void activeStop(){
-        if (setPosition > 0.40){
+        if(setPosition == Positions.amp){
+            
+        }else if (setPosition > 0.40){
             setPosition = 0.40;
-        }else if (setPosition < 0.29){
-            setPosition = 0.29;
+        }else if (setPosition <= 0.292){
+            setPosition = 0.292;
         }
         leftArm.set(armPID.calculate(getPosition(), setPosition));
         rightArm.set(armPID.calculate(getPosition(), setPosition));
@@ -121,7 +124,7 @@ public class Arm extends SubsystemBase {
     }
 
     public boolean isReady(){
-        return Math.abs(setPosition-getPosition())< 0.2;
+        return Math.abs(setPosition-getPosition()) < 0.0005;
     }
 
 

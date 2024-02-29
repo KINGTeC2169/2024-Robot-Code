@@ -1,19 +1,14 @@
-package frc.robot.commands.ButtonCommands.ShootingPos;
+package frc.robot.commands.ButtonCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Shooter;
 
-public class Amp extends Command {
+public class Shoot extends Command {
 
-    private Arm arm;
     private Shooter shooter;
-    final private double desiredAngle = 90;
 
-    public Amp(Arm arm, Shooter shooter){
-        this.arm = arm;
-        addRequirements(arm);
+    public Shoot(Shooter shooter){
         this.shooter = shooter;
         addRequirements(shooter);
     }
@@ -25,16 +20,15 @@ public class Amp extends Command {
     @Override
     public void execute(){
         shooter.setRPM(Constants.Vision.shootRPM);
-        arm.setPosition(desiredAngle);
     }
 
     @Override
     public void end(boolean interupt){
-        arm.activeStop();
+        shooter.setRPM(0);
     }
     
     @Override
 	public boolean isFinished() {
-		return arm.isReady() && shooter.shooterReady();
+		return false;
 	}
 }
