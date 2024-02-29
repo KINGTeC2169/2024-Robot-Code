@@ -3,6 +3,7 @@ package frc.robot.commands.ButtonCommands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.NoteManager;
 
 public class GroundPickup extends Command {
     private Arm arm;
@@ -27,11 +28,10 @@ public class GroundPickup extends Command {
 
     @Override
     public void end(boolean interupt){
-        new Rest(arm);
     }
     
     @Override
 	public boolean isFinished() {
-		return false;
+		return NoteManager.hasNote();
 	}
 }

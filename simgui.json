@@ -12,6 +12,9 @@
       "/Shuffleboard/Arm/Arm PID": "PIDController",
       "/Shuffleboard/Arm/PIDController[1]": "PIDController",
       "/Shuffleboard/Swerve Module/PIDController[2]": "PIDController",
+      "/Shuffleboard/Swerve Module/PIDController[3]": "PIDController",
+      "/Shuffleboard/Swerve Module/PIDController[4]": "PIDController",
+      "/Shuffleboard/Swerve Module/PIDController[5]": "PIDController",
       "/Shuffleboard/Swerve/Field": "Field2d"
     }
   },

@@ -22,6 +22,7 @@ import frc.robot.commands.ButtonCommands.IntakeCommand;
 import frc.robot.commands.ButtonCommands.Pickup;
 import frc.robot.commands.ButtonCommands.Rest;
 import frc.robot.commands.ButtonCommands.RevAndAngle;
+import frc.robot.commands.ButtonCommands.RevAngleLaunch;
 import frc.robot.commands.ButtonCommands.Launch;
 import frc.robot.commands.ButtonCommands.LimelightAlign;
 import frc.robot.commands.ButtonCommands.Outtake;
@@ -64,11 +65,12 @@ public class RobotContainer {
     
     // Register Named Commands
     NamedCommands.registerCommand("Ground Pickup", new GroundPickup(arm, intake));
-    NamedCommands.registerCommand("Amp Launch", new RevAndAngle(arm, shooter, Positions.amp));
-    NamedCommands.registerCommand("Podium Launch", new RevAndAngle(arm, shooter, Positions.podium));
-    NamedCommands.registerCommand("Rev and Launch 1", new RevAndAngle(arm, shooter, 0)); 
-    NamedCommands.registerCommand("Rev and Launch 2", new RevAndAngle(arm, shooter, 0));
-    NamedCommands.registerCommand("Rev and Launch 3", new RevAndAngle(arm, shooter, 0));
+    NamedCommands.registerCommand("Amp Launch", new RevAngleLaunch(arm, shooter, intake, Positions.amp, true));
+    NamedCommands.registerCommand("Rest Postion", new Rest(arm));
+    NamedCommands.registerCommand("Podium Launch", new RevAngleLaunch(arm, shooter, intake, Positions.podium));
+    NamedCommands.registerCommand("Rev and Launch 1", new RevAngleLaunch(arm, shooter, intake, 0)); 
+    NamedCommands.registerCommand("Rev and Launch 2", new RevAngleLaunch(arm, shooter, intake, 0));
+    NamedCommands.registerCommand("Rev and Launch 3", new RevAngleLaunch(arm, shooter, intake, 0));
 
     //themeSong = new MusicCommand(swerveSubsystem, "src\\main\\deploy\\ThunderStruck.chrp");
     tab.addString("Auto 1.0", () -> "3 Ring Center").withSize(3, 1).withPosition(0, 0);
@@ -123,18 +125,15 @@ public class RobotContainer {
 
     //Comp controls:
     controller.leftTrigger(0.2).whileTrue(new Rest(arm));
-    controller.rightTrigger(0.2).whileTrue(new IntakeCommand(intake));
-
-    controller.back().whileTrue(new Rest(arm));
-    controller.start().whileTrue(new Rest(arm));
+    controller.rightTrigger(0.2).whileTrue(new IntakeCommand(intake, arm));
 
     controller.povDown().whileTrue(new Outtake(intake));
-    controller.povUp().whileTrue(new IntakeCommand(intake));
+    controller.povUp().whileTrue(new IntakeCommand(intake, arm));
 
     controller.y().whileTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
     controller.x().whileTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
     controller.a().whileTrue(new RevAndAngle(arm, shooter, Positions.podium));
-    controller.b().whileTrue(new RevAndAngle(arm, shooter, Positions.amp));
+    controller.b().whileTrue(new RevAndAngle(arm, shooter, Positions.amp, true));
 
     controller.povRight().whileTrue(new Pickup(intake));
     controller.povUp().whileTrue(new Outtake(intake));
@@ -143,14 +142,15 @@ public class RobotContainer {
 
 
 
-    buttonBoard.button(1).whileTrue(new GroundPickup(arm, intake));
-    buttonBoard.button(2).whileTrue(new Rest(arm));
+    buttonBoard.button(1).whileTrue(new IntakeCommand(intake, arm));
+    buttonBoard.button(2).whileTrue(new Outtake(intake));
     buttonBoard.button(3).whileTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
-    buttonBoard.button(4).whileTrue(new RevAndAngle(arm, shooter, Positions.amp));
-    buttonBoard.button(5).whileTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
-    buttonBoard.button(6).whileTrue(new Launch(intake));
-    buttonBoard.button(7).whileTrue(new LimelightAlign(swerveSubsystem, arm, shooter));
+    buttonBoard.button(4).whileTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
+    buttonBoard.button(5).whileTrue(new Pickup(intake));
+    buttonBoard.button(6).whileTrue(new Rest(arm));
+    buttonBoard.button(7).whileTrue(new RevAndAngle(arm, shooter, Positions.amp));
     buttonBoard.button(8).whileTrue(new RevAndAngle(arm, shooter, Positions.podium));
+
     buttonBoard.button(9).whileTrue(new Stop(shooter, intake)); 
     buttonBoard.button(10).onTrue(Commands.run(() -> arm.activeStop()));
     buttonBoard.button(11).whileTrue(Commands.run(() -> intake.outTake()));

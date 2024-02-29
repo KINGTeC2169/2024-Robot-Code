@@ -90,7 +90,7 @@ public class Arm extends SubsystemBase {
 
     public void setPosition(double position) {
         setPosition = position;
-        if (position > 0.40){
+        if (position > 0.40 && !(position == Positions.amp)){
             position = 0.40;
         }else if (position < 0.29){
             position = 0.29;

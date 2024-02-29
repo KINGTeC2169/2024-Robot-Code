@@ -23,7 +23,7 @@ public class Shooter extends SubsystemBase {
 
     private ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
 
-    private GenericEntry shooterSpeed = tab.add("Shooter Speed", 0.5).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).withPosition(4, 0).getEntry();
+    //private GenericEntry shooterSpeed = tab.add("Shooter Speed", 0.5).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).withPosition(4, 0).getEntry();
 
     public Shooter(){
         
@@ -83,8 +83,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public void setRPM(){
-        
-        setPower(shooterSpeed.getDouble(0.5));
+        setPower(Vision.shootRPM/6350);
     }
 
     public void setAmpRPM(){
@@ -93,7 +92,7 @@ public class Shooter extends SubsystemBase {
 
 
     public boolean shooterReady(){
-        return getRPM()[0] > Vision.shootRPM && getRPM()[1] > Vision.shootRPM;
+        return getRPM()[0] > Vision.shootRPM - 400 && getRPM()[1] > Vision.shootRPM - 400;
     }
 
     public void stopShooter() {
