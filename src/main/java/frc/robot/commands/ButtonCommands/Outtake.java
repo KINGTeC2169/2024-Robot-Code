@@ -2,12 +2,11 @@ package frc.robot.commands.ButtonCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.NoteManager;
 
-public class Launch extends Command {
+public class Outtake extends Command {
     private Intake intake;
 
-    public Launch(Intake intake){
+    public Outtake(Intake intake){
         this.intake = intake;
         addRequirements(intake);
     }
@@ -18,10 +17,7 @@ public class Launch extends Command {
 
     @Override
     public void execute() { 
-        intake.inTake();
-        if(intake.getRPM() > 1500){
-            NoteManager.setFalse();
-        }
+        intake.outTake();
     }
 
     @Override

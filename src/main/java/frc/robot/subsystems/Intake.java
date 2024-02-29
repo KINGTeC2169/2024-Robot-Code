@@ -49,7 +49,7 @@ public class Intake extends SubsystemBase{
 
     /**Sets intake to outtake */
     public void outTake() {
-        intakeMotor.set(outtakeSpeed.getDouble(0.05));
+        intakeMotor.set(0.12);
     }
 
     /**Stops the intake. */
@@ -65,6 +65,11 @@ public class Intake extends SubsystemBase{
     /**Returns the voltage of the intake motor. */
     public double getVoltage(){
         return intakeMotor.getSupplyVoltage().getValueAsDouble();
+    }
+
+    /**Returns the current of the intake motor. */
+    public double getCurrent(){
+        return intakeMotor.getSupplyCurrent().getValueAsDouble();
     }
 
     /**Returns true of the intake is on. */

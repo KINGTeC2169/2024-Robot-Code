@@ -1,17 +1,18 @@
-package frc.robot.commands.ButtonCommands.ShootingPos;
+package frc.robot.commands.ButtonCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.Constants.Positions;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Shooter;
 
-public class RevAndAngle extends Command {
+public class RevAndAim extends Command {
 
     private Arm arm;
     private Shooter shooter;
     private double desiredAngle;
 
-    public RevAndAngle(Arm arm, Shooter shooter, double angle){
+    public RevAndAim(Arm arm, Shooter shooter, double angle){
         this.arm = arm;
         addRequirements(arm);
         this.shooter = shooter;
@@ -25,17 +26,18 @@ public class RevAndAngle extends Command {
 
     @Override
     public void execute(){
-        //shooter.setRPM(Constants.Vision.shootRPM);
-        arm.setPosition(desiredAngle);
+        shooter.setRPM(Constants.Vision.shootRPM);
+        arm.setAim(desiredAngle);
     }
 
     @Override
     public void end(boolean interupt){
-        arm.activeStop();
+        new Angle(arm, Positions.rest);
+        shooter.setRPM(0);
     }
     
     @Override
 	public boolean isFinished() {
-		return false;//arm.isReady();
+		return false;
 	}
 }

@@ -78,7 +78,7 @@ public final class Constants {
     public static final class ArmConstants {
         public static final double armEncoderOffset = 0.229493280737332 - 0.25; //Make sure to subtract by 0.25
         public static final double shooterOffset = 0.4103968962; // (90-66.486)*0.0174533 RAD
-        public static final double armOffset = 0.1504823526;//8.622*0.0174533 RAD
+        public static final double armOffset = 0.1504823526;//   RAD
         public static final double distance = 2.06841667; //ft Distance from hex shaft to point of shot 24.821in
 
         public static final double armGearBox = 201.6; //48 * (84/20)
@@ -136,12 +136,12 @@ public final class Constants {
 
     }
 
-    public static final class Angles{
-        public static final double subwoofer = 39.2;
-        public static final double podium = 20;
-        public static final double amp = -2;
-        public static final double safe = 35;
-
+    public static final class Positions{
+        public static final double rest = 0.292;
+        public static final double subwoofer = 0.3517;
+        public static final double sideSubwoofer = 0.36334;
+        public static final double podium = 0.3877;
+        public static final double amp = 0.5321;
     }
 
     

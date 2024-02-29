@@ -39,12 +39,12 @@ public class Shooter extends SubsystemBase {
         ShuffleboardLayout topMotor = tab.getLayout("Top Motor", BuiltInLayouts.kList).withPosition(0, 0).withSize(2, 4);
         topMotor.addDouble("Top Motor RPM", () -> getRPM()[0]).withWidget(BuiltInWidgets.kDial).withProperties(Map.of("Max", 4000));
         topMotor.addDouble("Top Motor Voltage", () -> getVoltage()[0]).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Max", 12));
-        topMotor.addDouble("Top Motor Current", () -> getShootCurrent()[0]).withWidget(BuiltInWidgets.kDial);
+        topMotor.addDouble("Top Motor Current", () -> getCurrent()[0]).withWidget(BuiltInWidgets.kDial);
 
         ShuffleboardLayout bottomMotor = tab.getLayout("Bottom Motor", BuiltInLayouts.kList).withPosition(2, 0).withSize(2, 4);
         bottomMotor.addDouble("Bottom Motor RPM", () -> getRPM()[1]).withWidget(BuiltInWidgets.kDial).withProperties(Map.of("Max", 4000));
         bottomMotor.addDouble("Bottom Motor Voltage", () -> getVoltage()[1]).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Max", 12));
-        bottomMotor.addDouble("Bottom Motor Current", () -> getShootCurrent()[0]).withWidget(BuiltInWidgets.kDial);
+        bottomMotor.addDouble("Bottom Motor Current", () -> getCurrent()[0]).withWidget(BuiltInWidgets.kDial);
 
         tab.addBoolean("Shooter Ready", () -> shooterReady()).withPosition(6, 0);
 
@@ -59,7 +59,7 @@ public class Shooter extends SubsystemBase {
     }
 
     /**Gets the current from the top and bottom motors as a double array */
-    public double[] getShootCurrent(){
+    public double[] getCurrent(){
         return new double[]{shooterTop.getSupplyCurrent().getValueAsDouble(),
                             shooterBot.getSupplyCurrent().getValueAsDouble()};
     }
@@ -101,7 +101,7 @@ public class Shooter extends SubsystemBase {
         shooterBot.set(0);
     }
 
-    public boolean off(){
-        return getVoltage()[0] < 5 && getVoltage()[1] < 5; //Change these values to resting voltages.
+    public boolean on(){
+        return getCurrent()[0] > 0 || getCurrent()[1] > 0;
     }
 }
