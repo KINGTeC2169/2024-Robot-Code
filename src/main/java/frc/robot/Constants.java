@@ -75,7 +75,8 @@ public final class Constants {
     }
 
     public static final class ArmConstants {
-        public static final double armEncoderOffset = 0.229493280737332 - 0.25; //Make sure to subtract by 0.25
+        public static final double armEncoderOffset =  0.2294932807 - 0.25 + 0.58822 - 0.292;
+        //public static final double armEncoderOffset =  0.2294932807 - 0.25 + (1-0.58822) - 0.292;
         public static final double shooterOffset = 0.4103968962; // (90-66.486)*0.0174533 RAD
         public static final double armOffset = 0.1504823526;//   RAD
         public static final double distance = 2.06841667; //ft Distance from hex shaft to point of shot 24.821in

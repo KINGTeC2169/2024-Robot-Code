@@ -5,7 +5,6 @@ import java.util.Map;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.hardware.TalonFX;
 
-import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;

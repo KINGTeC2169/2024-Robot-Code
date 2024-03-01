@@ -42,7 +42,6 @@ public class Arm extends SubsystemBase {
         leftArm.getConfigurator().apply(configs);
         rightArm.getConfigurator().apply(configs);
 
-
         encoder.setPositionOffset(Constants.ArmConstants.armEncoderOffset);
         
         armPID = new PIDController(1.95, 0.075, 0);
@@ -58,9 +57,10 @@ public class Arm extends SubsystemBase {
         rightMotor.addDouble("Current", () -> getCurrent()[1]).withWidget(BuiltInWidgets.kDial).withPosition(0, 0);
 
         tab.addDouble("Encoder Position", () -> getPosition()).withWidget(BuiltInWidgets.kDial).withSize(2, 2).withProperties(Map.of("Max", 1, "Min", -1)).withPosition(0, 2);
-        tab.addDouble("Exact Encoder Position", () -> getPosition()); //Don't change right now
-        tab.addDouble("Aim", () -> armToAim(getPosition()));
-        tab.addDouble("Converted Position", () -> aimToArm(armToAim(getPosition())));
+        tab.addDouble("Abs Encoder Position", () -> encoder.getAbsolutePosition()).withPosition(7, 0); //Don't change right now
+        tab.addDouble("Aim", () -> armToAim(getPosition())).withPosition(6, 0);
+        //tab.addDouble("Converted Position", () -> aimToArm(armToAim(getPosition())));
+        tab.addBoolean("Arm Ready", () -> isReady()).withPosition(6, 2).withSize(2, 2);
     
     }
 
@@ -70,12 +70,13 @@ public class Arm extends SubsystemBase {
     }         
 
     public double getPosition(){
-        double pos = 0.5 - (encoder.getAbsolutePosition() - encoder.getPositionOffset());
+        double pos = (encoder.getAbsolutePosition() - encoder.getPositionOffset());
+        //double pos = (1-encoder.getAbsolutePosition()) - encoder.getPositionOffset();
         if(pos < 0){
             pos += 1;
             Math.abs(pos);
         }
-        return pos; //To change direction, 0.5 - (encoder.getAbsolutePosition - encoder.getPositionOffset())
+        return pos;
     }
 
     public double[] getCurrent(){
@@ -92,8 +93,10 @@ public class Arm extends SubsystemBase {
         setPosition = position;
         if (position > 0.40 && !(position == Positions.amp)){
             position = 0.40;
-        }else if (position < 0.29){
+            setPosition = position;
+        }else if (position < 0.292){
             position = 0.29;
+            setPosition = position;
         }
         leftArm.set(armPID.calculate(getPosition(), position));
         rightArm.set(armPID.calculate(getPosition(),  position));
@@ -124,7 +127,7 @@ public class Arm extends SubsystemBase {
     }
 
     public boolean isReady(){
-        return Math.abs(setPosition-getPosition()) < 0.0005;
+        return Math.abs(setPosition-getPosition()) < 0.01;
     }
 
 

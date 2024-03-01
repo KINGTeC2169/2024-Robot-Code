@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Podium Launch"
+            "name": "Subwoofer Launch"
           }
         },
         {
@@ -26,19 +26,19 @@
         {
           "type": "named",
           "data": {
-            "name": "Ground Pickup"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.2
+            "name": "Rest Position"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Rev and Launch 1"
+            "name": "Ground Pickup"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Podium Launch"
           }
         },
         {
@@ -68,7 +68,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Rev and Launch 1"
+            "name": "Podium Launch"
           }
         },
         {
@@ -81,6 +81,12 @@
           "type": "path",
           "data": {
             "pathName": "Fourth Ring"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Rest Position"
           }
         },
         {

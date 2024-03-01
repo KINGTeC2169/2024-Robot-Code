@@ -5,12 +5,18 @@
       "x": 0.74,
       "y": 6.69
     },
-    "rotation": -29.89030954036566
+    "rotation": 150.11
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "Rest Position"
+          }
+        },
         {
           "type": "path",
           "data": {
@@ -21,6 +27,12 @@
           "type": "named",
           "data": {
             "name": "Amp Launch"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Rest Position"
           }
         },
         {
@@ -48,6 +60,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Rest Position"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Waypoint 4"
@@ -69,6 +87,12 @@
           "type": "named",
           "data": {
             "name": "Podium Launch"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Rest Position"
           }
         }
       ]

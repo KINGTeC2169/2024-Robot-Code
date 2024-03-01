@@ -45,7 +45,9 @@ public class RevAndAngle extends Command {
         double power = Constants.Vision.shootRPM;
         if(ampMode) power = 500;
 
-        //shooter.setRPM(power);
+        System.out.println(stable);
+
+        shooter.setRPM(power);
         arm.setPosition(desiredAngle);
     }
 
@@ -56,6 +58,6 @@ public class RevAndAngle extends Command {
     
     @Override
 	public boolean isFinished() {
-        return stable > 100;
+        return false;
 	}
 }

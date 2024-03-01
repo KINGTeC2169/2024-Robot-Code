@@ -23,21 +23,23 @@ public class Pickup extends Command {
     @Override
     public void execute() { 
         intake.inTake();
-        if(intake.getRPM() > 1500){
+        if(intake.getRPM() > 1250){
             started = true;
         }
-        if(intake.getRPM() < 800 && started){
+        if(intake.getRPM() < 1000 && started){
             NoteManager.setTrue();
         }
     }
 
     @Override
     public void end(boolean interupt) {
+        //intake.outTake();
+        //Timer.delay(0.08);
         intake.stopTake();
 	}
 
     @Override
 	public boolean isFinished() {
-		return false || NoteManager.hasNote();
+		return NoteManager.hasNote();
 	}
 }

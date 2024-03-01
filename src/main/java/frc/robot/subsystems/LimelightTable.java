@@ -22,6 +22,9 @@ public class LimelightTable {
 
     //This constructor adds data to the Limelight Shuffleboard tab
     public LimelightTable(){
+        
+        //Comp.add("Limelight", limelightCam).withWidget(BuiltInWidgets.kCameraStream).withSize(3, 3).withPosition(2, 0).withProperties(Map.of("Show Controls", false));
+
         tab.addNumber("TX", () -> getTX()).withPosition(0, 0);
         tab.addNumber("TY", () -> getTY()).withPosition(1, 0);
         tab.addNumber("TA", () -> getTA()).withPosition(0, 1);

@@ -54,6 +54,8 @@ public class RevAngleLaunch extends Command{
 
         shooter.setRPM(power);
         arm.setPosition(desiredAngle);
+
+        System.out.println(stable);
     }
 
     @Override
@@ -68,6 +70,6 @@ public class RevAngleLaunch extends Command{
     
     @Override
 	public boolean isFinished() {
-        return stable > 100;
+        return stable > 3;
 	}
 }

@@ -64,13 +64,12 @@ public class RobotContainer {
   public RobotContainer() {
     
     // Register Named Commands
-    NamedCommands.registerCommand("Ground Pickup", new GroundPickup(arm, intake));
+    NamedCommands.registerCommand("Ground Pickup", new Pickup(intake));
     NamedCommands.registerCommand("Amp Launch", new RevAngleLaunch(arm, shooter, intake, Positions.amp, true));
-    NamedCommands.registerCommand("Rest Postion", new Rest(arm));
+    NamedCommands.registerCommand("Rest Position", new Rest(arm));
+    NamedCommands.registerCommand("Subwoofer Launch", new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
     NamedCommands.registerCommand("Podium Launch", new RevAngleLaunch(arm, shooter, intake, Positions.podium));
-    NamedCommands.registerCommand("Rev and Launch 1", new RevAngleLaunch(arm, shooter, intake, 0)); 
-    NamedCommands.registerCommand("Rev and Launch 2", new RevAngleLaunch(arm, shooter, intake, 0));
-    NamedCommands.registerCommand("Rev and Launch 3", new RevAngleLaunch(arm, shooter, intake, 0));
+    NamedCommands.registerCommand("Sidesub Launch", new RevAngleLaunch(arm, shooter, intake, Positions.sideSubwoofer));
 
     //themeSong = new MusicCommand(swerveSubsystem, "src\\main\\deploy\\ThunderStruck.chrp");
     tab.addString("Auto 1.0", () -> "3 Ring Center").withSize(3, 1).withPosition(0, 0);
@@ -146,8 +145,8 @@ public class RobotContainer {
     buttonBoard.button(2).whileTrue(new Outtake(intake));
     buttonBoard.button(3).whileTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
     buttonBoard.button(4).whileTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
-    buttonBoard.button(5).whileTrue(new Pickup(intake));
-    buttonBoard.button(6).whileTrue(new Rest(arm));
+    buttonBoard.button(5).onTrue(new Pickup(intake));
+    buttonBoard.button(6).onTrue(new Rest(arm));
     buttonBoard.button(7).whileTrue(new RevAndAngle(arm, shooter, Positions.amp));
     buttonBoard.button(8).whileTrue(new RevAndAngle(arm, shooter, Positions.podium));
 

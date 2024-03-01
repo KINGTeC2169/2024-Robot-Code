@@ -12,9 +12,21 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "Rest Position"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Point 1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Podium Launch"
           }
         },
         {
@@ -26,7 +38,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Rev and Launch 3"
+            "name": "Ground Pickup"
           }
         },
         {
@@ -38,7 +50,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Rev and Launch 3"
+            "name": "Podium Launch"
           }
         }
       ]
