@@ -30,6 +30,7 @@ public class Arm extends SubsystemBase {
     //Update hex encoder
 
     private PIDController armPID;
+    private PIDController armDownPID;
 
     private double setPosition;
     final double zero = 0.04; //zero angle   
@@ -45,6 +46,7 @@ public class Arm extends SubsystemBase {
         encoder.setPositionOffset(Constants.ArmConstants.armEncoderOffset);
         
         armPID = new PIDController(1.95, 0.075, 0);
+        armDownPID = new PIDController(1,0.075,0);
 
         tab.add("Arm PID", armPID).withSize(2, 2).withPosition(0, 0);
 
@@ -56,11 +58,13 @@ public class Arm extends SubsystemBase {
         rightMotor.addDouble("Voltage", () -> getVoltage()[1]).withWidget(BuiltInWidgets.kVoltageView).withPosition(0, 1).withProperties(Map.of("Max", 12));
         rightMotor.addDouble("Current", () -> getCurrent()[1]).withWidget(BuiltInWidgets.kDial).withPosition(0, 0);
 
-        tab.addDouble("Encoder Position", () -> getPosition()).withWidget(BuiltInWidgets.kDial).withSize(2, 2).withProperties(Map.of("Max", 1, "Min", -1)).withPosition(0, 2);
+        tab.addDouble("Encoder Position", () -> getPosition()).withWidget(BuiltInWidgets.kDial).withSize(2, 2).withProperties(Map.of("Max", 0.75, "Min", 0.25)).withPosition(0, 2);
+        //tab.addDouble("Encoder Position", () -> getPosition()).withSize(1, 1).withPosition(6, 1);
+        tab.addDouble("Encoder Graph", () -> getPosition()).withWidget(BuiltInWidgets.kGraph).withSize(3, 3).withPosition(7, 1);
         tab.addDouble("Abs Encoder Position", () -> encoder.getAbsolutePosition()).withPosition(7, 0); //Don't change right now
         tab.addDouble("Aim", () -> armToAim(getPosition())).withPosition(6, 0);
         //tab.addDouble("Converted Position", () -> aimToArm(armToAim(getPosition())));
-        tab.addBoolean("Arm Ready", () -> isReady()).withPosition(6, 2).withSize(2, 2);
+        tab.addBoolean("Arm Ready", () -> isReady()).withPosition(6, 2).withSize(1, 2);
     
     }
 
@@ -70,7 +74,7 @@ public class Arm extends SubsystemBase {
     }         
 
     public double getPosition(){
-        double pos = (encoder.getAbsolutePosition() - encoder.getPositionOffset());
+        double pos = (encoder.getPositionOffset() - encoder.getAbsolutePosition());
         //double pos = (1-encoder.getAbsolutePosition()) - encoder.getPositionOffset();
         if(pos < 0){
             pos += 1;
@@ -90,12 +94,24 @@ public class Arm extends SubsystemBase {
     }
 
     public void setPosition(double position) {
+        /*
+        if(position == Positions.rest){
+            System.out.println("!!!");
+            if(getPosition() > 0.4){
+                leftArm.set(-0.15);
+                rightArm.set(-0.15);
+            } else {
+                leftArm.set(armDownPID.calculate(getPosition(), position));
+                rightArm.set(armDownPID.calculate(getPosition(),  position));
+            }
+            return;
+        }*/
         setPosition = position;
         if (position > 0.40 && !(position == Positions.amp)){
             position = 0.40;
             setPosition = position;
         }else if (position < 0.292){
-            position = 0.29;
+            position = 0.292;
             setPosition = position;
         }
         leftArm.set(armPID.calculate(getPosition(), position));

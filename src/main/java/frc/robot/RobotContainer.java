@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.Positions;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.ButtonCommands.Angle;
 import frc.robot.commands.ButtonCommands.GroundPickup;
 import frc.robot.commands.ButtonCommands.IntakeCommand;
 import frc.robot.commands.ButtonCommands.Pickup;
@@ -75,7 +76,8 @@ public class RobotContainer {
     tab.addString("Auto 1.0", () -> "3 Ring Center").withSize(3, 1).withPosition(0, 0);
     tab.addString("Auto 2.0", () -> "2 Ring Amp").withSize(3, 1).withPosition(0, 1);
     tab.addString("Auto 3.0", () -> "2 Ring Source").withSize(3, 1).withPosition(0, 2);
-    tab.addString("Auto 0.0", () -> "Just Drive").withSize(3, 1).withPosition(0, 3);
+    tab.addString("Auto 4.0", () -> "Emergency Auto").withSize(3, 1).withPosition(0, 3);
+    tab.addString("Auto 0.0", () -> "Just Drive").withSize(3, 1).withPosition(0, 4);
 
     swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
     () -> leftStick.getY(),
@@ -147,12 +149,12 @@ public class RobotContainer {
     buttonBoard.button(4).whileTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
     buttonBoard.button(5).onTrue(new Pickup(intake));
     buttonBoard.button(6).onTrue(new Rest(arm));
-    buttonBoard.button(7).whileTrue(new RevAndAngle(arm, shooter, Positions.amp));
+    buttonBoard.button(7).whileTrue(new RevAndAngle(arm, shooter, Positions.amp, true));
     buttonBoard.button(8).whileTrue(new RevAndAngle(arm, shooter, Positions.podium));
 
     buttonBoard.button(9).whileTrue(new Stop(shooter, intake)); 
     buttonBoard.button(10).onTrue(Commands.run(() -> arm.activeStop()));
-    buttonBoard.button(11).whileTrue(Commands.run(() -> intake.outTake()));
+    buttonBoard.button(11).whileTrue(new Angle(arm, 0.49));
     
   }
 
@@ -175,6 +177,7 @@ public class RobotContainer {
     }
 
     else if (autoChoice.getDouble(0.0) == 4.0){
+      return new PathPlannerAuto("Emergency Auto");
       
     }
     return new PathPlannerAuto("Just Drive");

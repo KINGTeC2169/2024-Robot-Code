@@ -2,6 +2,7 @@ package frc.robot.commands.ButtonCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.Constants.Vision;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Shooter;
 
@@ -28,7 +29,7 @@ public class RevAndAngle extends Command {
         this.shooter = shooter;
         addRequirements(shooter);
         desiredAngle = angle;
-        ampMode = true;
+        this.ampMode = true;
     }
 
     @Override
@@ -42,12 +43,11 @@ public class RevAndAngle extends Command {
         if(arm.isReady()){
             stable++;
         }
-        double power = Constants.Vision.shootRPM;
-        if(ampMode) power = 500;
 
-        System.out.println(stable);
+        //System.out.println(stable);
 
-        shooter.setRPM(power);
+        if(ampMode) shooter.setAmpRPM();
+        else shooter.setRPM(Vision.shootRPM);
         arm.setPosition(desiredAngle);
     }
 

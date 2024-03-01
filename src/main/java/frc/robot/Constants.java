@@ -75,7 +75,7 @@ public final class Constants {
     }
 
     public static final class ArmConstants {
-        public static final double armEncoderOffset =  0.2294932807 - 0.25 + 0.58822 - 0.292;
+        public static final double armEncoderOffset =  0.58822 + 0.292;//0.2294932807 - 0.25 + 0.58822 - 0.292;
         //public static final double armEncoderOffset =  0.2294932807 - 0.25 + (1-0.58822) - 0.292;
         public static final double shooterOffset = 0.4103968962; // (90-66.486)*0.0174533 RAD
         public static final double armOffset = 0.1504823526;//   RAD
@@ -100,7 +100,7 @@ public final class Constants {
 
         public static final ShuffleboardTab tab = Shuffleboard.getTab("Swerve Module");
 
-        public static double PDrive = tab.add("Drive P", 0.0).getEntry().getDouble(0.0);
+        public static double PDrive = tab.add("Drive P", 0.1).getEntry().getDouble(0.1);
 
         public static double PTurn = 0.31;
     }

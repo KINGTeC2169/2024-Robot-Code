@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.52,
-      "y": 2.23
+      "x": 0.72,
+      "y": 6.712444649960525
     },
-    "rotation": 180.0
+    "rotation": -119.74000000000001
   },
   "command": {
     "type": "sequential",
@@ -18,9 +18,15 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Just Drive"
+            "name": "Sidesub Launch"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Rest Position"
           }
         }
       ]

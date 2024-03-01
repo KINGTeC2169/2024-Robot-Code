@@ -48,6 +48,7 @@ public class RevAngleLaunch extends Command{
 
         if(arm.isReady()){
             stable++;
+            System.out.println(stable);
         }
         double power = Constants.Vision.shootRPM;
         if(ampMode) power = 500;
@@ -55,21 +56,19 @@ public class RevAngleLaunch extends Command{
         shooter.setRPM(power);
         arm.setPosition(desiredAngle);
 
-        System.out.println(stable);
+        //System.out.println(stable);
     }
 
     @Override
     public void end(boolean interupt){
-        if (ampMode){
-            intake.inTake();
-            Timer.delay(0.1);
-            intake.stopTake();
-        }
+        intake.inTake();
+        Timer.delay(0.3);
+        intake.stopTake();
         shooter.setRPM(0);
     }
     
     @Override
 	public boolean isFinished() {
-        return stable > 3;
+        return arm.isReady();
 	}
 }

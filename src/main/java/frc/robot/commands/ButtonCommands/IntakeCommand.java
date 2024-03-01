@@ -17,7 +17,7 @@ public class IntakeCommand extends Command {
 
     @Override
     public void initialize(){
-        System.out.println(arm.getPosition());
+        //System.out.println(arm.getPosition());
     }
 
     @Override

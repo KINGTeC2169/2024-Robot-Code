@@ -1,5 +1,6 @@
 package frc.robot.commands.ButtonCommands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.NoteManager;
@@ -34,7 +35,7 @@ public class Pickup extends Command {
     @Override
     public void end(boolean interupt) {
         //intake.outTake();
-        //Timer.delay(0.08);
+        Timer.delay(0.05);
         intake.stopTake();
 	}
 

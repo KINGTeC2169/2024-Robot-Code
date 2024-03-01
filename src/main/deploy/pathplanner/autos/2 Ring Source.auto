@@ -5,7 +5,7 @@
       "x": 0.74,
       "y": 4.41
     },
-    "rotation": 30.71
+    "rotation": 120.71
   },
   "command": {
     "type": "sequential",
@@ -18,21 +18,15 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Subwoofer Launch"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Point 1"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Podium Launch"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Point 2"
           }
         },
         {
@@ -44,13 +38,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Point 3"
+            "pathName": "Point 2"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Podium Launch"
+            "name": "Subwoofer Launch"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Rest Position"
           }
         }
       ]
