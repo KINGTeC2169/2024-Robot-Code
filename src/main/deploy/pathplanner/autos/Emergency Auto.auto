@@ -28,6 +28,25 @@
           "data": {
             "name": "Rest Position"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Emergency Path"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Ground Pickup"
+                }
+              }
+            ]
+          }
         }
       ]
     }

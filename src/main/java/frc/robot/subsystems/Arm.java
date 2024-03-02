@@ -146,6 +146,10 @@ public class Arm extends SubsystemBase {
         return Math.abs(setPosition-getPosition()) < 0.01;
     }
 
+    public boolean autoReady() {
+        return Math.abs(setPosition-getPosition()) < 0.015;
+    }
+
 
     /**
      * Gets the arm position in space (used for limelight) NOT encoder position

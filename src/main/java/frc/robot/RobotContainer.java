@@ -167,6 +167,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    swerveSubsystem.zeroHeading();
     if (autoChoice.getDouble(0.0) == 1.0){
       swerveSubsystem.field.setRobotPose(new Pose2d(1.34, 5.54, swerveSubsystem.getRotation2d()));
       return new PathPlannerAuto("3 Ring Center");

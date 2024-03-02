@@ -46,7 +46,9 @@
     }
   },
   "NetworkTables Info": {
-    "visible": true
+    "Connections": {
+      "open": true
+    }
   },
   "NetworkTables View": {
     "visible": false
