@@ -8,6 +8,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.proto.Trajectory;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
@@ -24,6 +25,7 @@ import frc.robot.Constants.Ports;
 import java.util.Map;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.PathPlannerTrajectory;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
@@ -67,6 +69,7 @@ public class SwerveSubsystem extends SubsystemBase {
     public SwerveDriveKinematics kinematics = DriveConstants.DRIVE_KINEMATICS;
     private final SwerveDriveOdometry odometer;
     public Field2d field = new Field2d();
+    public PathPlannerTrajectory trajectory;
 
     private ShuffleboardTab tab = Shuffleboard.getTab("Swerve");
     private GenericEntry fastSpeed = tab.add("Fast Speed", 1.0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).withPosition(6, 3).getEntry();
@@ -143,6 +146,10 @@ public class SwerveSubsystem extends SubsystemBase {
     /**Returns the field. */
     public Field2d getField() {
         return field;
+    }
+
+    public void setTrajectory(PathPlannerTrajectory trajectory){
+        this.trajectory = trajectory;
     }
 
     /**Returns the fast speed, which is adjustable via the slider on shuffleboard.*/

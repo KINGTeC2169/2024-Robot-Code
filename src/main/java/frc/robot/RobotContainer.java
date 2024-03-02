@@ -6,7 +6,11 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.PathPlannerTrajectory;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -60,7 +64,6 @@ public class RobotContainer {
   //Shuffleboard
   private ShuffleboardTab tab = Shuffleboard.getTab("Auto Chooser");
   private GenericEntry autoChoice = tab.add("Auto Choice", 0).withPosition(3, 0).getEntry();
-  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     
@@ -165,21 +168,26 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     if (autoChoice.getDouble(0.0) == 1.0){
+      swerveSubsystem.field.setRobotPose(new Pose2d(1.34, 5.54, swerveSubsystem.getRotation2d()));
       return new PathPlannerAuto("3 Ring Center");
     }
 
     else if (autoChoice.getDouble(0.0) == 2.0){
+      swerveSubsystem.field.setRobotPose(new Pose2d(0.74, 6.69, swerveSubsystem.getRotation2d()));
       return new PathPlannerAuto("2 Ring Amp");
     }
 
     else if (autoChoice.getDouble(0.0) == 3.0){
+      swerveSubsystem.field.setRobotPose(new Pose2d(0.74, 4.41, swerveSubsystem.getRotation2d()));
       return new PathPlannerAuto("2 Ring Source");
     }
 
     else if (autoChoice.getDouble(0.0) == 4.0){
+      swerveSubsystem.field.setRobotPose(new Pose2d(0.72, 6.71, swerveSubsystem.getRotation2d()));
       return new PathPlannerAuto("Emergency Auto");
       
     }
+    swerveSubsystem.field.setRobotPose(new Pose2d(0.52, 2.23, swerveSubsystem.getRotation2d()));
     return new PathPlannerAuto("Just Drive");
   }
 }
