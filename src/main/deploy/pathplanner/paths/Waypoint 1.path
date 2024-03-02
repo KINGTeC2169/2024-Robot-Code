@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.2799673117184607,
-        "y": 6.889530893440443
+        "x": 1.6111716784003651,
+        "y": 6.473839455992451
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.811757936312081,
-        "y": 7.246357620677327
+        "x": 2.0791600728094584,
+        "y": 6.990576641485824
       },
       "prevControl": {
-        "x": 1.1406187741285432,
-        "y": 7.090731148286942
+        "x": 1.5721726455329406,
+        "y": 7.068574707220673
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 90.0,
+    "rotation": 180.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "2 Ring Amp",
   "previewStartingState": {
-    "rotation": 151.31385242626058,
+    "rotation": -120.03,
     "velocity": 0
   },
   "useDefaultConstraints": true

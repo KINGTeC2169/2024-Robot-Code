@@ -5,7 +5,7 @@
       "x": 0.74,
       "y": 6.69
     },
-    "rotation": 150.11
+    "rotation": -120.03
   },
   "command": {
     "type": "sequential",
@@ -18,21 +18,27 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "Waypoint 1"
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "Amp Launch"
+            "name": "Subwoofer Launch"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "Rest Position"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Ground Pickup"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Waypoint 1"
           }
         },
         {
@@ -44,49 +50,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Ground Pickup"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Waypoint 3"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Podium Launch"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Rest Position"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Waypoint 4"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Ground Pickup"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Waypoint 5"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Podium Launch"
+            "name": "Amp Launch"
           }
         },
         {
