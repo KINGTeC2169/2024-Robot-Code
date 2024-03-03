@@ -62,7 +62,7 @@ public class SwerveSubsystem extends SubsystemBase {
     private SwerveModule backRight = new SwerveModule(
     Ports.backRightDrive,
     Ports.backRightTurn, 
-    false, false,
+    true, false,
     Ports.backRightAbsolute,
     DriveConstants.BRabsoluteOffset,
     false);
@@ -78,6 +78,9 @@ public class SwerveSubsystem extends SubsystemBase {
     private GenericEntry slowSpeed = tab.add("Slow Speed", 0.2).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).withPosition(2, 3).getEntry();
 
     public SwerveSubsystem() {
+
+        Pigeon.configure();
+
         odometer = new SwerveDriveOdometry(kinematics, getRotation2d(), getModulePositions(), new Pose2d(0, 0, new Rotation2d(0)));
         
         //SmartDashboard.putData("Field", field);
@@ -192,10 +195,12 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     /**Returns the rotation2d from the pigeon.*/
+
     public Rotation2d getRotation2d() {
         return Pigeon.getRotation2d();
         //return Rotation2d.fromDegrees(-getHeading());
     }
+
 
     /**Returns chassis speeds that are relative to the robot's front.*/
     public ChassisSpeeds getRobotRelativeSpeeds(){

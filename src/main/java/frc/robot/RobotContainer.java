@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.PathPlannerTrajectory;
@@ -13,12 +14,14 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.Joystick;
+
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+
 import frc.robot.Constants.Positions;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ButtonCommands.Angle;
@@ -38,6 +41,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LimelightTable;
 import frc.robot.subsystems.Pigeon;
 import frc.robot.subsystems.Shooter;
+
 import frc.robot.subsystems.SwerveSubsystem;
 
 /**
@@ -48,6 +52,7 @@ import frc.robot.subsystems.SwerveSubsystem;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+
   private final LimelightTable limelight = new LimelightTable();
   private final Pigeon pigeon = new Pigeon();
   private final Arm arm = new Arm();
@@ -64,6 +69,7 @@ public class RobotContainer {
   //Shuffleboard
   private ShuffleboardTab tab = Shuffleboard.getTab("Auto Chooser");
   private GenericEntry autoChoice = tab.add("Auto Choice", 0).withPosition(3, 0).getEntry();
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     
@@ -83,6 +89,7 @@ public class RobotContainer {
     tab.addString("Auto 0.0", () -> "Just Drive").withSize(3, 1).withPosition(0, 4);
 
     swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
+
     () -> leftStick.getY(),
     () -> leftStick.getX(),
     () -> rightStick.getTwist(),
@@ -93,6 +100,7 @@ public class RobotContainer {
 		));
 
     // Configure the trigger bindings
+
     configureBindings();
   }
 
@@ -167,6 +175,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+
     swerveSubsystem.zeroHeading();
     if (autoChoice.getDouble(0.0) == 1.0){
       swerveSubsystem.field.setRobotPose(new Pose2d(1.34, 5.54, swerveSubsystem.getRotation2d()));
@@ -190,5 +199,6 @@ public class RobotContainer {
     }
     swerveSubsystem.field.setRobotPose(new Pose2d(0.52, 2.23, swerveSubsystem.getRotation2d()));
     return new PathPlannerAuto("Just Drive");
+
   }
 }

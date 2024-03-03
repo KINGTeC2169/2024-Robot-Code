@@ -32,6 +32,7 @@ public final class Constants {
         public static final int pigeon = 14;
 
         //Swervedrive CAN ids
+
         public static final int frontLeftDrive = 3;
         public static final int frontLeftTurn = 2;
         public static final int frontLeftAbsolute = 10;
@@ -98,6 +99,7 @@ public final class Constants {
         public static final double driveEncoderRPMToMeterPerSec = driveEncoderToMeter / 60;
         public static final double turnEncoderRPMToRadPerSec = turnEncoderToRadian / 60;
 
+
         public static final ShuffleboardTab tab = Shuffleboard.getTab("Swerve Module");
 
         public static double PDrive = tab.add("Drive P", 0.1).getEntry().getDouble(0.1);
@@ -110,18 +112,28 @@ public final class Constants {
         public static final double rightLeftWheels = Units.inchesToMeters(23);
         public static final double frontBackWheels = Units.inchesToMeters(23);
 
+
         public static final double FRabsoluteOffset = -0.470931150019169; //2.672189131379128; 
         public static final double FLabsoluteOffset = -2.178248316049576; //0.958736054599285; 
         public static final double BRabsoluteOffset = 0.572173677384853; //0.513882525265217; 
         public static final double BLabsoluteOffset = 0.628930851817131; //2.517257384955883; 
 
+
         public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
-                new Translation2d(frontBackWheels / 2, rightLeftWheels / 2),//Front-Left
-                new Translation2d(frontBackWheels / 2, -rightLeftWheels / 2),//Front-Right
-                new Translation2d(-frontBackWheels / 2, rightLeftWheels / 2),//Back-Left
-                new Translation2d(-frontBackWheels / 2, -rightLeftWheels / 2));//Back-Right
+                new Translation2d(frontBackWheels / 2, -rightLeftWheels / 2),//Front-Left
+                new Translation2d(frontBackWheels / 2, rightLeftWheels / 2),//Front-Right
+                new Translation2d(-frontBackWheels / 2, -rightLeftWheels / 2),//Back-Left
+                new Translation2d(-frontBackWheels / 2, rightLeftWheels / 2));//Back-Right
     }
 
+    public static final class DeviceID {
+        public static final int shooterTop = 16;
+        public static final int shooterBot = 14;
+        public static final int intake = 15;
+        public static final int leftArm = 17;
+        public static final int rightArm = 18;
+        
+    }
     public static final class Vision {
 
         //7 3/4 from edge
