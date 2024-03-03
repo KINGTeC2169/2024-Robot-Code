@@ -1,3 +1,4 @@
+
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -8,13 +9,17 @@ import com.ctre.phoenix.sensors.CANCoderConfiguration;
 import com.ctre.phoenix.sensors.SensorTimeBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.Constants;
 
 import static frc.robot.Constants.ModuleConstants.*;
@@ -67,56 +72,62 @@ public class SwerveModule {
         //Creating and configuring PID controllers
         turningPID = new PIDController(PTurn, 0, 0);
         turningPID.enableContinuousInput(-Math.PI, Math.PI);
+        Constants.ModuleConstants.tab.add(turningPID).withWidget(BuiltInWidgets.kPIDController);
 
-        driveMotor.config_kP(0, 0.1);
-        
-        //drivePID = new PIDController(PDrive, 0, 0);
-
+        driveMotor.config_kP(0, Constants.ModuleConstants.PDrive);
 
         resetEncoders();
 
     }
-    /**Returns position of drive motor in rotations. */
+
+    /**
+     * Gets the drive position from the drive encoder
+     * 
+     * @return drivePosition -the position of the relative encoder
+     */
     public double getDrivePosition() {
         //return driveMotor.getSelectedSensorPosition() * driveEncoderToMeter;
         return -driveMotor.getSelectedSensorPosition() * (0.32 / 13824);
     }
 
-    /**Returns position of turn encoder in rotations. Counterclockwise is positive, accumulates. */
+    /**Returns position of turn encoder in radians. Counterclockwise is positive, accumulates. */
     public double getTurnPosition() {
         return turnEncoder.getPosition();
     }
 
-    /**Returns the Rotation2d position of the robot. */
+    /**Returns the rotation2d of the swerve module.*/
     public Rotation2d getRotation2d() {
-        return Rotation2d.fromRotations(getTurnPosition());
+        //return Rotation2d.fromDegrees(getTurnPosition());
+        return Rotation2d.fromRadians(getTurnPosition());
     }
 
-    /**Returns the drive motor velocity in rotations. */
+    /**Returns the velocity of the drive motor. */
     public double getDriveVelocity() {
-        //return driveMotor.getSelectedSensorVelocity() * driveEncoderRPMToMeterPerSec;
-        return driveMotor.getSelectedSensorVelocity();
+        return driveMotor.getSelectedSensorVelocity() * driveEncoderRPMToMeterPerSec;
     }
 
-    /**Returns the velocity of the turn motor in rpm. */
+    /**Returns the velocity of the turn motor. */
     public double getTurnVelocity() {
         return turnEncoder.getVelocity();
+        //>return turnMotor.getSelectedSensorVelocity();
     }
 
-    /**Returns absolute turn postion of the CANcoder in rotations. */
+    /**Returns the absolute position of the CANcoder. */
     public double getAbsoluteTurnPosition() {
         return absoluteEncoder.getAbsolutePosition();
     }
 
+    /**Returns the current of the drive motor. */
     public double getDriveCurrent() {
         return driveMotor.getSupplyCurrent();
     }
 
+    /**Returns the current of the turn motor. */
     public double getTurnCurrent() {
         return turnMotor.getOutputCurrent();
     }
 
-    /**Resets encoders */
+    /**Resets the relative turn motor encoder to the absolute turn position of the CANcoder. */
     public void resetEncoders() {
         driveMotor.setSelectedSensorPosition(0);
         turnEncoder.setPosition(getAbsoluteTurnPosition());
@@ -128,11 +139,12 @@ public class SwerveModule {
         return new SwerveModuleState(getDriveVelocity(), new Rotation2d(getTurnPosition()));
     }
 
-    /**Returns swerve module positon. */
+    /**Get the module position. */
     public SwerveModulePosition getModulePosition() {
         return new SwerveModulePosition(getDrivePosition(), getRotation2d());
     }
 
+    /**Sets the desired state of the swerve module. */
     public void setDesiredState(SwerveModuleState state) {
         if (Math.abs(state.speedMetersPerSecond) < 0.001) {
             stop();
@@ -151,12 +163,14 @@ public class SwerveModule {
         wantedSpeed = (((state.speedMetersPerSecond / maxSpeed) * 0.94) - 0.06);
         //driveMotor.set(ControlMode.Velocity, wantedSpeed * 3 / 2);
         // I LOVE ALIVEBAND  
-        driveMotor.set(ControlMode.PercentOutput, ((state.speedMetersPerSecond / maxSpeed) * 0.94) - 0.06);
+        driveMotor.set(ControlMode.PercentOutput, ((state.speedMetersPerSecond / maxSpeed) * 0.94) - 0.0);
         }
         
         turnMotor.set(turningPID.calculate(getTurnPosition(), state.angle.getRadians()));
 
     }
+
+    /**Sets the state of the swerve module. */
     public void setState(SwerveModuleState state) {
         state = SwerveModuleState.optimize(state, getState().angle);
 
@@ -165,14 +179,12 @@ public class SwerveModule {
         turnMotor.set(turningPID.calculate(getTurnPosition(), state.angle.getRadians()));
     }
 
-    public double getError() {
-        return driveMotor.getClosedLoopError();
-    }
-
+    /**Returns the wanted speed. */
     public double getWantedSpeed() {
         return wantedSpeed;
     }
 
+    /**Stops the swerve module. */
     public void stop() {
         wantedSpeed = 0;
         //driveMotor.set(ControlMode.Velocity, 0);
@@ -187,10 +199,11 @@ public class SwerveModule {
      * Uses a PID to set drive velocity to 0
      */
     public void semiAutoStop() {
-        driveMotor.set(ControlMode.PercentOutput, drivePID.calculate(getDriveVelocity(), 0));
+        driveMotor.set(ControlMode.PercentOutput, 0);
         turnMotor.set(0);
     }
 
+    /**Sets the velocity of the drive motor to 0 and the speed of the turn motor to 0. */
     public void fullStop() {
         driveMotor.set(ControlMode.Velocity, 0);
         turnMotor.set(0);
@@ -205,5 +218,4 @@ public class SwerveModule {
         driveMotor.set(ControlMode.PercentOutput, 0);
         turnMotor.set(turningPID.calculate(getTurnPosition(), state.angle.getRadians()));
     }
-
-}   
+}

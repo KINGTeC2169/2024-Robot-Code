@@ -1,0 +1,67 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.74,
+      "y": 6.69
+    },
+    "rotation": -120.03
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "Rest Position"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Subwoofer Launch"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Rest Position"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Ground Pickup"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Waypoint 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Waypoint 2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Amp Launch"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Rest Position"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

@@ -3,11 +3,15 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.proto.Trajectory;
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -21,6 +25,12 @@ import frc.robot.Constants.ModuleConstants;
 import frc.robot.Constants.Ports;
 import java.util.Map;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.PathPlannerTrajectory;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
+
 
 public class SwerveSubsystem extends SubsystemBase {
 
@@ -28,7 +38,7 @@ public class SwerveSubsystem extends SubsystemBase {
     private SwerveModule frontLeft = new SwerveModule(
     Ports.frontLeftDrive,
     Ports.frontLeftTurn, 
-    true, false,
+    false, false,
     Ports.frontLeftAbsolute,
     DriveConstants.FLabsoluteOffset,
     false);
@@ -44,7 +54,7 @@ public class SwerveSubsystem extends SubsystemBase {
     private SwerveModule backLeft = new SwerveModule(
     Ports.backLeftDrive,
     Ports.backLeftTurn, 
-    true, false,
+    false, false,
     Ports.backLeftAbsolute,
     DriveConstants.BLabsoluteOffset,
     false);
@@ -60,6 +70,7 @@ public class SwerveSubsystem extends SubsystemBase {
     public SwerveDriveKinematics kinematics = DriveConstants.DRIVE_KINEMATICS;
     private final SwerveDriveOdometry odometer;
     public Field2d field = new Field2d();
+    public PathPlannerTrajectory trajectory;
 
     private ShuffleboardTab tab = Shuffleboard.getTab("Swerve");
     private GenericEntry fastSpeed = tab.add("Fast Speed", 1.0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).withPosition(6, 3).getEntry();
@@ -77,37 +88,52 @@ public class SwerveSubsystem extends SubsystemBase {
         ShuffleboardLayout driveCurrents = tab.getLayout("Drive Currents", BuiltInLayouts.kGrid).withSize(2, 2).withProperties(Map.of("Number of rows", 2)).withPosition(0, 0);
         ShuffleboardLayout turnCurrents = tab.getLayout("Turn Currents", BuiltInLayouts.kGrid).withSize(2, 2).withProperties(Map.of("Number of rows", 2)).withPosition(0, 2);
 
-        driveCurrents.addDouble("Front Left", () -> frontLeft.getDriveCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL"));
-        driveCurrents.addDouble("Front Right", () -> frontRight.getDriveCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL"));
-        driveCurrents.addDouble("Back Left", () -> backLeft.getDriveCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL"));
-        driveCurrents.addDouble("Back Right", () -> backRight.getDriveCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL"));
+        driveCurrents.addDouble("Front Left", () -> frontLeft.getDriveCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL", "Max", 100));
+        driveCurrents.addDouble("Front Right", () -> frontRight.getDriveCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL", "Max", 100));
+        driveCurrents.addDouble("Back Left", () -> backLeft.getDriveCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL", "Max", 100));
+        driveCurrents.addDouble("Back Right", () -> backRight.getDriveCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL", "Max", 100));
 
-        turnCurrents.addDouble("Front Left", () -> frontLeft.getTurnCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL"));
-        turnCurrents.addDouble("Front Right", () -> frontRight.getTurnCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL"));
-        turnCurrents.addDouble("Back Left", () -> backLeft.getTurnCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL"));
-        turnCurrents.addDouble("Back Right", () -> backRight.getTurnCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL"));
+        turnCurrents.addDouble("Front Left", () -> frontLeft.getTurnCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL", "Max", 100));
+        turnCurrents.addDouble("Front Right", () -> frontRight.getTurnCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL", "Max", 100));
+        turnCurrents.addDouble("Back Left", () -> backLeft.getTurnCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL", "Max", 100));
+        turnCurrents.addDouble("Back Right", () -> backRight.getTurnCurrent()).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Orientation", "VERTICAL", "Max", 100));
 
-
-        //tab.add("Test", "Balls").withWidget(BuiltInWidgets.kComboBoxChooser);
+        tab.addDouble("Front Left Absolute", () -> frontLeft.getAbsoluteTurnPosition());
+        tab.addDouble("Front Right Absolute", () -> frontRight.getAbsoluteTurnPosition());
+        tab.addDouble("Back Left Absolute", () -> backLeft.getAbsoluteTurnPosition());
+        tab.addDouble("Back Right Absolute", () -> backRight.getAbsoluteTurnPosition());
+        
 
         tab.addDouble("Robot Heading", () -> getHeading()).withWidget(BuiltInWidgets.kGyro).withSize(3, 3).withPosition(7, 0);
 
-        tab.addDouble("Rotation 2D", () -> getRotation2d().getDegrees());
-
-        tab.addDouble("Front Left Percent", () -> frontLeft.getWantedSpeed());
-        tab.addDouble("Front Right Percent", () -> frontRight.getWantedSpeed());
-        tab.addDouble("Back Left Percent", () -> backLeft.getWantedSpeed());
-        tab.addDouble("Back Right Percent", () -> backRight.getWantedSpeed());
-        tab.addDouble("180 Head", () -> head180());
-
-        tab.addDouble("Abs Front Left", () -> frontLeft.getAbsoluteTurnPosition());
-        tab.addDouble("Abs Front Right", () -> frontRight.getAbsoluteTurnPosition());
-        tab.addDouble("Abs Back Left", () -> backLeft.getAbsoluteTurnPosition());
-        tab.addDouble("Abs Back Right", () -> backRight.getAbsoluteTurnPosition());
-        //tab.addDouble("X", () -> odometer.getPoseMeters().getX()).withPosition(8, 3);
-        //tab.addDouble("Y", () -> odometer.getPoseMeters().getY()).withPosition(9, 3);
-
         tab.add(field).withPosition(2, 0).withSize(5, 3);
+
+        // Configure AutoBuilder last
+        AutoBuilder.configureHolonomic(
+            this::getPose, // Robot pose supplier
+            this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
+            this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+            this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+            new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+                    new PIDConstants(0.01, 0.0, 0.0), // Translation PID constants
+                    new PIDConstants(0.01, 0.0, 0.0), // Rotation PID constants
+                    ModuleConstants.maxSpeed, // Max module speed, in m/s
+                    0.291, // Drive base radius in meters. Distance from robot center to furthest module.
+                    new ReplanningConfig() // Default path replanning config. See the API for the options here
+            ),
+            () -> {
+              // Boolean supplier that controls when the path will be mirrored for the red alliance
+              // This will flip the path being followed to the red side of the field.
+              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+              var alliance = DriverStation.getAlliance();
+              if (alliance.isPresent()) {
+                return alliance.get() == DriverStation.Alliance.Red;
+              }
+              return false;
+            },
+            this // Reference to this subsystem to set requirements
+    );
 
         //Creates a new thread, which sleeps and then zeros out the gyro
         //Uses a new thread so that it doesn't pause all other code running
@@ -121,22 +147,31 @@ public class SwerveSubsystem extends SubsystemBase {
         }).start();
     }
 
+    /**Returns the field. */
     public Field2d getField() {
         return field;
     }
 
+    public void setTrajectory(PathPlannerTrajectory trajectory){
+        this.trajectory = trajectory;
+    }
+
+    /**Returns the fast speed, which is adjustable via the slider on shuffleboard.*/
     public double getFastSpeed() {
-        return fastSpeed.getDouble(1.0);
+        return fastSpeed.getDouble(0.8);
     }
 
+    /**Returns the medium speed, which is adjustable via the slider on shuffleboard.*/
     public double getMediumSpeed() {
-        return mediumSpeed.getDouble(0.5);
+        return mediumSpeed.getDouble(0.65);
     }
 
+    /**Returns the slow speed, which is adjustable via the slider on shuffleboard.*/
     public double getSlowSpeed() {
-        return slowSpeed.getDouble(0.2);
+        return slowSpeed.getDouble(0.3);
     }
     
+    /**Returns the Module positions of the 4 swerve modules in the order frontLeft, frontRight, backLeft, backRight.*/
     public SwerveModulePosition[] getModulePositions() {
         return new SwerveModulePosition[] {
         frontLeft.getModulePosition(),
@@ -147,41 +182,56 @@ public class SwerveSubsystem extends SubsystemBase {
         
     }
 
+    /**Resets the Pigeon.*/
     public void zeroHeading() {
         System.out.println("Zeroing gyro \n.\n.\n.\n.\n.\n.\n.");
         Pigeon.reset();
     }
 
+    /**Returns the heading of the pigeon.*/
     public double getHeading() {
         //return Math.IEEEremainder(NavX.getAngle(), 360);
         return Pigeon.getAngle() % 360;
     }
-    public double head180() {
-        return  Math.IEEEremainder(Pigeon.getAngle(), 360);
-    }
+
+    /**Returns the rotation2d from the pigeon.*/
 
     public Rotation2d getRotation2d() {
         return Pigeon.getRotation2d();
         //return Rotation2d.fromDegrees(-getHeading());
     }
-    public Rotation2d getAdjustedRotation() {
-        return new Rotation2d(Pigeon.getRotation2d().getRadians() + Math.PI);
-    }
-    
 
-    public void resetPose(Pose2d pose) {
+
+    /**Returns chassis speeds that are relative to the robot's front.*/
+    public ChassisSpeeds getRobotRelativeSpeeds(){
+        return kinematics.toChassisSpeeds(getModuleStates()[0], 
+                                          getModuleStates()[1], 
+                                          getModuleStates()[2], 
+                                          getModuleStates()[3]);
     }
 
+    /**Sets swerve module states relative to the robot's front. */
+    public void driveRobotRelative(ChassisSpeeds speeds){
+        setModuleStates(kinematics.toSwerveModuleStates(speeds));
+    }
+
+    /**Returns the odometer's position in the form of a Pose2d. */
     public Pose2d getPose() {
         //return NavX.getPose();
         return odometer.getPoseMeters();
     }
 
+    /**Resets the position of the odometer using the rotation2d of the pigeon, the module positions, and a pose2d. */
     public void resetOdometry(Pose2d pose) {
-        odometer.resetPosition(getRotation2d(), getModulePositions(), pose);
+        var alliance = DriverStation.getAlliance();
+            if (alliance.isPresent() && alliance.get() == Alliance.Red) {
+                odometer.resetPosition(getRotation2d().plus(new Rotation2d(180)), getModulePositions(), pose);
+            }else{
+                odometer.resetPosition(getRotation2d(), getModulePositions(), pose);
+            }
     }
 
-
+    /**Resets the encoders of the 4 swerve modules. */
     public void resetEncoders() {
         frontLeft.resetEncoders();
         frontRight.resetEncoders();
@@ -217,6 +267,7 @@ public class SwerveSubsystem extends SubsystemBase {
         */
     }
 
+    /**Stops all 4 swerve modules. */
     public void stopModules() {
         frontLeft.stop();
         frontRight.stop();
@@ -235,6 +286,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     }
 
+    /**Sets modules states for autos only. */
     public void setAutoModuleStates(SwerveModuleState[] states) {
 
         SwerveDriveKinematics.desaturateWheelSpeeds(states, ModuleConstants.maxSpeed);
@@ -245,6 +297,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     }
 
+    /**Gets all 4 swerve module states. */
     public SwerveModuleState[] getModuleStates() {
         return new SwerveModuleState[] {
             frontLeft.getState(),
@@ -253,12 +306,14 @@ public class SwerveSubsystem extends SubsystemBase {
             backRight.getState()};
     }
 
+    /**Stops the wheels. Untested. Not used.*/
     public void fullStop() {
         frontLeft.fullStop();
         frontRight.fullStop();
         backLeft.fullStop();
         backRight.fullStop();
     }
+
     /**Puts wheels in 'X' position and sets driving to a velocity-PID loop set at 0m/s */
     public void setActiveStop() {
         System.out.println("1\n1\n1\n1\n1\n1\n1\n1");
