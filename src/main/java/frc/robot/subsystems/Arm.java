@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import java.util.Map;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.hardware.TalonFX;
 
@@ -30,7 +31,6 @@ public class Arm extends SubsystemBase {
     //Update hex encoder
 
     private PIDController armPID;
-    private PIDController armDownPID;
 
     private double setPosition;
     final double zero = 0.04; //zero angle   
@@ -43,10 +43,12 @@ public class Arm extends SubsystemBase {
         leftArm.getConfigurator().apply(configs);
         rightArm.getConfigurator().apply(configs);
 
+
+
+
         encoder.setPositionOffset(Constants.ArmConstants.armEncoderOffset);
         
         armPID = new PIDController(1.95, 0.075, 0);
-        armDownPID = new PIDController(1,0.075,0);
 
         tab.add("Arm PID", armPID).withSize(2, 2).withPosition(0, 0);
 
@@ -94,18 +96,13 @@ public class Arm extends SubsystemBase {
     }
 
     public void setPosition(double position) {
-        /*
         if(position == Positions.rest){
-            System.out.println("!!!");
-            if(getPosition() > 0.4){
-                leftArm.set(-0.15);
-                rightArm.set(-0.15);
+            if(position > Positions.rest + 0.5){
+                setSpeed(-0.05);
             } else {
-                leftArm.set(armDownPID.calculate(getPosition(), position));
-                rightArm.set(armDownPID.calculate(getPosition(),  position));
+                setSpeed(0);
             }
-            return;
-        }*/
+        }
         setPosition = position;
         if (position > 0.40 && !(position == Positions.amp)){
             position = 0.40;
