@@ -183,6 +183,8 @@ public class Arm extends SubsystemBase {
      */
     public static double aimToArm(double aim){
 
+        return ((68.19859053201 - aim)/360) +0.25;
+        /*
         aim *= 0.0174533;
 
         double slope1 = Math.tan(-aim);
@@ -193,6 +195,7 @@ public class Arm extends SubsystemBase {
         if(encoderRot < 0) encoderRot += 0.5;
             
         return encoderRot;
+        */
     }
 
     /**
@@ -201,6 +204,9 @@ public class Arm extends SubsystemBase {
      * @return aim angle IN DEGREES
      */
     public static double armToAim(double position){
+
+        return -(((position-0.25)*360) - 68.19859053201);
+        /*
         double encoderRad = 2*Math.PI*(position-0.25);
 
         double slope = -1/Math.tan(encoderRad + ArmConstants.shooterOffset);//ArmConstants.armOffset
@@ -208,5 +214,6 @@ public class Arm extends SubsystemBase {
         double aim = -(Math.atan(slope) * (180/Math.PI));
 
         return aim;
+        */
     }
 }
