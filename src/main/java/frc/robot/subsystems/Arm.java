@@ -97,7 +97,7 @@ public class Arm extends SubsystemBase {
 
     public void setPosition(double position) {
         if(position == Positions.rest){
-            if(position > Positions.rest + 0.5){
+            if(position > Positions.rest + 0.005){
                 setSpeed(-0.05);
             } else {
                 setSpeed(0);
