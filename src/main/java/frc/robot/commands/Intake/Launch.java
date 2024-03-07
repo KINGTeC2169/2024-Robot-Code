@@ -19,19 +19,15 @@ public class Launch extends Command {
     @Override
     public void execute() { 
         intake.inTake();
-        if(intake.getRPM() > 1500){
-            NoteManager.setFalse();
-        }
     }
 
     @Override
     public void end(boolean interupt) {
         intake.stopTake();
-        NoteManager.setFalse();
 	}
 
     @Override
 	public boolean isFinished() {
-		return false;
+		return !NoteManager.hasNote();
 	}
 }

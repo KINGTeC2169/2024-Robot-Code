@@ -29,7 +29,6 @@ public class IntakeCommand extends Command {
     @Override
     public void end(boolean interupt) {
         intake.stopTake();
-        NoteManager.setFalse();
         
 	}
 

@@ -21,7 +21,6 @@ public class RevAndAngle extends Command {
 
     @Override
     public void initialize(){
-        NoteManager.setTrue();
     }
 
     @Override

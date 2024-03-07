@@ -26,7 +26,7 @@ public class Intake extends SubsystemBase{
         tab.addBoolean("Intake On", () -> isOn()).withWidget(BuiltInWidgets.kBooleanBox).withPosition(3, 0);
         
         tab.addDouble("Intake RPM", () -> getRPM()).withPosition(0, 1);
-        tab.addDouble("Note Manager Distance", () -> NoteManager.getDistance()).withPosition(0,2);
+        tab.addBoolean("Note Manager Distance", () -> NoteManager.hasNote()).withPosition(0,2);
     }
 
     /**Sets intake to suck in */
