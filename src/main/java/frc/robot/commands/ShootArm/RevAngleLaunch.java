@@ -1,4 +1,4 @@
-package frc.robot.commands.ButtonCommands;
+package frc.robot.commands.ShootArm;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -54,9 +54,7 @@ public class RevAngleLaunch extends Command{
         if(ampMode) power = 500;
 
         shooter.setRPM(power);
-        arm.setPosition(desiredAngle);
-
-        //System.out.println(stable);
+        arm.setShootPos(desiredAngle);
     }
 
     @Override

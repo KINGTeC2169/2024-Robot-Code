@@ -81,12 +81,12 @@ public class Shooter extends SubsystemBase {
         setPower(power);
     }
 
-    public void setRPM(){
-        setPower(Vision.shootRPM/6350);
+    public void shootRPM(){
+        setRPM(Vision.shootRPM);
     }
 
-    public void setAmpRPM(){
-        setPower(0.1);
+    public void ampRPM(){
+        setRPM(Vision.ampRPM);
     }
 
 

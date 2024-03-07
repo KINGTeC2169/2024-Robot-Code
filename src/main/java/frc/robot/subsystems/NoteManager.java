@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import frc.robot.Constants;
-
 import com.revrobotics.*;
 import com.revrobotics.Rev2mDistanceSensor.Port;
 
@@ -31,5 +29,10 @@ public class NoteManager{
     /**Returns whether or not a note is in the intake */
     public static boolean hasNote(){
         return note;
+    }
+
+    //Untested
+    public static boolean sensorNote(){
+        return sensor.isRangeValid();
     }
 }

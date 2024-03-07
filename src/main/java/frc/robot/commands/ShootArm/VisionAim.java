@@ -1,4 +1,4 @@
-package frc.robot.commands.ButtonCommands;
+package frc.robot.commands.ShootArm;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -10,7 +10,7 @@ import frc.robot.subsystems.LimelightTable;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveSubsystem;
 
-public class LimelightAlign extends Command {
+public class VisionAim extends Command {
     private SwerveSubsystem swerveSubsystem;
     private ChassisSpeeds chassisSpeeds;
     private PIDController turnController;
@@ -18,7 +18,7 @@ public class LimelightAlign extends Command {
     private Arm arm;
     private Shooter shooter;
 
-    public LimelightAlign(SwerveSubsystem swerveSubsystem, Arm arm, Shooter shooter){
+    public VisionAim(SwerveSubsystem swerveSubsystem, Arm arm, Shooter shooter){
         this.swerveSubsystem = swerveSubsystem;
         addRequirements(swerveSubsystem);
         this.arm = arm;

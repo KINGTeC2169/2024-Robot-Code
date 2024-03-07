@@ -1,18 +1,16 @@
-package frc.robot.commands.ButtonCommands;
+package frc.robot.commands.ShootArm;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Intake;
+import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
 
-public class Stop extends Command{
-    private Shooter shooter;
-    private Intake intake;
+public class Shoot extends Command {
 
-    public Stop(Shooter shooter, Intake intake){
+    private Shooter shooter;
+
+    public Shoot(Shooter shooter){
         this.shooter = shooter;
         addRequirements(shooter);
-        this.intake = intake;
-        addRequirements(intake);
     }
 
     @Override
@@ -21,16 +19,16 @@ public class Stop extends Command{
 
     @Override
     public void execute(){
-        shooter.stopShooter();
-        intake.stopTake();
+        shooter.setRPM(Constants.Vision.shootRPM);
     }
 
     @Override
     public void end(boolean interupt){
+        shooter.setRPM(0);
     }
     
     @Override
 	public boolean isFinished() {
-		return !shooter.on() && !intake.isOn();
+		return false;
 	}
 }

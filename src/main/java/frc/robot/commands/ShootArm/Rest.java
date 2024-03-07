@@ -1,33 +1,37 @@
-package frc.robot.commands.ButtonCommands;
+package frc.robot.commands.ShootArm;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Arm;
 
-public class ArmStop extends Command{
-    private Arm arm;
-    private double position;
+public class Rest extends Command {
 
-    public ArmStop(Arm arm){
+    private Arm arm;
+
+    public Rest(Arm arm){
         this.arm = arm;
+        addRequirements(arm);
     }
 
     @Override
     public void initialize(){
-        position = arm.getPosition();
+        Timer.delay(0.05);
     }
 
     @Override
     public void execute(){
-        arm.setPosition(position);
+        arm.setRest();
     }
 
     @Override
     public void end(boolean interupt){
-        new Rest(arm);
+        arm.setSpeed(0);
     }
     
     @Override
 	public boolean isFinished() {
-		return false;
+		return arm.restReady();
 	}
 }
+
+

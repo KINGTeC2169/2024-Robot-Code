@@ -2,10 +2,10 @@ package frc.robot.subsystems;
 
 import java.util.Map;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
@@ -27,15 +27,15 @@ public class Arm extends SubsystemBase {
     TalonFX leftArm = new TalonFX(Constants.Ports.leftArm);
     TalonFX rightArm = new TalonFX(Constants.Ports.rightArm);
 
-    //Master = left, follower = right
     private  DutyCycleEncoder encoder = new DutyCycleEncoder(Constants.Ports.armEncoder);
-    //Update hex encoder
 
     private PIDController armPID;
     private ArmFeedforward armForward;
 
     private double setPosition;
-    final double zero = 0.04; //zero angle   
+    private final double lowerLimit = 0.285; 
+    private final double upperLimit = 0.435;
+
     
     public Arm() {
 
@@ -44,9 +44,6 @@ public class Arm extends SubsystemBase {
         
         leftArm.getConfigurator().apply(configs);
         rightArm.getConfigurator().apply(configs);
-
-
-
 
         encoder.setPositionOffset(Constants.ArmConstants.armEncoderOffset);
         
@@ -66,11 +63,10 @@ public class Arm extends SubsystemBase {
         rightMotor.addDouble("Current", () -> getCurrent()[1]).withWidget(BuiltInWidgets.kDial).withPosition(0, 0).withProperties(Map.of("Max", 5));
 
         tab.addDouble("Encoder Position", () -> getPosition()).withWidget(BuiltInWidgets.kDial).withSize(2, 2).withProperties(Map.of("Max", 0.75, "Min", 0.25)).withPosition(0, 2);
-        //tab.addDouble("Encoder Position", () -> getPosition()).withSize(1, 1).withPosition(6, 1);
+        tab.addDouble("Encoder Position", () -> getPosition()).withSize(1, 1).withPosition(6, 1);
         tab.addDouble("Encoder Graph", () -> getPosition()).withWidget(BuiltInWidgets.kGraph).withSize(3, 3).withPosition(7, 1);
         tab.addDouble("Abs Encoder Position", () -> encoder.getAbsolutePosition()).withPosition(7, 0); //Don't change right now
         tab.addDouble("Aim", () -> armToAim(getPosition())).withPosition(6, 0);
-        //tab.addDouble("Converted Position", () -> aimToArm(armToAim(getPosition())));
         tab.addBoolean("Arm Ready", () -> isReady()).withPosition(6, 2).withSize(1, 2);
     
     }
@@ -82,7 +78,6 @@ public class Arm extends SubsystemBase {
 
     public double getPosition(){
         double pos = (encoder.getPositionOffset() - encoder.getAbsolutePosition());
-        //double pos = (1-encoder.getAbsolutePosition()) - encoder.getPositionOffset();
         if(pos < 0){
             pos += 1;
             Math.abs(pos);
@@ -101,53 +96,33 @@ public class Arm extends SubsystemBase {
     }
 
     public void setRest(){
-        setPosition = 0.296;
-        setSpeed(-0.1);
+        setPosition = Positions.rest;
+        setSpeed(-0.08);
     }
 
-    public void setPosition(double position) {
-        /* 
-        if(position == Positions.rest){
-            if(position > Positions.rest + 0.005){
-                setSpeed(-0.25);
-            } else {
-                setSpeed(0);
-            }
-            return;
-        }*/
+    public void setAmp(){
+        setPosition = Positions.amp;
+        leftArm.setVoltage(armPID.calculate(getPosition(), Positions.amp) + armForward.calculate(getPosition() - 0.25, 0));
+        rightArm.setVoltage(armPID.calculate(getPosition(),  Positions.amp) + armForward.calculate(getPosition() - 0.25, 0));
+    }
+
+    public void setShootPos(double position) {
+        position = MathUtil.clamp(position, lowerLimit, upperLimit);
         setPosition = position;
-        if (position > 0.40 && !(position == Positions.amp)){
-            position = 0.40;
-            setPosition = position;
-        }else if (position < 0.296){
-            position = 0.296;
-            setPosition = position;
-        }
-        System.out.println(armForward.calculate(getPosition() - 0.25, 0));
-        System.out.println(armPID.calculate(getPosition(), position) + armForward.calculate(getPosition() - 0.25, 0));
-        leftArm.setVoltage(armPID.calculate(getPosition(), position) + armForward.calculate(getPosition() - 0.25, 0));
-        rightArm.setVoltage(armPID.calculate(getPosition(),  position) + armForward.calculate(getPosition() - 0.25, 0));
+        leftArm.setVoltage(armPID.calculate(getPosition(), position) + armForward.calculate(position - 0.25, 0));
+        rightArm.setVoltage(armPID.calculate(getPosition(),  position) + armForward.calculate(position - 0.25, 0));
     }
 
     //AIM = DEGREES, ARM = ROTATIONS
     public void setAim(double aim) {
-        double position = aimToArm(aim);
-        setPosition(position);
+        setShootPos(aimToArm(aim));
     }
 
     public void activeStop(){
-        if(setPosition == Positions.amp){
-            
-        }else if (setPosition > 0.40){
-            setPosition = 0.40;
-        }else if (setPosition <= 0.292){
-            setPosition = 0.292;
-        }
-        leftArm.set(armPID.calculate(getPosition(), setPosition));
-        rightArm.set(armPID.calculate(getPosition(), setPosition));
+        leftArm.setVoltage(armForward.calculate(getPosition()-0.25, 0));
+        rightArm.setVoltage(armForward.calculate(getPosition()-0.25, 0));
     }
 
-    //Use activeStop() intead!
     public void stop(){
         leftArm.set(0);
         rightArm.set(0);
@@ -157,10 +132,9 @@ public class Arm extends SubsystemBase {
         return Math.abs(setPosition-getPosition()) < 0.001;
     }
 
-    /*public boolean autoReady() {
-        return Math.abs(setPosition-getPosition()) < 0.015;
-    }*/
-
+    public boolean restReady(){
+        return getPosition() <= Positions.rest;
+    }
 
     /**
      * Gets the arm position in space (used for limelight) NOT encoder position
@@ -180,11 +154,10 @@ public class Arm extends SubsystemBase {
     public static double[] predictArmPosition(double position){
         double x = ArmConstants.distance*Math.cos(2*Math.PI*(position-0.25) + ArmConstants.armOffset) + Vision.toShaftX;
         double y = ArmConstants.distance*Math.cos(2*Math.PI*(position-0.25) + ArmConstants.armOffset) + Vision.toShaftY;
-        //double x = ArmConstants.distance*Math.cos(2*Math.PI*(0.4-0.25) + ArmConstants.armOffset) + Vision.toShaftX;
-        //double y = ArmConstants.distance*Math.cos(2*Math.PI*(0.4-0.25) + ArmConstants.armOffset) + Vision.toShaftY;
         return new double[]{x,y};
     }
 
+    //Input aim DEGREES instead of position ROTATIONS
     public static double[] predictArmPositionAim(double aim){
         double position = aimToArm(aim);
         double x = ArmConstants.distance*Math.cos(2*Math.PI*(position-0.25) + ArmConstants.armOffset) + Vision.toShaftX;
@@ -198,20 +171,7 @@ public class Arm extends SubsystemBase {
      * @return position of the arm IN ROTATIONS
      */
     public static double aimToArm(double aim){
-
-        return ((68.19859053201 - aim)/360) +0.25;
-        /*
-        aim *= 0.0174533;
-
-        double slope1 = Math.tan(-aim);
-        double totalOffset = Math.atan(-1/slope1);
-        double encoderRad = totalOffset - ArmConstants.shooterOffset; //Radians  - ArmConstants.armOffset
-        double encoderRot = (encoderRad/(2*Math.PI) + 0.25); //Rotations
-            
-        if(encoderRot < 0) encoderRot += 0.5;
-            
-        return encoderRot;
-        */
+        return ((ArmConstants.restAim - aim)/360) +0.25;
     }
 
     /**
@@ -220,16 +180,6 @@ public class Arm extends SubsystemBase {
      * @return aim angle IN DEGREES
      */
     public static double armToAim(double position){
-
-        return -(((position-0.25)*360) - 68.19859053201);
-        /*
-        double encoderRad = 2*Math.PI*(position-0.25);
-
-        double slope = -1/Math.tan(encoderRad + ArmConstants.shooterOffset);//ArmConstants.armOffset
-
-        double aim = -(Math.atan(slope) * (180/Math.PI));
-
-        return aim;
-        */
+        return -(((position-0.25)*360) - ArmConstants.restAim);
     }
 }

@@ -1,4 +1,4 @@
-package frc.robot.commands.ButtonCommands;
+package frc.robot.commands.ShootArm;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Arm;
@@ -20,7 +20,7 @@ public class Angle extends Command {
 
     @Override
     public void execute(){
-        arm.setPosition(angle);
+        arm.setShootPos(angle);
     }
 
     @Override

@@ -76,7 +76,6 @@ public final class Constants {
     }
 
     public static final class ArmConstants {
-        //Rest to aim: 68.19859053201
         public static final double armEncoderOffset =  0.58822 + 0.292;//0.2294932807 - 0.25 + 0.58822 - 0.292;
         //public static final double armEncoderOffset =  0.2294932807 - 0.25 + (1-0.58822) - 0.292;
         public static final double shooterOffset = 0.4103968962; // (90-66.486)*0.0174533 RAD
@@ -84,6 +83,8 @@ public final class Constants {
         public static final double distance = 2.06841667; //ft Distance from hex shaft to point of shot 24.821in
 
         public static final double armGearBox = 201.6; //48 * (84/20)
+
+        public static final double restAim = 68.19859053201;
 
 
     }
@@ -139,6 +140,7 @@ public final class Constants {
         //Launch speed: 40.36 ft/sec
         //7 3/4 from edge
         public static final double shootRPM = 5000; //Do not change. Currently about 5000 TODO: Make it adjustable
+        public static final double ampRPM = 500;
         public static final double tagHeight = 5.5; //ft
         public static final double mountedHeight = 1.0; //ft
         public static final double mountedAngle = 45; //angle deg

@@ -1,4 +1,4 @@
-package frc.robot.commands.ButtonCommands;
+package frc.robot.commands.Intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Arm;
@@ -18,7 +18,7 @@ public class IntakeCommand extends Command {
 
     @Override
     public void initialize(){
-        //System.out.println(arm.getPosition());
+        System.out.println(arm.getPosition());
     }
 
     @Override

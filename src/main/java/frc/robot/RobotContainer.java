@@ -24,18 +24,17 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import frc.robot.Constants.Positions;
 import frc.robot.commands.DriveCommand;
-import frc.robot.commands.ButtonCommands.Angle;
-import frc.robot.commands.ButtonCommands.GroundPickup;
-import frc.robot.commands.ButtonCommands.IntakeCommand;
-import frc.robot.commands.ButtonCommands.Pickup;
-import frc.robot.commands.ButtonCommands.Rest;
-import frc.robot.commands.ButtonCommands.RevAndAngle;
-import frc.robot.commands.ButtonCommands.RevAngleLaunch;
-import frc.robot.commands.ButtonCommands.Launch;
-import frc.robot.commands.ButtonCommands.LimelightAlign;
-import frc.robot.commands.ButtonCommands.Outtake;
-import frc.robot.commands.ButtonCommands.Shoot;
-import frc.robot.commands.ButtonCommands.Stop;
+import frc.robot.commands.ShootArm.Shoot;
+import frc.robot.commands.ShootArm.VisionAim;
+import frc.robot.commands.Intake.IntakeCommand;
+import frc.robot.commands.Intake.Launch;
+import frc.robot.commands.Intake.Outtake;
+import frc.robot.commands.Intake.Pickup;
+import frc.robot.commands.ShootArm.Amp;
+import frc.robot.commands.ShootArm.Angle;
+import frc.robot.commands.ShootArm.Rest;
+import frc.robot.commands.ShootArm.RevAndAngle;
+import frc.robot.commands.ShootArm.RevAngleLaunch;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LimelightTable;
@@ -52,7 +51,6 @@ import frc.robot.subsystems.SwerveSubsystem;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-
   private final LimelightTable limelight = new LimelightTable();
   private final Pigeon pigeon = new Pigeon();
   private final Arm arm = new Arm();
@@ -145,13 +143,13 @@ public class RobotContainer {
     controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
     controller.x().onTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
     controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.podium));
-    controller.b().onTrue(new RevAndAngle(arm, shooter, Positions.amp, true));
+    controller.b().onTrue(new Amp(arm, shooter));
 
     controller.povRight().whileTrue(new Pickup(intake));
     //controller.povUp().whileTrue(new Outtake(intake));
     controller.back().whileTrue(new Launch(intake));
     controller.back().onFalse(new Rest(arm));
-    controller.povLeft().whileTrue(new LimelightAlign(swerveSubsystem, arm, shooter));
+    controller.povLeft().whileTrue(new VisionAim(swerveSubsystem, arm, shooter));
 
 
 
@@ -161,10 +159,9 @@ public class RobotContainer {
     buttonBoard.button(4).whileTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
     buttonBoard.button(5).onTrue(new Pickup(intake));
     buttonBoard.button(6).onTrue(new Rest(arm));
-    buttonBoard.button(7).whileTrue(new RevAndAngle(arm, shooter, Positions.amp, true));
+    buttonBoard.button(7).whileTrue(new Amp(arm, shooter));
     buttonBoard.button(8).whileTrue(new RevAndAngle(arm, shooter, Positions.podium));
 
-    buttonBoard.button(9).whileTrue(new Stop(shooter, intake)); 
     buttonBoard.button(10).onTrue(Commands.run(() -> arm.activeStop()));
     buttonBoard.button(11).whileTrue(new Angle(arm, 0.49));
     
