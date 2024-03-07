@@ -3,6 +3,7 @@ package frc.robot.commands.ButtonCommands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.NoteManager;
 
 public class IntakeCommand extends Command {
     private Intake intake;
@@ -28,6 +29,7 @@ public class IntakeCommand extends Command {
     @Override
     public void end(boolean interupt) {
         intake.stopTake();
+        NoteManager.setFalse();
         
 	}
 

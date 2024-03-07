@@ -136,20 +136,21 @@ public class RobotContainer {
     controller.rightBumper().whileTrue(new Shoot(shooter));
 
     //Comp controls:
-    controller.leftTrigger(0.2).whileTrue(new Rest(arm));
+    controller.leftTrigger(0.2).onTrue(new Rest(arm));
     controller.rightTrigger(0.2).whileTrue(new IntakeCommand(intake, arm));
 
     controller.povDown().whileTrue(new Outtake(intake));
     controller.povUp().whileTrue(new IntakeCommand(intake, arm));
 
-    controller.y().whileTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
-    controller.x().whileTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
-    controller.a().whileTrue(new RevAndAngle(arm, shooter, Positions.podium));
-    controller.b().whileTrue(new RevAndAngle(arm, shooter, Positions.amp, true));
+    controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
+    controller.x().onTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
+    controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.podium));
+    controller.b().onTrue(new RevAndAngle(arm, shooter, Positions.amp, true));
 
     controller.povRight().whileTrue(new Pickup(intake));
-    controller.povUp().whileTrue(new Outtake(intake));
+    //controller.povUp().whileTrue(new Outtake(intake));
     controller.back().whileTrue(new Launch(intake));
+    controller.back().onFalse(new Rest(arm));
     controller.povLeft().whileTrue(new LimelightAlign(swerveSubsystem, arm, shooter));
 
 

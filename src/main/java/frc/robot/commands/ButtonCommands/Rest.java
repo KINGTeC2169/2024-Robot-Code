@@ -1,5 +1,6 @@
 package frc.robot.commands.ButtonCommands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.Positions;
 import frc.robot.subsystems.Arm;
@@ -15,11 +16,12 @@ public class Rest extends Command {
 
     @Override
     public void initialize(){
+        Timer.delay(0.05);
     }
 
     @Override
     public void execute(){
-        arm.setPosition(Positions.rest);
+        arm.setRest();
     }
 
     @Override

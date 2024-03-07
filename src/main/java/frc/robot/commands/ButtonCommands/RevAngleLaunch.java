@@ -69,6 +69,6 @@ public class RevAngleLaunch extends Command{
     
     @Override
 	public boolean isFinished() {
-        return arm.autoReady();
+        return arm.isReady();
 	}
 }

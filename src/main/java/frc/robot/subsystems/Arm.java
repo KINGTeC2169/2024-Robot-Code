@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
@@ -31,6 +32,7 @@ public class Arm extends SubsystemBase {
     //Update hex encoder
 
     private PIDController armPID;
+    private ArmFeedforward armForward;
 
     private double setPosition;
     final double zero = 0.04; //zero angle   
@@ -48,17 +50,20 @@ public class Arm extends SubsystemBase {
 
         encoder.setPositionOffset(Constants.ArmConstants.armEncoderOffset);
         
-        armPID = new PIDController(1.95, 0.075, 0);
-
+        //(2.35, 0.075, 0)
+        //4.25
+        armPID = new PIDController(26, 0.075, 0);
+        armForward = new ArmFeedforward(0.15, 0.22, 3.61, 0.01);
+  
         tab.add("Arm PID", armPID).withSize(2, 2).withPosition(0, 0);
 
         ShuffleboardLayout leftMotor = tab.getLayout("Left Motor", BuiltInLayouts.kList).withPosition(2, 0).withSize(2, 4).withProperties(Map.of("Number of columns", 1, "Number of rows", 3));
         leftMotor.addDouble("Voltage", () -> getVoltage()[0]).withWidget(BuiltInWidgets.kVoltageView).withPosition(0, 1).withProperties(Map.of("Max", 12));
-        leftMotor.addDouble("Current", () -> getCurrent()[0]).withWidget(BuiltInWidgets.kDial).withPosition(0, 0);
+        leftMotor.addDouble("Current", () -> getCurrent()[0]).withWidget(BuiltInWidgets.kDial).withPosition(0, 0).withProperties(Map.of("Max", 5));
 
         ShuffleboardLayout rightMotor = tab.getLayout("Right Motor", BuiltInLayouts.kList).withPosition(4, 0).withSize(2, 4).withProperties(Map.of("Number of columns", 1, "Number of rows", 3));
         rightMotor.addDouble("Voltage", () -> getVoltage()[1]).withWidget(BuiltInWidgets.kVoltageView).withPosition(0, 1).withProperties(Map.of("Max", 12));
-        rightMotor.addDouble("Current", () -> getCurrent()[1]).withWidget(BuiltInWidgets.kDial).withPosition(0, 0);
+        rightMotor.addDouble("Current", () -> getCurrent()[1]).withWidget(BuiltInWidgets.kDial).withPosition(0, 0).withProperties(Map.of("Max", 5));
 
         tab.addDouble("Encoder Position", () -> getPosition()).withWidget(BuiltInWidgets.kDial).withSize(2, 2).withProperties(Map.of("Max", 0.75, "Min", 0.25)).withPosition(0, 2);
         //tab.addDouble("Encoder Position", () -> getPosition()).withSize(1, 1).withPosition(6, 1);
@@ -95,24 +100,33 @@ public class Arm extends SubsystemBase {
                             rightArm.getSupplyVoltage().getValueAsDouble()}; 
     }
 
+    public void setRest(){
+        setPosition = 0.296;
+        setSpeed(-0.1);
+    }
+
     public void setPosition(double position) {
+        /* 
         if(position == Positions.rest){
             if(position > Positions.rest + 0.005){
-                setSpeed(-0.05);
+                setSpeed(-0.25);
             } else {
                 setSpeed(0);
             }
-        }
+            return;
+        }*/
         setPosition = position;
         if (position > 0.40 && !(position == Positions.amp)){
             position = 0.40;
             setPosition = position;
-        }else if (position < 0.292){
-            position = 0.292;
+        }else if (position < 0.296){
+            position = 0.296;
             setPosition = position;
         }
-        leftArm.set(armPID.calculate(getPosition(), position));
-        rightArm.set(armPID.calculate(getPosition(),  position));
+        System.out.println(armForward.calculate(getPosition() - 0.25, 0));
+        System.out.println(armPID.calculate(getPosition(), position) + armForward.calculate(getPosition() - 0.25, 0));
+        leftArm.setVoltage(armPID.calculate(getPosition(), position) + armForward.calculate(getPosition() - 0.25, 0));
+        rightArm.setVoltage(armPID.calculate(getPosition(),  position) + armForward.calculate(getPosition() - 0.25, 0));
     }
 
     //AIM = DEGREES, ARM = ROTATIONS
@@ -140,12 +154,12 @@ public class Arm extends SubsystemBase {
     }
 
     public boolean isReady(){
-        return Math.abs(setPosition-getPosition()) < 0.01;
+        return Math.abs(setPosition-getPosition()) < 0.001;
     }
 
-    public boolean autoReady() {
+    /*public boolean autoReady() {
         return Math.abs(setPosition-getPosition()) < 0.015;
-    }
+    }*/
 
 
     /**
@@ -166,6 +180,8 @@ public class Arm extends SubsystemBase {
     public static double[] predictArmPosition(double position){
         double x = ArmConstants.distance*Math.cos(2*Math.PI*(position-0.25) + ArmConstants.armOffset) + Vision.toShaftX;
         double y = ArmConstants.distance*Math.cos(2*Math.PI*(position-0.25) + ArmConstants.armOffset) + Vision.toShaftY;
+        //double x = ArmConstants.distance*Math.cos(2*Math.PI*(0.4-0.25) + ArmConstants.armOffset) + Vision.toShaftX;
+        //double y = ArmConstants.distance*Math.cos(2*Math.PI*(0.4-0.25) + ArmConstants.armOffset) + Vision.toShaftY;
         return new double[]{x,y};
     }
 

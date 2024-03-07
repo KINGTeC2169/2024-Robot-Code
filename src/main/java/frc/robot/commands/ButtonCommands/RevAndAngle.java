@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Constants.Vision;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.NoteManager;
 import frc.robot.subsystems.Shooter;
 
 public class RevAndAngle extends Command {
@@ -35,6 +36,7 @@ public class RevAndAngle extends Command {
     @Override
     public void initialize(){
         stable = 0;
+        NoteManager.setTrue();
     }
 
     @Override
@@ -58,6 +60,6 @@ public class RevAndAngle extends Command {
     
     @Override
 	public boolean isFinished() {
-        return false;
+        return !NoteManager.hasNote();
 	}
 }
