@@ -1,4 +1,3 @@
-
 package frc.robot.commands;
 
 import java.util.function.Supplier;

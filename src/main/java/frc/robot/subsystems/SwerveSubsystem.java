@@ -10,7 +10,6 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -25,7 +24,6 @@ import frc.robot.Constants.Ports;
 import java.util.Map;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.path.PathPlannerTrajectory;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
@@ -69,7 +67,6 @@ public class SwerveSubsystem extends SubsystemBase {
     public SwerveDriveKinematics kinematics = DriveConstants.DRIVE_KINEMATICS;
     private final SwerveDriveOdometry odometer;
     public Field2d field = new Field2d();
-    public PathPlannerTrajectory trajectory;
 
     private ShuffleboardTab tab = Shuffleboard.getTab("Swerve");
     private GenericEntry fastSpeed = tab.add("Fast Speed", 1.0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).withPosition(6, 3).getEntry();
@@ -77,9 +74,6 @@ public class SwerveSubsystem extends SubsystemBase {
     private GenericEntry slowSpeed = tab.add("Slow Speed", 0.2).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).withPosition(2, 3).getEntry();
 
     public SwerveSubsystem() {
-
-        Pigeon.configure();
-
         odometer = new SwerveDriveOdometry(kinematics, getRotation2d(), getModulePositions(), new Pose2d(0, 0, new Rotation2d(0)));
         
         //SmartDashboard.putData("Field", field);
@@ -151,10 +145,6 @@ public class SwerveSubsystem extends SubsystemBase {
         return field;
     }
 
-    public void setTrajectory(PathPlannerTrajectory trajectory){
-        this.trajectory = trajectory;
-    }
-
     /**Returns the fast speed, which is adjustable via the slider on shuffleboard.*/
     public double getFastSpeed() {
         return fastSpeed.getDouble(0.8);
@@ -194,12 +184,10 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     /**Returns the rotation2d from the pigeon.*/
-
     public Rotation2d getRotation2d() {
         return Pigeon.getRotation2d();
         //return Rotation2d.fromDegrees(-getHeading());
     }
-
 
     /**Returns chassis speeds that are relative to the robot's front.*/
     public ChassisSpeeds getRobotRelativeSpeeds(){
@@ -222,12 +210,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     /**Resets the position of the odometer using the rotation2d of the pigeon, the module positions, and a pose2d. */
     public void resetOdometry(Pose2d pose) {
-        var alliance = DriverStation.getAlliance();
-            if (alliance.isPresent() && alliance.get() == Alliance.Red) {
-                odometer.resetPosition(getRotation2d().plus(new Rotation2d(180)), getModulePositions(), pose);
-            }else{
-                odometer.resetPosition(getRotation2d(), getModulePositions(), pose);
-            }
+        odometer.resetPosition(getRotation2d(), getModulePositions(), pose);
     }
 
     /**Resets the encoders of the 4 swerve modules. */
