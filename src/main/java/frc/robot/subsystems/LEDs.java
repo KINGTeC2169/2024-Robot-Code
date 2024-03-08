@@ -21,8 +21,11 @@ public class LEDs {
     public static void blue(){
         arduino.writeString("D");
     }
+    public static void orange(){
+        arduino.writeString("E");
+    }
 //turns leds off:
     public static void off(){
-        arduino.writeString("E");
+        arduino.writeString("F");
     }
 }
