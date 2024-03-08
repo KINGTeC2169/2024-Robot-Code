@@ -47,7 +47,7 @@ public final class Constants {
         public static final int backRightAbsolute = 13;
         
         //DIO ports
-        public static final int beamBreak = 0;
+        public static final int beamBreak = 5;
         public static final int armEncoder = 8;
 
         //Shooter CAN ids
@@ -115,10 +115,10 @@ public final class Constants {
         public static final double frontBackWheels = Units.inchesToMeters(23);
 
 
-        public static final double FRabsoluteOffset = -0.470931150019169; //2.672189131379128; 
-        public static final double FLabsoluteOffset = -2.178248316049576; //0.958736054599285; 
-        public static final double BRabsoluteOffset = 0.572173677384853; //0.513882525265217; 
-        public static final double BLabsoluteOffset = 0.628930851817131; //2.517257384955883; 
+        public static final double FRabsoluteOffset = -0.463261261582375; //-0.470931150019169;
+        public static final double FLabsoluteOffset = -2.175180360674858; //-2.178248316049576;
+        public static final double BRabsoluteOffset = 0.587513454258442; //0.572173677384853;
+        public static final double BLabsoluteOffset = 0.631998807191849; //0.628930851817131;
 
 
         public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(

@@ -145,7 +145,7 @@ public class RobotContainer {
     controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.podium));
     controller.b().onTrue(new Amp(arm, shooter));
 
-    controller.povRight().whileTrue(new Pickup(intake));
+    controller.povRight().onTrue(new Pickup(intake));
     //controller.povUp().whileTrue(new Outtake(intake));
     controller.back().whileTrue(new Launch(intake));
     controller.back().onFalse(new Rest(arm));

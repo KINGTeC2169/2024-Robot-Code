@@ -10,6 +10,6 @@ public class NoteManager{
     private static DigitalInput beamBreak = new DigitalInput(Ports.beamBreak);
 
     public static boolean hasNote(){
-        return beamBreak.get();
+        return !beamBreak.get();
     }
 }

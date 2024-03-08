@@ -62,7 +62,7 @@ public class Arm extends SubsystemBase {
         rightMotor.addDouble("Voltage", () -> getVoltage()[1]).withWidget(BuiltInWidgets.kVoltageView).withPosition(0, 1).withProperties(Map.of("Max", 12));
         rightMotor.addDouble("Current", () -> getCurrent()[1]).withWidget(BuiltInWidgets.kDial).withPosition(0, 0).withProperties(Map.of("Max", 5));
 
-        tab.addDouble("Encoder Position", () -> getPosition()).withWidget(BuiltInWidgets.kDial).withSize(2, 2).withProperties(Map.of("Max", 0.75, "Min", 0.25)).withPosition(0, 2);
+        //tab.addDouble("Encoder Position", () -> getPosition()).withWidget(BuiltInWidgets.kDial).withSize(2, 2).withProperties(Map.of("Max", 0.75, "Min", 0.25)).withPosition(0, 2);
         tab.addDouble("Encoder Position", () -> getPosition()).withSize(1, 1).withPosition(6, 1);
         tab.addDouble("Encoder Graph", () -> getPosition()).withWidget(BuiltInWidgets.kGraph).withSize(3, 3).withPosition(7, 1);
         tab.addDouble("Abs Encoder Position", () -> encoder.getAbsolutePosition()).withPosition(7, 0); //Don't change right now
