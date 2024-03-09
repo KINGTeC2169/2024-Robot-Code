@@ -8,7 +8,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.proto.Trajectory;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -223,12 +222,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     /**Resets the position of the odometer using the rotation2d of the pigeon, the module positions, and a pose2d. */
     public void resetOdometry(Pose2d pose) {
-        var alliance = DriverStation.getAlliance();
-            if (alliance.isPresent() && alliance.get() == Alliance.Red) {
-                odometer.resetPosition(getRotation2d().plus(new Rotation2d(180)), getModulePositions(), pose);
-            }else{
-                odometer.resetPosition(getRotation2d(), getModulePositions(), pose);
-            }
+        odometer.resetPosition(getRotation2d(), getModulePositions(), pose);
     }
 
     /**Resets the encoders of the 4 swerve modules. */

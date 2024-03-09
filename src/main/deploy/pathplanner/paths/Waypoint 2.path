@@ -20,8 +20,8 @@
         "y": 7.246020306766504
       },
       "prevControl": {
-        "x": 2.0680297586982364,
-        "y": 7.222620887046051
+        "x": 2.0177898597164603,
+        "y": 7.115777363461391
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,8 +30,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.25,
-      "rotationDegrees": 90.0,
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -90.0,
       "rotateFast": false
     }
   ],
@@ -45,13 +45,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 90.0,
+    "rotation": -90.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "2 Ring Amp",
   "previewStartingState": {
-    "rotation": 180.0,
+    "rotation": 0.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

@@ -120,10 +120,10 @@ public final class Constants {
 
 
         public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
-                new Translation2d(frontBackWheels / 2, -rightLeftWheels / 2),//Front-Left
-                new Translation2d(frontBackWheels / 2, rightLeftWheels / 2),//Front-Right
-                new Translation2d(-frontBackWheels / 2, -rightLeftWheels / 2),//Back-Left
-                new Translation2d(-frontBackWheels / 2, rightLeftWheels / 2));//Back-Right
+                new Translation2d(frontBackWheels / 2, rightLeftWheels / 2),//Front-Left
+                new Translation2d(frontBackWheels / 2, -rightLeftWheels / 2),//Front-Right
+                new Translation2d(-frontBackWheels / 2, rightLeftWheels / 2),//Back-Left
+                new Translation2d(-frontBackWheels / 2, -rightLeftWheels / 2));//Back-Right
     }
 
     public static final class DeviceID {
