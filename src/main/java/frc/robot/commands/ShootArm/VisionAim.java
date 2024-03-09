@@ -8,6 +8,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.Vision;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.LimelightTable;
+import frc.robot.subsystems.NoteManager;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveSubsystem;
 
@@ -34,23 +35,26 @@ public class VisionAim extends Command {
 
     @Override
     public void execute(){
-        //if(LimelightTable.getTV()) chassisSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(0, 0, -turnController.calculate(LimelightTable.getTX(), 0), swerveSubsystem.getRotation2d());
-        //else chassisSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(0, 0, 0, swerveSubsystem.getRotation2d());
+        if(NoteManager.hasNote()){
+        
+            if(LimelightTable.getTV()) chassisSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(0, 0, -turnController.calculate(LimelightTable.getTX(), 0), swerveSubsystem.getRotation2d());
+            else chassisSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(0, 0, 0, swerveSubsystem.getRotation2d());
 
-        //SwerveModuleState[] moduleStates = DriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
-        //swerveSubsystem.setModuleStates(moduleStates);
+            SwerveModuleState[] moduleStates = DriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
+            swerveSubsystem.setModuleStates(moduleStates);
 
-        arm.setShootPos(Arm.aimToArm(LimelightTable.aimShot()));
-        shooter.setRPM(Vision.shootRPM);
+            arm.setShootPos(Arm.aimToArm(LimelightTable.aimShot()));
+            shooter.shootRPM();
+        }
     }
 
     @Override
     public void end(boolean interrupted) {
-        arm.activeStop();
+        shooter.stopShooter();
     }
 
     @Override
     public boolean isFinished() {
-        return arm.isReady() && shooter.shooterReady();
+        return !NoteManager.hasNote();
     }
 }

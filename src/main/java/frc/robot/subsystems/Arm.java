@@ -49,7 +49,7 @@ public class Arm extends SubsystemBase {
         
         //(2.35, 0.075, 0)
         //4.25
-        armPID = new PIDController(30, 0.2, 1);
+        armPID = new PIDController(26, 0.05, 5);
         armForward = new ArmFeedforward(0.15, 0.22, 3.61, 0.01);
   
         tab.add("Arm PID", armPID).withSize(2, 2).withPosition(0, 0);

@@ -135,12 +135,12 @@ public class RobotContainer {
 
     //Comp controls:
     controller.leftTrigger(0.2).onTrue(new Rest(arm));
-    controller.rightTrigger(0.2).whileTrue(new IntakeCommand(intake, arm));
+    controller.rightTrigger(0.2).whileTrue(new VisionAim(swerveSubsystem, arm, shooter));
 
     controller.povDown().whileTrue(new Outtake(intake));
     controller.povUp().whileTrue(new IntakeCommand(intake, arm));
 
-    controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.rest));//Positions.subwoofer));
+    controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
     controller.x().onTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
     controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.podium));
     controller.b().onTrue(new Amp(arm, shooter));
@@ -151,7 +151,7 @@ public class RobotContainer {
     controller.back().whileTrue(new Launch(intake));
     controller.back().onFalse(new Rest(arm));
     //controller.povLeft().whileTrue(new VisionAim(swerveSubsystem, arm, shooter));
-    controller.povLeft().onTrue(new RevAngleLaunch(arm, shooter, intake, Positions.sideSubwoofer));
+    controller.povLeft().onTrue(new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
 
 
     buttonBoard.button(1).whileTrue(new IntakeCommand(intake, arm));

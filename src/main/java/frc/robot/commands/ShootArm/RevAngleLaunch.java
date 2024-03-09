@@ -42,7 +42,7 @@ public class RevAngleLaunch extends Command{
         shooter.shootRPM();
         arm.setShootPos(desiredAngle);
 
-        if(stable>3 && shooter.shooterReady()){
+        if(stable > 3){
             intake.inTake();
         }
     }
