@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.NoteManager;
 import frc.robot.subsystems.Shooter;
 
 public class RevAngleLaunch extends Command{
@@ -13,7 +14,6 @@ public class RevAngleLaunch extends Command{
     private Shooter shooter;
     private Intake intake;
     private double desiredAngle;
-    private boolean ampMode;
     private double stable;
 
     public RevAngleLaunch(Arm arm, Shooter shooter, Intake intake, double angle){
@@ -24,18 +24,6 @@ public class RevAngleLaunch extends Command{
         this.intake = intake;
         addRequirements(intake);
         desiredAngle = angle;
-        ampMode = false;
-    }
-
-    public RevAngleLaunch(Arm arm, Shooter shooter, Intake intake, double angle, boolean ampMode){
-        this.arm = arm;
-        addRequirements(arm);
-        this.shooter = shooter;
-        addRequirements(shooter);
-        this.intake = intake;
-        addRequirements(intake);
-        desiredAngle = angle;
-        ampMode = true;
     }
 
     @Override
@@ -50,23 +38,23 @@ public class RevAngleLaunch extends Command{
             stable++;
             System.out.println(stable);
         }
-        double power = Constants.Vision.shootRPM;
-        if(ampMode) power = 500;
 
-        shooter.setRPM(power);
+        shooter.shootRPM();
         arm.setShootPos(desiredAngle);
+
+        if(stable>3 && shooter.shooterReady()){
+            intake.inTake();
+        }
     }
 
     @Override
     public void end(boolean interupt){
-        intake.inTake();
-        Timer.delay(0.3);
         intake.stopTake();
         shooter.setRPM(0);
     }
     
     @Override
 	public boolean isFinished() {
-        return arm.isReady();
+        return !NoteManager.hasNote();
 	}
 }

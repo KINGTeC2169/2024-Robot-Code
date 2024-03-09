@@ -73,7 +73,7 @@ public class RobotContainer {
     
     // Register Named Commands
     NamedCommands.registerCommand("Ground Pickup", new Pickup(intake));
-    NamedCommands.registerCommand("Amp Launch", new RevAngleLaunch(arm, shooter, intake, Positions.amp, true));
+    //NamedCommands.registerCommand("Amp Launch", new RevAngleLaunch(arm, shooter, intake, Positions.amp, true));
     NamedCommands.registerCommand("Rest Position", new Rest(arm));
     NamedCommands.registerCommand("Subwoofer Launch", new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
     NamedCommands.registerCommand("Podium Launch", new RevAngleLaunch(arm, shooter, intake, Positions.podium));
@@ -140,17 +140,18 @@ public class RobotContainer {
     controller.povDown().whileTrue(new Outtake(intake));
     controller.povUp().whileTrue(new IntakeCommand(intake, arm));
 
-    controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
+    controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.rest));//Positions.subwoofer));
     controller.x().onTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
     controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.podium));
     controller.b().onTrue(new Amp(arm, shooter));
+    controller.start().onTrue(new RevAndAngle(arm, shooter, Arm.aimToArm(LimelightTable.aimShot())));
 
     controller.povRight().onTrue(new Pickup(intake));
     //controller.povUp().whileTrue(new Outtake(intake));
     controller.back().whileTrue(new Launch(intake));
     controller.back().onFalse(new Rest(arm));
-    controller.povLeft().whileTrue(new VisionAim(swerveSubsystem, arm, shooter));
-
+    //controller.povLeft().whileTrue(new VisionAim(swerveSubsystem, arm, shooter));
+    controller.povLeft().onTrue(new RevAngleLaunch(arm, shooter, intake, Positions.sideSubwoofer));
 
 
     buttonBoard.button(1).whileTrue(new IntakeCommand(intake, arm));

@@ -5,6 +5,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.Vision;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.LimelightTable;
 import frc.robot.subsystems.Shooter;
@@ -33,14 +34,14 @@ public class VisionAim extends Command {
 
     @Override
     public void execute(){
-        if(LimelightTable.getTV()) chassisSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(0, 0, -turnController.calculate(LimelightTable.getTX(), 0), swerveSubsystem.getRotation2d());
-        else chassisSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(0, 0, 0, swerveSubsystem.getRotation2d());
+        //if(LimelightTable.getTV()) chassisSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(0, 0, -turnController.calculate(LimelightTable.getTX(), 0), swerveSubsystem.getRotation2d());
+        //else chassisSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(0, 0, 0, swerveSubsystem.getRotation2d());
 
-        SwerveModuleState[] moduleStates = DriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
-        swerveSubsystem.setModuleStates(moduleStates);
+        //SwerveModuleState[] moduleStates = DriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
+        //swerveSubsystem.setModuleStates(moduleStates);
 
-        //arm.setAim(LimelightTable.aimShot());
-        //shooter.setRPM(Vision.shootRPM);
+        arm.setShootPos(Arm.aimToArm(LimelightTable.aimShot()));
+        shooter.setRPM(Vision.shootRPM);
     }
 
     @Override
