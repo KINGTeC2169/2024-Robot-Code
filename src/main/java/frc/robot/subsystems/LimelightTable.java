@@ -39,6 +39,7 @@ public class LimelightTable {
         tab.addDouble("Angle", () -> (getAngle())).withPosition(5, 1);
         tab.addDouble("HeightDif", () -> getHeightDif()).withPosition(6, 1);
         tab.addNumber("Aim shot1", () -> finalAim).withPosition(6, 0);
+        tab.addNumber("Angle shot", () -> Arm.aimToArm(LimelightTable.aimShot())).withPosition(7,0);
     }
 
     public static double getTX(){

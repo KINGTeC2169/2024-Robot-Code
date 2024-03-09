@@ -23,8 +23,10 @@ public class Amp extends Command {
 
     @Override
     public void execute(){
-        shooter.ampRPM();
-        arm.setAmp();
+        if(NoteManager.hasNote()){
+            shooter.ampRPM();
+            arm.setAmp();
+        }
     }
 
     @Override

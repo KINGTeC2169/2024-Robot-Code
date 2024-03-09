@@ -33,7 +33,7 @@ public class Arm extends SubsystemBase {
     private ArmFeedforward armForward;
 
     private double setPosition;
-    private final double lowerLimit = 0.285; 
+    private final double lowerLimit = Positions.rest; 
     private final double upperLimit = 0.435;
 
     
@@ -49,7 +49,7 @@ public class Arm extends SubsystemBase {
         
         //(2.35, 0.075, 0)
         //4.25
-        armPID = new PIDController(26, 0.075, 0);
+        armPID = new PIDController(30, 0.2, 1);
         armForward = new ArmFeedforward(0.15, 0.22, 3.61, 0.01);
   
         tab.add("Arm PID", armPID).withSize(2, 2).withPosition(0, 0);
@@ -102,8 +102,8 @@ public class Arm extends SubsystemBase {
 
     public void setAmp(){
         setPosition = Positions.amp;
-        leftArm.setVoltage(armPID.calculate(getPosition(), Positions.amp) + armForward.calculate(getPosition() - 0.25, 0));
-        rightArm.setVoltage(armPID.calculate(getPosition(),  Positions.amp) + armForward.calculate(getPosition() - 0.25, 0));
+        leftArm.setVoltage(armPID.calculate(getPosition(), Positions.amp));
+        rightArm.setVoltage(armPID.calculate(getPosition(),  Positions.amp));
     }
 
     public void setShootPos(double position) {
@@ -114,9 +114,9 @@ public class Arm extends SubsystemBase {
     }
 
     //AIM = DEGREES, ARM = ROTATIONS
-    public void setAim(double aim) {
+    /*public void setAim(double aim) {
         setShootPos(aimToArm(aim));
-    }
+    }*/
 
     public void activeStop(){
         leftArm.setVoltage(armForward.calculate(getPosition()-0.25, 0));
@@ -129,7 +129,7 @@ public class Arm extends SubsystemBase {
     }
 
     public boolean isReady(){
-        return Math.abs(setPosition-getPosition()) < 0.001;
+        return Math.abs(setPosition-getPosition()) < 0.002;
     }
 
     public boolean restReady(){

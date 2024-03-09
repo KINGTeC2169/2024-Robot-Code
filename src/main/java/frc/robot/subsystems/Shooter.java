@@ -71,8 +71,8 @@ public class Shooter extends SubsystemBase {
     
     /**Gets the rpm from the top and bottom motors as a double array*/
     public double[] getRPM(){
-        return new double[]{((60 * shooterTop.getRotorVelocity().getValue())),
-                            ((60 * shooterBot.getRotorVelocity().getValue()))};
+        return new double[]{(-(60 * shooterTop.getRotorVelocity().getValue())),
+                            (-(60 * shooterBot.getRotorVelocity().getValue()))};
     }
 
     public void setRPM(double rpm){
@@ -91,7 +91,7 @@ public class Shooter extends SubsystemBase {
 
 
     public boolean shooterReady(){
-        return getRPM()[0] > Vision.shootRPM - 400 && getRPM()[1] > Vision.shootRPM - 400;
+        return getRPM()[0] > Vision.shootRPM - 700 && getRPM()[1] > Vision.shootRPM - 700;
     }
 
     public void stopShooter() {
