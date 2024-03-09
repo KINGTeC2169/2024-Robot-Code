@@ -85,7 +85,7 @@ public class DriveCommand extends Command{
             swerveSubsystem.zeroHeading();
         }
 
-        chassisSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(xSpeed, ySpeed, turningSpeed, Pigeon.getRotation2d());
+        chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, Pigeon.getRotation2d());
 
         SwerveModuleState[] moduleStates = DriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds); 
         

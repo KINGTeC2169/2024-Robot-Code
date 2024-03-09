@@ -115,17 +115,17 @@ public final class Constants {
         public static final double frontBackWheels = Units.inchesToMeters(23);
 
 
-        public static final double FRabsoluteOffset = 2.670655153691769; //-0.470931150019169;
-        public static final double FLabsoluteOffset = 0.971007876098156; //-2.178248316049576;
-        public static final double BRabsoluteOffset = -2.574014559388161; //0.572173677384853;
-        public static final double BLabsoluteOffset = -2.503451585769653; //0.628930851817131;
+        public static final double FRabsoluteOffset = -0.470931150019169; //2.670655153691769; //-0.470931150019169;
+        public static final double FLabsoluteOffset = -2.178248316049576; //0.971007876098156; //-2.178248316049576;
+        public static final double BRabsoluteOffset = 0.572173677384853; //-2.574014559388161; //0.572173677384853;
+        public static final double BLabsoluteOffset = 0.628930851817131; //-2.503451585769653; //0.628930851817131;
 
 
         public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
-                new Translation2d(frontBackWheels / 2, -rightLeftWheels / 2),//Front-Left
-                new Translation2d(frontBackWheels / 2, rightLeftWheels / 2),//Front-Right
-                new Translation2d(-frontBackWheels / 2, -rightLeftWheels / 2),//Back-Left
-                new Translation2d(-frontBackWheels / 2, rightLeftWheels / 2));//Back-Right
+                new Translation2d(frontBackWheels / 2, rightLeftWheels / 2),//Front-Left
+                new Translation2d(frontBackWheels / 2, -rightLeftWheels / 2),//Front-Right
+                new Translation2d(-frontBackWheels / 2, rightLeftWheels / 2),//Back-Left
+                new Translation2d(-frontBackWheels / 2, -rightLeftWheels / 2));//Back-Right
     }
 
     public static final class DeviceID {
