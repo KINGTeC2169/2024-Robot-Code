@@ -27,7 +27,7 @@ public class Arm extends SubsystemBase {
     TalonFX leftArm = new TalonFX(Constants.Ports.leftArm);
     TalonFX rightArm = new TalonFX(Constants.Ports.rightArm);
 
-    private  DutyCycleEncoder encoder = new DutyCycleEncoder(Constants.Ports.armEncoder);
+    private DutyCycleEncoder encoder = new DutyCycleEncoder(Constants.Ports.armEncoder);
 
     private PIDController armPID;
     private ArmFeedforward armForward;
@@ -68,7 +68,7 @@ public class Arm extends SubsystemBase {
         tab.addDouble("Abs Encoder Position", () -> encoder.getAbsolutePosition()).withPosition(7, 0); //Don't change right now
         tab.addDouble("Aim", () -> armToAim(getPosition())).withPosition(6, 0);
         tab.addBoolean("Arm Ready", () -> isReady()).withPosition(6, 2).withSize(1, 2);
-    
+        tab.addDouble("Converted", () -> aimToArm(armToAim(getPosition())));
     }
 
     public void setSpeed(double speed){
@@ -171,7 +171,7 @@ public class Arm extends SubsystemBase {
      * @return position of the arm IN ROTATIONS
      */
     public static double aimToArm(double aim){
-        return ((ArmConstants.restAim - aim)/360) +0.25;
+        return -(aim - ArmConstants.restAim)/360 + Positions.rest;
     }
 
     /**
@@ -180,6 +180,6 @@ public class Arm extends SubsystemBase {
      * @return aim angle IN DEGREES
      */
     public static double armToAim(double position){
-        return -(((position-0.25)*360) - ArmConstants.restAim);
+        return ArmConstants.restAim - ((position-Positions.rest)*360);
     }
 }
