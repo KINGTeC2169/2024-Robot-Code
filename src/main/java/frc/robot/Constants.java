@@ -84,7 +84,7 @@ public final class Constants {
 
         public static final double armGearBox = 201.6; //48 * (84/20)
 
-        public static final double restAim = 68.19859053201;
+        public static final double restAim = 67.4491244931; //deg
 
 
     }
@@ -147,7 +147,7 @@ public final class Constants {
         public static final double mountedAngle = 45; //angle deg
         public static final double toShaftX = -0.1146; //ft
         public static final double toShaftY = 0.28125; //ft
-        public static final double launchSpeed = 55; //ft/sec
+        public static final double launchSpeed = 63.7024327322; //ft/sec
         public static final double gravity = -32.19;
 
     }
