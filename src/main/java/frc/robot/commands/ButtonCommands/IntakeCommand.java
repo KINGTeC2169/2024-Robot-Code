@@ -1,18 +1,14 @@
 package frc.robot.commands.ButtonCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Intake;
 
 public class IntakeCommand extends Command {
     private Intake intake;
-    private Arm arm;
 
-    public IntakeCommand(Intake intake, Arm arm){
+    public IntakeCommand(Intake intake){
         this.intake = intake;
         addRequirements(this.intake);
-        this.arm = arm;
-        addRequirements(arm);
     }
 
     @Override

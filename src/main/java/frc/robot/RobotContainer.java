@@ -134,10 +134,10 @@ public class RobotContainer {
 
     //Comp controls:
     controller.leftTrigger(0.2).whileTrue(new Rest(arm));
-    controller.rightTrigger(0.2).whileTrue(new IntakeCommand(intake, arm));
+    controller.rightTrigger(0.2).whileTrue(new IntakeCommand(intake));
 
     controller.povDown().whileTrue(new Outtake(intake));
-    controller.povUp().whileTrue(new IntakeCommand(intake, arm));
+    controller.povUp().whileTrue(new IntakeCommand(intake));
 
     controller.y().whileTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
     controller.x().whileTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
@@ -151,7 +151,7 @@ public class RobotContainer {
 
 
 
-    buttonBoard.button(1).whileTrue(new IntakeCommand(intake, arm));
+    buttonBoard.button(1).whileTrue(new IntakeCommand(intake));
     buttonBoard.button(2).whileTrue(new Outtake(intake));
     buttonBoard.button(3).whileTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
     buttonBoard.button(4).whileTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
