@@ -88,6 +88,9 @@ public class Shooter extends SubsystemBase {
     public void ampRPM(){
         setRPM(Vision.ampRPM);
     }
+    public void backward(){
+        setRPM(-1000);
+    }
 
 
     public boolean shooterReady(){

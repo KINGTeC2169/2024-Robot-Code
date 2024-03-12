@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.Positions;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ShootArm.Shoot;
+import frc.robot.commands.ShootArm.Stuck;
 import frc.robot.commands.ShootArm.VisionAim;
 import frc.robot.commands.Intake.IntakeCommand;
 import frc.robot.commands.Intake.Launch;
@@ -134,23 +135,26 @@ public class RobotContainer {
     controller.rightBumper().whileTrue(new Shoot(shooter));
 
     //Comp controls:
-    controller.leftTrigger(0.2).onTrue(new Rest(arm));
-    controller.rightTrigger(0.2).whileTrue(new VisionAim(swerveSubsystem, arm, shooter));
+    controller.leftTrigger(0.2).onTrue(new Pickup(intake));
+    controller.rightTrigger(0.2).whileTrue(new Launch(intake));
+    controller.rightTrigger(0.2).onFalse(new Rest(arm));
 
-    controller.povDown().whileTrue(new Outtake(intake));
-    controller.povUp().whileTrue(new IntakeCommand(intake, arm));
+    controller.povDown().onTrue(new Rest(arm));
+    //controller.povUp().whileTrue(new IntakeCommand(intake, arm));
 
     controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
     controller.x().onTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
     controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.podium));
     controller.b().onTrue(new Amp(arm, shooter));
-    controller.start().onTrue(new RevAndAngle(arm, shooter, Arm.aimToArm(LimelightTable.aimShot())));
+    //controller.start().onTrue(new RevAndAngle(arm, shooter, Arm.aimToArm(LimelightTable.aimShot())));
 
     controller.povRight().onTrue(new Pickup(intake));
     //controller.povUp().whileTrue(new Outtake(intake));
-    controller.back().whileTrue(new Launch(intake));
-    controller.back().onFalse(new Rest(arm));
-    //controller.povLeft().whileTrue(new VisionAim(swerveSubsystem, arm, shooter));
+    //controller.back().whileTrue(new Launch(intake));
+    //
+    controller.back().onTrue(new Stuck(arm, shooter));
+
+    controller.start().onTrue(new VisionAim(swerveSubsystem, arm, shooter));
     controller.povLeft().onTrue(new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
 
 

@@ -42,9 +42,9 @@ public class DriveCommand extends Command{
 
     @Override
     public void execute() {
-        double xSpeed = xSpdFunction.get();
-        double ySpeed = ySpdFunction.get();
-        double turningSpeed = -turningSpdFunction.get();
+        double xSpeed = -xSpdFunction.get();
+        double ySpeed = -ySpdFunction.get();
+        double turningSpeed = turningSpdFunction.get();
 
         ChassisSpeeds chassisSpeeds;
 

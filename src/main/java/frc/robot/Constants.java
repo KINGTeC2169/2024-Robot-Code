@@ -104,7 +104,7 @@ public final class Constants {
 
         public static final ShuffleboardTab tab = Shuffleboard.getTab("Swerve Module");
 
-        public static double PDrive = tab.add("Drive P", 0.1).getEntry().getDouble(0.1);
+        public static final double PDrive = 0.2;
 
         public static double PTurn = 0.31;
     }
@@ -115,10 +115,10 @@ public final class Constants {
         public static final double frontBackWheels = Units.inchesToMeters(23);
 
 
-        public static final double FRabsoluteOffset = -0.470931150019169; //2.670655153691769; //-0.470931150019169;
-        public static final double FLabsoluteOffset = -2.178248316049576; //0.971007876098156; //-2.178248316049576;
-        public static final double BRabsoluteOffset = 0.572173677384853; //-2.574014559388161; //0.572173677384853;
-        public static final double BLabsoluteOffset = 0.628930851817131; //-2.503451585769653; //0.628930851817131;
+        public static final double FRabsoluteOffset = 2.676791064441204; //2.670655153691769; //-0.470931150019169;
+        public static final double FLabsoluteOffset = 0.972541853785515; //0.971007876098156; //-2.178248316049576;
+        public static final double BRabsoluteOffset = -2.572480581700802; //-2.574014559388161; //0.572173677384853;
+        public static final double BLabsoluteOffset = -2.506519541144371; //-2.503451585769653; //0.628930851817131;
 
 
         public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
@@ -157,7 +157,7 @@ public final class Constants {
         public static final double subwoofer = 0.3517 -0.038;
         public static final double sideSubwoofer = 0.36334 -0.038;
         public static final double podium = 0.3877 -0.038;
-        public static final double amp = 0.5321 -0.038;
+        public static final double amp = 0.5421 -0.038;
     }
 
     

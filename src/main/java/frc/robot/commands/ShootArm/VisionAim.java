@@ -37,7 +37,7 @@ public class VisionAim extends Command {
     public void execute(){
         if(NoteManager.hasNote()){
         
-            if(LimelightTable.getTV()) chassisSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(0, 0, -turnController.calculate(LimelightTable.getTX(), 0), swerveSubsystem.getRotation2d());
+            if(LimelightTable.getTV()) chassisSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(0, 0, turnController.calculate(LimelightTable.getTX(), 0), swerveSubsystem.getRotation2d());
             else chassisSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(0, 0, 0, swerveSubsystem.getRotation2d());
 
             SwerveModuleState[] moduleStates = DriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);

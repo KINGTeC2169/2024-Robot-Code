@@ -224,7 +224,7 @@ public class SwerveSubsystem extends SubsystemBase {
                 odometer.resetPosition(getRotation2d().plus(new Rotation2d(180)), getModulePositions(), pose);
         }
     }
-
+    
     /**Resets the encoders of the 4 swerve modules. */
     public void resetEncoders() {
         frontLeft.resetEncoders();
