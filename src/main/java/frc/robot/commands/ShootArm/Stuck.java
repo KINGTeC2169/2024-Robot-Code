@@ -3,7 +3,6 @@ package frc.robot.commands.ShootArm;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.NoteManager;
 import frc.robot.subsystems.Shooter;
 
 public class Stuck extends Command {

@@ -5,7 +5,6 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.Vision;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.LimelightTable;
 import frc.robot.subsystems.NoteManager;
