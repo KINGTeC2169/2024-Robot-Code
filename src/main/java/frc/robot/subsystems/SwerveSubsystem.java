@@ -109,8 +109,8 @@ public class SwerveSubsystem extends SubsystemBase {
             this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
             new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                    new PIDConstants(0.01, 0.0, 0.0), // Translation PID constants
-                    new PIDConstants(0.01, 0.0, 0.0), // Rotation PID constants
+                    new PIDConstants(0.001, 0.0, 0.0), // Translation PID constants
+                    new PIDConstants(0.03, 0.0, 0.0), // Rotation PID constants
                     ModuleConstants.maxSpeed, // Max module speed, in m/s
                     0.291, // Drive base radius in meters. Distance from robot center to furthest module.
                     new ReplanningConfig() // Default path replanning config. See the API for the options here
@@ -211,20 +211,9 @@ public class SwerveSubsystem extends SubsystemBase {
 
     /**Resets the position of the odometer using the rotation2d of the pigeon, the module positions, and a pose2d. */
     public void resetOdometry(Pose2d pose) {
-        var alliance = DriverStation.getAlliance();
-        if (alliance.isPresent()){
-            if (alliance.get() == Alliance.Red){
-                odometer.resetPosition(getRotation2d().plus(new Rotation2d(180)), getModulePositions(), pose);
-            }
-            else{
-                odometer.resetPosition(getRotation2d(), getModulePositions(), pose);
-            }
-        }
-        else{
-                odometer.resetPosition(getRotation2d().plus(new Rotation2d(180)), getModulePositions(), pose);
-        }
+        odometer.resetPosition(getRotation2d(), getModulePositions(), pose);
     }
-    
+
     /**Resets the encoders of the 4 swerve modules. */
     public void resetEncoders() {
         frontLeft.resetEncoders();
