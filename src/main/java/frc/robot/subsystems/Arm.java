@@ -30,7 +30,6 @@ public class Arm extends SubsystemBase {
     //Update hex encoder
 
     private PIDController armPID;
-    private PIDController armDownPID;
 
     private double setPosition;
     final double zero = 0.04; //zero angle   
@@ -46,7 +45,6 @@ public class Arm extends SubsystemBase {
         encoder.setPositionOffset(Constants.ArmConstants.armEncoderOffset);
         
         armPID = new PIDController(1.95, 0.075, 0);
-        armDownPID = new PIDController(1,0.075,0);
 
         tab.add("Arm PID", armPID).withSize(2, 2).withPosition(0, 0);
 
