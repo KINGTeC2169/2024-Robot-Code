@@ -150,9 +150,8 @@ public class RobotContainer {
     //controller.back().whileTrue(new Launch(intake));
     //
     controller.back().onTrue(new Stuck(arm, shooter));
-
     controller.start().onTrue(new VisionAim(swerveSubsystem, arm, shooter));
-    controller.povLeft().onTrue(new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
+    //controller.povLeft().onTrue(new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
 
 
     buttonBoard.button(1).whileTrue(new IntakeCommand(intake, arm));
@@ -182,6 +181,7 @@ public class RobotContainer {
       return new PathPlannerAuto("3 Ring Center");
     }
 
+
     else if (autoChoice.getDouble(0.0) == 2.0){
       swerveSubsystem.field.setRobotPose(new Pose2d(0.74, 6.69, swerveSubsystem.getRotation2d()));
       return new PathPlannerAuto("2 Ring Amp");
@@ -197,7 +197,7 @@ public class RobotContainer {
       return new PathPlannerAuto("Emergency Auto");
       
     }
-    swerveSubsystem.field.setRobotPose(new Pose2d(0.52, 2.23, swerveSubsystem.getRotation2d()));
+    swerveSubsystem.field.setRobotPose(new Pose2d(1.36, 5.54, swerveSubsystem.getRotation2d()));
     return new PathPlannerAuto("Just Drive");
 
   }
