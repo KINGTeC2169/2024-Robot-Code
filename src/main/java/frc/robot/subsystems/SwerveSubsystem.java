@@ -108,8 +108,8 @@ public class SwerveSubsystem extends SubsystemBase {
             this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
             new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                    new PIDConstants(0.001, 0.0, 0.0), // Translation PID constants
-                    new PIDConstants(0.03, 0.0, 0.0), // Rotation PID constants
+                    new PIDConstants(0.35, 0.0, 0.0), // Translation PID constants
+                    new PIDConstants(0.53, 0.0, 0.0), // Rotation PID constants
                     ModuleConstants.maxSpeed, // Max module speed, in m/s
                     0.291, // Drive base radius in meters. Distance from robot center to furthest module.
                     new ReplanningConfig() // Default path replanning config. See the API for the options here
@@ -173,7 +173,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     /**Resets the Pigeon.*/
     public void zeroHeading() {
-        System.out.println("Zeroing gyro \n.\n.\n.\n.\n.\n.\n.");
+        //System.out.println("Zeroing gyro \n.\n.\n.\n.\n.\n.\n.");
         Pigeon.reset();
     }
 
@@ -298,7 +298,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     /**Puts wheels in 'X' position and sets driving to a velocity-PID loop set at 0m/s */
     public void setActiveStop() {
-        System.out.println("1\n1\n1\n1\n1\n1\n1\n1");
+        //System.out.println("1\n1\n1\n1\n1\n1\n1\n1");
         frontLeft.activeStop(-1);
         frontRight.activeStop(1);
         backLeft.activeStop(1);
