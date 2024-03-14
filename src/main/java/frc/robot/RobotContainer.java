@@ -129,7 +129,7 @@ public class RobotContainer {
 
     //Testing controls:
     controller.leftBumper().whileTrue(Commands.run(() -> arm.setSpeed(-controller.getRightY()/10.0)));
-    controller.rightBumper().whileTrue(new Shoot(shooter));
+    controller.rightBumper().whileTrue(new Shoot(shooter,intake));
 
     //Comp controls:
     controller.leftTrigger(0.2).onTrue(new Pickup(intake));

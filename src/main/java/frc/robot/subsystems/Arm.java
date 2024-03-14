@@ -129,7 +129,7 @@ public class Arm extends SubsystemBase {
     }
 
     public boolean isReady(){
-        return Math.abs(setPosition-getPosition()) < 0.002;
+        return Math.abs(setPosition-getPosition()) < 0.005;
     }
 
     public boolean restReady(){
