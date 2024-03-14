@@ -27,6 +27,8 @@ public class Shooter extends SubsystemBase {
     private double topRotation = 24/18; //24t on flywheel/18t on 
     private double botRotation = 24/24; //24t on flywheel/24t on motor shaft
 
+    private double setpointRPM = 0;
+
     private ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
 
     //private GenericEntry shooterSpeed = tab.add("Shooter Speed", 0.5).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).withPosition(4, 0).getEntry();
@@ -83,12 +85,19 @@ public class Shooter extends SubsystemBase {
                             (-(60 * shooterBot.getRotorVelocity().getValue()))};
     }
 
-    public void setRPM(double rpm){
+    /**Gets the shooter rpm from the top and bottom motors as a double array*/
+    public double[] getShooterRPM(){
+        return new double[]{(-(60 * shooterTop.getRotorVelocity().getValue()) * topRotation),
+                            (-(60 * shooterBot.getRotorVelocity().getValue()) * botRotation)};
+    }
 
-        double topRPM = topRotation * rpm;
-        double botRPM = botRotation * rpm;
-        shooterTop.setControl(m_velocity.withVelocity(topRPM));
-        shooterBot.setControl(m_velocity.withVelocity(botRPM));
+    public void setRPM(double rpm){
+        m_velocity.Slot = 0;
+        setpointRPM = rpm;
+        double topRPS = topRotation * rpm/60 * 2.14285714285714;
+        double botRPS = botRotation * rpm/60 * 2.14285714285714;
+        shooterTop.setControl(m_velocity.withVelocity(topRPS));
+        shooterBot.setControl(m_velocity.withVelocity(botRPS));
     }
 
     public void shootRPM(){
@@ -102,9 +111,8 @@ public class Shooter extends SubsystemBase {
         setRPM(-1000);
     }
 
-
     public boolean shooterReady(){
-        return getRPM()[0] > Vision.shootRPM - 700 && getRPM()[1] > Vision.shootRPM - 700;
+        return Math.abs(getShooterRPM()[0] - setpointRPM) < 25 &&  Math.abs(getShooterRPM()[1] - setpointRPM) < 25;
     }
 
     public void stopShooter() {
