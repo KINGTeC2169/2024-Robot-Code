@@ -3,6 +3,9 @@ package frc.robot.subsystems;
 import java.util.Map;
 
 import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.controls.MotionMagicExpoVoltage;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
@@ -16,9 +19,13 @@ import frc.robot.Constants;
 import frc.robot.Constants.Vision;
 
 public class Shooter extends SubsystemBase {
+    private final VelocityVoltage m_velocity = new VelocityVoltage(0);
     
     private TalonFX shooterTop;
     private TalonFX shooterBot;
+
+    private double topRotation = 24/18; //24t on flywheel/18t on 
+    private double botRotation = 24/24; //24t on flywheel/24t on motor shaft
 
     private ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
 
@@ -52,6 +59,7 @@ public class Shooter extends SubsystemBase {
     /**Sets the power as a double between -1 and 1*/
     
     public void setPower(double power){
+
         shooterTop.set(-power);
         shooterBot.set(-power);
         SmartDashboard.putNumber("Request ShotSpeed", power);
@@ -77,8 +85,10 @@ public class Shooter extends SubsystemBase {
 
     public void setRPM(double rpm){
 
-        double power = rpm/6350;
-        setPower(power);
+        double topRPM = topRotation * rpm;
+        double botRPM = botRotation * rpm;
+        shooterTop.setControl(m_velocity.withVelocity(topRPM));
+        shooterBot.setControl(m_velocity.withVelocity(botRPM));
     }
 
     public void shootRPM(){
