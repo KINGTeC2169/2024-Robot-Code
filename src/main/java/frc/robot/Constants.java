@@ -68,10 +68,6 @@ public final class Constants {
     public static final class AutoAngles{
 
         public static final double top = 0.3;
-        
-           
-
-
 
     }
 
@@ -106,7 +102,7 @@ public final class Constants {
 
         public static final double PDrive = 0.2;
 
-        public static double PTurn = 0.31;
+        public static double PTurn = 0.6;
     }
 
     public static final class DriveConstants {
@@ -114,18 +110,17 @@ public final class Constants {
         public static final double rightLeftWheels = Units.inchesToMeters(23);
         public static final double frontBackWheels = Units.inchesToMeters(23);
 
-
         public static final double FRabsoluteOffset = 2.676791064441204; //2.670655153691769; //-0.470931150019169;
         public static final double FLabsoluteOffset = 0.972541853785515; //0.971007876098156; //-2.178248316049576;
         public static final double BRabsoluteOffset = -2.572480581700802; //-2.574014559388161; //0.572173677384853;
         public static final double BLabsoluteOffset = -2.506519541144371; //-2.503451585769653; //0.628930851817131;
 
 
-        public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
-                new Translation2d(frontBackWheels / 2, rightLeftWheels / 2),//Front-Left
-                new Translation2d(frontBackWheels / 2, -rightLeftWheels / 2),//Front-Right
-                new Translation2d(-frontBackWheels / 2, rightLeftWheels / 2),//Back-Left
-                new Translation2d(-frontBackWheels / 2, -rightLeftWheels / 2));//Back-Right
+    public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
+        new Translation2d(frontBackWheels / 2, rightLeftWheels / 2),//Front-Left
+        new Translation2d(frontBackWheels / 2, -rightLeftWheels / 2),//Front-Right
+        new Translation2d(-frontBackWheels / 2, rightLeftWheels / 2),//Back-Left
+        new Translation2d(-frontBackWheels / 2, -rightLeftWheels / 2));//Back-Right
     }
 
     public static final class DeviceID {
@@ -134,8 +129,8 @@ public final class Constants {
         public static final int intake = 15;
         public static final int leftArm = 17;
         public static final int rightArm = 18;
-        
     }
+
     public static final class Vision {
         //Launch speed: 40.36 ft/sec
         //7 3/4 from edge
@@ -159,6 +154,4 @@ public final class Constants {
         public static final double podium = 0.15; //-0.038;
         public static final double amp = 0.3063; //-0.038;
     }
-
-    
 }

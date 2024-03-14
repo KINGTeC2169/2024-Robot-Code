@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
@@ -227,26 +226,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
         //field.setRobotPose(odometer.getPoseMeters());
         field.setRobotPose(odometer.getPoseMeters().getX(), odometer.getPoseMeters().getY(), odometer.getPoseMeters().getRotation());
-
-        SmartDashboard.putNumber("X", odometer.getPoseMeters().getX());
-        SmartDashboard.putNumber("Y", odometer.getPoseMeters().getY());
-        SmartDashboard.putNumber("Pose angle", odometer.getPoseMeters().getRotation().getDegrees());
         
-        //SmartDashboard.putData("Field", field);
-    
-        /*
-        SmartDashboard.putNumber("Front Left", frontLeft.getTurnPosition());
-        SmartDashboard.putNumber("Front Right", frontRight.getTurnPosition());
-        SmartDashboard.putNumber("Back Left", backLeft.getTurnPosition());
-        SmartDashboard.putNumber("Back Right", backRight.getTurnPosition());
-        SmartDashboard.putNumber("Wanted Speed", backRight.getWantedSpeed());
-        SmartDashboard.putNumber("Back Right speed", backRight.getDriveVelocity());
-        SmartDashboard.putNumber("Back Left speed", backLeft.getDriveVelocity());
-        SmartDashboard.putNumber("Front Right speed", frontRight.getDriveVelocity());
-        SmartDashboard.putNumber("Front left speed", frontLeft.getDriveVelocity());
-        SmartDashboard.putNumber("Error", backLeft.getError());
-        SmartDashboard.putNumber("Error", Math.abs(backRight.getWantedSpeed() - backRight.getDrivePosition()));
-        */
     }
 
     /**Stops all 4 swerve modules. */
