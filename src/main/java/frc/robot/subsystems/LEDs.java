@@ -7,7 +7,7 @@ public class LEDs {
     private static SerialPort arduino = new SerialPort(9600, Constants.Ports.arduino);
 
 //rainbow effect:
-    public static void intialize(){
+    public static void rainbow(){ //was initialize
         arduino.writeString("A");
     }
 //green:

@@ -129,7 +129,7 @@ public class Arm extends SubsystemBase {
     }
 
     public boolean isReady(){
-        if ( Math.abs(setPosition-getPosition()) < 0.005){
+        if (Math.abs(setPosition-getPosition()) < 0.005 && !restReady()){
             LEDs.green();
             return true;
             
