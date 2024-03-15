@@ -151,7 +151,7 @@ public class RobotContainer {
     controller.back().onFalse(new Rest(arm));
     controller.povLeft().whileTrue(new VisionAim(swerveSubsystem, arm, shooter));
 
-
+    controller.start().whileFalse(new LEDCommand(arm,shooter,intake)
 
     buttonBoard.button(1).whileTrue(new IntakeCommand(intake, arm));
     buttonBoard.button(2).whileTrue(new Outtake(intake));
