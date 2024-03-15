@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.52,
-      "y": 2.23
+      "x": 1.36,
+      "y": 5.54
     },
     "rotation": 0.0
   },
@@ -18,9 +18,27 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Podium Launch"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Rest Position"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Just Drive"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Ground Pickup"
           }
         }
       ]

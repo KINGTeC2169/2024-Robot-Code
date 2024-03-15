@@ -1,16 +1,21 @@
 package frc.robot.commands.ShootArm;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
 public class Shoot extends Command {
 
     private Shooter shooter;
+    private Intake intake;
 
-    public Shoot(Shooter shooter){
+    public Shoot(Shooter shooter, Intake intake){
         this.shooter = shooter;
         addRequirements(shooter);
+        this.intake = intake;
+        addRequirements(intake);
     }
 
     @Override
@@ -19,12 +24,15 @@ public class Shoot extends Command {
 
     @Override
     public void execute(){
-        shooter.setRPM(Constants.Vision.shootRPM);
+        shooter.setRPM(2000);
     }
 
     @Override
     public void end(boolean interupt){
-        shooter.setRPM(0);
+        intake.inTake();
+        Timer.delay(0.05);
+        intake.stopTake();
+        shooter.stopShooter();
     }
     
     @Override

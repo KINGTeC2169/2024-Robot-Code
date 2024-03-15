@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
@@ -108,8 +107,8 @@ public class SwerveSubsystem extends SubsystemBase {
             this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
             new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                    new PIDConstants(0.01, 0.0, 0.0), // Translation PID constants
-                    new PIDConstants(0.01, 0.0, 0.0), // Rotation PID constants
+                    new PIDConstants(0.35, 0.0, 0.0), // Translation PID constants
+                    new PIDConstants(0.53, 0.0, 0.0), // Rotation PID constants
                     ModuleConstants.maxSpeed, // Max module speed, in m/s
                     0.291, // Drive base radius in meters. Distance from robot center to furthest module.
                     new ReplanningConfig() // Default path replanning config. See the API for the options here
@@ -123,7 +122,7 @@ public class SwerveSubsystem extends SubsystemBase {
               if (alliance.isPresent()) {
                 return alliance.get() == DriverStation.Alliance.Red;
               }
-              return false;
+              return true;
             },
             this // Reference to this subsystem to set requirements
     );
@@ -173,7 +172,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     /**Resets the Pigeon.*/
     public void zeroHeading() {
-        System.out.println("Zeroing gyro \n.\n.\n.\n.\n.\n.\n.");
+        //System.out.println("Zeroing gyro \n.\n.\n.\n.\n.\n.\n.");
         Pigeon.reset();
     }
 
@@ -227,26 +226,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
         //field.setRobotPose(odometer.getPoseMeters());
         field.setRobotPose(odometer.getPoseMeters().getX(), odometer.getPoseMeters().getY(), odometer.getPoseMeters().getRotation());
-
-        SmartDashboard.putNumber("X", odometer.getPoseMeters().getX());
-        SmartDashboard.putNumber("Y", odometer.getPoseMeters().getY());
-        SmartDashboard.putNumber("Pose angle", odometer.getPoseMeters().getRotation().getDegrees());
         
-        //SmartDashboard.putData("Field", field);
-    
-        /*
-        SmartDashboard.putNumber("Front Left", frontLeft.getTurnPosition());
-        SmartDashboard.putNumber("Front Right", frontRight.getTurnPosition());
-        SmartDashboard.putNumber("Back Left", backLeft.getTurnPosition());
-        SmartDashboard.putNumber("Back Right", backRight.getTurnPosition());
-        SmartDashboard.putNumber("Wanted Speed", backRight.getWantedSpeed());
-        SmartDashboard.putNumber("Back Right speed", backRight.getDriveVelocity());
-        SmartDashboard.putNumber("Back Left speed", backLeft.getDriveVelocity());
-        SmartDashboard.putNumber("Front Right speed", frontRight.getDriveVelocity());
-        SmartDashboard.putNumber("Front left speed", frontLeft.getDriveVelocity());
-        SmartDashboard.putNumber("Error", backLeft.getError());
-        SmartDashboard.putNumber("Error", Math.abs(backRight.getWantedSpeed() - backRight.getDrivePosition()));
-        */
     }
 
     /**Stops all 4 swerve modules. */
@@ -298,7 +278,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     /**Puts wheels in 'X' position and sets driving to a velocity-PID loop set at 0m/s */
     public void setActiveStop() {
-        System.out.println("1\n1\n1\n1\n1\n1\n1\n1");
+        //System.out.println("1\n1\n1\n1\n1\n1\n1\n1");
         frontLeft.activeStop(-1);
         frontRight.activeStop(1);
         backLeft.activeStop(1);

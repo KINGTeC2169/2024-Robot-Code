@@ -68,15 +68,11 @@ public final class Constants {
     public static final class AutoAngles{
 
         public static final double top = 0.3;
-        
-           
-
-
 
     }
 
     public static final class ArmConstants {
-        public static final double armEncoderOffset =  0.58822 + 0.292;//0.2294932807 - 0.25 + 0.58822 - 0.292;
+        public static final double armEncoderOffset =  0.647920739908018; //0.377614558557864 + 0.5;//0.58822 + 0.292;//0.2294932807 - 0.25 + 0.58822 - 0.292;
         //public static final double armEncoderOffset =  0.2294932807 - 0.25 + (1-0.58822) - 0.292;
         public static final double shooterOffset = 0.4103968962; // (90-66.486)*0.0174533 RAD
         public static final double armOffset = 0.1504823526;//   RAD
@@ -84,7 +80,7 @@ public final class Constants {
 
         public static final double armGearBox = 201.6; //48 * (84/20)
 
-        public static final double restAim = 68.19859053201;
+        public static final double restAim = 67.4491244931; //deg
 
 
     }
@@ -104,9 +100,9 @@ public final class Constants {
 
         public static final ShuffleboardTab tab = Shuffleboard.getTab("Swerve Module");
 
-        public static double PDrive = tab.add("Drive P", 0.1).getEntry().getDouble(0.1);
+        public static final double PDrive = 0.2;
 
-        public static double PTurn = 0.31;
+        public static double PTurn = 0.6;
     }
 
     public static final class DriveConstants {
@@ -114,18 +110,17 @@ public final class Constants {
         public static final double rightLeftWheels = Units.inchesToMeters(23);
         public static final double frontBackWheels = Units.inchesToMeters(23);
 
+        public static final double FRabsoluteOffset = 2.676791064441204; //2.670655153691769; //-0.470931150019169;
+        public static final double FLabsoluteOffset = 0.972541853785515; //0.971007876098156; //-2.178248316049576;
+        public static final double BRabsoluteOffset = -2.572480581700802; //-2.574014559388161; //0.572173677384853;
+        public static final double BLabsoluteOffset = -2.506519541144371; //-2.503451585769653; //0.628930851817131;
 
-        public static final double FRabsoluteOffset = 2.670655153691769; //-0.470931150019169;
-        public static final double FLabsoluteOffset = 0.971007876098156; //-2.178248316049576;
-        public static final double BRabsoluteOffset = -2.574014559388161; //0.572173677384853;
-        public static final double BLabsoluteOffset = -2.503451585769653; //0.628930851817131;
 
-
-        public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
-                new Translation2d(frontBackWheels / 2, -rightLeftWheels / 2),//Front-Left
-                new Translation2d(frontBackWheels / 2, rightLeftWheels / 2),//Front-Right
-                new Translation2d(-frontBackWheels / 2, -rightLeftWheels / 2),//Back-Left
-                new Translation2d(-frontBackWheels / 2, rightLeftWheels / 2));//Back-Right
+    public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
+        new Translation2d(frontBackWheels / 2, rightLeftWheels / 2),//Front-Left
+        new Translation2d(frontBackWheels / 2, -rightLeftWheels / 2),//Front-Right
+        new Translation2d(-frontBackWheels / 2, rightLeftWheels / 2),//Back-Left
+        new Translation2d(-frontBackWheels / 2, -rightLeftWheels / 2));//Back-Right
     }
 
     public static final class DeviceID {
@@ -134,30 +129,29 @@ public final class Constants {
         public static final int intake = 15;
         public static final int leftArm = 17;
         public static final int rightArm = 18;
-        
     }
+
     public static final class Vision {
         //Launch speed: 40.36 ft/sec
         //7 3/4 from edge
-        public static final double shootRPM = 5000; //Do not change. Currently about 5000 TODO: Make it adjustable
+        //0.342314558557864
+        public static final double shootRPM = 6000; //Do not change. Currently about 5000 TODO: Make it adjustable
         public static final double ampRPM = 500;
         public static final double tagHeight = 5.5; //ft
         public static final double mountedHeight = 1.0; //ft
         public static final double mountedAngle = 45; //angle deg
         public static final double toShaftX = -0.1146; //ft
         public static final double toShaftY = 0.28125; //ft
-        public static final double launchSpeed = 50; //ft/sec
+        public static final double launchSpeed = 63.7024327322; //ft/sec
         public static final double gravity = -32.19;
 
     }
 
     public static final class Positions{
-        public static final double rest = 0.292;
-        public static final double subwoofer = 0.3517;
-        public static final double sideSubwoofer = 0.36334;
-        public static final double podium = 0.3877;
-        public static final double amp = 0.5321;
+        public static final double rest = 0.06; //0.254 //0,.292
+        public static final double subwoofer = 0.118025; //-0.038;
+        public static final double sideSubwoofer = 0.136; // -0.038;
+        public static final double podium = 0.15; //-0.038;
+        public static final double amp = 0.3063; //-0.038;
     }
-
-    
 }

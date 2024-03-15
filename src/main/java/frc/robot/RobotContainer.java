@@ -7,11 +7,8 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.path.PathPlannerTrajectory;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.Joystick;
 
@@ -25,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.Positions;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ShootArm.Shoot;
+import frc.robot.commands.ShootArm.Stuck;
 import frc.robot.commands.ShootArm.VisionAim;
 import frc.robot.commands.Intake.IntakeCommand;
 import frc.robot.commands.Intake.Launch;
@@ -73,7 +71,7 @@ public class RobotContainer {
     
     // Register Named Commands
     NamedCommands.registerCommand("Ground Pickup", new Pickup(intake));
-    NamedCommands.registerCommand("Amp Launch", new RevAngleLaunch(arm, shooter, intake, Positions.amp, true));
+    //NamedCommands.registerCommand("Amp Launch", new RevAngleLaunch(arm, shooter, intake, Positions.amp, true));
     NamedCommands.registerCommand("Rest Position", new Rest(arm));
     NamedCommands.registerCommand("Subwoofer Launch", new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
     NamedCommands.registerCommand("Podium Launch", new RevAngleLaunch(arm, shooter, intake, Positions.podium));
@@ -131,27 +129,31 @@ public class RobotContainer {
 
     //Testing controls:
     controller.leftBumper().whileTrue(Commands.run(() -> arm.setSpeed(-controller.getRightY()/10.0)));
-    controller.rightBumper().whileTrue(new Shoot(shooter));
+    //controller.rightBumper().whileTrue(new Shoot(shooter,intake));
+    controller.rightBumper().whileTrue(Commands.run(() -> shooter.setRPM(3000)));
 
     //Comp controls:
-    controller.leftTrigger(0.2).onTrue(new Rest(arm));
-    controller.rightTrigger(0.2).whileTrue(new IntakeCommand(intake, arm));
+    controller.leftTrigger(0.2).onTrue(new Pickup(intake));
+    controller.rightTrigger(0.2).whileTrue(new Launch(intake));
+    controller.rightTrigger(0.2).onFalse(new Rest(arm));
 
-    controller.povDown().whileTrue(new Outtake(intake));
-    controller.povUp().whileTrue(new IntakeCommand(intake, arm));
+    controller.povDown().onTrue(new Rest(arm));
+    //controller.povUp().whileTrue(new IntakeCommand(intake, arm));
 
     controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
     controller.x().onTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
     controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.podium));
     controller.b().onTrue(new Amp(arm, shooter));
+    //controller.start().onTrue(new RevAndAngle(arm, shooter, Arm.aimToArm(LimelightTable.aimShot())));
 
     controller.povRight().onTrue(new Pickup(intake));
     //controller.povUp().whileTrue(new Outtake(intake));
-    controller.back().whileTrue(new Launch(intake));
-    controller.back().onFalse(new Rest(arm));
-    controller.povLeft().whileTrue(new VisionAim(swerveSubsystem, arm, shooter));
+    //controller.back().whileTrue(new Launch(intake));
+    //
+    controller.back().onTrue(new Stuck(arm, shooter));
+    controller.start().onTrue(new VisionAim(swerveSubsystem, arm, shooter));
+    //controller.povLeft().onTrue(new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
 
-    controller.start().whileFalse(new LEDCommand(arm,shooter,intake)
 
     buttonBoard.button(1).whileTrue(new IntakeCommand(intake, arm));
     buttonBoard.button(2).whileTrue(new Outtake(intake));
@@ -180,6 +182,7 @@ public class RobotContainer {
       return new PathPlannerAuto("3 Ring Center");
     }
 
+
     else if (autoChoice.getDouble(0.0) == 2.0){
       swerveSubsystem.field.setRobotPose(new Pose2d(0.74, 6.69, swerveSubsystem.getRotation2d()));
       return new PathPlannerAuto("2 Ring Amp");
@@ -195,7 +198,7 @@ public class RobotContainer {
       return new PathPlannerAuto("Emergency Auto");
       
     }
-    swerveSubsystem.field.setRobotPose(new Pose2d(0.52, 2.23, swerveSubsystem.getRotation2d()));
+    swerveSubsystem.field.setRobotPose(new Pose2d(1.36, 5.54, swerveSubsystem.getRotation2d()));
     return new PathPlannerAuto("Just Drive");
 
   }

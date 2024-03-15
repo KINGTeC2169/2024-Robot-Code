@@ -1,5 +1,6 @@
 package frc.robot.commands.ShootArm;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.NoteManager;
@@ -25,13 +26,16 @@ public class RevAndAngle extends Command {
 
     @Override
     public void execute(){
-        shooter.shootRPM();
-        arm.setShootPos(desiredAngle);
+        if(NoteManager.hasNote()){
+            shooter.setRPM(6000);
+            arm.setShootPos(desiredAngle);
+        }
     }
 
     @Override
     public void end(boolean interupt){
         shooter.setRPM(0);
+        Timer.delay(0.01);
     }
     
     @Override

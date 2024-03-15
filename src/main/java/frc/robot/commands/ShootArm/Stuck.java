@@ -1,16 +1,16 @@
 package frc.robot.commands.ShootArm;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.NoteManager;
 import frc.robot.subsystems.Shooter;
 
-public class Amp extends Command {
+public class Stuck extends Command {
 
     private Arm arm;
     private Shooter shooter;
 
-    public Amp(Arm arm, Shooter shooter){
+    public Stuck(Arm arm, Shooter shooter){
         this.arm = arm;
         addRequirements(arm);
         this.shooter = shooter;
@@ -23,19 +23,19 @@ public class Amp extends Command {
 
     @Override
     public void execute(){
-        if(NoteManager.hasNote()){
-            shooter.ampRPM();
-            arm.setAmp();
-        }
+        arm.setAmp();
     }
 
     @Override
     public void end(boolean interupt){
-        shooter.setRPM(0);
+        shooter.ampRPM();
+        Timer.delay(0.3);
+        shooter.stopShooter();
+        arm.setRest();
     }
     
     @Override
 	public boolean isFinished() {
-        return !NoteManager.hasNote();
+        return false;
 	}
 }
