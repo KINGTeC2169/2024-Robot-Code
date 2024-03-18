@@ -52,13 +52,13 @@ public final class Constants {
 
         //Shooter CAN ids
         public static final int shooterTop = 17;
-        public static final int shooterBot = 18;
+        public static final int shooterBot = 15;
 
         //Intake CAN id
         public static final int intake = 19; 
 
         //Arm CAN ids
-        public static final int leftArm = 15;
+        public static final int leftArm = 18;
         public static final int rightArm = 16;
 
         public static final Port arduino = SerialPort.Port.kUSB1; //Arduino USB port
