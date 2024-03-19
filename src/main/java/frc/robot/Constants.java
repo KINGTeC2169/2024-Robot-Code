@@ -72,7 +72,7 @@ public final class Constants {
     }
 
     public static final class ArmConstants {
-        public static final double armEncoderOffset =  0.342314558557864 + 0.5;//0.58822 + 0.292;//0.2294932807 - 0.25 + 0.58822 - 0.292;
+        public static final double armEncoderOffset =  0.647920739908018; //0.377614558557864 + 0.5;//0.58822 + 0.292;//0.2294932807 - 0.25 + 0.58822 - 0.292;
         //public static final double armEncoderOffset =  0.2294932807 - 0.25 + (1-0.58822) - 0.292;
         public static final double shooterOffset = 0.4103968962; // (90-66.486)*0.0174533 RAD
         public static final double armOffset = 0.1504823526;//   RAD
@@ -148,10 +148,10 @@ public final class Constants {
     }
 
     public static final class Positions{
-        public static final double rest = 0.254;//0.292;
-        public static final double subwoofer = 0.3517 -0.038;
-        public static final double sideSubwoofer = 0.36334 -0.038;
-        public static final double podium = 0.3877 -0.038;
-        public static final double amp = 0.5421 -0.038;
+        public static final double rest = 0.06; //0.254 //0,.292
+        public static final double subwoofer = 0.118025; //-0.038;
+        public static final double sideSubwoofer = 0.136; // -0.038;
+        public static final double podium = 0.15; //-0.038;
+        public static final double amp = 0.3063; //-0.038;
     }
 }

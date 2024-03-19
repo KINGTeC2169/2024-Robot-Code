@@ -3,6 +3,9 @@ package frc.robot.subsystems;
 import java.util.Map;
 
 import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.controls.MotionMagicExpoVoltage;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
@@ -16,9 +19,15 @@ import frc.robot.Constants;
 import frc.robot.Constants.Vision;
 
 public class Shooter extends SubsystemBase {
+    private final VelocityVoltage m_velocity = new VelocityVoltage(0);
     
     private TalonFX shooterTop;
     private TalonFX shooterBot;
+
+    private double topRotation = 24/18; //24t on flywheel/18t on 
+    private double botRotation = 24/24; //24t on flywheel/24t on motor shaft
+
+    private double setpointRPM = 0;
 
     private ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
 
@@ -52,6 +61,7 @@ public class Shooter extends SubsystemBase {
     /**Sets the power as a double between -1 and 1*/
     
     public void setPower(double power){
+
         shooterTop.set(-power);
         shooterBot.set(-power);
         SmartDashboard.putNumber("Request ShotSpeed", power);
@@ -75,10 +85,19 @@ public class Shooter extends SubsystemBase {
                             (-(60 * shooterBot.getRotorVelocity().getValue()))};
     }
 
-    public void setRPM(double rpm){
+    /**Gets the shooter rpm from the top and bottom motors as a double array*/
+    public double[] getShooterRPM(){
+        return new double[]{(-(60 * shooterTop.getRotorVelocity().getValue()) * topRotation),
+                            (-(60 * shooterBot.getRotorVelocity().getValue()) * botRotation)};
+    }
 
-        double power = rpm/6350;
-        setPower(power);
+    public void setRPM(double rpm){
+        m_velocity.Slot = 0;
+        setpointRPM = rpm;
+        double topRPS = topRotation * rpm/60 * 2.14285714285714;
+        double botRPS = botRotation * rpm/60 * 2.14285714285714;
+        shooterTop.setControl(m_velocity.withVelocity(topRPS));
+        shooterBot.setControl(m_velocity.withVelocity(botRPS));
     }
 
     public void shootRPM(){
@@ -92,9 +111,8 @@ public class Shooter extends SubsystemBase {
         setRPM(-1000);
     }
 
-
     public boolean shooterReady(){
-        return getRPM()[0] > Vision.shootRPM - 700 && getRPM()[1] > Vision.shootRPM - 700;
+        return Math.abs(getShooterRPM()[0] - setpointRPM) < 25 &&  Math.abs(getShooterRPM()[1] - setpointRPM) < 25;
     }
 
     public void stopShooter() {

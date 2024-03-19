@@ -5,8 +5,9 @@ import frc.robot.Constants;
 
 public class LEDs {   
     private static SerialPort arduino = new SerialPort(9600, Constants.Ports.arduino);
+
 //rainbow effect:
-    public static void intialize(){
+    public static void rainbow(){ //was initialize
         arduino.writeString("A");
     }
 //green:
@@ -21,6 +22,7 @@ public class LEDs {
     public static void blue(){
         arduino.writeString("D");
     }
+    //orange:
     public static void orange(){
         arduino.writeString("E");
     }
