@@ -25,7 +25,7 @@ public class Rest extends Command {
 
     @Override
     public void end(boolean interupt){
-        arm.setSpeed(0);
+        arm.setVoltage(0);
     }
     
     @Override

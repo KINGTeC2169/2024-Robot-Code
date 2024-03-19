@@ -33,7 +33,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    LEDs.rainbow();
+    //LEDs.rainbow();
 
     
     /* 
@@ -62,7 +62,10 @@ public class Robot extends TimedRobot {
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+
+    
+  }
 
   @Override
   public void disabledPeriodic() {}
@@ -100,7 +103,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     if(NoteManager.hasNote()){
-      LEDs.orange();
+      //LEDs.orange();
     }
 
   }
