@@ -55,8 +55,8 @@ public class RobotContainer {
   private final Arm arm = new Arm();
   private final Intake intake = new Intake();
   private final Shooter shooter = new Shooter();
-  private final Music music = new Music(arm,shooter);
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+  private final Music music = new Music(arm,shooter,intake,swerveSubsystem);
 
   //Driver Station controllers
   private final Joystick leftStick = new Joystick(Constants.Ports.leftStick);

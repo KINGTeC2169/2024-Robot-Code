@@ -76,6 +76,10 @@ public class SwerveModule {
 
     }
 
+    public void playNote(double hz){
+        driveMotor.set(ControlMode.MusicTone, hz);
+    }
+
     /**
      * Gets the drive position from the drive encoder
      * 

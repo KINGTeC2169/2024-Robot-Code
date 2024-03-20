@@ -120,7 +120,7 @@ public class Arm extends SubsystemBase {
 
     }
 
-    public void music(double hz){
+    public void playNote(double hz){
         leftArm.setControl(new MusicTone(hz));
         //rightArm.setControl(new MusicTone(hz));
     }

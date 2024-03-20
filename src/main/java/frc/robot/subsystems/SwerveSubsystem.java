@@ -22,6 +22,7 @@ import frc.robot.Constants.ModuleConstants;
 import frc.robot.Constants.Ports;
 import java.util.Map;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
@@ -284,4 +285,10 @@ public class SwerveSubsystem extends SubsystemBase {
         backRight.activeStop(-1);
     }
 
+    public void playNote(double hz){
+        frontLeft.playNote(hz);
+        frontRight.playNote(hz);
+        backLeft.playNote(hz);
+        backRight.playNote(hz);
+    }
 }

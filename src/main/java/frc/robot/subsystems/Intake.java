@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import java.util.Map;
 
+import com.ctre.phoenix6.controls.MusicTone;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
@@ -67,5 +68,9 @@ public class Intake extends SubsystemBase{
     /**Returns true of the intake is on. */
     public boolean isOn(){
         return Math.abs(getSpeed()) > 0;
+    }
+
+    public void playNote(double hz){
+        intakeMotor.setControl(new MusicTone(hz));
     }
 }
