@@ -47,22 +47,22 @@ public final class Constants {
         public static final int backRightAbsolute = 13;
         
         //DIO ports
-        public static final int beamBreak = 5;
+        public static final int beamBreak = 6;
         public static final int armEncoder = 8;
 
         //Shooter CAN ids
         public static final int shooterTop = 17;
-        public static final int shooterBot = 15;
+        public static final int shooterBot = 18;
 
         //Intake CAN id
         public static final int intake = 19; 
 
         //Arm CAN ids
-        public static final int leftArm = 30; //18
-        public static final int rightArm = 31; //16
+        public static final int leftArm = 15;
+        public static final int rightArm = 16;
 
-        public static final int musicMotor = 18;
-        public static final int musicMotor2 = 16;
+        public static final int musicMotor = 30;
+        public static final int musicMotor2 = 31;
 
         public static final Port arduino = SerialPort.Port.kUSB1; //Arduino USB port
         
@@ -75,7 +75,8 @@ public final class Constants {
     }
 
     public static final class ArmConstants {
-        public static final double armEncoderOffset =  0.647920739908018; //0.377614558557864 + 0.5;//0.58822 + 0.292;//0.2294932807 - 0.25 + 0.58822 - 0.292;
+        public static final double armEncoderOffset = 0.857992571449814-0.5;
+        //public static final double armEncoderOffset =  0.647920739908018; //0.377614558557864 + 0.5;//0.58822 + 0.292;//0.2294932807 - 0.25 + 0.58822 - 0.292;
         //public static final double armEncoderOffset =  0.2294932807 - 0.25 + (1-0.58822) - 0.292;
         public static final double shooterOffset = 0.4103968962; // (90-66.486)*0.0174533 RAD
         public static final double armOffset = 0.1504823526;//   RAD
@@ -127,11 +128,11 @@ public final class Constants {
     }
 
     public static final class DeviceID {
-        public static final int shooterTop = 16;
-        public static final int shooterBot = 14;
-        public static final int intake = 15;
-        public static final int leftArm = 17;
-        public static final int rightArm = 18;
+        public static final int shooterTop = 17;
+        public static final int shooterBot = 18;
+        public static final int intake = 19;
+        public static final int leftArm = 15;
+        public static final int rightArm = 16;
     }
 
     public static final class Vision {
@@ -151,10 +152,10 @@ public final class Constants {
     }
 
     public static final class Positions{
-        public static final double rest = 0.06; //0.254 //0,.292
-        public static final double subwoofer = 0.118025; //-0.038;
-        public static final double sideSubwoofer = 0.136; // -0.038;
-        public static final double podium = 0.15; //-0.038;
-        public static final double amp = 0.3063; //-0.038;
+        public static final double rest = 0.262;//0.06; //0.254 //0,.292
+        public static final double subwoofer = 0.3517-0.03;//0.118025; //-0.038;
+        public static final double sideSubwoofer = 0.36334-0.03;//0.136; // -0.038;
+        public static final double podium = 0.3877-0.03;//0.15; //-0.038;
+        public static final double amp = 0.5321-0.03;//0.3063; //-0.038;
     }
 }

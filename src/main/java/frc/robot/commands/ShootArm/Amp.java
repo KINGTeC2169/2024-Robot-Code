@@ -1,6 +1,7 @@
 package frc.robot.commands.ShootArm;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.Positions;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.NoteManager;
 import frc.robot.subsystems.Shooter;
@@ -25,7 +26,7 @@ public class Amp extends Command {
     public void execute(){
         if(NoteManager.hasNote()){
             shooter.ampRPM();
-            arm.setAmp();
+            arm.setShootPos(Positions.amp);
         }
     }
 

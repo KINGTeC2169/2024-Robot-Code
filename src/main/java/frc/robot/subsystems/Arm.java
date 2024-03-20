@@ -45,7 +45,7 @@ public class Arm extends SubsystemBase {
     private double setPosition;
     private double talonZero;
     private final double lowerLimit = Positions.rest; 
-    private final double upperLimit = 0.435;
+    private final double upperLimit = Positions.amp+0.05;
 
     private GenericEntry kS = tab.add("kS", 0.11).withPosition(1,0).getEntry();//Done
     private GenericEntry kG = tab.add("kG", 0).withPosition(1,1).getEntry();
@@ -63,8 +63,9 @@ public class Arm extends SubsystemBase {
         updatePID();
         
 
-        //armPID = new PIDController(26, 0.05, 5);
+        armPID = new PIDController(55,0.7,1);
         //armForward = new ArmFeedforward(0.15, 0.22, 3.61, 0.01);
+        armForward = new ArmFeedforward(0.15, 0.22, 3.61, 0.01);
     
         ShuffleboardLayout leftMotor = tab.getLayout("Left Motor", BuiltInLayouts.kList).withPosition(2, 0).withSize(2, 2).withProperties(Map.of("Number of columns", 1, "Number of rows", 2));
         leftMotor.addDouble("Voltage", () -> getVoltage()[0]).withWidget(BuiltInWidgets.kVoltageView).withPosition(0, 1).withProperties(Map.of("Max", 12));
@@ -91,6 +92,11 @@ public class Arm extends SubsystemBase {
     }
 
 
+    public void updatePIDF(){
+        //armPID = new PIDController(kP.getDouble(0), kI.getDouble(0), kD.getDouble(0));
+        //armForward = new ArmFeedforward(kS.getDouble(0.18), kG.getDouble(0.41), kV.getDouble(3.88), kA.getDouble(0.03));
+        System.out.println("armPID reset");
+    }
     //Update PID and feedforward with values inputted on shuffleboard
     public void updatePID(){
         // in init function
@@ -99,10 +105,10 @@ public class Arm extends SubsystemBase {
         System.out.println(kP.getDouble(0));
         // set slot 0 gains
         var slot0Configs = talonFXConfigs.Slot0;
-        slot0Configs.kS = kS.getDouble(0.11); //0.25; // Add 0.25 V output to overcome static friction
-        slot0Configs.kG = kG.getDouble(0);
-        slot0Configs.kV = kV.getDouble(0); //0.12; // A velocity target of 1 rps results in 0.12 V output
-        slot0Configs.kA = kA.getDouble(0); //0.01; // An acceleration of 1 rps/s requires 0.01 V output
+        slot0Configs.kS = kS.getDouble(0.18); //0.25; // Add 0.25 V output to overcome static friction
+        slot0Configs.kG = kG.getDouble(0.41);
+        slot0Configs.kV = kV.getDouble(3.88); //0.12; // A velocity target of 1 rps results in 0.12 V output
+        slot0Configs.kA = kA.getDouble(0.03); //0.01; // An acceleration of 1 rps/s requires 0.01 V output
         slot0Configs.kP = kP.getDouble(0); // An error of 1 rps results in 0.11 V output
         slot0Configs.kI = kI.getDouble(0); // no output for integrated error
         slot0Configs.kD = kD.getDouble(0); // no output for error derivative
@@ -110,12 +116,13 @@ public class Arm extends SubsystemBase {
         leftArm.getConfigurator().apply(talonFXConfigs);
         rightArm.getConfigurator().apply(talonFXConfigs);
 
-        rightArm.setControl(new Follower(leftArm.getDeviceID(), false));//true means inverse
+        rightArm.setControl(new Follower(leftArm.getDeviceID(), true));//true means inverse
 
     }
 
-    public void music(){
-        leftArm.setControl(new MusicTone(300));
+    public void music(double hz){
+        leftArm.setControl(new MusicTone(hz));
+        //rightArm.setControl(new MusicTone(hz));
     }
     
     public void setVoltage(double volts){
@@ -143,7 +150,7 @@ public class Arm extends SubsystemBase {
 
     public void setRest(){
         setPosition = Positions.rest;
-        this.setVoltage(-0.5);
+        this.setVoltage(-2.5);
     }
 
     public void posOne(){
@@ -159,11 +166,16 @@ public class Arm extends SubsystemBase {
         leftArm.setPosition(Positions.amp);
     }
 
+    /*public void setShootPos(double position){
+        leftArm.setControl(m_position.withPosition((0-talonZero)*216));
+    }*/
+
     public void setShootPos(double position) {
         position = MathUtil.clamp(position, lowerLimit, upperLimit);
         setPosition = position;
+        //System.out.println(armForward.calculate(position - 0.25, 0));
+        //System.out.println(armPID.calculate(getPosition(), position) + " PID");
         leftArm.setVoltage(armPID.calculate(getPosition(), position) + armForward.calculate(position - 0.25, 0));
-        rightArm.setVoltage(armPID.calculate(getPosition(),  position) + armForward.calculate(position - 0.25, 0));
     }
 
     //AIM = DEGREES, ARM = ROTATIONS
@@ -181,7 +193,7 @@ public class Arm extends SubsystemBase {
     }
 
     public boolean isReady(){
-        if (Math.abs(setPosition-getPosition()) < 0.005 && !restReady()){
+        if (Math.abs(setPosition-getPosition()) < 0.003 && !restReady()){
             LEDs.green();
             return true;
             

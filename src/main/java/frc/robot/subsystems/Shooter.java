@@ -5,6 +5,7 @@ import java.util.Map;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.controls.MotionMagicExpoVoltage;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.MusicTone;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 
@@ -24,8 +25,8 @@ public class Shooter extends SubsystemBase {
     private TalonFX shooterTop;
     private TalonFX shooterBot;
 
-    private double topRotation = 24/18; //24t on flywheel/18t on 
-    private double botRotation = 24/24; //24t on flywheel/24t on motor shaft
+    private double topRotation = 24/24; //24t on flywheel/24t on 
+    private double botRotation = 24/18; //24t on flywheel/18t on motor shaft
 
     private double setpointRPM = 0;
 
@@ -122,5 +123,10 @@ public class Shooter extends SubsystemBase {
 
     public boolean on(){
         return getCurrent()[0] > 0 || getCurrent()[1] > 0;
+    }
+
+    public void playNote(double hz){
+        shooterTop.setControl(new MusicTone(hz));
+        shooterBot.setControl(new MusicTone(hz));
     }
 }

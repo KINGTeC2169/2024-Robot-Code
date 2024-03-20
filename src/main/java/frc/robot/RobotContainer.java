@@ -53,9 +53,9 @@ public class RobotContainer {
   private final LimelightTable limelight = new LimelightTable();
   private final Pigeon pigeon = new Pigeon();
   private final Arm arm = new Arm();
-  private final Music music = new Music();
   private final Intake intake = new Intake();
   private final Shooter shooter = new Shooter();
+  private final Music music = new Music(arm,shooter);
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
   //Driver Station controllers
@@ -143,20 +143,21 @@ public class RobotContainer {
     controller.povDown().onTrue(new Rest(arm));
     //controller.povUp().whileTrue(new IntakeCommand(intake, arm));
 
-    //controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
-    //controller.x().onTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
+    controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
+    controller.x().onTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
     //controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.podium));
-    //controller.b().onTrue(new Amp(arm, shooter));
-    //controller.start().onTrue(new RevAndAngle(arm, shooter, Arm.aimToArm(LimelightTable.aimShot())));
+    controller.y().whileTrue(Commands.run(() -> arm.updatePIDF()));
+    controller.b().onTrue(new Amp(arm, shooter));
+    controller.start().onTrue(new RevAndAngle(arm, shooter, Arm.aimToArm(LimelightTable.aimShot())));
 
-    controller.a().whileTrue(Commands.run(() -> arm.posOne()));
-    controller.b().whileTrue(Commands.run(() -> arm.posZero()));
-    controller.x().whileTrue(Commands.run(() -> arm.updatePID()));
-    controller.y().whileTrue(Commands.run(() -> music.play()));
+    //controller.a().whileTrue(Commands.run(() -> arm.posOne()));
+    //controller.b().whileTrue(Commands.run(() -> arm.posZero()));
+    //controller.x().whileTrue(Commands.run(() -> arm.updatePID()));
+    //controller.y().whileTrue(Commands.run(() -> music.play()));
     controller.povRight().onTrue(new Pickup(intake));
     //controller.povUp().whileTrue(new Outtake(intake));
     //controller.back().whileTrue(new Launch(intake));
-    //
+    controller.povUp().whileTrue(Commands.run(() -> music.play()));
     controller.back().onTrue(new Stuck(arm, shooter));
     controller.start().onTrue(new VisionAim(swerveSubsystem, arm, shooter));
     //controller.povLeft().onTrue(new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
