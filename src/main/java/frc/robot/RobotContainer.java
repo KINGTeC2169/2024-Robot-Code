@@ -133,7 +133,8 @@ public class RobotContainer {
     //controller.leftBumper().whileTrue(Commands.run(() -> arm.setSpeed(-controller.getRightY()/10.0)));
     controller.leftBumper().whileTrue(Commands.run(() -> arm.setVoltage(-controller.getRightY())));
     //controller.rightBumper().whileTrue(new Shoot(shooter,intake));
-    controller.rightBumper().whileTrue(Commands.run(() -> shooter.setRPM(3000)));
+    controller.rightBumper().onTrue(Commands.run(() -> shooter.setRPM(3000)));
+    controller.rightBumper().onFalse(Commands.run(() -> shooter.setRPM(0)));
 
     //Comp controls:
     controller.leftTrigger(0.2).onTrue(new Pickup(intake));
@@ -145,8 +146,8 @@ public class RobotContainer {
 
     controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
     controller.x().onTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
-    //controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.podium));
-    controller.y().whileTrue(Commands.run(() -> arm.updatePIDF()));
+    controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.podium));
+    //controller.y().whileTrue(Commands.run(() -> arm.updatePIDF()));
     controller.b().onTrue(new Amp(arm, shooter));
     controller.start().onTrue(new RevAndAngle(arm, shooter, Arm.aimToArm(LimelightTable.aimShot())));
 

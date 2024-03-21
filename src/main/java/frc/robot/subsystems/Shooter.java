@@ -25,8 +25,8 @@ public class Shooter extends SubsystemBase {
     private TalonFX shooterTop;
     private TalonFX shooterBot;
 
-    private double topRotation = 24/24; //24t on flywheel/24t on 
-    private double botRotation = 24/18; //24t on flywheel/18t on motor shaft
+    private double topRotation = 1; //24t on flywheel/24t on 
+    private double botRotation = 1.333; //24t on flywheel/18t on motor shaft
 
     private double setpointRPM = 0;
 
@@ -44,6 +44,8 @@ public class Shooter extends SubsystemBase {
 
         shooterTop.getConfigurator().apply(configs,0.050);
         shooterBot.getConfigurator().apply(configs,0.050);
+        shooterTop.setInverted(true);
+        shooterBot.setInverted(true);
 
         ShuffleboardLayout topMotor = tab.getLayout("Top Motor", BuiltInLayouts.kList).withPosition(0, 0).withSize(2, 4);
         topMotor.addDouble("Top Motor RPM", () -> getRPM()[0]).withWidget(BuiltInWidgets.kDial).withProperties(Map.of("Max", 4000));
@@ -97,6 +99,8 @@ public class Shooter extends SubsystemBase {
         setpointRPM = rpm;
         double topRPS = topRotation * rpm/60 * 2.14285714285714;
         double botRPS = botRotation * rpm/60 * 2.14285714285714;
+        System.out.println(topRPS);
+        System.out.println(botRPS + "b");
         shooterTop.setControl(m_velocity.withVelocity(topRPS));
         shooterBot.setControl(m_velocity.withVelocity(botRPS));
     }

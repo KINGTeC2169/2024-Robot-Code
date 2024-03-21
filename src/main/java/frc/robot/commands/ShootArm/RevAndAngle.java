@@ -27,7 +27,7 @@ public class RevAndAngle extends Command {
     @Override
     public void execute(){
         if(NoteManager.hasNote()){
-            //shooter.setRPM(6000);
+            shooter.setRPM(4500);
             arm.setShootPos(desiredAngle);
         }
     }

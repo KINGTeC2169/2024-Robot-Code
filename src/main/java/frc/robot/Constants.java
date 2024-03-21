@@ -104,9 +104,9 @@ public final class Constants {
 
         public static final ShuffleboardTab tab = Shuffleboard.getTab("Swerve Module");
 
-        public static final double PDrive = 0.2;
+        public static final double PDrive = 0.1;
 
-        public static double PTurn = 0.6;
+        public static double PTurn = 0.5;
     }
 
     public static final class DriveConstants {
@@ -139,8 +139,8 @@ public final class Constants {
         //Launch speed: 40.36 ft/sec
         //7 3/4 from edge
         //0.342314558557864
-        public static final double shootRPM = 6000; //Do not change. Currently about 5000 TODO: Make it adjustable
-        public static final double ampRPM = 500;
+        public static final double shootRPM = 4500; //Do not change. Currently about 5000 TODO: Make it adjustable
+        public static final double ampRPM = 400;
         public static final double tagHeight = 5.5; //ft
         public static final double mountedHeight = 1.0; //ft
         public static final double mountedAngle = 45; //angle deg
@@ -150,12 +150,12 @@ public final class Constants {
         public static final double gravity = -32.19;
 
     }
-
+ 
     public static final class Positions{
-        public static final double rest = 0.262;//0.06; //0.254 //0,.292
+        public static final double rest = 0.261;//0.06; //0.254 //0,.292
         public static final double subwoofer = 0.3517-0.03;//0.118025; //-0.038;
-        public static final double sideSubwoofer = 0.36334-0.03;//0.136; // -0.038;
-        public static final double podium = 0.3877-0.03;//0.15; //-0.038;
+        public static final double sideSubwoofer = 0.261;//0.36334-0.03;//0.136; // -0.038;
+        public static final double podium = 0.39;//0.3877-0.03;//0.15; //-0.038;
         public static final double amp = 0.5321-0.03;//0.3063; //-0.038;
     }
 }

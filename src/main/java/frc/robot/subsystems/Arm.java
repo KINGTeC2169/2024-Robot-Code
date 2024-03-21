@@ -9,6 +9,7 @@ import com.ctre.phoenix6.controls.MusicTone;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ArmFeedforward;
@@ -47,7 +48,9 @@ public class Arm extends SubsystemBase {
     private final double lowerLimit = Positions.rest; 
     private final double upperLimit = Positions.amp+0.05;
 
-    private GenericEntry kS = tab.add("kS", 0.11).withPosition(1,0).getEntry();//Done
+    private GenericEntry adShoot = tab.add("adjust Shoot", 0).withPosition(1,0).getEntry();
+
+    //private GenericEntry kS = tab.add("kS", 0.11).withPosition(1,0).getEntry();//Done
     private GenericEntry kG = tab.add("kG", 0).withPosition(1,1).getEntry();
     private GenericEntry kV = tab.add("kV", 0).withPosition(1,2).getEntry();
     private GenericEntry kA = tab.add("kA", 0).withPosition(1,3).getEntry();
@@ -105,7 +108,7 @@ public class Arm extends SubsystemBase {
         System.out.println(kP.getDouble(0));
         // set slot 0 gains
         var slot0Configs = talonFXConfigs.Slot0;
-        slot0Configs.kS = kS.getDouble(0.18); //0.25; // Add 0.25 V output to overcome static friction
+        //slot0Configs.kS = kS.getDouble(0.18); //0.25; // Add 0.25 V output to overcome static friction
         slot0Configs.kG = kG.getDouble(0.41);
         slot0Configs.kV = kV.getDouble(3.88); //0.12; // A velocity target of 1 rps results in 0.12 V output
         slot0Configs.kA = kA.getDouble(0.03); //0.01; // An acceleration of 1 rps/s requires 0.01 V output
@@ -115,6 +118,8 @@ public class Arm extends SubsystemBase {
 
         leftArm.getConfigurator().apply(talonFXConfigs);
         rightArm.getConfigurator().apply(talonFXConfigs);
+        leftArm.setNeutralMode(NeutralModeValue.Brake);
+        rightArm.setNeutralMode(NeutralModeValue.Brake);
 
         rightArm.setControl(new Follower(leftArm.getDeviceID(), true));//true means inverse
 
@@ -163,7 +168,7 @@ public class Arm extends SubsystemBase {
 
     public void setAmp(){
         setPosition = Positions.amp;
-        leftArm.setPosition(Positions.amp);
+        this.setShootPos(Positions.amp);
     }
 
     /*public void setShootPos(double position){
@@ -173,6 +178,8 @@ public class Arm extends SubsystemBase {
     public void setShootPos(double position) {
         position = MathUtil.clamp(position, lowerLimit, upperLimit);
         setPosition = position;
+        position = adShoot.getDouble(0.3);
+        setPosition = adShoot.getDouble(0.3);
         //System.out.println(armForward.calculate(position - 0.25, 0));
         //System.out.println(armPID.calculate(getPosition(), position) + " PID");
         leftArm.setVoltage(armPID.calculate(getPosition(), position) + armForward.calculate(position - 0.25, 0));

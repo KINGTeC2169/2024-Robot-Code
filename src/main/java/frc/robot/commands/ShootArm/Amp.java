@@ -1,5 +1,6 @@
 package frc.robot.commands.ShootArm;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.Positions;
 import frc.robot.subsystems.Arm;
@@ -32,6 +33,7 @@ public class Amp extends Command {
 
     @Override
     public void end(boolean interupt){
+        Timer.delay(0.2);
         shooter.setRPM(0);
     }
     
