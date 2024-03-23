@@ -21,7 +21,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import frc.robot.Constants.Positions;
 import frc.robot.commands.DriveCommand;
-import frc.robot.commands.ShootArm.Shoot;
 import frc.robot.commands.ShootArm.Stuck;
 import frc.robot.commands.ShootArm.VisionAim;
 import frc.robot.commands.Intake.IntakeCommand;
@@ -73,7 +72,7 @@ public class RobotContainer {
     
     // Register Named Commands
     NamedCommands.registerCommand("Ground Pickup", new Pickup(intake));
-    //NamedCommands.registerCommand("Amp Launch", new RevAngleLaunch(arm, shooter, intake, Positions.amp, true));
+    NamedCommands.registerCommand("Amp Launch", new RevAngleLaunch(arm, shooter, intake, Positions.amp));
     NamedCommands.registerCommand("Rest Position", new Rest(arm));
     NamedCommands.registerCommand("Subwoofer Launch", new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
     NamedCommands.registerCommand("Podium Launch", new RevAngleLaunch(arm, shooter, intake, Positions.podium));
@@ -131,10 +130,12 @@ public class RobotContainer {
 
     //Testing controls:
     //controller.leftBumper().whileTrue(Commands.run(() -> arm.setSpeed(-controller.getRightY()/10.0)));
-    controller.leftBumper().whileTrue(Commands.run(() -> arm.setVoltage(-controller.getRightY())));
+    controller.leftBumper().whileTrue(Commands.run(() -> arm.setVoltage(-controller.getRightY()*2)));
     //controller.rightBumper().whileTrue(new Shoot(shooter,intake));
     controller.rightBumper().onTrue(Commands.run(() -> shooter.setRPM(3000)));
     controller.rightBumper().onFalse(Commands.run(() -> shooter.setRPM(0)));
+
+    buttonBoard.button(10).whileTrue((Commands.run(() -> music.play())));
 
     //Comp controls:
     controller.leftTrigger(0.2).onTrue(new Pickup(intake));
@@ -158,7 +159,7 @@ public class RobotContainer {
     controller.povRight().onTrue(new Pickup(intake));
     //controller.povUp().whileTrue(new Outtake(intake));
     //controller.back().whileTrue(new Launch(intake));
-    controller.povUp().whileTrue(Commands.run(() -> music.play()));
+    controller.povUp().onTrue(new RevAndAngle(arm, shooter, 0.34));
     controller.back().onTrue(new Stuck(arm, shooter));
     controller.start().onTrue(new VisionAim(swerveSubsystem, arm, shooter));
     //controller.povLeft().onTrue(new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
@@ -173,9 +174,13 @@ public class RobotContainer {
     buttonBoard.button(7).whileTrue(new Amp(arm, shooter));
     buttonBoard.button(8).whileTrue(new RevAndAngle(arm, shooter, Positions.podium));
 
-    buttonBoard.button(10).onTrue(Commands.run(() -> arm.activeStop()));
+    //buttonBoard.button(10).onTrue(Commands.run(() -> arm.activeStop()));
     buttonBoard.button(11).whileTrue(new Angle(arm, 0.49));
     
+  }
+
+  public Command getTestCommand(){
+    return null; //Commands.run(music::play);
   }
 
   /**

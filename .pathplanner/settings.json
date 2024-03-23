@@ -4,8 +4,9 @@
   "holonomicMode": true,
   "pathFolders": [
     "2 Ring Amp",
+    "2 Ring Source",
     "3 Ring Center",
-    "2 Ring Source"
+    "test auto"
   ],
   "autoFolders": [],
   "defaultMaxVel": 3.0,

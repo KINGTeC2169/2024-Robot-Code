@@ -5,7 +5,7 @@
       "x": 0.72,
       "y": 6.71
     },
-    "rotation": -119.74000000000001
+    "rotation": 60.25999999999999
   },
   "command": {
     "type": "sequential",
@@ -20,7 +20,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Sidesub Launch"
+            "name": "Subwoofer Launch"
           }
         },
         {
@@ -30,9 +30,41 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Emergency Path"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Emergency Path"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Ground Pickup"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Subwoofer Launch"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Rest Position"
+                }
+              }
+            ]
           }
         },
         {
@@ -40,9 +72,34 @@
           "data": {
             "commands": [
               {
+                "type": "path",
+                "data": {
+                  "pathName": "First Ring"
+                }
+              },
+              {
                 "type": "named",
                 "data": {
                   "name": "Ground Pickup"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Negative First Ring"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Subwoofer Launch"
                 }
               }
             ]

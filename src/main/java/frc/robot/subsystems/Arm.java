@@ -27,8 +27,6 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.Positions;
 import frc.robot.Constants.Vision;
 
-import com.ctre.phoenix.music.Orchestra;
-
 public class Arm extends SubsystemBase {
 
     private final PositionVoltage m_position = new PositionVoltage(0);
@@ -48,26 +46,25 @@ public class Arm extends SubsystemBase {
     private final double lowerLimit = Positions.rest; 
     private final double upperLimit = Positions.amp+0.05;
 
+    //0.34
     private GenericEntry adShoot = tab.add("adjust Shoot", 0).withPosition(1,0).getEntry();
-
-    //private GenericEntry kS = tab.add("kS", 0.11).withPosition(1,0).getEntry();//Done
-    private GenericEntry kG = tab.add("kG", 0).withPosition(1,1).getEntry();
-    private GenericEntry kV = tab.add("kV", 0).withPosition(1,2).getEntry();
-    private GenericEntry kA = tab.add("kA", 0).withPosition(1,3).getEntry();
-    private GenericEntry kP = tab.add("kP", 0).withPosition(0,0).getEntry();
-    private GenericEntry kI = tab.add("kI", 0).withPosition(0,1).getEntry();
-    private GenericEntry kD = tab.add("kD", 0).withPosition(0,2).getEntry();
 
     public Arm() {
 
         encoder.setPositionOffset(Constants.ArmConstants.armEncoderOffset);
-        resetArmEncoder();
+        var talonFXConfigs = new TalonFXConfiguration();
 
-        updatePID();
-        
+        var slot0Configs = talonFXConfigs.Slot0;
+        slot0Configs.kP = 0;
+
+        leftArm.getConfigurator().apply(talonFXConfigs);
+        rightArm.getConfigurator().apply(talonFXConfigs);
+        leftArm.setNeutralMode(NeutralModeValue.Brake);
+        rightArm.setNeutralMode(NeutralModeValue.Brake);
+
+        rightArm.setControl(new Follower(leftArm.getDeviceID(), true));//true means inverse
 
         armPID = new PIDController(55,0.7,1);
-        //armForward = new ArmFeedforward(0.15, 0.22, 3.61, 0.01);
         armForward = new ArmFeedforward(0.15, 0.22, 3.61, 0.01);
     
         ShuffleboardLayout leftMotor = tab.getLayout("Left Motor", BuiltInLayouts.kList).withPosition(2, 0).withSize(2, 2).withProperties(Map.of("Number of columns", 1, "Number of rows", 2));
@@ -88,46 +85,9 @@ public class Arm extends SubsystemBase {
         tab.addDouble("MM Position", () -> leftArm.getPosition().getValueAsDouble());
     }
 
-    public void resetArmEncoder() {
-        if(encoder.isConnected()){
-            talonZero = getPosition();
-        }
-    }
-
-
-    public void updatePIDF(){
-        //armPID = new PIDController(kP.getDouble(0), kI.getDouble(0), kD.getDouble(0));
-        //armForward = new ArmFeedforward(kS.getDouble(0.18), kG.getDouble(0.41), kV.getDouble(3.88), kA.getDouble(0.03));
-        System.out.println("armPID reset");
-    }
-    //Update PID and feedforward with values inputted on shuffleboard
-    public void updatePID(){
-        // in init function
-        var talonFXConfigs = new TalonFXConfiguration();
-
-        System.out.println(kP.getDouble(0));
-        // set slot 0 gains
-        var slot0Configs = talonFXConfigs.Slot0;
-        //slot0Configs.kS = kS.getDouble(0.18); //0.25; // Add 0.25 V output to overcome static friction
-        slot0Configs.kG = kG.getDouble(0.41);
-        slot0Configs.kV = kV.getDouble(3.88); //0.12; // A velocity target of 1 rps results in 0.12 V output
-        slot0Configs.kA = kA.getDouble(0.03); //0.01; // An acceleration of 1 rps/s requires 0.01 V output
-        slot0Configs.kP = kP.getDouble(0); // An error of 1 rps results in 0.11 V output
-        slot0Configs.kI = kI.getDouble(0); // no output for integrated error
-        slot0Configs.kD = kD.getDouble(0); // no output for error derivative
-
-        leftArm.getConfigurator().apply(talonFXConfigs);
-        rightArm.getConfigurator().apply(talonFXConfigs);
-        leftArm.setNeutralMode(NeutralModeValue.Brake);
-        rightArm.setNeutralMode(NeutralModeValue.Brake);
-
-        rightArm.setControl(new Follower(leftArm.getDeviceID(), true));//true means inverse
-
-    }
-
     public void playNote(double hz){
         leftArm.setControl(new MusicTone(hz));
-        //rightArm.setControl(new MusicTone(hz));
+        rightArm.setControl(new MusicTone(hz));
     }
     
     public void setVoltage(double volts){
@@ -155,15 +115,7 @@ public class Arm extends SubsystemBase {
 
     public void setRest(){
         setPosition = Positions.rest;
-        this.setVoltage(-2.5);
-    }
-
-    public void posOne(){
-        leftArm.setControl(m_position.withPosition(10-talonZero));
-    }
-
-    public void posZero(){
-        leftArm.setControl(m_position.withPosition(0-talonZero));
+        this.setVoltage(-3.5);
     }
 
     public void setAmp(){
@@ -171,18 +123,16 @@ public class Arm extends SubsystemBase {
         this.setShootPos(Positions.amp);
     }
 
-    /*public void setShootPos(double position){
-        leftArm.setControl(m_position.withPosition((0-talonZero)*216));
-    }*/
 
     public void setShootPos(double position) {
         position = MathUtil.clamp(position, lowerLimit, upperLimit);
         setPosition = position;
-        position = adShoot.getDouble(0.3);
-        setPosition = adShoot.getDouble(0.3);
-        //System.out.println(armForward.calculate(position - 0.25, 0));
-        //System.out.println(armPID.calculate(getPosition(), position) + " PID");
         leftArm.setVoltage(armPID.calculate(getPosition(), position) + armForward.calculate(position - 0.25, 0));
+    }
+
+    public void superShoot(){
+        setPosition = MathUtil.clamp(adShoot.getDouble(0), lowerLimit, upperLimit);
+        leftArm.setVoltage(armPID.calculate(getPosition(), setPosition) + armForward.calculate(setPosition - 0.25, 0));
     }
 
     //AIM = DEGREES, ARM = ROTATIONS
@@ -200,7 +150,7 @@ public class Arm extends SubsystemBase {
     }
 
     public boolean isReady(){
-        if (Math.abs(setPosition-getPosition()) < 0.003 && !restReady()){
+        if (Math.abs(setPosition-getPosition()) < 0.004 && !restReady()){
             LEDs.green();
             return true;
             

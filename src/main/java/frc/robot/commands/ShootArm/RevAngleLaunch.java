@@ -1,6 +1,8 @@
 package frc.robot.commands.ShootArm;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.Positions;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.NoteManager;
@@ -36,17 +38,18 @@ public class RevAngleLaunch extends Command{
             stable++;
             System.out.println(stable);
         }
-
-        shooter.shootRPM();
+        if (desiredAngle == Positions.amp) shooter.ampRPM();
+        else shooter.shootRPM();
         arm.setShootPos(desiredAngle);
 
-        if(stable > 6){
+        if(stable > 4){
             intake.inTake();
         }
     }
 
     @Override
     public void end(boolean interupt){
+        if (desiredAngle == Positions.amp) Timer.delay(0.07);
         intake.stopTake();
         shooter.setRPM(0);
     }

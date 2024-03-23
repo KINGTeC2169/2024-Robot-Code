@@ -16,19 +16,25 @@
     },
     {
       "anchor": {
-        "x": 2.0791600728094584,
-        "y": 6.990576641485824
+        "x": 2.67389532403768,
+        "y": 6.980826883268969
       },
       "prevControl": {
-        "x": 1.5721726455329406,
-        "y": 7.068574707220673
+        "x": 2.1669078967611624,
+        "y": 7.058824949003817
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Gapp 1"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.35,
+      "rotationDegrees": 0,
+      "rotateFast": true
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
