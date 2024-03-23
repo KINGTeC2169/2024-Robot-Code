@@ -43,28 +43,21 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Waypoint 2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Amp Launch"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Rest Position"
-                }
-              }
-            ]
+            "pathName": "Waypoint 2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Amp Launch"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Rest Position"
           }
         }
       ]

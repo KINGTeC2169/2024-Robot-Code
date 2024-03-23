@@ -4,12 +4,10 @@
 
 package frc.robot;
 
-
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.util.PathPlannerLogging;
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.Joystick;
 
@@ -66,7 +64,7 @@ public class RobotContainer {
 
   //Shuffleboard
   private ShuffleboardTab tab = Shuffleboard.getTab("Auto Chooser");
-  private GenericEntry autoChoice = tab.add("Auto Choice", 0).withPosition(3, 0).getEntry();
+  private GenericEntry autoChoice = tab.add("Auto Choice", 0).withPosition(6, 0).getEntry();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -84,7 +82,8 @@ public class RobotContainer {
     tab.addString("Auto 2.0", () -> "2 Ring Amp").withSize(3, 1).withPosition(0, 1);
     tab.addString("Auto 3.0", () -> "2 Ring Source").withSize(3, 1).withPosition(0, 2);
     tab.addString("Auto 4.0", () -> "Emergency Auto").withSize(3, 1).withPosition(0, 3);
-    tab.addString("Auto 0.0", () -> "Just Drive").withSize(3, 1).withPosition(0, 4);
+    tab.addString("Auto 5.0", () -> "Rishi's Auto").withSize(3, 1).withPosition(3, 0);
+    tab.addString("Auto 0.0", () -> "Just Drive").withSize(3, 1).withPosition(3, 1);
 
     swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
 
@@ -144,25 +143,27 @@ public class RobotContainer {
     controller.rightTrigger(0.2).onFalse(new Rest(arm));
 
     controller.povDown().onTrue(new Rest(arm));
-    //controller.povUp().whileTrue(new IntakeCommand(intake, arm));
+    controller.povRight().onTrue(new Pickup(intake));
 
     controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
-    controller.x().onTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
-    controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.podium));
-    //controller.y().whileTrue(Commands.run(() -> arm.updatePIDF()));
+    //controller.x().onTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
+    controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.podium));;
     controller.b().onTrue(new Amp(arm, shooter));
-    controller.start().onTrue(new RevAndAngle(arm, shooter, Arm.aimToArm(LimelightTable.aimShot())));
 
+    controller.start().onTrue(new RevAndAngle(arm, shooter, Arm.aimToArm(LimelightTable.aimShot())));
+    controller.start().onTrue(new VisionAim(swerveSubsystem, arm, shooter));
+     controller.back().onTrue(new Stuck(arm, shooter));
+
+    //controller.y().whileTrue(Commands.run(() -> arm.updatePIDF()))
+    //controller.povUp().whileTrue(new IntakeCommand(intake, arm));
     //controller.a().whileTrue(Commands.run(() -> arm.posOne()));
     //controller.b().whileTrue(Commands.run(() -> arm.posZero()));
     //controller.x().whileTrue(Commands.run(() -> arm.updatePID()));
     //controller.y().whileTrue(Commands.run(() -> music.play()));
-    controller.povRight().onTrue(new Pickup(intake));
     //controller.povUp().whileTrue(new Outtake(intake));
     //controller.back().whileTrue(new Launch(intake));
-    controller.povUp().onTrue(new RevAndAngle(arm, shooter, 0.34));
-    controller.back().onTrue(new Stuck(arm, shooter));
-    controller.start().onTrue(new VisionAim(swerveSubsystem, arm, shooter));
+    //controller.povUp().onTrue(new RevAndAngle(arm, shooter, 0.34));
+    
     //controller.povLeft().onTrue(new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
 
 
@@ -193,40 +194,45 @@ public class RobotContainer {
 
     swerveSubsystem.zeroHeading();
     if (autoChoice.getDouble(0.0) == 1.0){
-      swerveSubsystem.field.setRobotPose(new Pose2d(1.34, 5.54, swerveSubsystem.getRotation2d()));
-      PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {swerveSubsystem.field.setRobotPose(pose);});
-      PathPlannerLogging.setLogTargetPoseCallback((pose) -> {swerveSubsystem.field.getObject("target pose").setPose(pose);});
-      PathPlannerLogging.setLogActivePathCallback((poses) -> {swerveSubsystem.field.getObject("path").setPoses(poses);});
+      //swerveSubsystem.field.setRobotPose(new Pose2d(1.34, 5.54, swerveSubsystem.getRotation2d()));
+      PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {SwerveSubsystem.field.setRobotPose(pose);});
+      PathPlannerLogging.setLogTargetPoseCallback((pose) -> {SwerveSubsystem.field.getObject("target pose").setPose(pose);});
+      PathPlannerLogging.setLogActivePathCallback((poses) -> {SwerveSubsystem.field.getObject("path").setPoses(poses);});
       return new PathPlannerAuto("3 Ring Center");
     }
 
 
     else if (autoChoice.getDouble(0.0) == 2.0){
       //swerveSubsystem.field.setRobotPose(new Pose2d(0.74, 6.69, swerveSubsystem.getRotation2d()));
-      PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {swerveSubsystem.field.setRobotPose(pose);});
+      PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {SwerveSubsystem.field.setRobotPose(pose);});
       return new PathPlannerAuto("2 Ring Amp");
     }
 
     else if (autoChoice.getDouble(0.0) == 3.0){
       //swerveSubsystem.field.setRobotPose(new Pose2d(0.74, 4.41, swerveSubsystem.getRotation2d()));
-      PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {swerveSubsystem.field.setRobotPose(pose);});
-      PathPlannerLogging.setLogTargetPoseCallback((pose) -> {swerveSubsystem.field.getObject("target pose").setPose(pose);});
-      PathPlannerLogging.setLogActivePathCallback((poses) -> {swerveSubsystem.field.getObject("path").setPoses(poses);});
+      PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {SwerveSubsystem.field.setRobotPose(pose);});
+      PathPlannerLogging.setLogTargetPoseCallback((pose) -> {SwerveSubsystem.field.getObject("target pose").setPose(pose);});
+      PathPlannerLogging.setLogActivePathCallback((poses) -> {SwerveSubsystem.field.getObject("path").setPoses(poses);});
       return new PathPlannerAuto("2 Ring Source");
     }
 
     else if (autoChoice.getDouble(0.0) == 4.0){
       //swerveSubsystem.field.setRobotPose(new Pose2d(0.72, 6.71, swerveSubsystem.getRotation2d()));
-      PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {swerveSubsystem.field.setRobotPose(pose);});
-      PathPlannerLogging.setLogTargetPoseCallback((pose) -> {swerveSubsystem.field.getObject("target pose").setPose(pose);});
-      PathPlannerLogging.setLogActivePathCallback((poses) -> {swerveSubsystem.field.getObject("path").setPoses(poses);});
+      PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {SwerveSubsystem.field.setRobotPose(pose);});
+      PathPlannerLogging.setLogTargetPoseCallback((pose) -> {SwerveSubsystem.field.getObject("target pose").setPose(pose);});
+      PathPlannerLogging.setLogActivePathCallback((poses) -> {SwerveSubsystem.field.getObject("path").setPoses(poses);});
       return new PathPlannerAuto("Emergency Auto");
       
     }
+
+    else if (autoChoice.getDouble(0.0) == 5.0){
+      PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {SwerveSubsystem.field.setRobotPose(pose);});
+      return new PathPlannerAuto("Rishi's Auto");
+    }
     //swerveSubsystem.field.setRobotPose(new Pose2d(1.36, 5.54, swerveSubsystem.getRotation2d()));
-    PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {swerveSubsystem.field.setRobotPose(pose);});
-    PathPlannerLogging.setLogTargetPoseCallback((pose) -> {swerveSubsystem.field.getObject("target pose").setPose(pose);});
-    PathPlannerLogging.setLogActivePathCallback((poses) -> {swerveSubsystem.field.getObject("path").setPoses(poses);});
+    PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {SwerveSubsystem.field.setRobotPose(pose);});
+    PathPlannerLogging.setLogTargetPoseCallback((pose) -> {SwerveSubsystem.field.getObject("target pose").setPose(pose);});
+    PathPlannerLogging.setLogActivePathCallback((poses) -> {SwerveSubsystem.field.getObject("path").setPoses(poses);});
     return new PathPlannerAuto("Just Drive");
 
   }

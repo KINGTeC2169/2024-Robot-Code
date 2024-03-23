@@ -47,7 +47,7 @@ public final class Constants {
         public static final int backRightAbsolute = 13;
         
         //DIO ports
-        public static final int beamBreak = 6;
+        public static final int beamBreak = 7;
         public static final int armEncoder = 8;
 
         //Shooter CAN ids
@@ -153,7 +153,7 @@ public final class Constants {
  
     public static final class Positions{
         public static final double rest = 0.261;//0.06; //0.254 //0,.292
-        public static final double subwoofer = 0.3517-0.03;//0.118025; //-0.038;
+        public static final double subwoofer = 0.3417-0.03;//0.118025; //-0.038;
         public static final double sideSubwoofer = 0.36334-0.03;//0.261; //0.136; // -0.038;
         public static final double podium = 0.39;//0.3877-0.03;//0.15; //-0.038;
         public static final double amp = 0.5421-0.03;//0.3063; //-0.038;

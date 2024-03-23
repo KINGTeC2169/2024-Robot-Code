@@ -14,12 +14,6 @@
         {
           "type": "named",
           "data": {
-            "name": "Rest Position"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "Subwoofer Launch"
           }
         },
