@@ -22,7 +22,6 @@ import frc.robot.Constants.ModuleConstants;
 import frc.robot.Constants.Ports;
 import java.util.Map;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
@@ -66,7 +65,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     public SwerveDriveKinematics kinematics = DriveConstants.DRIVE_KINEMATICS;
     private final SwerveDriveOdometry odometer;
-    public Field2d field = new Field2d();
+    public static Field2d field = new Field2d();
 
     private ShuffleboardTab tab = Shuffleboard.getTab("Swerve");
     private GenericEntry fastSpeed = tab.add("Fast Speed", 1.0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).withPosition(6, 3).getEntry();
