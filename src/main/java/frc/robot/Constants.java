@@ -144,8 +144,8 @@ public final class Constants {
         public static final double tagHeight = 5.5; //ft
         public static final double mountedHeight = 1.0; //ft
         public static final double mountedAngle = 45; //angle deg
-        public static final double toShaftX = -0.1146; //ft
-        public static final double toShaftY = 0.28125; //ft
+        public static final double toShaftX = -0.2671; //ft
+        public static final double toShaftY = 0.447325; //ft
         public static final double launchSpeed = 63.7024327322; //ft/sec
         public static final double gravity = -32.19;
 
