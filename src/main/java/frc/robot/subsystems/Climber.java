@@ -33,6 +33,9 @@ public class Climber extends SubsystemBase{
         tab.addDouble("Left Arm Voltage", () -> getVoltage()[0]).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Max" , 12)).withPosition(0, 0);
         tab.addDouble("Right Arm Voltage", () -> getVoltage()[1]).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Max" , 12)).withPosition(0, 1);
 
+        tab.addDouble("Left Amperage", () -> getAmperage()[0]).withWidget(BuiltInWidgets.kDial).withProperties(Map.of("Max" , 30)).withPosition(2, 0).withSize(2, 2);
+        tab.addDouble("Right Amperage", () -> getAmperage()[1]).withWidget(BuiltInWidgets.kDial).withProperties(Map.of("Max" , 30)).withPosition(2, 2).withSize(2, 2);
+
         leftEncoder = leftClimber.getEncoder();
         rightEncoder = rightClimber.getEncoder();
      

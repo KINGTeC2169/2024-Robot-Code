@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -155,7 +156,9 @@ public class RobotContainer {
 
     controller.start().onTrue(new RevAndAngle(arm, shooter, Arm.aimToArm(LimelightTable.aimShot())));
     controller.start().onTrue(new VisionAim(swerveSubsystem, arm, shooter));
-     controller.back().onTrue(new Stuck(arm, shooter));
+    controller.back().onTrue(new Stuck(arm, shooter));
+
+    controller.axisGreaterThan(1, 0.1).onTrue(Commands.run(() -> climber.setSpeed(-controller.getLeftY()*1.8)));
 
     //controller.y().whileTrue(Commands.run(() -> arm.updatePIDF()))
     //controller.povUp().whileTrue(new IntakeCommand(intake, arm));
