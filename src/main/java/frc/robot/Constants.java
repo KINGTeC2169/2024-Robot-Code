@@ -61,8 +61,9 @@ public final class Constants {
         public static final int leftArm = 15;
         public static final int rightArm = 16;
 
-        public static final int musicMotor = 30;
-        public static final int musicMotor2 = 31;
+        //Climber CAN ids
+        public static final int leftClimber = 20;
+        public static final int rightClimber = 21;
 
         public static final Port arduino = SerialPort.Port.kUSB1; //Arduino USB port
         

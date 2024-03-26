@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import frc.robot.Constants.Positions;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.LetsFly;
 import frc.robot.commands.ShootArm.Stuck;
 import frc.robot.commands.ShootArm.VisionAim;
 import frc.robot.commands.Intake.IntakeCommand;
@@ -33,6 +34,7 @@ import frc.robot.commands.ShootArm.Rest;
 import frc.robot.commands.ShootArm.RevAndAngle;
 import frc.robot.commands.ShootArm.RevAngleLaunch;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LimelightTable;
 import frc.robot.subsystems.Music;
@@ -52,6 +54,7 @@ public class RobotContainer {
   private final LimelightTable limelight = new LimelightTable();
   private final Pigeon pigeon = new Pigeon();
   private final Arm arm = new Arm();
+  private final Climber climber = new Climber();
   private final Intake intake = new Intake();
   private final Shooter shooter = new Shooter();
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
@@ -146,7 +149,7 @@ public class RobotContainer {
     //controller.povUp().whileTrue(new IntakeCommand(intake, arm));
 
     controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
-    controller.x().onTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
+    controller.x().onTrue(new VisionAim(swerveSubsystem, arm, shooter));
     controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.podium));
     //controller.y().whileTrue(Commands.run(() -> arm.updatePIDF()));
     controller.b().onTrue(new Amp(arm, shooter));
@@ -161,7 +164,7 @@ public class RobotContainer {
     //controller.back().whileTrue(new Launch(intake));
     controller.povUp().onTrue(new RevAndAngle(arm, shooter, 0.34));
     controller.back().onTrue(new Stuck(arm, shooter));
-    controller.start().onTrue(new VisionAim(swerveSubsystem, arm, shooter));
+    controller.start().onTrue(new LetsFly(climber));
     //controller.povLeft().onTrue(new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
 
 
@@ -180,7 +183,7 @@ public class RobotContainer {
   }
 
   public Command getTestCommand(){
-    return null; //Commands.run(music::play);
+    return Commands.run(music::play);
   }
 
   /**

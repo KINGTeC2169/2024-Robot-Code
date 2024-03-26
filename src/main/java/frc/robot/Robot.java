@@ -34,12 +34,6 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     //LEDs.rainbow();
-
-    
-    /* 
-    List ins = new ArrayList<TalonFX>(instruments);
-    orchestra = new Orchestra(ins); 
-    */
     
   }
 

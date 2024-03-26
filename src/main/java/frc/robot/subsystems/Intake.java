@@ -14,7 +14,6 @@ import frc.robot.Constants;
 public class Intake extends SubsystemBase{
     
     private TalonFX intakeMotor;
-    //private DigitalInput beamBreak;
 
     private ShuffleboardTab tab = Shuffleboard.getTab("Intake");
 
