@@ -14,7 +14,32 @@
         {
           "type": "named",
           "data": {
+            "name": "Subwoofer Launch"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "Rest Position"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Ground Pickup"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Speaker feeder"
+                }
+              }
+            ]
           }
         },
         {
@@ -24,22 +49,9 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Speaker feeder"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Ground Pickup"
-                }
-              }
-            ]
+            "name": "Rest Position"
           }
         }
       ]

@@ -26,7 +26,7 @@ public class Pickup extends Command {
     public void end(boolean interupt) {
         intake.stopTake();
         intake.outTake();
-        Timer.delay(0.01);
+        Timer.delay(0.02);
         intake.stopTake();
 	}
 
