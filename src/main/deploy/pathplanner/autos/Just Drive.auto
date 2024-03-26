@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.36,
-      "y": 5.54
+      "x": 0.5404204540602812,
+      "y": 2.619490595106547
     },
-    "rotation": 0.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -18,27 +18,9 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "Subwoofer Launch"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Rest Position"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "Just Drive"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Ground Pickup"
           }
         }
       ]

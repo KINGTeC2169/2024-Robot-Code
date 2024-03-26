@@ -5,7 +5,7 @@
       "x": 0.74,
       "y": 4.41
     },
-    "rotation": 120.71
+    "rotation": -59.29000000000002
   },
   "command": {
     "type": "sequential",
@@ -14,25 +14,32 @@
         {
           "type": "named",
           "data": {
-            "name": "Rest Position"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "Subwoofer Launch"
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Point 1"
+            "name": "Rest Position"
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "Ground Pickup"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Point 1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Ground Pickup"
+                }
+              }
+            ]
           }
         },
         {

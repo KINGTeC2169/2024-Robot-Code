@@ -90,6 +90,10 @@ public class Arm extends SubsystemBase {
         rightArm.setControl(new MusicTone(hz));
     }
     
+    public double getSetPosition(){
+        return setPosition;
+    }
+
     public void setVoltage(double volts){
         leftArm.setVoltage(volts);
     }
@@ -113,9 +117,10 @@ public class Arm extends SubsystemBase {
                             rightArm.getSupplyVoltage().getValueAsDouble()}; 
     }
 
-    public void setRest(){
+    public void setRest(boolean ampMode){
         setPosition = Positions.rest;
-        this.setVoltage(-3.5);
+        if (ampMode) this.setVoltage(-3.5);
+        else this.setVoltage(-2);
     }
 
     public void setAmp(){
@@ -150,7 +155,7 @@ public class Arm extends SubsystemBase {
     }
 
     public boolean isReady(){
-        if (Math.abs(setPosition-getPosition()) < 0.004 && !restReady()){
+        if (Math.abs(setPosition-getPosition()) < 0.003 && !restReady()){
             LEDs.green();
             return true;
             
