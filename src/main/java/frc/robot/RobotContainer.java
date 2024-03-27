@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -139,38 +138,35 @@ public class RobotContainer {
     controller.rightBumper().onTrue(Commands.run(() -> shooter.setRPM(3000)));
     controller.rightBumper().onFalse(Commands.run(() -> shooter.setRPM(0)));
 
-    buttonBoard.button(10).whileTrue((Commands.run(() -> music.play())));
-
     //Comp controls:
     controller.leftTrigger(0.2).onTrue(new Pickup(intake));
     controller.rightTrigger(0.2).whileTrue(new Launch(intake));
     controller.rightTrigger(0.2).onFalse(new Rest(arm));
 
+    controller.povUp().onTrue(new RevAndAngle(arm, shooter, 0.34));
     controller.povDown().onTrue(new Rest(arm));
     controller.povRight().onTrue(new Pickup(intake));
 
     controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
-    //controller.x().onTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
+    controller.x().onTrue(new RevAndAngle(arm, shooter, Arm.aimToArm(LimelightTable.aimShot())));
+    controller.x().onTrue(new VisionAim(swerveSubsystem, arm, shooter));
     controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.podium));;
     controller.b().onTrue(new Amp(arm, shooter));
 
-    controller.start().onTrue(new RevAndAngle(arm, shooter, Arm.aimToArm(LimelightTable.aimShot())));
-    controller.start().onTrue(new VisionAim(swerveSubsystem, arm, shooter));
+    controller.start().onTrue(new LetsFly(climber));
     controller.back().onTrue(new Stuck(arm, shooter));
 
-    controller.axisGreaterThan(1, 0.1).onTrue(Commands.run(() -> climber.setSpeed(-controller.getLeftY()*1.8)));
+    //controller.axisGreaterThan(1, 0.1).onTrue(Commands.run(() -> climber.setSpeed(-controller.getLeftY()*1.8)));
 
     //controller.y().whileTrue(Commands.run(() -> arm.updatePIDF()))
     //controller.povUp().whileTrue(new IntakeCommand(intake, arm));
     //controller.a().whileTrue(Commands.run(() -> arm.posOne()));
     //controller.b().whileTrue(Commands.run(() -> arm.posZero()));
     //controller.x().whileTrue(Commands.run(() -> arm.updatePID()));
+    //controller.x().onTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
     //controller.y().whileTrue(Commands.run(() -> music.play()));
     //controller.povUp().whileTrue(new Outtake(intake));
     //controller.back().whileTrue(new Launch(intake));
-    controller.povUp().onTrue(new RevAndAngle(arm, shooter, 0.34));
-    controller.back().onTrue(new Stuck(arm, shooter));
-    controller.start().onTrue(new LetsFly(climber));
     //controller.povLeft().onTrue(new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
 
 
@@ -182,7 +178,7 @@ public class RobotContainer {
     buttonBoard.button(6).onTrue(new Rest(arm));
     buttonBoard.button(7).whileTrue(new Amp(arm, shooter));
     buttonBoard.button(8).whileTrue(new RevAndAngle(arm, shooter, Positions.podium));
-
+    buttonBoard.button(10).whileTrue((Commands.run(() -> music.play())));
     //buttonBoard.button(10).onTrue(Commands.run(() -> arm.activeStop()));
     buttonBoard.button(11).whileTrue(new Angle(arm, 0.49));
     
