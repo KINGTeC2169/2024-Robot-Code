@@ -20,7 +20,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import frc.robot.Constants.Positions;
 import frc.robot.commands.DriveCommand;
-import frc.robot.commands.LetsFly;
+import frc.robot.commands.LetsFlyLeft;
+import frc.robot.commands.LetsFlyRight;
 import frc.robot.commands.ShootArm.Stuck;
 import frc.robot.commands.ShootArm.VisionAim;
 import frc.robot.commands.Intake.IntakeCommand;
@@ -153,7 +154,8 @@ public class RobotContainer {
     controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.podium));;
     controller.b().onTrue(new Amp(arm, shooter));
 
-    controller.start().onTrue(new LetsFly(climber));
+    controller.start().onTrue(new LetsFlyLeft(climber));
+    controller.start().onTrue(new LetsFlyRight(climber));
     controller.back().onTrue(new Stuck(arm, shooter));
 
     //controller.axisGreaterThan(1, 0.1).onTrue(Commands.run(() -> climber.setSpeed(-controller.getLeftY()*1.8)));

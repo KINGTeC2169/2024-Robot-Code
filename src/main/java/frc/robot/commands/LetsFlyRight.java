@@ -3,29 +3,27 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Climber;
 
-public class LetsFly extends Command{
+public class LetsFlyRight extends Command{
     
     private Climber climber;
 
-    public LetsFly(Climber climber){
-
+    public LetsFlyRight(Climber climber){
         this.climber = climber;
-
     }
 
     @Override
     public void execute(){
-        climber.setMaxHeight();
-        climber.setSpeed(-0.2);
+        climber.setRightMaxHeight();
+        climber.setRightSpeed(-0.2);
     }
 
     @Override
     public void end(boolean interrupted){
-        climber.setSpeed(0);
+        climber.setRightSpeed(0);
     }
 
     @Override
     public boolean isFinished(){
-        return climber.climberDown();
+        return climber.rightClimberDown();
     }
 }

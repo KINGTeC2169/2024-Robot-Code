@@ -65,6 +65,10 @@ public final class Constants {
         public static final int leftClimber = 20;
         public static final int rightClimber = 21;
 
+        //Climber DIO Ports
+        public static final int leftClimberTouch = 6;
+        public static final int rightClimberTouch = 5;
+
         public static final Port arduino = SerialPort.Port.kUSB1; //Arduino USB port
         
     }
