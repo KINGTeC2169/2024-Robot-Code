@@ -85,15 +85,18 @@ public class Arm extends SubsystemBase {
         tab.addDouble("MM Position", () -> leftArm.getPosition().getValueAsDouble());
     }
 
+    //Part of Music subsystem commands
     public void playNote(double hz){
         leftArm.setControl(new MusicTone(hz));
         rightArm.setControl(new MusicTone(hz));
     }
     
+    //Gets the arm the last position it was set too
     public double getSetPosition(){
         return setPosition;
     }
 
+    //Sets the arm voltage
     public void setVoltage(double volts){
         leftArm.setVoltage(volts);
     }
