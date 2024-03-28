@@ -21,6 +21,7 @@ import frc.robot.Constants;
 
 import static frc.robot.Constants.ModuleConstants.*;
 
+@SuppressWarnings("removal")
 public class SwerveModule {
     private TalonFX driveMotor;
     private CANSparkMax turnMotor;

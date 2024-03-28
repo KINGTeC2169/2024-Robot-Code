@@ -2,12 +2,9 @@ package frc.robot.subsystems;
 
 import java.util.Map;
 
-import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MusicTone;
-import com.ctre.phoenix6.controls.PositionVoltage;
-import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
@@ -29,8 +26,6 @@ import frc.robot.Constants.Vision;
 
 public class Arm extends SubsystemBase {
 
-    private final PositionVoltage m_position = new PositionVoltage(0);
-
     private ShuffleboardTab tab = Shuffleboard.getTab("Arm");
 
     TalonFX leftArm = new TalonFX(Constants.Ports.leftArm);
@@ -42,7 +37,6 @@ public class Arm extends SubsystemBase {
     private ArmFeedforward armForward;
 
     private double setPosition;
-    private double talonZero;
     private final double lowerLimit = Positions.rest; 
     private final double upperLimit = Positions.amp+0.05;
 

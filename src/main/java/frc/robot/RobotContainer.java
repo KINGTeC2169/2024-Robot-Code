@@ -51,7 +51,9 @@ import frc.robot.subsystems.SwerveSubsystem;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  @SuppressWarnings("unused")
   private final LimelightTable limelight = new LimelightTable();
+  @SuppressWarnings("unused")
   private final Pigeon pigeon = new Pigeon();
   private final Arm arm = new Arm();
   private final Climber climber = new Climber();
@@ -132,14 +134,12 @@ public class RobotContainer {
     controller.b().whileTrue(new Amp(arm, shooter));
     */
 
-    //Testing controls:
-    //controller.leftBumper().whileTrue(Commands.run(() -> arm.setSpeed(-controller.getRightY()/10.0)));
+    //Comp controls:
+
     controller.leftBumper().whileTrue(Commands.run(() -> arm.setVoltage(-controller.getRightY()*2)));
-    //controller.rightBumper().whileTrue(new Shoot(shooter,intake));
     controller.rightBumper().onTrue(Commands.run(() -> shooter.setRPM(3000)));
     controller.rightBumper().onFalse(Commands.run(() -> shooter.setRPM(0)));
 
-    //Comp controls:
     controller.leftTrigger(0.2).onTrue(new Pickup(intake));
     controller.rightTrigger(0.2).whileTrue(new Launch(intake));
     controller.rightTrigger(0.2).onFalse(new Rest(arm));
