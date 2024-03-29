@@ -42,6 +42,7 @@ public class DriveCommand extends Command{
 
     @Override
     public void execute() {
+        //Gets the speeds from controller input
         double xSpeed = xSpdFunction.get();
         double ySpeed = ySpdFunction.get();
         double turningSpeed = turningSpdFunction.get();
@@ -57,7 +58,7 @@ public class DriveCommand extends Command{
         ySpeed = yLimiter.calculate(ySpeed) *  Constants.ModuleConstants.maxSpeed;
         turningSpeed = turningLimiter.calculate(turningSpeed) * ModuleConstants.maxNeoRadPerSec;
 
-        
+        //Slow mode
         if (isSlow.get()){
             xSpeed *= swerveSubsystem.getSlowSpeed();
             ySpeed *= swerveSubsystem.getSlowSpeed();
@@ -65,27 +66,36 @@ public class DriveCommand extends Command{
             //swerveSubsystem.oneRotation(); For testing yesterday. 
         }
 
+        //Fast mode
         else if (isFast.get()){
             xSpeed *= swerveSubsystem.getFastSpeed();
             ySpeed *= swerveSubsystem.getFastSpeed();
             turningSpeed *= swerveSubsystem.getFastSpeed(); 
         }
 
+        //Regular speed if no other controller buttons are pressed
         else {
             xSpeed *= swerveSubsystem.getMediumSpeed();
             ySpeed *= swerveSubsystem.getMediumSpeed();
             turningSpeed *= swerveSubsystem.getMediumSpeed();
         }
 
+        //Resets swerve drive encoders
         if (resetEncoder.get()) {
             swerveSubsystem.resetEncoders();
         }
 
+        //Resets pigeon
         if (resetPigeon.get()) {
             swerveSubsystem.zeroHeading();
         }
 
+        //Sets robot to field relative mode
         chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, Pigeon.getRotation2d());
+
+        //Sets robot to robot relative mode 
+        //DO NOT UNCOMMENT UNLESS YOU KNOW WHAT YOU ARE DOING
+        //chassisSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(xSpeed, ySpeed, turningSpeed, Pigeon.getRotation2d());
 
         SwerveModuleState[] moduleStates = DriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds); 
         

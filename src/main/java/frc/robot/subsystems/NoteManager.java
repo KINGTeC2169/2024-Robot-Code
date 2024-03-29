@@ -7,6 +7,7 @@ public class NoteManager{
     
     private static DigitalInput beamBreak = new DigitalInput(Ports.beamBreak);
 
+    /**Returns true if the intake has a note. */
     public static boolean hasNote(){
         return !beamBreak.get();
     }

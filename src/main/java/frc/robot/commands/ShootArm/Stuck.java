@@ -22,11 +22,13 @@ public class Stuck extends Command {
     }
 
     @Override
+    //Sets the arm to the amp scoring position
     public void execute(){
         arm.setAmp();
     }
 
     @Override
+    //Runs the shooter to get the note out of it and then stops the shooter
     public void end(boolean interupt){
         arm.setVoltage(0);
         shooter.ampRPM();
@@ -35,6 +37,7 @@ public class Stuck extends Command {
     }
     
     @Override
+    //TODO: better return statement
 	public boolean isFinished() {
         return false;
 	}

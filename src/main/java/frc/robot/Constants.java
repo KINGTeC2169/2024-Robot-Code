@@ -24,15 +24,16 @@ public final class Constants {
 
     public static final class Ports {
         
+        //Driver station controller ids
         public static final int leftStick = 0;
         public static final int rightStick = 1;
         public static final int controller = 2;
         public static final int buttons = 3;
 
+        //Pigeon CAN id
         public static final int pigeon = 14;
 
         //Swervedrive CAN ids
-
         public static final int frontLeftDrive = 3;
         public static final int frontLeftTurn = 2;
         public static final int frontLeftAbsolute = 10;
@@ -47,8 +48,10 @@ public final class Constants {
         public static final int backRightAbsolute = 13;
         
         //DIO ports
-        public static final int beamBreak = 7;
         public static final int armEncoder = 8;
+        public static final int beamBreak = 7;
+        public static final int leftClimberTouch = 6;
+        public static final int rightClimberTouch = 5;
 
         //Shooter CAN ids
         public static final int shooterTop = 17;
@@ -65,18 +68,9 @@ public final class Constants {
         public static final int leftClimber = 20;
         public static final int rightClimber = 21;
 
-        //Climber DIO Ports
-        public static final int leftClimberTouch = 6;
-        public static final int rightClimberTouch = 5;
-
-        public static final Port arduino = SerialPort.Port.kUSB1; //Arduino USB port
+        //Arduino USB port
+        public static final Port arduino = SerialPort.Port.kUSB1;
         
-    }
-
-    public static final class AutoAngles{
-
-        public static final double top = 0.3;
-
     }
 
     public static final class ArmConstants {
@@ -106,12 +100,13 @@ public final class Constants {
         public static final double driveEncoderRPMToMeterPerSec = driveEncoderToMeter / 60;
         public static final double turnEncoderRPMToRadPerSec = turnEncoderToRadian / 60;
 
-
         public static final ShuffleboardTab tab = Shuffleboard.getTab("Swerve Module");
 
         public static final double PDrive = 0.1;
 
-        public static double PTurn = 0.42;
+        public static double PTurn = 0.445;
+        public static double ITurn = 0.001;
+        public static double DTurn = 0.001;
     }
 
     public static final class DriveConstants {
@@ -130,14 +125,6 @@ public final class Constants {
         new Translation2d(frontBackWheels / 2, -rightLeftWheels / 2),//Front-Right
         new Translation2d(-frontBackWheels / 2, rightLeftWheels / 2),//Back-Left
         new Translation2d(-frontBackWheels / 2, -rightLeftWheels / 2));//Back-Right
-    }
-
-    public static final class DeviceID {
-        public static final int shooterTop = 17;
-        public static final int shooterBot = 18;
-        public static final int intake = 19;
-        public static final int leftArm = 15;
-        public static final int rightArm = 16;
     }
 
     public static final class Vision {

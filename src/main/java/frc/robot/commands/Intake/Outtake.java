@@ -16,11 +16,13 @@ public class Outtake extends Command {
     }
 
     @Override
+    //Runs intake backwards
     public void execute() { 
         intake.outTake();
     }
 
     @Override
+    //Stops intake
     public void end(boolean interupt) {
         intake.stopTake();
 	}

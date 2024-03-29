@@ -24,12 +24,11 @@ import frc.robot.commands.LetsFlyLeft;
 import frc.robot.commands.LetsFlyRight;
 import frc.robot.commands.ShootArm.Stuck;
 import frc.robot.commands.ShootArm.VisionAim;
-import frc.robot.commands.Intake.IntakeCommand;
 import frc.robot.commands.Intake.Launch;
 import frc.robot.commands.Intake.Outtake;
 import frc.robot.commands.Intake.Pickup;
 import frc.robot.commands.ShootArm.Amp;
-import frc.robot.commands.ShootArm.Angle;
+
 import frc.robot.commands.ShootArm.Rest;
 import frc.robot.commands.ShootArm.RevAndAngle;
 import frc.robot.commands.ShootArm.RevAngleLaunch;
@@ -173,7 +172,7 @@ public class RobotContainer {
     //controller.povLeft().onTrue(new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
 
 
-    buttonBoard.button(1).whileTrue(new IntakeCommand(intake, arm));
+    buttonBoard.button(1).whileTrue(new Pickup(intake));
     buttonBoard.button(2).whileTrue(new Outtake(intake));
     buttonBoard.button(3).whileTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
     buttonBoard.button(4).whileTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
@@ -183,7 +182,7 @@ public class RobotContainer {
     buttonBoard.button(8).whileTrue(new RevAndAngle(arm, shooter, Positions.podium));
     buttonBoard.button(10).whileTrue((Commands.run(() -> music.play())));
     //buttonBoard.button(10).onTrue(Commands.run(() -> arm.activeStop()));
-    buttonBoard.button(11).whileTrue(new Angle(arm, 0.49));
+    //buttonBoard.button(11).whileTrue(new Angle(arm, 0.49));
     
   }
 

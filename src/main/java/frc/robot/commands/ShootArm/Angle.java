@@ -19,6 +19,7 @@ public class Angle extends Command {
     }
 
     @Override
+    //Set the arm to the supplied postion
     public void execute(){
         arm.setShootPos(angle);
     }

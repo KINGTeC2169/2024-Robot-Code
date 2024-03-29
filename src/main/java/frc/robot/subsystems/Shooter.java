@@ -37,9 +37,10 @@ public class Shooter extends SubsystemBase {
         shooterTop = new TalonFX(Constants.Ports.shooterTop);
         shooterBot = new TalonFX(Constants.Ports.shooterBot);
 
+        //Shooter motor configuration
         var configs = new Slot0Configs();
         configs.kP = 0.1;
-
+        
         shooterTop.getConfigurator().apply(configs,0.050);
         shooterBot.getConfigurator().apply(configs,0.050);
         shooterTop.setInverted(true);
@@ -59,8 +60,9 @@ public class Shooter extends SubsystemBase {
 
     }
 
-    /**Sets the power as a double between -1 and 1*/
-    
+    /**Sets the speed of the shooter
+     * @param power double between 1 and -1
+     */ 
     public void setPower(double power){
 
         shooterTop.set(-power);
@@ -103,30 +105,38 @@ public class Shooter extends SubsystemBase {
         shooterBot.setControl(m_velocity.withVelocity(botRPS));
     }
 
+    /**Sets the shooter to the rpm for shooting*/
     public void shootRPM(){
         setRPM(Vision.shootRPM);
     }
 
+    /**Runs the shooter at the rpm for scoring amp*/
     public void ampRPM(){
         setRPM(Vision.ampRPM);
     }
+
+    /**Runs the shooter backward */
     public void backward(){
         setRPM(-1000);
     }
 
+    /**Returns true if both shooter motors' rpm is +/- 200 rpm of the desired rpm */
     public boolean shooterReady(){
         return Math.abs(getShooterRPM()[0] - setpointRPM) < 200 &&  Math.abs(getShooterRPM()[1] - setpointRPM) < 200;
     }
 
+    /**Sets the shooter speed to 0 */
     public void stopShooter() {
         shooterTop.set(0); 
         shooterBot.set(0);
     }
 
+    /**Returns true if the current of either shooter motors is greater than 0 */
     public boolean on(){
         return getCurrent()[0] > 0 || getCurrent()[1] > 0;
     }
 
+    /**Used for music */
     public void playNote(double hz){
         shooterTop.setControl(new MusicTone(hz));
         shooterBot.setControl(new MusicTone(hz));

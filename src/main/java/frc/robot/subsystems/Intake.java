@@ -19,7 +19,6 @@ public class Intake extends SubsystemBase{
 
     public Intake(){
         intakeMotor = new TalonFX(Constants.Ports.intake);
-        //beamBreak = new DigitalInput(Constants.Ports.beamBreak);
 
         tab.addDouble("Intake Voltage", () -> getVoltage()).withWidget(BuiltInWidgets.kVoltageView).withSize(2, 1).withPosition(0, 0).withProperties(Map.of("Max", 12));
         tab.addBoolean("Has note", () -> NoteManager.hasNote()).withPosition(2, 0);
@@ -35,11 +34,12 @@ public class Intake extends SubsystemBase{
         
     }
 
+    /**Returns the intake motor's rotor velocity in rotations per minute */
     public double getRPM(){
         return -(60 * intakeMotor.getRotorVelocity().getValue());
     }
 
-    /**Sets intake to outtake */
+    /**Runs intake backwards at 0.12 speed*/
     public void outTake() {
         intakeMotor.set(0.12);
     }
@@ -69,6 +69,7 @@ public class Intake extends SubsystemBase{
         return Math.abs(getSpeed()) > 0;
     }
 
+    /**Used for music commands */
     public void playNote(double hz){
         intakeMotor.setControl(new MusicTone(hz));
     }

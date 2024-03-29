@@ -18,17 +18,20 @@ public class Launch extends Command {
     }
 
     @Override
+    //Runs the intake
     public void execute() { 
         intake.inTake();
     }
 
     @Override
+    //Stops the intake after a few milliseconds
     public void end(boolean interupt) {
         Timer.delay(0.03);
         intake.stopTake();
 	}
 
     @Override
+    //Finishes when there is no note in the intake
 	public boolean isFinished() {
 		return !NoteManager.hasNote();
 	}

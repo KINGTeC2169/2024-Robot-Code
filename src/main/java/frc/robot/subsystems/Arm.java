@@ -79,22 +79,23 @@ public class Arm extends SubsystemBase {
         tab.addDouble("MM Position", () -> leftArm.getPosition().getValueAsDouble());
     }
 
-    //Part of Music subsystem commands
+    /**Part of Music subsystem commands*/
     public void playNote(double hz){
         leftArm.setControl(new MusicTone(hz));
         rightArm.setControl(new MusicTone(hz));
     }
     
-    //Gets the arm the last position it was set too
+    /**Gets the arm the last position it was set to*/
     public double getSetPosition(){
         return setPosition;
     }
 
-    //Sets the arm voltage
+    /**Sets the arm voltage*/
     public void setVoltage(double volts){
         leftArm.setVoltage(volts);
     }
 
+    /**Gets the position of the arm from the hex encoder */
     public double getPosition(){
         double pos = (encoder.getPositionOffset() - encoder.getAbsolutePosition());
         if(pos < 0){
@@ -104,22 +105,29 @@ public class Arm extends SubsystemBase {
         return pos;
     }
 
+    /**Returns the output current of the left and right motors */
     public double[] getCurrent(){
         return new double[]{leftArm.getSupplyCurrent().getValueAsDouble(),
                             rightArm.getSupplyCurrent().getValueAsDouble()}; 
     }
 
+    /**Returns the input voltage of the left and right motors */
     public double[] getVoltage(){
         return new double[]{leftArm.getSupplyVoltage().getValueAsDouble(),
                             rightArm.getSupplyVoltage().getValueAsDouble()}; 
     }
 
+    /**Sets the arm to rest postion.
+     * 
+     * @param ampMode - arm will move faster if true
+     */
     public void setRest(boolean ampMode){
         setPosition = Positions.rest;
         if (ampMode) this.setVoltage(-3.5);
         else this.setVoltage(-2);
     }
 
+    /**Sets the arm to the amp scoring position */
     public void setAmp(){
         setPosition = Positions.amp;
         this.setShootPos(Positions.amp);
@@ -142,15 +150,20 @@ public class Arm extends SubsystemBase {
         setShootPos(aimToArm(aim));
     }*/
 
+    /**Sets the arm to its last set position */
     public void activeStop(){
         leftArm.setPosition(setPosition);
     }
 
+    /**Stops the left and right motors */
     public void stop(){
         leftArm.set(0);
         rightArm.set(0);
     }
 
+    /**Returns true if the position of the arm is +/- 0.003 of the set position and the arm is not in the rest position.
+     * LEDs are also synced to this method.
+     */
     public boolean isReady(){
         if (Math.abs(setPosition-getPosition()) < 0.003 && !restReady()){
             LEDs.green();
@@ -162,6 +175,7 @@ public class Arm extends SubsystemBase {
         }
     }
 
+    /**Returns true if the arm is in rest position */
     public boolean restReady(){
         return getPosition() <= Positions.rest;
     }

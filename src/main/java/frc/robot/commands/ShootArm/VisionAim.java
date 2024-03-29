@@ -33,6 +33,7 @@ public class VisionAim extends Command {
     public void initialize(){}
 
     @Override
+    //If the intake has a note, the swerve drive will line up with the april tag, set the arm to a calculated angle, and rev up the shooter
     public void execute(){
         if(NoteManager.hasNote()){
         
@@ -48,11 +49,13 @@ public class VisionAim extends Command {
     }
 
     @Override
+    //Stops the shooter
     public void end(boolean interrupted) {
         shooter.stopShooter();
     }
 
     @Override
+    //Finishes when there is no note in the intake
     public boolean isFinished() {
         return !NoteManager.hasNote();
     }

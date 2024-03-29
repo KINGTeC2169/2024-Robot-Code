@@ -24,6 +24,7 @@ public class Amp extends Command {
     }
 
     @Override
+    //If the intake has a note, rev up the shooter and set the arm to the amp position
     public void execute(){
         if(NoteManager.hasNote()){
             shooter.ampRPM();
@@ -32,12 +33,14 @@ public class Amp extends Command {
     }
 
     @Override
+    //Wait a little and then stop the shooter so the note has time to get out
     public void end(boolean interupt){
         Timer.delay(0.2);
         shooter.setRPM(0);
     }
     
     @Override
+    //Finishes when there is no note in the intake
 	public boolean isFinished() {
         return !NoteManager.hasNote();
 	}

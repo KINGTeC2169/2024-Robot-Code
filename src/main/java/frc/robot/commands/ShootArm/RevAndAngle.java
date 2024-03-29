@@ -25,6 +25,7 @@ public class RevAndAngle extends Command {
     }
 
     @Override
+    //If there is a note in the intake, set the shooter to 4500 rpm and set the arm the the desired position
     public void execute(){
         if(NoteManager.hasNote()){
             shooter.setRPM(4500);
@@ -33,12 +34,14 @@ public class RevAndAngle extends Command {
     }
 
     @Override
+    //Stops the shooter and gives a little delay for it to stop
     public void end(boolean interupt){
         shooter.setRPM(0);
         Timer.delay(0.01);
     }
     
     @Override
+    //Finishes when there is no note in the intake
 	public boolean isFinished() {
         return !NoteManager.hasNote();
 	}

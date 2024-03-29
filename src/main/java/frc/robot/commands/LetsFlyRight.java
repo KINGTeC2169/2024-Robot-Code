@@ -12,17 +12,20 @@ public class LetsFlyRight extends Command{
     }
 
     @Override
+    //Raises right climber to max height and starts lowering it
     public void execute(){
         climber.setRightMaxHeight();
         climber.setRightSpeed(-0.2);
     }
 
     @Override
+    //Stops the right climber
     public void end(boolean interrupted){
         climber.setRightSpeed(0);
     }
 
     @Override
+    //Returns true if the touch sensor on the right climber is pressed
     public boolean isFinished(){
         return climber.rightClimberDown();
     }
