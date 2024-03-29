@@ -78,11 +78,19 @@ public class Climber extends SubsystemBase{
     }
 
     public void setLeftSpeed(double speed){
-        leftClimber.set(speed);
+        if(Math.abs(speed)<0.1){
+            leftClimber.set(0);
+        } else {
+            leftClimber.set(speed);
+        }
     }
 
     public void setRightSpeed(double speed){
-        rightClimber.set(speed);
+        if(Math.abs(speed)<0.1){
+            rightClimber.set(0);
+        } else {
+            rightClimber.set(speed);
+        }
     }  
     
     public void setMaxHeight(){

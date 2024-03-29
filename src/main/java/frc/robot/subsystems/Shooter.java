@@ -115,7 +115,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public boolean shooterReady(){
-        return Math.abs(getShooterRPM()[0] - setpointRPM) < 25 &&  Math.abs(getShooterRPM()[1] - setpointRPM) < 25;
+        return Math.abs(getShooterRPM()[0] - setpointRPM) < 200 &&  Math.abs(getShooterRPM()[1] - setpointRPM) < 200;
     }
 
     public void stopShooter() {

@@ -28,6 +28,7 @@ public class Stuck extends Command {
 
     @Override
     public void end(boolean interupt){
+        arm.setVoltage(0);
         shooter.ampRPM();
         Timer.delay(0.8);
         shooter.stopShooter();
@@ -35,6 +36,6 @@ public class Stuck extends Command {
     
     @Override
 	public boolean isFinished() {
-        return arm.isReady();
+        return false;
 	}
 }
