@@ -18,6 +18,9 @@ public final class Main {
    * Main initialization function. Do not perform any initialization here.
    *
    * <p>If you change your main robot class, change the parameter type.
+   * 
+   * Here is a link to troubleshooting the common problems we've had with this robot: 
+   * {@link}https://docs.google.com/document/d/1konnptrgaR4SrySQrfDNKLIEid4QvJNBhphZfVDYEJw/edit
    */
   public static void main(String... args) {
     RobotBase.startRobot(Robot::new);
