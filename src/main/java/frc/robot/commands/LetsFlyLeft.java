@@ -6,16 +6,21 @@ import frc.robot.subsystems.Climber;
 public class LetsFlyLeft extends Command{
     
     private Climber climber;
+    private double power;
 
-    public LetsFlyLeft(Climber climber){
+    public LetsFlyLeft(Climber climber, double power){
         this.climber = climber;
+        this.power = power;
+        addRequirements(climber);
     }
 
     @Override
-    //Raises left climber to max height and starts lowering it
+    //sets climber to set power if the climber isn't already down
     public void execute(){
-        climber.setLeftMaxHeight();
-        climber.setLeftSpeed(-0.2);
+        if (climber.leftClimberDown() && power < 0){
+            climber.setLeftSpeed(0);
+        }
+        else climber.setSpeed(power);
     }
 
     @Override
@@ -25,8 +30,8 @@ public class LetsFlyLeft extends Command{
     }
 
     @Override
-    //Returns true if the touch sensor on the left climber is pressed
+    //Returns true if the power is over the threshold
     public boolean isFinished(){
-        return climber.leftClimberDown();
+        return power < 0.1;
     }
 }
