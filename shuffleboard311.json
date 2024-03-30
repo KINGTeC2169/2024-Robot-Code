@@ -5,7 +5,7 @@
       "autoPopulate": true,
       "autoPopulatePrefix": "SmartDashboard/",
       "widgetPane": {
-        "gridSize": 100.0,
+        "gridSize": 120.0,
         "showGrid": true,
         "hgap": 16.0,
         "vgap": 16.0,
@@ -13,15 +13,15 @@
         "tiles": {
           "8,0": {
             "size": [
-              2,
+              1,
               2
             ],
             "content": {
               "_type": "Boolean Box",
               "_source0": "network_table:///Shuffleboard/Arm/Arm Ready",
-              "_title": "Shuffleboard/Arm/Arm Ready",
-              "_glyph": 148,
-              "_showGlyph": false,
+              "_title": "Arm Ready",
+              "_glyph": 106,
+              "_showGlyph": true,
               "Colors/Color when true": "#7CFC00FF",
               "Colors/Color when false": "#8B0000FF"
             }
@@ -34,24 +34,24 @@
             "content": {
               "_type": "Boolean Box",
               "_source0": "network_table:///Shuffleboard/Limelight/canSeeTag",
-              "_title": "Shuffleboard/Limelight/canSeeTag",
-              "_glyph": 148,
-              "_showGlyph": false,
+              "_title": "Apriltag Visible",
+              "_glyph": 185,
+              "_showGlyph": true,
               "Colors/Color when true": "#7CFC00FF",
               "Colors/Color when false": "#8B0000FF"
             }
           },
           "8,2": {
             "size": [
-              2,
+              1,
               2
             ],
             "content": {
               "_type": "Boolean Box",
               "_source0": "network_table:///Shuffleboard/Intake/Has note",
-              "_title": "Shuffleboard/Intake/Has note",
-              "_glyph": 148,
-              "_showGlyph": false,
+              "_title": "Has Note",
+              "_glyph": 118,
+              "_showGlyph": true,
               "Colors/Color when true": "#7CFC00FF",
               "Colors/Color when false": "#8B0000FF"
             }
@@ -64,9 +64,9 @@
             "content": {
               "_type": "Boolean Box",
               "_source0": "network_table:///Shuffleboard/Intake/Intake On",
-              "_title": "Shuffleboard/Intake/Intake On",
-              "_glyph": 148,
-              "_showGlyph": false,
+              "_title": "Intake On",
+              "_glyph": 0,
+              "_showGlyph": true,
               "Colors/Color when true": "#7CFC00FF",
               "Colors/Color when false": "#8B0000FF"
             }
@@ -79,9 +79,9 @@
             "content": {
               "_type": "Camera Stream",
               "_source0": "camera_server://limelight",
-              "_title": "limelight",
-              "_glyph": 148,
-              "_showGlyph": false,
+              "_title": "Limelight",
+              "_glyph": 81,
+              "_showGlyph": true,
               "Crosshair/Show crosshair": true,
               "Crosshair/Crosshair color": "#FFFFFFFF",
               "Controls/Show controls": true,
@@ -101,13 +101,13 @@
               "_type": "Field",
               "_source0": "network_table:///Shuffleboard/Swerve/Field",
               "_title": "Shuffleboard/Swerve/Field",
-              "_glyph": 148,
-              "_showGlyph": false,
+              "_glyph": 139,
+              "_showGlyph": true,
               "Game/Game": "k2024Crescendo",
               "Visuals/Robot Icon Size": 45.0,
               "Visuals/Show Outside Circles": false,
               "Colors/path": "#00FF00FF",
-              "Colors/target pose": "#FFFFFFFF"
+              "Colors/target pose": "#FF0000FF"
             }
           }
         }
