@@ -4,11 +4,15 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.util.PathPlannerLogging;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 //import frc.robot.subsystems.LEDs;
+import frc.robot.subsystems.NoteManager;
+import frc.robot.subsystems.SwerveSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -32,11 +36,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-
-    /* 
-    List ins = new ArrayList<TalonFX>(instruments);
-    orchestra = new Orchestra(ins); 
-    */
+    //LEDs.rainbow();
     
   }
 
@@ -53,12 +53,16 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
+    
     CommandScheduler.getInstance().run();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+
+    
+  }
 
   @Override
   public void disabledPeriodic() {}
@@ -71,6 +75,8 @@ public class Robot extends TimedRobot {
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
+      PathPlannerLogging.setLogTargetPoseCallback((pose) -> {SwerveSubsystem.field.getObject("target pose").setPose(pose);});
+      PathPlannerLogging.setLogActivePathCallback((poses) -> {SwerveSubsystem.field.getObject("path").setPoses(poses);});
     }
   }
 
@@ -95,8 +101,9 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    //Constants.Ports.arduino.writeString("A");
-    //Timer.delay(1);
+    if(NoteManager.hasNote()){
+      //LEDs.orange();
+    }
 
   }
 
@@ -104,11 +111,16 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    Command testCommand = m_robotContainer.getTestCommand();
+    if (testCommand != null) {
+      testCommand.schedule();
+    }
   }
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+  }
 
   /** This function is called once when the robot is first started up. */
   @Override

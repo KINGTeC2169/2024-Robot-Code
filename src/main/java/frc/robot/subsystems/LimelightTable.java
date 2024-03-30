@@ -23,8 +23,6 @@ public class LimelightTable {
     //This constructor adds data to the Limelight Shuffleboard tab
     public LimelightTable(){
         
-        //Comp.add("Limelight", limelightCam).withWidget(BuiltInWidgets.kCameraStream).withSize(3, 3).withPosition(2, 0).withProperties(Map.of("Show Controls", false));
-
         tab.addNumber("TX", () -> getTX()).withPosition(0, 0);
         tab.addNumber("TY", () -> getTY()).withPosition(1, 0);
         tab.addNumber("TA", () -> getTA()).withPosition(0, 1);
@@ -39,6 +37,7 @@ public class LimelightTable {
         tab.addDouble("Angle", () -> (getAngle())).withPosition(5, 1);
         tab.addDouble("HeightDif", () -> getHeightDif()).withPosition(6, 1);
         tab.addNumber("Aim shot1", () -> finalAim).withPosition(6, 0);
+        tab.addNumber("Angle shot", () -> Arm.aimToArm(LimelightTable.aimShot())).withPosition(7,0);
     }
 
     public static double getTX(){
@@ -90,8 +89,9 @@ public class LimelightTable {
     public static double aimShot(){
         double distance = getDistance();
         double aim = getShootingAngle(new double[]{distance, 6.90625-Vision.mountedHeight});
+        //double aim = getShootingAngle(new double[]{distance-Arm.predictArmPosition(1)[0], 6.90625-Vision.mountedHeight-Arm.predictArmPosition(1)[1]});
         for(int i = 0; i < 8; i++){
-            aim = getShootingAngle(new double[]{distance-Arm.predictArmPosition(aim)[0], 6.90625-Vision.mountedHeight-Arm.predictArmPosition(aim)[1]});
+            aim = getShootingAngle(new double[]{distance-Arm.predictArmPosition(Arm.aimToArm(aim))[0], 6.90625-Vision.mountedHeight-Arm.predictArmPosition(Arm.aimToArm(aim))[1]});
         }
         finalAim = aim;
         return finalAim;

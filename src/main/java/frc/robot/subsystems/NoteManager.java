@@ -1,21 +1,14 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import frc.robot.Constants.Ports;
+
 public class NoteManager{
     
-    private static boolean note = false;
+    private static DigitalInput beamBreak = new DigitalInput(Ports.beamBreak);
 
-    /**This tells the shooter that there isn't a note in the intake */
-    public static void setFalse(){
-        note = false;
-    }
-
-    /**This tells the shooter that there is a not in the intake */
-    public static void setTrue(){
-        note = true;
-    }
-
-    /**Returns whether or not a note is in the intake */
+    /**Returns true if the intake has a note. */
     public static boolean hasNote(){
-        return note;
+        return !beamBreak.get();
     }
 }

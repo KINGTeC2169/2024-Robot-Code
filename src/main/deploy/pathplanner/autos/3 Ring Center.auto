@@ -18,81 +18,83 @@
           }
         },
         {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Rest Position"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "First Ring"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Ground Pickup"
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "First Ring"
+            "pathName": "Negative First Ring"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Subwoofer Launch"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Rest Position"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Second Ring"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Ground Pickup"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Negative Second Ring"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Subwoofer Launch"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "Rest Position"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Ground Pickup"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Podium Launch"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Second Ring"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Ground Pickup"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.2
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Third Rotation"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Podium Launch"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.2
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Fourth Ring"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Rest Position"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Ground Pickup"
           }
         }
       ]

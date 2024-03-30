@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
@@ -24,7 +23,6 @@ import frc.robot.Constants.Ports;
 import java.util.Map;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.path.PathPlannerTrajectory;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
@@ -60,15 +58,14 @@ public class SwerveSubsystem extends SubsystemBase {
     private SwerveModule backRight = new SwerveModule(
     Ports.backRightDrive,
     Ports.backRightTurn, 
-    true, false,
+    false, false,
     Ports.backRightAbsolute,
     DriveConstants.BRabsoluteOffset,
     false);
 
     public SwerveDriveKinematics kinematics = DriveConstants.DRIVE_KINEMATICS;
     private final SwerveDriveOdometry odometer;
-    public Field2d field = new Field2d();
-    public PathPlannerTrajectory trajectory;
+    public static Field2d field = new Field2d();
 
     private ShuffleboardTab tab = Shuffleboard.getTab("Swerve");
     private GenericEntry fastSpeed = tab.add("Fast Speed", 1.0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).withPosition(6, 3).getEntry();
@@ -76,13 +73,9 @@ public class SwerveSubsystem extends SubsystemBase {
     private GenericEntry slowSpeed = tab.add("Slow Speed", 0.2).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).withPosition(2, 3).getEntry();
 
     public SwerveSubsystem() {
-
-        Pigeon.configure();
-
         odometer = new SwerveDriveOdometry(kinematics, getRotation2d(), getModulePositions(), new Pose2d(0, 0, new Rotation2d(0)));
         
-        //SmartDashboard.putData("Field", field);
-        
+        //Shuffleboard data        
         ShuffleboardLayout driveCurrents = tab.getLayout("Drive Currents", BuiltInLayouts.kGrid).withSize(2, 2).withProperties(Map.of("Number of rows", 2)).withPosition(0, 0);
         ShuffleboardLayout turnCurrents = tab.getLayout("Turn Currents", BuiltInLayouts.kGrid).withSize(2, 2).withProperties(Map.of("Number of rows", 2)).withPosition(0, 2);
 
@@ -113,8 +106,8 @@ public class SwerveSubsystem extends SubsystemBase {
             this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
             new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                    new PIDConstants(0.01, 0.0, 0.0), // Translation PID constants
-                    new PIDConstants(0.01, 0.0, 0.0), // Rotation PID constants
+                    new PIDConstants(1.95, 0.0, 0.0), // Translation PID constants
+                    new PIDConstants(2.35, 0.0, 0.0), // Rotation PID constants
                     ModuleConstants.maxSpeed, // Max module speed, in m/s
                     0.291, // Drive base radius in meters. Distance from robot center to furthest module.
                     new ReplanningConfig() // Default path replanning config. See the API for the options here
@@ -128,7 +121,7 @@ public class SwerveSubsystem extends SubsystemBase {
               if (alliance.isPresent()) {
                 return alliance.get() == DriverStation.Alliance.Red;
               }
-              return false;
+              return true;
             },
             this // Reference to this subsystem to set requirements
     );
@@ -148,10 +141,6 @@ public class SwerveSubsystem extends SubsystemBase {
     /**Returns the field. */
     public Field2d getField() {
         return field;
-    }
-
-    public void setTrajectory(PathPlannerTrajectory trajectory){
-        this.trajectory = trajectory;
     }
 
     /**Returns the fast speed, which is adjustable via the slider on shuffleboard.*/
@@ -182,7 +171,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     /**Resets the Pigeon.*/
     public void zeroHeading() {
-        System.out.println("Zeroing gyro \n.\n.\n.\n.\n.\n.\n.");
+        //System.out.println("Zeroing gyro \n.\n.\n.\n.\n.\n.\n.");
         Pigeon.reset();
     }
 
@@ -193,12 +182,10 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     /**Returns the rotation2d from the pigeon.*/
-
     public Rotation2d getRotation2d() {
         return Pigeon.getRotation2d();
         //return Rotation2d.fromDegrees(-getHeading());
     }
-
 
     /**Returns chassis speeds that are relative to the robot's front.*/
     public ChassisSpeeds getRobotRelativeSpeeds(){
@@ -238,26 +225,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
         //field.setRobotPose(odometer.getPoseMeters());
         field.setRobotPose(odometer.getPoseMeters().getX(), odometer.getPoseMeters().getY(), odometer.getPoseMeters().getRotation());
-
-        SmartDashboard.putNumber("X", odometer.getPoseMeters().getX());
-        SmartDashboard.putNumber("Y", odometer.getPoseMeters().getY());
-        SmartDashboard.putNumber("Pose angle", odometer.getPoseMeters().getRotation().getDegrees());
         
-        //SmartDashboard.putData("Field", field);
-    
-        /*
-        SmartDashboard.putNumber("Front Left", frontLeft.getTurnPosition());
-        SmartDashboard.putNumber("Front Right", frontRight.getTurnPosition());
-        SmartDashboard.putNumber("Back Left", backLeft.getTurnPosition());
-        SmartDashboard.putNumber("Back Right", backRight.getTurnPosition());
-        SmartDashboard.putNumber("Wanted Speed", backRight.getWantedSpeed());
-        SmartDashboard.putNumber("Back Right speed", backRight.getDriveVelocity());
-        SmartDashboard.putNumber("Back Left speed", backLeft.getDriveVelocity());
-        SmartDashboard.putNumber("Front Right speed", frontRight.getDriveVelocity());
-        SmartDashboard.putNumber("Front left speed", frontLeft.getDriveVelocity());
-        SmartDashboard.putNumber("Error", backLeft.getError());
-        SmartDashboard.putNumber("Error", Math.abs(backRight.getWantedSpeed() - backRight.getDrivePosition()));
-        */
     }
 
     /**Stops all 4 swerve modules. */
@@ -309,11 +277,17 @@ public class SwerveSubsystem extends SubsystemBase {
 
     /**Puts wheels in 'X' position and sets driving to a velocity-PID loop set at 0m/s */
     public void setActiveStop() {
-        System.out.println("1\n1\n1\n1\n1\n1\n1\n1");
+        //System.out.println("1\n1\n1\n1\n1\n1\n1\n1");
         frontLeft.activeStop(-1);
         frontRight.activeStop(1);
         backLeft.activeStop(1);
         backRight.activeStop(-1);
     }
 
+    public void playNote(double hz){
+        frontLeft.playNote(hz);
+        frontRight.playNote(hz);
+        backLeft.playNote(hz);
+        backRight.playNote(hz);
+    }
 }

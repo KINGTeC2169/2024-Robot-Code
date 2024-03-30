@@ -14,31 +14,32 @@
         {
           "type": "named",
           "data": {
-            "name": "Rest Position"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "Subwoofer Launch"
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "Rest Position"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Ground Pickup"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Waypoint 1"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Rest Position"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Waypoint 1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Ground Pickup"
+                }
+              }
+            ]
           }
         },
         {

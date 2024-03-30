@@ -45,19 +45,50 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Point 2"
+            "pathName": "Point 3"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Subwoofer Launch"
+            "name": "Half Court Launch"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Rest Position"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Point 4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Ground Pickup"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Point 5"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Rest Position"
+            "name": "Half Court Launch"
           }
         }
       ]

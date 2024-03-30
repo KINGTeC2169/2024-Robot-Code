@@ -4,15 +4,14 @@
 
 package frc.robot;
 
-
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.path.PathPlannerTrajectory;
+import com.pathplanner.lib.util.PathPlannerLogging;
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.Joystick;
 
+import edu.wpi.first.math.trajectory.*;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,20 +21,23 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import frc.robot.Constants.Positions;
 import frc.robot.commands.DriveCommand;
-import frc.robot.commands.ButtonCommands.Angle;
-import frc.robot.commands.ButtonCommands.IntakeCommand;
-import frc.robot.commands.ButtonCommands.Pickup;
-import frc.robot.commands.ButtonCommands.Rest;
-import frc.robot.commands.ButtonCommands.RevAndAngle;
-import frc.robot.commands.ButtonCommands.RevAngleLaunch;
-import frc.robot.commands.ButtonCommands.Launch;
-import frc.robot.commands.ButtonCommands.LimelightAlign;
-import frc.robot.commands.ButtonCommands.Outtake;
-import frc.robot.commands.ButtonCommands.Shoot;
-import frc.robot.commands.ButtonCommands.Stop;
+import frc.robot.commands.LetsFlyLeft;
+import frc.robot.commands.LetsFlyRight;
+import frc.robot.commands.ShootArm.Stuck;
+import frc.robot.commands.ShootArm.VisionAim;
+import frc.robot.commands.Intake.Launch;
+import frc.robot.commands.Intake.Outtake;
+import frc.robot.commands.Intake.Pickup;
+import frc.robot.commands.ShootArm.Amp;
+
+import frc.robot.commands.ShootArm.Rest;
+import frc.robot.commands.ShootArm.RevAndAngle;
+import frc.robot.commands.ShootArm.RevAngleLaunch;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LimelightTable;
+import frc.robot.subsystems.Music;
 import frc.robot.subsystems.Pigeon;
 import frc.robot.subsystems.Shooter;
 
@@ -49,13 +51,16 @@ import frc.robot.subsystems.SwerveSubsystem;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-
+  @SuppressWarnings("unused")
   private final LimelightTable limelight = new LimelightTable();
+  @SuppressWarnings("unused")
   private final Pigeon pigeon = new Pigeon();
   private final Arm arm = new Arm();
+  private final Climber climber = new Climber();
   private final Intake intake = new Intake();
   private final Shooter shooter = new Shooter();
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+  private final Music music = new Music(arm,shooter,intake,swerveSubsystem);
 
   //Driver Station controllers
   private final Joystick leftStick = new Joystick(Constants.Ports.leftStick);
@@ -65,25 +70,30 @@ public class RobotContainer {
 
   //Shuffleboard
   private ShuffleboardTab tab = Shuffleboard.getTab("Auto Chooser");
-  private GenericEntry autoChoice = tab.add("Auto Choice", 0).withPosition(3, 0).getEntry();
+  private GenericEntry autoChoice = tab.add("Auto Choice", 0).withPosition(6, 0).getEntry();
+
+  private Trajectory trajectory;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     
     // Register Named Commands
     NamedCommands.registerCommand("Ground Pickup", new Pickup(intake));
-    NamedCommands.registerCommand("Amp Launch", new RevAngleLaunch(arm, shooter, intake, Positions.amp, true));
+    NamedCommands.registerCommand("Amp Launch", new RevAngleLaunch(arm, shooter, intake, Positions.amp));
     NamedCommands.registerCommand("Rest Position", new Rest(arm));
     NamedCommands.registerCommand("Subwoofer Launch", new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
     NamedCommands.registerCommand("Podium Launch", new RevAngleLaunch(arm, shooter, intake, Positions.podium));
     NamedCommands.registerCommand("Sidesub Launch", new RevAngleLaunch(arm, shooter, intake, Positions.sideSubwoofer));
+    NamedCommands.registerCommand("Half Court Launch", new RevAngleLaunch(arm, shooter, intake, 0.34));
 
     //themeSong = new MusicCommand(swerveSubsystem, "src\\main\\deploy\\ThunderStruck.chrp");
     tab.addString("Auto 1.0", () -> "3 Ring Center").withSize(3, 1).withPosition(0, 0);
     tab.addString("Auto 2.0", () -> "2 Ring Amp").withSize(3, 1).withPosition(0, 1);
     tab.addString("Auto 3.0", () -> "2 Ring Source").withSize(3, 1).withPosition(0, 2);
-    tab.addString("Auto 4.0", () -> "Emergency Auto").withSize(3, 1).withPosition(0, 3);
-    tab.addString("Auto 0.0", () -> "Just Drive").withSize(3, 1).withPosition(0, 4);
+    tab.addString("Auto 4.0", () -> "Center Line Amp").withSize(3, 1).withPosition(0, 3);
+    tab.addString("Auto 5.0", () -> "Rishi's Auto").withSize(3, 1).withPosition(3, 0);
+    tab.addString("Auto 6.0", () -> "Hogging Auto").withSize(3, 1).withPosition(3, 1);
+    tab.addString("Auto 0.0", () -> "Just Drive").withSize(3, 1).withPosition(3, 2);
 
     swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
 
@@ -128,42 +138,59 @@ public class RobotContainer {
     controller.b().whileTrue(new Amp(arm, shooter));
     */
 
-    //Testing controls:
-    controller.leftBumper().whileTrue(Commands.run(() -> arm.setSpeed(-controller.getRightY()/10.0)));
-    controller.rightBumper().whileTrue(new Shoot(shooter));
-
     //Comp controls:
-    controller.leftTrigger(0.2).whileTrue(new Rest(arm));
-    controller.rightTrigger(0.2).whileTrue(new IntakeCommand(intake));
 
-    controller.povDown().whileTrue(new Outtake(intake));
-    controller.povUp().whileTrue(new IntakeCommand(intake));
+    controller.leftBumper().whileTrue(Commands.run(() -> arm.setVoltage(-controller.getRightY()*2)));
+    controller.rightBumper().onTrue(Commands.run(() -> shooter.setRPM(3000)));
+    controller.rightBumper().onFalse(Commands.run(() -> shooter.setRPM(0)));
 
-    controller.y().whileTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
-    controller.x().whileTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
-    controller.a().whileTrue(new RevAndAngle(arm, shooter, Positions.podium));
-    controller.b().whileTrue(new RevAndAngle(arm, shooter, Positions.amp, true));
+    controller.leftTrigger(0.2).onTrue(new Pickup(intake));
+    controller.rightTrigger(0.2).whileTrue(new Launch(intake));
+    controller.rightTrigger(0.2).onFalse(new Rest(arm));
 
-    controller.povRight().whileTrue(new Pickup(intake));
-    controller.povUp().whileTrue(new Outtake(intake));
-    controller.back().whileTrue(new Launch(intake));
-    controller.povLeft().whileTrue(new LimelightAlign(swerveSubsystem, arm, shooter));
+    controller.povUp().onTrue(new RevAndAngle(arm, shooter, 0.34));
+    controller.povDown().onTrue(new Rest(arm));
+    controller.povLeft().whileTrue(new Outtake(intake));
+
+    controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
+    controller.x().onTrue(new RevAndAngle(arm, shooter, Arm.aimToArm(LimelightTable.aimShot())));
+    controller.x().onTrue(new VisionAim(swerveSubsystem, arm, shooter));
+    controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.podium));;
+    controller.b().onTrue(new Amp(arm, shooter));
+
+    controller.back().whileTrue(new Stuck(arm, shooter));
+
+    controller.leftBumper().whileFalse(new LetsFlyLeft(climber, -controller.getLeftY()));
+    controller.leftBumper().whileFalse(new LetsFlyRight(climber, -controller.getRightY()));
+
+    //controller.y().whileTrue(Commands.run(() -> arm.updatePIDF()))
+    //controller.povUp().whileTrue(new IntakeCommand(intake, arm));
+    //controller.a().whileTrue(Commands.run(() -> arm.posOne()));
+    //controller.b().whileTrue(Commands.run(() -> arm.posZero()));
+    //controller.x().whileTrue(Commands.run(() -> arm.updatePID()));
+    //controller.x().onTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
+    //controller.y().whileTrue(Commands.run(() -> music.play()));
+    //controller.povUp().whileTrue(new Outtake(intake));
+    //controller.back().whileTrue(new Launch(intake));
+    //controller.povLeft().onTrue(new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
 
 
-
-    buttonBoard.button(1).whileTrue(new IntakeCommand(intake));
+    buttonBoard.button(1).whileTrue(new Pickup(intake));
     buttonBoard.button(2).whileTrue(new Outtake(intake));
     buttonBoard.button(3).whileTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
     buttonBoard.button(4).whileTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
     buttonBoard.button(5).onTrue(new Pickup(intake));
     buttonBoard.button(6).onTrue(new Rest(arm));
-    buttonBoard.button(7).whileTrue(new RevAndAngle(arm, shooter, Positions.amp, true));
+    buttonBoard.button(7).whileTrue(new Amp(arm, shooter));
     buttonBoard.button(8).whileTrue(new RevAndAngle(arm, shooter, Positions.podium));
-
-    buttonBoard.button(9).whileTrue(new Stop(shooter, intake)); 
-    buttonBoard.button(10).onTrue(Commands.run(() -> arm.activeStop()));
-    buttonBoard.button(11).whileTrue(new Angle(arm, 0.49));
+    buttonBoard.button(10).whileTrue((Commands.run(() -> music.play())));
+    //buttonBoard.button(10).onTrue(Commands.run(() -> arm.activeStop()));
+    //buttonBoard.button(11).whileTrue(new Angle(arm, 0.49));
     
+  }
+
+  public Command getTestCommand(){
+    return Commands.run(music::play);
   }
 
   /**
@@ -174,28 +201,35 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
 
     swerveSubsystem.zeroHeading();
+
+    PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {SwerveSubsystem.field.setRobotPose(pose);});
+    PathPlannerLogging.setLogActivePathCallback((poses) -> {trajectory = TrajectoryGenerator.generateTrajectory(poses, null);
+                                                            SwerveSubsystem.field.getObject("path").setTrajectory(trajectory);
+                                                            });
+
     if (autoChoice.getDouble(0.0) == 1.0){
-      swerveSubsystem.field.setRobotPose(new Pose2d(1.34, 5.54, swerveSubsystem.getRotation2d()));
       return new PathPlannerAuto("3 Ring Center");
     }
 
     else if (autoChoice.getDouble(0.0) == 2.0){
-      swerveSubsystem.field.setRobotPose(new Pose2d(0.74, 6.69, swerveSubsystem.getRotation2d()));
       return new PathPlannerAuto("2 Ring Amp");
     }
 
     else if (autoChoice.getDouble(0.0) == 3.0){
-      swerveSubsystem.field.setRobotPose(new Pose2d(0.74, 4.41, swerveSubsystem.getRotation2d()));
       return new PathPlannerAuto("2 Ring Source");
     }
 
     else if (autoChoice.getDouble(0.0) == 4.0){
-      swerveSubsystem.field.setRobotPose(new Pose2d(0.72, 6.71, swerveSubsystem.getRotation2d()));
-      return new PathPlannerAuto("Emergency Auto");
-      
+      return new PathPlannerAuto("Center Line Amp");
     }
-    swerveSubsystem.field.setRobotPose(new Pose2d(0.52, 2.23, swerveSubsystem.getRotation2d()));
-    return new PathPlannerAuto("Just Drive");
 
+    else if (autoChoice.getDouble(0.0) == 5.0){
+      return new PathPlannerAuto("Rishi's Auto");
+    }
+    
+    else if (autoChoice.getDouble(0.0) == 6.0){
+      return new PathPlannerAuto("Hogging Auto");
+    }
+    return new PathPlannerAuto("Just Drive");
   }
 }

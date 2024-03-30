@@ -1,29 +1,31 @@
-package frc.robot.commands.ButtonCommands;
+package frc.robot.commands.ShootArm;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Arm;
 
-public class ArmStop extends Command{
-    private Arm arm;
-    private double position;
+public class Angle extends Command {
 
-    public ArmStop(Arm arm){
+    private Arm arm;
+    private double angle;
+
+    public Angle(Arm arm, double angle){
         this.arm = arm;
+        addRequirements(arm);
+        this.angle = angle;
     }
 
     @Override
     public void initialize(){
-        position = arm.getPosition();
     }
 
     @Override
+    //Set the arm to the supplied postion
     public void execute(){
-        arm.setPosition(position);
+        arm.setShootPos(angle);
     }
 
     @Override
     public void end(boolean interupt){
-        new Rest(arm);
     }
     
     @Override

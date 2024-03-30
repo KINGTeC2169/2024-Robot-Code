@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.74,
-      "y": 4.41
+      "x": 0.7531929553170285,
+      "y": 4.3678916811515345
     },
-    "rotation": -59.29000000000002
+    "rotation": -62.17590361574677
   },
   "command": {
     "type": "sequential",
@@ -18,34 +18,28 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Rest Position"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "named",
                 "data": {
-                  "name": "Rest Position"
+                  "name": "Ground Pickup"
                 }
               },
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Point 1"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Ground Pickup"
+                  "pathName": "Speaker feeder"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Point 2"
           }
         },
         {
