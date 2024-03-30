@@ -30,7 +30,7 @@ public class Intake extends SubsystemBase{
 
     /**Sets intake to suck in */
     public void inTake() {
-        intakeMotor.set(-0.45);
+        intakeMotor.set(-0.4);
         
     }
 

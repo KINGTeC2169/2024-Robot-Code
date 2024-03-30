@@ -132,7 +132,7 @@ public final class Constants {
         //7 3/4 from edge
         //0.342314558557864
         public static final double shootRPM = 4500; //Do not change. Currently about 5000 TODO: Make it adjustable
-        public static final double ampRPM = 400;
+        public static final double ampRPM = 500;
         public static final double tagHeight = 5.5; //ft
         public static final double mountedHeight = 1.0; //ft
         public static final double mountedAngle = 45; //angle deg

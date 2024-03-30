@@ -84,6 +84,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Subwoofer Launch", new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
     NamedCommands.registerCommand("Podium Launch", new RevAngleLaunch(arm, shooter, intake, Positions.podium));
     NamedCommands.registerCommand("Sidesub Launch", new RevAngleLaunch(arm, shooter, intake, Positions.sideSubwoofer));
+    NamedCommands.registerCommand("Half Court Launch", new RevAngleLaunch(arm, shooter, intake, 0.34));
 
     //themeSong = new MusicCommand(swerveSubsystem, "src\\main\\deploy\\ThunderStruck.chrp");
     tab.addString("Auto 1.0", () -> "3 Ring Center").withSize(3, 1).withPosition(0, 0);
@@ -91,7 +92,8 @@ public class RobotContainer {
     tab.addString("Auto 3.0", () -> "2 Ring Source").withSize(3, 1).withPosition(0, 2);
     tab.addString("Auto 4.0", () -> "Center Line Amp").withSize(3, 1).withPosition(0, 3);
     tab.addString("Auto 5.0", () -> "Rishi's Auto").withSize(3, 1).withPosition(3, 0);
-    tab.addString("Auto 0.0", () -> "Just Drive").withSize(3, 1).withPosition(3, 1);
+    tab.addString("Auto 6.0", () -> "Hogging Auto").withSize(3, 1).withPosition(3, 1);
+    tab.addString("Auto 0.0", () -> "Just Drive").withSize(3, 1).withPosition(3, 2);
 
     swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
 
@@ -223,6 +225,10 @@ public class RobotContainer {
 
     else if (autoChoice.getDouble(0.0) == 5.0){
       return new PathPlannerAuto("Rishi's Auto");
+    }
+    
+    else if (autoChoice.getDouble(0.0) == 6.0){
+      return new PathPlannerAuto("Hogging Auto");
     }
     return new PathPlannerAuto("Just Drive");
   }

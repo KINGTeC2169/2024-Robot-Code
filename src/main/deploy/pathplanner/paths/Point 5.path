@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.26,
-        "y": 1.08
+        "x": 7.9545143705672015,
+        "y": 2.619490595106547
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.404889111772525,
-        "y": 1.262968679783513
+        "x": 7.276253412905686,
+        "y": 1.567016695286953
       },
       "isLocked": false,
-      "linkedName": "Gappp 1"
+      "linkedName": "Gappp5"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 1.08
       },
       "prevControl": {
-        "x": 7.615383891736444,
-        "y": 1.1460271353591136
+        "x": 7.018982015172007,
+        "y": 1.450075150862553
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,7 +39,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -43.48772007627966,
+    "rotation": -40.300491581174285,
     "rotateFast": false
   },
   "reversed": false,
