@@ -67,7 +67,7 @@ public class SwerveModule {
         */
 
         //Creating and configuring PID controllers
-        turningPID = new PIDController(PTurn, 0, 0);
+        turningPID = new PIDController(PTurn, ITurn, DTurn);
         turningPID.enableContinuousInput(-Math.PI, Math.PI);
         Constants.ModuleConstants.tab.add(turningPID).withWidget(BuiltInWidgets.kPIDController);
 

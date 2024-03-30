@@ -11,6 +11,7 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.Joystick;
 
+import edu.wpi.first.math.trajectory.*;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -71,6 +72,8 @@ public class RobotContainer {
   private ShuffleboardTab tab = Shuffleboard.getTab("Auto Chooser");
   private GenericEntry autoChoice = tab.add("Auto Choice", 0).withPosition(6, 0).getEntry();
 
+  private Trajectory trajectory;
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     
@@ -86,7 +89,7 @@ public class RobotContainer {
     tab.addString("Auto 1.0", () -> "3 Ring Center").withSize(3, 1).withPosition(0, 0);
     tab.addString("Auto 2.0", () -> "2 Ring Amp").withSize(3, 1).withPosition(0, 1);
     tab.addString("Auto 3.0", () -> "2 Ring Source").withSize(3, 1).withPosition(0, 2);
-    tab.addString("Auto 4.0", () -> "Emergency Auto").withSize(3, 1).withPosition(0, 3);
+    tab.addString("Auto 4.0", () -> "Center Line Amp").withSize(3, 1).withPosition(0, 3);
     tab.addString("Auto 5.0", () -> "Rishi's Auto").withSize(3, 1).withPosition(3, 0);
     tab.addString("Auto 0.0", () -> "Just Drive").withSize(3, 1).withPosition(3, 1);
 
@@ -198,47 +201,31 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
 
     swerveSubsystem.zeroHeading();
+
+    PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {SwerveSubsystem.field.setRobotPose(pose);});
+    PathPlannerLogging.setLogActivePathCallback((poses) -> {trajectory = TrajectoryGenerator.generateTrajectory(poses, null);
+                                                            SwerveSubsystem.field.getObject("path").setTrajectory(trajectory);
+                                                            });
+
     if (autoChoice.getDouble(0.0) == 1.0){
-      //swerveSubsystem.field.setRobotPose(new Pose2d(1.34, 5.54, swerveSubsystem.getRotation2d()));
-      PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {SwerveSubsystem.field.setRobotPose(pose);});
-      PathPlannerLogging.setLogTargetPoseCallback((pose) -> {SwerveSubsystem.field.getObject("target pose").setPose(pose);});
-      PathPlannerLogging.setLogActivePathCallback((poses) -> {SwerveSubsystem.field.getObject("path").setPoses(poses);});
       return new PathPlannerAuto("3 Ring Center");
     }
 
-
     else if (autoChoice.getDouble(0.0) == 2.0){
-      //swerveSubsystem.field.setRobotPose(new Pose2d(0.74, 6.69, swerveSubsystem.getRotation2d()));
-      PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {SwerveSubsystem.field.setRobotPose(pose);});
       return new PathPlannerAuto("2 Ring Amp");
     }
 
     else if (autoChoice.getDouble(0.0) == 3.0){
-      //swerveSubsystem.field.setRobotPose(new Pose2d(0.74, 4.41, swerveSubsystem.getRotation2d()));
-      PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {SwerveSubsystem.field.setRobotPose(pose);});
-      PathPlannerLogging.setLogTargetPoseCallback((pose) -> {SwerveSubsystem.field.getObject("target pose").setPose(pose);});
-      PathPlannerLogging.setLogActivePathCallback((poses) -> {SwerveSubsystem.field.getObject("path").setPoses(poses);});
       return new PathPlannerAuto("2 Ring Source");
     }
 
     else if (autoChoice.getDouble(0.0) == 4.0){
-      //swerveSubsystem.field.setRobotPose(new Pose2d(0.72, 6.71, swerveSubsystem.getRotation2d()));
-      PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {SwerveSubsystem.field.setRobotPose(pose);});
-      PathPlannerLogging.setLogTargetPoseCallback((pose) -> {SwerveSubsystem.field.getObject("target pose").setPose(pose);});
-      PathPlannerLogging.setLogActivePathCallback((poses) -> {SwerveSubsystem.field.getObject("path").setPoses(poses);});
-      return new PathPlannerAuto("Emergency Auto");
-      
+      return new PathPlannerAuto("Center Line Amp");
     }
 
     else if (autoChoice.getDouble(0.0) == 5.0){
-      PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {SwerveSubsystem.field.setRobotPose(pose);});
       return new PathPlannerAuto("Rishi's Auto");
     }
-    //swerveSubsystem.field.setRobotPose(new Pose2d(1.36, 5.54, swerveSubsystem.getRotation2d()));
-    PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {SwerveSubsystem.field.setRobotPose(pose);});
-    PathPlannerLogging.setLogTargetPoseCallback((pose) -> {SwerveSubsystem.field.getObject("target pose").setPose(pose);});
-    PathPlannerLogging.setLogActivePathCallback((poses) -> {SwerveSubsystem.field.getObject("path").setPoses(poses);});
     return new PathPlannerAuto("Just Drive");
-
   }
 }

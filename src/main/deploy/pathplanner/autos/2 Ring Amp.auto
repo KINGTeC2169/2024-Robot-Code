@@ -18,15 +18,15 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "Rest Position"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Rest Position"
+                }
+              },
               {
                 "type": "path",
                 "data": {

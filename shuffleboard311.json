@@ -5,54 +5,15 @@
       "autoPopulate": true,
       "autoPopulatePrefix": "SmartDashboard/",
       "widgetPane": {
-        "gridSize": 128.0,
+        "gridSize": 100.0,
         "showGrid": true,
         "hgap": 16.0,
         "vgap": 16.0,
         "titleType": 0,
         "tiles": {
-          "4,1": {
+          "8,0": {
             "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/X",
-              "_title": "X",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
-          "4,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Y",
-              "_title": "Y",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
-          "4,3": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Pose angle",
-              "_title": "Pose angle",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
-          "7,0": {
-            "size": [
-              3,
+              2,
               2
             ],
             "content": {
@@ -67,7 +28,7 @@
           },
           "4,0": {
             "size": [
-              1,
+              2,
               1
             ],
             "content": {
@@ -80,9 +41,9 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "7,2": {
+          "8,2": {
             "size": [
-              3,
+              2,
               2
             ],
             "content": {
@@ -95,7 +56,7 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "5,0": {
+          "6,0": {
             "size": [
               2,
               1
@@ -131,30 +92,22 @@
               "imageHeight": 0
             }
           },
-          "5,1": {
+          "4,1": {
             "size": [
-              1,
-              1
+              4,
+              3
             ],
             "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Request ShotSpeed",
-              "_title": "Request ShotSpeed",
+              "_type": "Field",
+              "_source0": "network_table:///Shuffleboard/Swerve/Field",
+              "_title": "Shuffleboard/Swerve/Field",
               "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
-          "6,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///Shuffleboard/Limelight/Angle shot",
-              "_title": "/Shuffleboard/Limelight/Angle shot",
-              "_glyph": 148,
-              "_showGlyph": false
+              "_showGlyph": false,
+              "Game/Game": "k2024Crescendo",
+              "Visuals/Robot Icon Size": 45.0,
+              "Visuals/Show Outside Circles": false,
+              "Colors/path": "#00FF00FF",
+              "Colors/target pose": "#FFFFFFFF"
             }
           }
         }
@@ -206,9 +159,9 @@
     }
   ],
   "windowGeometry": {
-    "x": 0.0,
-    "y": 0.0,
-    "width": 1529.5999755859375,
-    "height": 824.0
+    "x": -7.333333492279053,
+    "y": -7.333333492279053,
+    "width": 1294.6666259765625,
+    "height": 774.6666870117188
   }
 }

@@ -12,15 +12,22 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "Rest Position"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Just Drive"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Rest Position"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Just Drive"
+                }
+              }
+            ]
           }
         }
       ]
