@@ -156,12 +156,10 @@ public class RobotContainer {
     controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.podium));;
     controller.b().onTrue(new Amp(arm, shooter));
 
-    controller.start().onTrue(new LetsFlyLeft(climber));
-    controller.start().onTrue(new LetsFlyRight(climber));
     controller.back().whileTrue(new Stuck(arm, shooter));
 
-    controller.leftBumper().whileFalse(Commands.run(() -> climber.setLeftSpeed(-controller.getLeftY()*1.8)));
-    controller.leftBumper().whileFalse(Commands.run(() -> climber.setRightSpeed(-controller.getRightY()*1.8)));
+    controller.leftBumper().whileFalse(new LetsFlyLeft(climber, -controller.getLeftY()));
+    controller.leftBumper().whileFalse(new LetsFlyRight(climber, -controller.getRightY()));
 
     //controller.y().whileTrue(Commands.run(() -> arm.updatePIDF()))
     //controller.povUp().whileTrue(new IntakeCommand(intake, arm));
