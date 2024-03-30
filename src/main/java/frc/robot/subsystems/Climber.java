@@ -45,8 +45,8 @@ public class Climber extends SubsystemBase{
         tab.addDouble("Left Amperage", () -> getAmperage()[0]).withWidget(BuiltInWidgets.kDial).withProperties(Map.of("Max" , 30)).withPosition(2, 0).withSize(2, 2);
         tab.addDouble("Right Amperage", () -> getAmperage()[1]).withWidget(BuiltInWidgets.kDial).withProperties(Map.of("Max" , 30)).withPosition(2, 2).withSize(2, 2);
 
-        tab.addBoolean("Left Touch Sensor", () -> getLimits()[0]).withPosition(0, 4);
-        tab.addBoolean("Right Touch Sensor", () -> getLimits()[1]).withPosition(0, 5);
+        tab.addBoolean("Left Touch Sensor", () -> getLimits()[0]).withPosition(0, 3);
+        tab.addBoolean("Right Touch Sensor", () -> getLimits()[1]).withPosition(1, 3);
 
         leftEncoder = leftClimber.getEncoder();
         rightEncoder = rightClimber.getEncoder();

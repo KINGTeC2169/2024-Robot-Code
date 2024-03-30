@@ -50,8 +50,8 @@ public final class Constants {
         //DIO ports
         public static final int armEncoder = 8;
         public static final int beamBreak = 7;
-        public static final int leftClimberTouch = 6;
-        public static final int rightClimberTouch = 5;
+        public static final int leftClimberTouch = 0;
+        public static final int rightClimberTouch = 1;
 
         //Shooter CAN ids
         public static final int shooterTop = 17;
