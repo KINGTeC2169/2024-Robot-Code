@@ -11,9 +11,9 @@
         "vgap": 16.0,
         "titleType": 0,
         "tiles": {
-          "8,0": {
+          "9,0": {
             "size": [
-              1,
+              2,
               2
             ],
             "content": {
@@ -41,9 +41,9 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "8,2": {
+          "9,2": {
             "size": [
-              1,
+              2,
               2
             ],
             "content": {
@@ -58,7 +58,7 @@
           },
           "6,0": {
             "size": [
-              2,
+              3,
               1
             ],
             "content": {
@@ -94,7 +94,7 @@
           },
           "4,1": {
             "size": [
-              4,
+              5,
               3
             ],
             "content": {
@@ -105,9 +105,7 @@
               "_showGlyph": true,
               "Game/Game": "k2024Crescendo",
               "Visuals/Robot Icon Size": 45.0,
-              "Visuals/Show Outside Circles": false,
-              "Colors/path": "#00FF00FF",
-              "Colors/target pose": "#FF0000FF"
+              "Visuals/Show Outside Circles": false
             }
           }
         }
@@ -159,9 +157,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -7.333333492279053,
-    "y": -7.333333492279053,
-    "width": 1294.6666259765625,
-    "height": 774.6666870117188
+    "x": -7.199999809265137,
+    "y": -7.199999809265137,
+    "width": 1550.4000244140625,
+    "height": 838.4000244140625
   }
 }

@@ -137,7 +137,7 @@ public class Shooter extends SubsystemBase {
     }
 
     /**Used for music */
-    public void playNote(double hz){
+     public void playNote(double hz){
         shooterTop.setControl(new MusicTone(hz));
         shooterBot.setControl(new MusicTone(hz));
     }
