@@ -43,22 +43,15 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Subwoofer Launch"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Rest Position"
-                }
-              }
-            ]
+            "name": "Subwoofer Launch"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Rest Position"
           }
         },
         {
@@ -81,22 +74,15 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Negative First Ring"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Subwoofer Launch"
-                }
-              }
-            ]
+            "pathName": "Negative First Ring"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Subwoofer Launch"
           }
         }
       ]

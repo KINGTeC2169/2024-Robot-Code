@@ -71,7 +71,7 @@ public class Climber extends SubsystemBase{
                              rightClimber.getOutputCurrent()};
     }
 
-    /**Returns a boolean array with the limit switch values of  */
+    /**Returns a boolean array with the limit switch values of the climbers */
     public boolean[] getLimits(){
         return new boolean[]{!leftLimit.get(),
                              !rightLimit.get()};
@@ -89,7 +89,7 @@ public class Climber extends SubsystemBase{
      * @param speed The speed to set. Must be above 0.1.
      */
     public void setLeftSpeed(double speed){
-        if(Math.abs(speed)<0.1){
+        if(Math.abs(speed)<0.1 && !getLimits()[0]){
             leftClimber.set(0);
         } else {
             leftClimber.set(speed);
@@ -100,7 +100,7 @@ public class Climber extends SubsystemBase{
      * @param speed The speed to set. Must be above 0.1.
      */
     public void setRightSpeed(double speed){
-        if(Math.abs(speed)<0.1){
+        if(Math.abs(speed)<0.1 && !getLimits()[0]){
             rightClimber.set(0);
         } else {
             rightClimber.set(speed);
