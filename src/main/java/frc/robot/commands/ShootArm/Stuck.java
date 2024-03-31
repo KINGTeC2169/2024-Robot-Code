@@ -2,6 +2,7 @@ package frc.robot.commands.ShootArm;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.Positions;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Shooter;
 
@@ -24,7 +25,7 @@ public class Stuck extends Command {
     @Override
     //Sets the arm to the amp scoring position
     public void execute(){
-        arm.setAmp();
+        arm.setShootPos(Positions.amp);
     }
 
     @Override
@@ -33,7 +34,7 @@ public class Stuck extends Command {
         arm.setVoltage(0);
         shooter.ampRPM();
         Timer.delay(0.8);
-        shooter.stopShooter();
+        shooter.setRPM(0);
     }
     
     @Override
