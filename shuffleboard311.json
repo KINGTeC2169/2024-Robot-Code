@@ -100,12 +100,53 @@
             "content": {
               "_type": "Field",
               "_source0": "network_table:///Shuffleboard/Swerve/Field",
-              "_title": "Shuffleboard/Swerve/Field",
+              "_title": "Field",
               "_glyph": 139,
               "_showGlyph": true,
               "Game/Game": "k2024Crescendo",
               "Visuals/Robot Icon Size": 45.0,
-              "Visuals/Show Outside Circles": false
+              "Visuals/Show Outside Circles": false,
+              "Colors/path": "#00FF00FF",
+              "Colors/target pose": "#FF0000FF"
+            }
+          },
+          "0,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/limelight_PipelineName",
+              "_title": "limelight_PipelineName",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "1,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/limelight_Interface",
+              "_title": "limelight_Interface",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "2,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/limelight_Stream",
+              "_title": "limelight_Stream",
+              "_glyph": 148,
+              "_showGlyph": false
             }
           }
         }

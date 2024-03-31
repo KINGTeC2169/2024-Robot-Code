@@ -17,7 +17,7 @@ public class LetsFlyRight extends Command{
     @Override
     //sets climber to set power if the climber isn't already down
     public void execute(){
-        if (climber.rightClimberDown() && power < 0){
+        if ((climber.rightClimberDown() && power < 0) || power < 0.1){
             climber.setRightSpeed(0);
         }
         else climber.setSpeed(power);
@@ -32,6 +32,6 @@ public class LetsFlyRight extends Command{
     @Override
     //Returns true if the power is over the threshold
     public boolean isFinished(){
-        return power < 0.1;
+        return false;
     }
 }

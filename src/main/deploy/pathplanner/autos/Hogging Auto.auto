@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.72,
-      "y": 6.72
+      "x": 0.74,
+      "y": 4.41
     },
-    "rotation": 59.97
+    "rotation": -59.29000000000002
   },
   "command": {
     "type": "sequential",
@@ -30,7 +30,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Name 1"
+                  "pathName": "Point 1"
                 }
               },
               {
@@ -45,13 +45,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Name 2"
+            "pathName": "Point 3"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Subwoofer Launch"
+            "name": "Half Court Launch"
           }
         },
         {
@@ -67,7 +67,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Name 3"
+                  "pathName": "Point 4"
                 }
               },
               {
@@ -82,7 +82,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Name 4"
+            "pathName": "Point 5"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Half Court Launch"
           }
         }
       ]

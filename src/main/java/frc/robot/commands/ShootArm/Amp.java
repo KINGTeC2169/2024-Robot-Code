@@ -35,7 +35,7 @@ public class Amp extends Command {
     @Override
     //Wait a little and then stop the shooter so the note has time to get out
     public void end(boolean interupt){
-        Timer.delay(0.2);
+        Timer.delay(0.3);
         shooter.setRPM(0);
     }
     
