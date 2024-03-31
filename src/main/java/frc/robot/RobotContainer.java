@@ -6,12 +6,10 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.Joystick;
 
-import edu.wpi.first.math.trajectory.*;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -71,8 +69,6 @@ public class RobotContainer {
   //Shuffleboard
   private ShuffleboardTab tab = Shuffleboard.getTab("Auto Chooser");
   private GenericEntry autoChoice = tab.add("Auto Choice", 0).withPosition(6, 0).getEntry();
-
-  private Trajectory trajectory;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -201,11 +197,6 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
 
     swerveSubsystem.zeroHeading();
-
-    PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {SwerveSubsystem.field.setRobotPose(pose);});
-    PathPlannerLogging.setLogActivePathCallback((poses) -> {trajectory = TrajectoryGenerator.generateTrajectory(poses, null);
-                                                            SwerveSubsystem.field.getObject("path").setTrajectory(trajectory);
-                                                            });
 
     if (autoChoice.getDouble(0.0) == 1.0){
       return new PathPlannerAuto("3 Ring Center");
