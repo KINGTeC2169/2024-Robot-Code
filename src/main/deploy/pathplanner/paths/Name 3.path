@@ -8,29 +8,29 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6153335414452408,
-        "y": 6.469681456888385
+        "x": 1.72,
+        "y": 6.72
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.67389532403768,
-        "y": 6.980826883268969
+        "x": 7.849266980585242,
+        "y": 7.203599136543003
       },
       "prevControl": {
-        "x": 2.1669078967611624,
-        "y": 7.058824949003817
+        "x": 6.849266980585242,
+        "y": 7.203599136543003
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Gapp 1"
+      "linkedName": "gap 3"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.35,
+      "waypointRelativePos": 0.5,
       "rotationDegrees": 0,
       "rotateFast": true
     }
@@ -38,22 +38,21 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 4.78,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
-    "rotation": 0.0,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "2 Ring Amp",
+  "folder": "Center Line Amp",
   "previewStartingState": {
     "rotation": 59.97,
-    "velocity": 0
+    "velocity": 0.0
   },
   "useDefaultConstraints": true
 }

@@ -3,56 +3,49 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.72,
-        "y": 6.72
+        "x": 2.6190702618372064,
+        "y": 6.964284639469753
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6153335414452408,
-        "y": 6.469681456888385
+        "x": 1.8506645544038356,
+        "y": 6.847564785176163
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Gap 2"
     },
     {
       "anchor": {
-        "x": 2.67389532403768,
-        "y": 6.980826883268969
+        "x": 0.72,
+        "y": 6.72
       },
       "prevControl": {
-        "x": 2.1669078967611624,
-        "y": 7.058824949003817
+        "x": 1.5588649186718628,
+        "y": 6.828111476127366
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Gapp 1"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.35,
-      "rotationDegrees": 0,
-      "rotateFast": true
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 4.78,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
-    "rotation": 0.0,
+    "rotation": 59.97,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "2 Ring Amp",
+  "folder": "Center Line Amp",
   "previewStartingState": {
-    "rotation": 59.97,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

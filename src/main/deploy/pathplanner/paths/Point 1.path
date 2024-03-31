@@ -9,19 +9,19 @@
       "prevControl": null,
       "nextControl": {
         "x": 1.0461183690863805,
-        "y": 1.6077807811940226
+        "y": 1.6077807811940223
       },
       "isLocked": false,
       "linkedName": "Gappp3"
     },
     {
       "anchor": {
-        "x": 7.510136501754484,
-        "y": 0.7718141932010376
+        "x": 8.25856238607064,
+        "y": 1.0758622087044754
       },
       "prevControl": {
-        "x": 3.533116755970982,
-        "y": 0.7985194013347447
+        "x": 4.281542640287138,
+        "y": 1.1025674168381825
       },
       "nextControl": null,
       "isLocked": false,
@@ -40,7 +40,7 @@
   "goalEndState": {
     "velocity": 0,
     "rotation": 0.0,
-    "rotateFast": false
+    "rotateFast": true
   },
   "reversed": false,
   "folder": "2 Ring Source",

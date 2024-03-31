@@ -2,25 +2,32 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.52,
-      "y": 2.23
+      "x": 0.5404204540602812,
+      "y": 2.619490595106547
     },
-    "rotation": 0.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "Rest Position"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Just Drive"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Rest Position"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Just Drive"
+                }
+              }
+            ]
           }
         }
       ]

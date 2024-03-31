@@ -21,6 +21,7 @@ import frc.robot.Constants;
 
 import static frc.robot.Constants.ModuleConstants.*;
 
+@SuppressWarnings("removal")
 public class SwerveModule {
     private TalonFX driveMotor;
     private CANSparkMax turnMotor;
@@ -29,7 +30,7 @@ public class SwerveModule {
     private final RelativeEncoder turnEncoder;
 
     private double wantedSpeed;
-    
+
     private PIDController turningPID;
     private CANCoderConfiguration config = new CANCoderConfiguration();
 
@@ -66,7 +67,7 @@ public class SwerveModule {
         */
 
         //Creating and configuring PID controllers
-        turningPID = new PIDController(PTurn, 0, 0);
+        turningPID = new PIDController(PTurn, ITurn, DTurn);
         turningPID.enableContinuousInput(-Math.PI, Math.PI);
         Constants.ModuleConstants.tab.add(turningPID).withWidget(BuiltInWidgets.kPIDController);
 
@@ -74,6 +75,10 @@ public class SwerveModule {
 
         resetEncoders();
 
+    }
+
+    public void playNote(double hz){
+        driveMotor.set(ControlMode.MusicTone, hz);
     }
 
     /**
@@ -127,7 +132,7 @@ public class SwerveModule {
     public void resetEncoders() {
         driveMotor.setSelectedSensorPosition(0);
         turnEncoder.setPosition(getAbsoluteTurnPosition());
-        System.out.println("RESETTING ENCODERS \nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS");
+        //System.out.println("RESETTING ENCODERS \nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS\nRESETTING ENCODERS");
     }
 
     /**Returns the state of the swerve module. */

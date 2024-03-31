@@ -14,25 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Rest Position"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Sidesub Launch"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Rest Position"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Emergency Path"
+            "name": "Subwoofer Launch"
           }
         },
         {
@@ -42,10 +24,65 @@
               {
                 "type": "named",
                 "data": {
+                  "name": "Rest Position"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Emergency Path"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
                   "name": "Ground Pickup"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Subwoofer Launch"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Rest Position"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "First Ring"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Ground Pickup"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Negative First Ring"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Subwoofer Launch"
           }
         }
       ]

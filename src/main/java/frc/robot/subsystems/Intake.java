@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import java.util.Map;
 
+import com.ctre.phoenix6.controls.MusicTone;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
@@ -13,32 +14,32 @@ import frc.robot.Constants;
 public class Intake extends SubsystemBase{
     
     private TalonFX intakeMotor;
-    //private DigitalInput beamBreak;
 
     private ShuffleboardTab tab = Shuffleboard.getTab("Intake");
 
     public Intake(){
         intakeMotor = new TalonFX(Constants.Ports.intake);
-        //beamBreak = new DigitalInput(Constants.Ports.beamBreak);
 
         tab.addDouble("Intake Voltage", () -> getVoltage()).withWidget(BuiltInWidgets.kVoltageView).withSize(2, 1).withPosition(0, 0).withProperties(Map.of("Max", 12));
         tab.addBoolean("Has note", () -> NoteManager.hasNote()).withPosition(2, 0);
         tab.addBoolean("Intake On", () -> isOn()).withWidget(BuiltInWidgets.kBooleanBox).withPosition(3, 0);
         
         tab.addDouble("Intake RPM", () -> getRPM()).withPosition(0, 1);
+        tab.addBoolean("Note Manager Distance", () -> NoteManager.hasNote()).withPosition(0,2);
     }
 
     /**Sets intake to suck in */
     public void inTake() {
-        intakeMotor.set(-0.3);
+        intakeMotor.set(-0.4);
         
     }
 
+    /**Returns the intake motor's rotor velocity in rotations per minute */
     public double getRPM(){
         return -(60 * intakeMotor.getRotorVelocity().getValue());
     }
 
-    /**Sets intake to outtake */
+    /**Runs intake backwards at 0.12 speed*/
     public void outTake() {
         intakeMotor.set(0.12);
     }
@@ -66,5 +67,10 @@ public class Intake extends SubsystemBase{
     /**Returns true of the intake is on. */
     public boolean isOn(){
         return Math.abs(getSpeed()) > 0;
+    }
+
+    /**Used for music commands */
+    public void playNote(double hz){
+        intakeMotor.setControl(new MusicTone(hz));
     }
 }

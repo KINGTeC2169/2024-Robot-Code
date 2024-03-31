@@ -23,7 +23,14 @@
         "bottom": 1476,
         "height": 8.210550308227539,
         "left": 150,
+        "path": {
+          "arrows": false,
+          "style": "Line"
+        },
         "right": 2961,
+        "target pose": {
+          "style": "Box/Image"
+        },
         "top": 79,
         "width": 16.541748046875,
         "window": {
