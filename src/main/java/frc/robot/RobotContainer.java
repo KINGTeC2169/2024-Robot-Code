@@ -87,7 +87,7 @@ public class RobotContainer {
     tab.addString("Auto 2.0", () -> "2 Ring Amp").withSize(3, 1).withPosition(0, 1);
     tab.addString("Auto 3.0", () -> "2 Ring Source").withSize(3, 1).withPosition(0, 2);
     tab.addString("Auto 4.0", () -> "Center Line Amp").withSize(3, 1).withPosition(0, 3);
-    tab.addString("Auto 5.0", () -> "Rishi's Auto").withSize(3, 1).withPosition(3, 0);
+    tab.addString("Auto 5.0", () -> "Blank Auto").withSize(3, 1).withPosition(3, 0);
     tab.addString("Auto 6.0", () -> "Hogging Auto").withSize(3, 1).withPosition(3, 1);
     tab.addString("Auto 0.0", () -> "Just Drive").withSize(3, 1).withPosition(3, 2);
 
@@ -215,7 +215,7 @@ public class RobotContainer {
     }
 
     else if (autoChoice.getDouble(0.0) == 5.0){
-      return new PathPlannerAuto("Rishi's Auto");
+      return null;
     }
     
     else if (autoChoice.getDouble(0.0) == 6.0){
