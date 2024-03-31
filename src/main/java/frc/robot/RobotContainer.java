@@ -88,7 +88,7 @@ public class RobotContainer {
     tab.addString("Auto 3.0", () -> "2 Ring Source").withSize(3, 1).withPosition(0, 2);
     tab.addString("Auto 4.0", () -> "Center Line Amp").withSize(3, 1).withPosition(0, 3);
     tab.addString("Auto 5.0", () -> "Blank Auto").withSize(3, 1).withPosition(3, 0);
-    tab.addString("Auto 6.0", () -> "Hogging Auto").withSize(3, 1).withPosition(3, 1);
+    tab.addString("Auto 6.0", () -> "Hogging Source").withSize(3, 1).withPosition(3, 1);
     tab.addString("Auto 0.0", () -> "Just Drive").withSize(3, 1).withPosition(3, 2);
 
     swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
@@ -219,7 +219,7 @@ public class RobotContainer {
     }
     
     else if (autoChoice.getDouble(0.0) == 6.0){
-      return new PathPlannerAuto("Hogging Auto");
+      return new PathPlannerAuto("Hogging Source");
     }
     return new PathPlannerAuto("Just Drive");
   }
