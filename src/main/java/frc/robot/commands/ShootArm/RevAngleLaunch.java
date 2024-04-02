@@ -18,6 +18,7 @@ public class RevAngleLaunch extends Command{
     private double desiredAngle;
     private double stable;
     private Timer timer;
+    private double rpm;
 
     public RevAngleLaunch(Arm arm, Shooter shooter, Intake intake, double angle){
         this.arm = arm;
@@ -28,6 +29,19 @@ public class RevAngleLaunch extends Command{
         addRequirements(intake);
         desiredAngle = angle;
         timer = new Timer();
+        this.rpm = 0;
+    }
+
+    public RevAngleLaunch(Arm arm, Shooter shooter, Intake intake, double angle, double rpm){
+        this.arm = arm;
+        addRequirements(arm);
+        this.shooter = shooter;
+        addRequirements(shooter);
+        this.intake = intake;
+        addRequirements(intake);
+        desiredAngle = angle;
+        timer = new Timer();
+        this.rpm = rpm;
     }
 
     @Override
@@ -48,9 +62,9 @@ public class RevAngleLaunch extends Command{
             System.out.println(stable);
         }
         if (desiredAngle == Positions.amp) shooter.ampRPM();
+        else if (rpm != 0) shooter.setRPM(rpm);
         else shooter.shootRPM();
         arm.setShootPos(desiredAngle);
-
         if(stable > 5 || timer.hasElapsed(2.6)){
             intake.inTake();
         }

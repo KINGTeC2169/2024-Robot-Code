@@ -84,7 +84,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Subwoofer Launch", new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
     NamedCommands.registerCommand("Podium Launch", new RevAngleLaunch(arm, shooter, intake, Positions.podium));
     NamedCommands.registerCommand("Sidesub Launch", new RevAngleLaunch(arm, shooter, intake, Positions.sideSubwoofer));
-    NamedCommands.registerCommand("Half Court Launch", new RevAngleLaunch(arm, shooter, intake, 0.34));
+    NamedCommands.registerCommand("Half Court Launch", new RevAngleLaunch(arm, shooter, intake, 0.34, 3000));
 
     //themeSong = new MusicCommand(swerveSubsystem, "src\\main\\deploy\\ThunderStruck.chrp");
     tab.addString("Auto 1.0", () -> "3 Ring Center").withSize(3, 1).withPosition(0, 0);
