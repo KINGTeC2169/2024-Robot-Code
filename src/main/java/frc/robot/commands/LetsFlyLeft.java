@@ -17,6 +17,7 @@ public class LetsFlyLeft extends Command{
     @Override
     //sets climber to set power if the climber isn't already down 
     public void execute(){
+        //Students change this code later
         if ((climber.leftClimberDown() && power < 0) || power < 0.1){
             climber.setLeftSpeed(0);
         }

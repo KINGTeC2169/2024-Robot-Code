@@ -80,14 +80,14 @@ public class RobotContainer {
     NamedCommands.registerCommand("Subwoofer Launch", new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
     NamedCommands.registerCommand("Podium Launch", new RevAngleLaunch(arm, shooter, intake, Positions.podium));
     NamedCommands.registerCommand("Sidesub Launch", new RevAngleLaunch(arm, shooter, intake, Positions.sideSubwoofer));
-    NamedCommands.registerCommand("Half Court Launch", new RevAngleLaunch(arm, shooter, intake, 0.34, 3000));
+    NamedCommands.registerCommand("Half Court Launch", new RevAngleLaunch(arm, shooter, intake, 0.34, 2500));
 
     //themeSong = new MusicCommand(swerveSubsystem, "src\\main\\deploy\\ThunderStruck.chrp");
     tab.addString("Auto 1.0", () -> "3 Ring Center").withSize(3, 1).withPosition(0, 0);
     tab.addString("Auto 2.0", () -> "2 Ring Amp").withSize(3, 1).withPosition(0, 1);
-    tab.addString("Auto 3.0", () -> "2 Ring Source").withSize(3, 1).withPosition(0, 2);
+    tab.addString("Auto 3.0", () -> "Just Shoot").withSize(3, 1).withPosition(0, 2);
     tab.addString("Auto 4.0", () -> "Center Line Amp").withSize(3, 1).withPosition(0, 3);
-    tab.addString("Auto 5.0", () -> "Blank Auto").withSize(3, 1).withPosition(3, 0);
+    tab.addString("Auto 5.0", () -> "Sanju one").withSize(3, 1).withPosition(3, 0);
     tab.addString("Auto 6.0", () -> "Hogging Source").withSize(3, 1).withPosition(3, 1);
     tab.addString("Auto 0.0", () -> "Just Drive").withSize(3, 1).withPosition(3, 2);
 
@@ -156,8 +156,10 @@ public class RobotContainer {
 
     controller.back().whileTrue(new Stuck(arm, shooter));
 
-    controller.leftBumper().whileFalse(new LetsFlyLeft(climber, -controller.getLeftY()));
-    controller.leftBumper().whileFalse(new LetsFlyRight(climber, -controller.getRightY()));
+    // controller.leftBumper().whileFalse(new LetsFlyLeft(climber, -controller.getLeftY()));
+    // controller.leftBumper().whileFalse(new LetsFlyRight(climber, -controller.getRightY()));
+    controller.leftBumper().whileFalse(Commands.run(() -> climber.setLeftSpeed(-controller.getLeftY())));
+    controller.leftBumper().whileFalse(Commands.run( () -> climber.setRightSpeed(-controller.getRightY())));
 
     //controller.y().whileTrue(Commands.run(() -> arm.updatePIDF()))
     //controller.povUp().whileTrue(new IntakeCommand(intake, arm));
@@ -207,7 +209,7 @@ public class RobotContainer {
     }
 
     else if (autoChoice.getDouble(0.0) == 3.0){
-      return new PathPlannerAuto("2 Ring Source");
+      return new PathPlannerAuto("Shoot");
     }
 
     else if (autoChoice.getDouble(0.0) == 4.0){
@@ -215,7 +217,7 @@ public class RobotContainer {
     }
 
     else if (autoChoice.getDouble(0.0) == 5.0){
-      return null;
+      return new PathPlannerAuto("Sanju one");
     }
     
     else if (autoChoice.getDouble(0.0) == 6.0){

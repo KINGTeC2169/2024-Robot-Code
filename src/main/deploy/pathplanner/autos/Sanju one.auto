@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.74,
-      "y": 6.69
+      "x": 1.3771774811958186,
+      "y": 5.567111941824834
     },
-    "rotation": 59.97
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -30,7 +30,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Waypoint 1"
+                  "pathName": "First Ring"
                 }
               },
               {
@@ -45,13 +45,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Waypoint 2"
+            "pathName": "Negative First Ring"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Amp Launch"
+            "name": "Subwoofer Launch"
           }
         },
         {

@@ -18,6 +18,7 @@ public class RevAngleLaunch extends Command{
     private double desiredAngle;
     private double stable;
     private Timer timer;
+    private double rpm;
 
     public RevAngleLaunch(Arm arm, Shooter shooter, Intake intake, double angle){
         this.arm = arm;
