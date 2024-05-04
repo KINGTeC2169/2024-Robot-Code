@@ -13,7 +13,6 @@ import com.ctre.phoenix6.hardware.CANcoder;
 // import com.ctre.phoenix.sensors.SensorTimeBase;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
-import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
@@ -55,7 +54,7 @@ public class SwerveModule {
         turnMotor.setInverted(turnMotorReversed);
 
         config = new CANcoderConfiguration();
-        config.MagnetSensor.MagnetOffset = absoluteOffset;
+        config.MagnetSensor.MagnetOffset = Units.radiansToRotations(absoluteOffset);
         config.MagnetSensor.SensorDirection = isCancoderReversed ? SensorDirectionValue.CounterClockwise_Positive : SensorDirectionValue.Clockwise_Positive;
         config.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.Signed_PlusMinusHalf;
 
