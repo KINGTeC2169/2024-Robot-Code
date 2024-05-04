@@ -121,7 +121,7 @@ public class SwerveModule {
 
     /**Returns the absolute position of the CANcoder. */
     public double getAbsoluteTurnPosition() {
-        return absoluteEncoder.getAbsolutePosition().getValueAsDouble() * 360;
+        return (absoluteEncoder.getAbsolutePosition().getValueAsDouble() * 360) * (180.0/Math.PI);
     }
 
     /**Returns the current of the drive motor. */
