@@ -55,7 +55,7 @@ public class SwerveModule {
 
         config = new CANcoderConfiguration();
         config.MagnetSensor.MagnetOffset = absoluteOffset;
-        config.MagnetSensor.SensorDirection = isCancoderReversed ? SensorDirectionValue.CounterClockwise_Positive : SensorDirectionValue.Clockwise_Positive;
+        config.MagnetSensor.SensorDirection = isCancoderReversed ? SensorDirectionValue.Clockwise_Positive : SensorDirectionValue.CounterClockwise_Positive;
 
         // config.magnetOffsetDegrees = Units.radiansToDegrees(absoluteOffset);
         // config.sensorCoefficient = 2 * Math.PI / 4096.0;
