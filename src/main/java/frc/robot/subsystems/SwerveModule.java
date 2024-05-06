@@ -12,7 +12,7 @@ import com.ctre.phoenix6.hardware.CANcoder;
 // import com.ctre.phoenix.sensors.CANCoderConfiguration;
 // import com.ctre.phoenix.sensors.SensorTimeBase;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
@@ -119,7 +119,7 @@ public class SwerveModule {
 
     /**Returns the absolute position of the CANcoder. */
     public double getAbsoluteTurnPosition() {
-        return absoluteEncoder.getAbsolutePosition().getValueAsDouble();
+        return (absoluteEncoder.getAbsolutePosition().getValueAsDouble() * 360) * (180.0/Math.PI);
     }
 
     /**Returns the current of the drive motor. */
