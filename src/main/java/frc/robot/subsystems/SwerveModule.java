@@ -12,10 +12,11 @@ import com.ctre.phoenix6.hardware.CANcoder;
 // import com.ctre.phoenix.sensors.CANCoderConfiguration;
 // import com.ctre.phoenix.sensors.SensorTimeBase;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -53,8 +54,11 @@ public class SwerveModule {
         driveMotor.setInverted(driveMotorReversed);
         turnMotor.setInverted(turnMotorReversed);
 
+        driveMotor.setNeutralMode(NeutralModeValue.Brake);
+        turnMotor.setIdleMode(IdleMode.kBrake);
+
         config = new CANcoderConfiguration();
-        config.MagnetSensor.MagnetOffset = absoluteOffset;
+        config.MagnetSensor.MagnetOffset = Units.radiansToRotations(absoluteOffset);
         config.MagnetSensor.SensorDirection = isCancoderReversed ? SensorDirectionValue.Clockwise_Positive : SensorDirectionValue.CounterClockwise_Positive;
 
         // config.magnetOffsetDegrees = Units.radiansToDegrees(absoluteOffset);
@@ -119,7 +123,7 @@ public class SwerveModule {
 
     /**Returns the absolute position of the CANcoder. */
     public double getAbsoluteTurnPosition() {
-        return (absoluteEncoder.getAbsolutePosition().getValueAsDouble() * 360) * (180.0/Math.PI);
+        return Units.rotationsToRadians(absoluteEncoder.getAbsolutePosition().getValueAsDouble()); // * 360) * (180.0/Math.PI);
     }
 
     /**Returns the current of the drive motor. */
