@@ -5,19 +5,13 @@ import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MusicTone;
 import com.ctre.phoenix6.hardware.CANcoder;
-// import com.ctre.phoenix.motorcontrol.ControlMode;
-// import com.ctre.phoenix.motorcontrol.can.TalonFX;
-// import com.ctre.phoenix.sensors.AbsoluteSensorRange;
-// import com.ctre.phoenix.sensors.CANCoder;
-// import com.ctre.phoenix.sensors.CANCoderConfiguration;
-// import com.ctre.phoenix.sensors.SensorTimeBase;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -29,7 +23,6 @@ import frc.robot.Constants;
 
 import static frc.robot.Constants.ModuleConstants.*;
 
-@SuppressWarnings("removal")
 public class SwerveModule {
     private TalonFX driveMotor;
     private CANSparkMax turnMotor;
@@ -60,13 +53,6 @@ public class SwerveModule {
         config = new CANcoderConfiguration();
         config.MagnetSensor.MagnetOffset = Units.radiansToRotations(absoluteOffset);
         config.MagnetSensor.SensorDirection = isCancoderReversed ? SensorDirectionValue.Clockwise_Positive : SensorDirectionValue.CounterClockwise_Positive;
-
-        // config.magnetOffsetDegrees = Units.radiansToDegrees(absoluteOffset);
-        // config.sensorCoefficient = 2 * Math.PI / 4096.0;
-        // config.unitString = "rad";
-        // config.sensorTimeBase = SensorTimeBase.PerSecond;
-        // config.sensorDirection = isCancoderReversed;
-        // config.absoluteSensorRange = AbsoluteSensorRange.Signed_PlusMinus180;
 
         absoluteEncoder = new CANcoder(canCoderID);
         absoluteEncoder.getConfigurator().apply(config);
