@@ -32,9 +32,9 @@ public class SwerveSubsystem extends SubsystemBase {
 
     //Creates an instance of SwerveModule for each module on the robot
     private SwerveModule frontLeft = new SwerveModule(
-    Ports.frontLeftDrive,
-    Ports.frontLeftTurn, 
-    false, false,
+    Ports.frontLeftDrive,//Drive wheel id
+    Ports.frontLeftTurn, //Turn wheel id
+    true, false,
     Ports.frontLeftAbsolute,
     DriveConstants.FLabsoluteOffset,
     false);
@@ -42,7 +42,7 @@ public class SwerveSubsystem extends SubsystemBase {
     private SwerveModule frontRight = new SwerveModule(
     Ports.frontRightDrive,
     Ports.frontRightTurn, 
-    false, false,
+    true, false,
     Ports.frontRightAbsolute,
     DriveConstants.FRabsoluteOffset,
     false);
@@ -50,7 +50,7 @@ public class SwerveSubsystem extends SubsystemBase {
     private SwerveModule backLeft = new SwerveModule(
     Ports.backLeftDrive,
     Ports.backLeftTurn, 
-    false, false,
+    true, false,
     Ports.backLeftAbsolute,
     DriveConstants.BLabsoluteOffset,
     false);
@@ -58,7 +58,7 @@ public class SwerveSubsystem extends SubsystemBase {
     private SwerveModule backRight = new SwerveModule(
     Ports.backRightDrive,
     Ports.backRightTurn, 
-    false, false,
+    true, false,
     Ports.backRightAbsolute,
     DriveConstants.BRabsoluteOffset,
     false);

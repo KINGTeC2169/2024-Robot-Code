@@ -2,46 +2,15 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.72,
-      "y": 6.71
+      "x": 1.3771774811958186,
+      "y": 5.567111941824834
     },
-    "rotation": 60.25999999999999
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
-        {
-          "type": "named",
-          "data": {
-            "name": "Subwoofer Launch"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Rest Position"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Emergency Path"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Ground Pickup"
-                }
-              }
-            ]
-          }
-        },
         {
           "type": "named",
           "data": {
@@ -83,6 +52,12 @@
           "type": "named",
           "data": {
             "name": "Subwoofer Launch"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Rest Position"
           }
         }
       ]

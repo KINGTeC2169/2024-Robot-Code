@@ -6,12 +6,10 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.Joystick;
 
-import edu.wpi.first.math.trajectory.*;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -72,8 +70,6 @@ public class RobotContainer {
   private ShuffleboardTab tab = Shuffleboard.getTab("Auto Chooser");
   private GenericEntry autoChoice = tab.add("Auto Choice", 0).withPosition(6, 0).getEntry();
 
-  private Trajectory trajectory;
-
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     
@@ -84,15 +80,15 @@ public class RobotContainer {
     NamedCommands.registerCommand("Subwoofer Launch", new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
     NamedCommands.registerCommand("Podium Launch", new RevAngleLaunch(arm, shooter, intake, Positions.podium));
     NamedCommands.registerCommand("Sidesub Launch", new RevAngleLaunch(arm, shooter, intake, Positions.sideSubwoofer));
-    NamedCommands.registerCommand("Half Court Launch", new RevAngleLaunch(arm, shooter, intake, 0.34));
+    NamedCommands.registerCommand("Half Court Launch", new RevAngleLaunch(arm, shooter, intake, 0.34, 2500));
 
     //themeSong = new MusicCommand(swerveSubsystem, "src\\main\\deploy\\ThunderStruck.chrp");
     tab.addString("Auto 1.0", () -> "3 Ring Center").withSize(3, 1).withPosition(0, 0);
     tab.addString("Auto 2.0", () -> "2 Ring Amp").withSize(3, 1).withPosition(0, 1);
-    tab.addString("Auto 3.0", () -> "2 Ring Source").withSize(3, 1).withPosition(0, 2);
+    tab.addString("Auto 3.0", () -> "Just Shoot").withSize(3, 1).withPosition(0, 2);
     tab.addString("Auto 4.0", () -> "Center Line Amp").withSize(3, 1).withPosition(0, 3);
-    tab.addString("Auto 5.0", () -> "Rishi's Auto").withSize(3, 1).withPosition(3, 0);
-    tab.addString("Auto 6.0", () -> "Hogging Auto").withSize(3, 1).withPosition(3, 1);
+    tab.addString("Auto 5.0", () -> "Sanju one").withSize(3, 1).withPosition(3, 0);
+    tab.addString("Auto 6.0", () -> "Hogging Source").withSize(3, 1).withPosition(3, 1);
     tab.addString("Auto 0.0", () -> "Just Drive").withSize(3, 1).withPosition(3, 2);
 
     swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
@@ -162,6 +158,8 @@ public class RobotContainer {
 
     controller.leftBumper().whileFalse(new LetsFlyLeft(climber, -controller.getLeftY()));
     controller.leftBumper().whileFalse(new LetsFlyRight(climber, -controller.getRightY()));
+    controller.leftBumper().whileFalse(Commands.run(() -> climber.setLeftSpeed(-controller.getLeftY())));
+    controller.leftBumper().whileFalse(Commands.run( () -> climber.setRightSpeed(-controller.getRightY())));
 
     //controller.y().whileTrue(Commands.run(() -> arm.updatePIDF()))
     //controller.povUp().whileTrue(new IntakeCommand(intake, arm));
@@ -202,11 +200,6 @@ public class RobotContainer {
 
     swerveSubsystem.zeroHeading();
 
-    PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {SwerveSubsystem.field.setRobotPose(pose);});
-    PathPlannerLogging.setLogActivePathCallback((poses) -> {trajectory = TrajectoryGenerator.generateTrajectory(poses, null);
-                                                            SwerveSubsystem.field.getObject("path").setTrajectory(trajectory);
-                                                            });
-
     if (autoChoice.getDouble(0.0) == 1.0){
       return new PathPlannerAuto("3 Ring Center");
     }
@@ -216,7 +209,7 @@ public class RobotContainer {
     }
 
     else if (autoChoice.getDouble(0.0) == 3.0){
-      return new PathPlannerAuto("2 Ring Source");
+      return new PathPlannerAuto("Shoot");
     }
 
     else if (autoChoice.getDouble(0.0) == 4.0){
@@ -224,11 +217,11 @@ public class RobotContainer {
     }
 
     else if (autoChoice.getDouble(0.0) == 5.0){
-      return new PathPlannerAuto("Rishi's Auto");
+      return new PathPlannerAuto("Sanju one");
     }
     
     else if (autoChoice.getDouble(0.0) == 6.0){
-      return new PathPlannerAuto("Hogging Auto");
+      return new PathPlannerAuto("Hogging Source");
     }
     return new PathPlannerAuto("Just Drive");
   }

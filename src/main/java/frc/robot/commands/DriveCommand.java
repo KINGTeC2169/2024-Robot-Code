@@ -52,7 +52,7 @@ public class DriveCommand extends Command{
         // Deadband: unsure if necessary for our controllers
         xSpeed = Math.abs(xSpeed) > .07 ? xSpeed : 0.0;
         ySpeed = Math.abs(ySpeed) > .07 ? ySpeed : 0.0;
-        turningSpeed = Math.abs(turningSpeed) > .05 ? turningSpeed : 0.0;
+        turningSpeed = Math.abs(turningSpeed) > .08 ? turningSpeed : 0.0;
 
         xSpeed = xLimiter.calculate(xSpeed) *  Constants.ModuleConstants.maxSpeed;
         ySpeed = yLimiter.calculate(ySpeed) *  Constants.ModuleConstants.maxSpeed;
