@@ -80,7 +80,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Subwoofer Launch", new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
     NamedCommands.registerCommand("Podium Launch", new RevAngleLaunch(arm, shooter, intake, Positions.podium));
     NamedCommands.registerCommand("Sidesub Launch", new RevAngleLaunch(arm, shooter, intake, Positions.sideSubwoofer));
-    NamedCommands.registerCommand("Half Court Launch", new RevAngleLaunch(arm, shooter, intake, 0.34, 2500));
+    NamedCommands.registerCommand("Half Court Launch", new RevAngleLaunch(arm, shooter, intake, 0.34, 1000));
 
     //themeSong = new MusicCommand(swerveSubsystem, "src\\main\\deploy\\ThunderStruck.chrp");
     tab.addString("Auto 1.0", () -> "3 Ring Center").withSize(3, 1).withPosition(0, 0);
@@ -198,31 +198,33 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
 
-    swerveSubsystem.zeroHeading();
+    return null;
 
-    if (autoChoice.getDouble(0.0) == 1.0){
-      return new PathPlannerAuto("3 Ring Center");
-    }
+  //   swerveSubsystem.zeroHeading();
 
-    else if (autoChoice.getDouble(0.0) == 2.0){
-      return new PathPlannerAuto("2 Ring Amp");
-    }
+  //   if (autoChoice.getDouble(0.0) == 1.0){
+  //     return new PathPlannerAuto("3 Ring Center");
+  //   }
 
-    else if (autoChoice.getDouble(0.0) == 3.0){
-      return new PathPlannerAuto("Shoot");
-    }
+  //   else if (autoChoice.getDouble(0.0) == 2.0){
+  //     return new PathPlannerAuto("2 Ring Amp");
+  //   }
 
-    else if (autoChoice.getDouble(0.0) == 4.0){
-      return new PathPlannerAuto("Center Line Amp");
-    }
+  //   else if (autoChoice.getDouble(0.0) == 3.0){
+  //     return new PathPlannerAuto("Shoot");
+  //   }
 
-    else if (autoChoice.getDouble(0.0) == 5.0){
-      return new PathPlannerAuto("Sanju one");
-    }
+  //   else if (autoChoice.getDouble(0.0) == 4.0){
+  //     return new PathPlannerAuto("Center Line Amp");
+  //   }
+
+  //   else if (autoChoice.getDouble(0.0) == 5.0){
+  //     return new PathPlannerAuto("Sanju one");
+  //   }
     
-    else if (autoChoice.getDouble(0.0) == 6.0){
-      return new PathPlannerAuto("Hogging Source");
-    }
-    return new PathPlannerAuto("Just Drive");
+  //   else if (autoChoice.getDouble(0.0) == 6.0){
+  //     return new PathPlannerAuto("Hogging Source");
+  //   }
+  //   return new PathPlannerAuto("Just Drive");
   }
 }
