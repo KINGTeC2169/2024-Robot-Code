@@ -43,6 +43,6 @@ public class RevAndAngle extends Command {
     @Override
     //Finishes when there is no note in the intake
 	public boolean isFinished() {
-        return !NoteManager.hasNote();
+        return false;
 	}
 }

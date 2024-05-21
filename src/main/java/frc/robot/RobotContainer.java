@@ -36,6 +36,7 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LimelightTable;
 import frc.robot.subsystems.Music;
+import frc.robot.subsystems.NoteManager;
 import frc.robot.subsystems.Pigeon;
 import frc.robot.subsystems.Shooter;
 
@@ -141,16 +142,19 @@ public class RobotContainer {
     controller.rightBumper().onFalse(Commands.run(() -> shooter.setRPM(0)));
 
     controller.leftTrigger(0.2).onTrue(new Pickup(intake));
+    controller.leftTrigger(0.2).whileFalse(Commands.run(() -> intake.stopTake()));
     controller.rightTrigger(0.2).whileTrue(new Launch(intake));
     controller.rightTrigger(0.2).onFalse(new Rest(arm));
 
     controller.povUp().onTrue(new RevAndAngle(arm, shooter, 0.34));
     controller.povDown().onTrue(new Rest(arm));
-    controller.povLeft().whileTrue(new Outtake(intake));
+    controller.x().whileTrue(new Outtake(intake));
+    controller.povRight().onTrue(Commands.run(() -> NoteManager.setTrue()));
+    controller.povRight().whileFalse(Commands.run(() -> NoteManager.setFalse()));
 
     controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
-    controller.x().onTrue(new RevAndAngle(arm, shooter, Arm.aimToArm(LimelightTable.aimShot())));
-    controller.x().onTrue(new VisionAim(swerveSubsystem, arm, shooter));
+    //controller.x().onTrue(new RevAndAngle(arm, shooter, Arm.aimToArm(LimelightTable.aimShot())));
+    controller.povLeft().onTrue(new RevAndAngle(arm, shooter, 0.34));
     controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.podium));;
     controller.b().onTrue(new Amp(arm, shooter));
 

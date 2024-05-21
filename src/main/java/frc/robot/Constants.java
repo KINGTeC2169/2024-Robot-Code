@@ -144,7 +144,7 @@ public final class Constants {
     }
  
     public static final class Positions{
-        public static final double rest = 0.261;//0.06; //0.254 //0,.292
+        public static final double rest = 0.265;//0.06; //0.254 //0,.292
         public static final double subwoofer = 0.3417-0.03;//0.118025; //-0.038;
         public static final double sideSubwoofer = 0.36334-0.03;//0.261; //0.136; // -0.038;
         public static final double podium = 0.39;//0.3877-0.03;//0.15; //-0.038;
