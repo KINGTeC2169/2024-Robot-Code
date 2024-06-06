@@ -154,12 +154,13 @@ public class RobotContainer {
 
     controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
     //controller.x().onTrue(new RevAndAngle(arm, shooter, Arm.aimToArm(LimelightTable.aimShot())));
-    controller.povLeft().onTrue(new RevAndAngle(arm, shooter, 0.34));
-    controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.podium));;
+    controller.y().onTrue(new RevAndAngle(arm, shooter, 0.4));
+    //controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.podium));;
     controller.b().onTrue(new Amp(arm, shooter));
 
     controller.back().whileTrue(new Stuck(arm, shooter));
 
+    
     controller.leftBumper().whileFalse(new LetsFlyLeft(climber, -controller.getLeftY()));
     controller.leftBumper().whileFalse(new LetsFlyRight(climber, -controller.getRightY()));
     controller.leftBumper().whileFalse(Commands.run(() -> climber.setLeftSpeed(-controller.getLeftY())));
