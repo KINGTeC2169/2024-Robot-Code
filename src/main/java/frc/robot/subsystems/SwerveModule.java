@@ -17,7 +17,7 @@ import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -29,7 +29,6 @@ import frc.robot.Constants;
 
 import static frc.robot.Constants.ModuleConstants.*;
 
-@SuppressWarnings("removal")
 public class SwerveModule {
     private TalonFX driveMotor;
     private CANSparkMax turnMotor;
