@@ -1,6 +1,8 @@
 package frc.robot.commands.ShootArm;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.NoteManager;
@@ -30,6 +32,7 @@ public class RevAndAngle extends Command {
         if(NoteManager.hasNote()){
             shooter.setRPM(4500);
             arm.setShootPos(desiredAngle);
+            
         }
     }
 

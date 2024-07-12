@@ -8,6 +8,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -103,9 +104,13 @@ public class RobotContainer {
     () -> leftStick.getRawButton(1)
 		));
 
+    
+
     // Configure the trigger bindings
 
     configureBindings();
+
+    
   }
 
   /**
@@ -142,7 +147,7 @@ public class RobotContainer {
     controller.rightBumper().onFalse(Commands.run(() -> shooter.setRPM(0)));
 
     controller.leftTrigger(0.2).onTrue(new Pickup(intake));
-    controller.leftTrigger(0.2).whileFalse(Commands.run(() -> intake.stopTake()));
+    //controller.leftTrigger(0.2).whileFalse(Commands.run(() -> intake.stopTake()));
     controller.rightTrigger(0.2).whileTrue(new Launch(intake));
     controller.rightTrigger(0.2).onFalse(new Rest(arm));
 
@@ -151,16 +156,15 @@ public class RobotContainer {
     controller.x().whileTrue(new Outtake(intake));
     controller.povRight().onTrue(Commands.run(() -> NoteManager.setTrue()));
     controller.povRight().whileFalse(Commands.run(() -> NoteManager.setFalse()));
-
     controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
     //controller.x().onTrue(new RevAndAngle(arm, shooter, Arm.aimToArm(LimelightTable.aimShot())));
-    controller.y().onTrue(new RevAndAngle(arm, shooter, 0.4));
+    controller.y().onTrue(new RevAndAngle(arm, shooter, 0.37));
+    //0.37
     //controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.podium));;
     controller.b().onTrue(new Amp(arm, shooter));
 
     controller.back().whileTrue(new Stuck(arm, shooter));
 
-    
     controller.leftBumper().whileFalse(new LetsFlyLeft(climber, -controller.getLeftY()));
     controller.leftBumper().whileFalse(new LetsFlyRight(climber, -controller.getRightY()));
     controller.leftBumper().whileFalse(Commands.run(() -> climber.setLeftSpeed(-controller.getLeftY())));

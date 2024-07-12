@@ -99,6 +99,7 @@ public class Shooter extends SubsystemBase {
         setpointRPM = rpm;
         double topRPS = topRotation * rpm/60 * 2.14285714285714;
         double botRPS = botRotation * rpm/60 * 2.14285714285714;
+        
         shooterTop.setControl(m_velocity.withVelocity(topRPS));
         shooterBot.setControl(m_velocity.withVelocity(botRPS));
     }
