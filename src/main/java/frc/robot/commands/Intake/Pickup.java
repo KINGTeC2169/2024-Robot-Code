@@ -23,10 +23,12 @@ public class Pickup extends Command {
     //Runs intake
     public void execute() { 
         intake.inTake();
-        if(intake.getRPM() > 1750){
-            started = true;
-        } else if (intake.getRPM() < 1500 && started){
-            NoteManager.setTrue();
+        if(intake.getMode() == 1){
+            if(intake.getRPM() > 1750){
+                started = true;
+            } else if (intake.getRPM() < 1500 && started){
+                NoteManager.setTrue();
+            }
         }
     }
 
@@ -42,6 +44,9 @@ public class Pickup extends Command {
     @Override
     //Returns true if there is a note in the intake
 	public boolean isFinished() {
-		return NoteManager.hasNote();
+        if(intake.getMode() != 0){
+		    return NoteManager.hasNote();
+        }
+        return false;
 	}
 }

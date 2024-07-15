@@ -57,7 +57,7 @@ public class RobotContainer {
   private final Pigeon pigeon = new Pigeon();
   private final Arm arm = new Arm();
   private final Climber climber = new Climber();
-  private final Intake intake = new Intake();
+  private final Intake intake = new Intake(1);
   private final Shooter shooter = new Shooter();
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
   private final Music music = new Music(arm,shooter,intake,swerveSubsystem);

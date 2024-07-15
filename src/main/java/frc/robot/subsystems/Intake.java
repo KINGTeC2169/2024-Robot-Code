@@ -14,11 +14,13 @@ import frc.robot.Constants;
 public class Intake extends SubsystemBase{
     
     private TalonFX intakeMotor;
+    private int mode; // 0 -> complete manual, 1 -> pressure sensor, 2 -> beam break
 
     private ShuffleboardTab tab = Shuffleboard.getTab("Intake");
 
-    public Intake(){
+    public Intake(int mode){
         intakeMotor = new TalonFX(Constants.Ports.intake);
+        mode = this.mode;
 
         tab.addDouble("Intake Voltage", () -> getVoltage()).withWidget(BuiltInWidgets.kVoltageView).withSize(2, 1).withPosition(0, 0).withProperties(Map.of("Max", 12));
         tab.addBoolean("Has note", () -> NoteManager.hasNote()).withPosition(2, 0);
@@ -26,12 +28,21 @@ public class Intake extends SubsystemBase{
         
         tab.addDouble("Intake RPM", () -> getRPM()).withPosition(0, 1);
         tab.addBoolean("Note Manager Distance", () -> NoteManager.hasNote()).withPosition(0,2);
+        tab.addDouble("Current Mode", () -> getMode()).withPosition(4,0);
+    }
+
+    public int getMode(){
+        return mode;
+    }
+
+    public void cycleMode(){
+        mode++;
+        mode%=3;
     }
 
     /**Sets intake to suck in */
     public void inTake() {
         intakeMotor.set(-0.4);
-        
     }
 
     /**Returns the intake motor's rotor velocity in rotations per minute */

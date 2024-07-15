@@ -28,11 +28,15 @@ public class Launch extends Command {
     public void end(boolean interupt) {
         Timer.delay(0.03);
         intake.stopTake();
+        NoteManager.setFalse();
 	}
 
     @Override
     //Finishes when there is no note in the intake
 	public boolean isFinished() {
-		return !NoteManager.hasNote();
+        if(intake.getMode() == 2){
+            return !NoteManager.hasNote();
+        }
+		return false;
 	}
 }
