@@ -1,6 +1,8 @@
 package frc.robot.commands.ShootArm;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.Positions;
 import frc.robot.subsystems.Arm;
@@ -11,12 +13,14 @@ public class Amp extends Command {
 
     private Arm arm;
     private Shooter shooter;
+    private XboxController rumble;
 
-    public Amp(Arm arm, Shooter shooter){
+    public Amp(Arm arm, Shooter shooter, XboxController rumble){
         this.arm = arm;
         addRequirements(arm);
         this.shooter = shooter;
         addRequirements(shooter);
+        this.rumble = rumble;
     }
 
     @Override
@@ -30,6 +34,9 @@ public class Amp extends Command {
             shooter.ampRPM();
             arm.setShootPos(Positions.amp);
         }
+        if(arm.getPosition() > 0.48){
+            rumble.setRumble(GenericHID.RumbleType.kRightRumble, 0.5);
+        }
     }
 
     @Override
@@ -37,6 +44,7 @@ public class Amp extends Command {
     public void end(boolean interupt){
         Timer.delay(0.3);
         shooter.setRPM(0);
+        
     }
     
     @Override

@@ -1,6 +1,8 @@
 package frc.robot.commands.ShootArm;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.Positions;
 import frc.robot.subsystems.Arm;
@@ -8,16 +10,19 @@ import frc.robot.subsystems.Arm;
 public class Rest extends Command {
 
     private Arm arm;
+    private XboxController rumble;
 
-    public Rest(Arm arm){
+    public Rest(Arm arm, XboxController rumble){
         this.arm = arm;
         addRequirements(arm);
+        this.rumble = rumble;
     }
 
     @Override
     //Adds extra delay so the previous command can finish
     public void initialize(){
         Timer.delay(0.05);
+        rumble.setRumble(GenericHID.RumbleType.kRightRumble, 0);
     }
 
     @Override

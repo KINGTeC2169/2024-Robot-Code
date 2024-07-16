@@ -22,6 +22,12 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
  */
 public final class Constants {
 
+    public static final class Modes {
+
+        public static int intakeMode = 2; // 0 -> complete manual, 1 -> pressure sensor, 2 -> beam break
+
+    }
+
     public static final class Ports {
         
         //Driver station controller ids
@@ -114,10 +120,10 @@ public final class Constants {
         public static final double rightLeftWheels = Units.inchesToMeters(23);
         public static final double frontBackWheels = Units.inchesToMeters(23);
 
-        public static final double FRabsoluteOffset = 2.689068321163529; //2.670655153691769; //-0.470931150019169;
-        public static final double FLabsoluteOffset = 1.135145783035374; //0.971007876098156; //-2.178248316049576;
-        public static final double BRabsoluteOffset = -2.478912953223196; //-2.574014559388161; //0.572173677384853;
-        public static final double BLabsoluteOffset = -2.486582857162624; //-2.503451585769653; //0.628930851817131;
+        public static final double FRabsoluteOffset = 2.689068321163529; //2.670655153691769; //-0.470931150019169; //Post Season: 2.689068321163529
+        public static final double FLabsoluteOffset = 1.135145783035374; //0.971007876098156; //-2.178248316049576; //Post Season: 1.135145783035374
+        public static final double BRabsoluteOffset = -2.478912953223196; //-2.574014559388161; //0.572173677384853; //Post Season: -2.478912953223196
+        public static final double BLabsoluteOffset = -2.486582857162624; //-2.503451585769653; //0.628930851817131; //Post Season: -2.486582857162624
 
 
     public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(

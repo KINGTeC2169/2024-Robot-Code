@@ -13,12 +13,14 @@ public class RevAndAngle extends Command {
     private Arm arm;
     private Shooter shooter;
     private double desiredAngle;
+    private XboxController rumble;
 
-    public RevAndAngle(Arm arm, Shooter shooter, double angle){
+    public RevAndAngle(Arm arm, Shooter shooter, double angle, XboxController rumble){
         this.arm = arm;
         addRequirements(arm);
         this.shooter = shooter;
         addRequirements(shooter);
+        this.rumble = rumble;
         desiredAngle = angle;
     }
 
@@ -34,6 +36,9 @@ public class RevAndAngle extends Command {
             arm.setShootPos(desiredAngle);
             
         }
+        if(arm.isReady()){
+            rumble.setRumble(GenericHID.RumbleType.kRightRumble, 0.5);
+        }
     }
 
     @Override
@@ -41,6 +46,7 @@ public class RevAndAngle extends Command {
     public void end(boolean interupt){
         shooter.setRPM(0);
         Timer.delay(0.01);
+        
     }
     
     @Override

@@ -10,7 +10,7 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -57,7 +57,7 @@ public class RobotContainer {
   private final Pigeon pigeon = new Pigeon();
   private final Arm arm = new Arm();
   private final Climber climber = new Climber();
-  private final Intake intake = new Intake(1);
+  private final Intake intake = new Intake(); //also change in note manager
   private final Shooter shooter = new Shooter();
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
   private final Music music = new Music(arm,shooter,intake,swerveSubsystem);
@@ -66,6 +66,7 @@ public class RobotContainer {
   private final Joystick leftStick = new Joystick(Constants.Ports.leftStick);
   private final Joystick rightStick = new Joystick(Constants.Ports.rightStick);
   private final CommandXboxController controller = new CommandXboxController(Constants.Ports.controller);
+  private final XboxController controllerRumble = new XboxController(Constants.Ports.controller);
   private final CommandXboxController buttonBoard = new CommandXboxController(Constants.Ports.buttons);
 
   //Shuffleboard
@@ -78,7 +79,7 @@ public class RobotContainer {
     // Register Named Commands
     NamedCommands.registerCommand("Ground Pickup", new Pickup(intake));
     NamedCommands.registerCommand("Amp Launch", new RevAngleLaunch(arm, shooter, intake, Positions.amp));
-    NamedCommands.registerCommand("Rest Position", new Rest(arm));
+    NamedCommands.registerCommand("Rest Position", new Rest(arm, controllerRumble));
     NamedCommands.registerCommand("Subwoofer Launch", new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
     NamedCommands.registerCommand("Podium Launch", new RevAngleLaunch(arm, shooter, intake, Positions.podium));
     NamedCommands.registerCommand("Sidesub Launch", new RevAngleLaunch(arm, shooter, intake, Positions.sideSubwoofer));
@@ -142,33 +143,40 @@ public class RobotContainer {
 
     //Comp controls:
 
+    //controller.getAButton().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
     controller.leftBumper().whileTrue(Commands.run(() -> arm.setVoltage(-controller.getRightY()*2)));
     controller.rightBumper().onTrue(Commands.run(() -> shooter.setRPM(3000)));
     controller.rightBumper().onFalse(Commands.run(() -> shooter.setRPM(0)));
 
     controller.leftTrigger(0.2).onTrue(new Pickup(intake));
     //controller.leftTrigger(0.2).whileFalse(Commands.run(() -> intake.stopTake()));
-    controller.rightTrigger(0.2).whileTrue(new Launch(intake));
-    controller.rightTrigger(0.2).onFalse(new Rest(arm));
+    controller.rightTrigger(0.2).whileTrue(new Launch(intake, controllerRumble));
+    controller.rightTrigger(0.2).onFalse(new Rest(arm, controllerRumble));
 
-    controller.povUp().onTrue(new RevAndAngle(arm, shooter, 0.34));
-    controller.povDown().onTrue(new Rest(arm));
+    controller.povUp().onTrue(new RevAndAngle(arm, shooter, 0.34, controllerRumble));
+    controller.povDown().onTrue(new Rest(arm, controllerRumble));
     controller.x().whileTrue(new Outtake(intake));
     controller.povRight().onTrue(Commands.run(() -> NoteManager.setTrue()));
     controller.povRight().whileFalse(Commands.run(() -> NoteManager.setFalse()));
-    controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
+    controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer, controllerRumble));
+    /*controller.a().onTrue(Commands.run(() -> controllerRumble.setRumble(GenericHID.RumbleType.kRightRumble, 0.2)));
+    controller.a().onTrue(Commands.run(() -> controllerRumble.setRumble(GenericHID.RumbleType.kLeftRumble, 0.2)));
+    controller.b().onTrue(Commands.run(() -> controllerRumble.setRumble(GenericHID.RumbleType.kRightRumble, 0)));
+    controller.b().onTrue(Commands.run(() -> controllerRumble.setRumble(GenericHID.RumbleType.kLeftRumble, 0)));
+    */
     //controller.x().onTrue(new RevAndAngle(arm, shooter, Arm.aimToArm(LimelightTable.aimShot())));
-    controller.y().onTrue(new RevAndAngle(arm, shooter, 0.37));
+    controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer, controllerRumble));
     //0.37
     //controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.podium));;
-    controller.b().onTrue(new Amp(arm, shooter));
+    controller.b().onTrue(new Amp(arm, shooter, controllerRumble));
 
     controller.back().whileTrue(new Stuck(arm, shooter));
+    controller.start().onTrue(Commands.run(() -> intake.cycleMode()));
 
     controller.leftBumper().whileFalse(new LetsFlyLeft(climber, -controller.getLeftY()));
     controller.leftBumper().whileFalse(new LetsFlyRight(climber, -controller.getRightY()));
     controller.leftBumper().whileFalse(Commands.run(() -> climber.setLeftSpeed(-controller.getLeftY())));
-    controller.leftBumper().whileFalse(Commands.run( () -> climber.setRightSpeed(-controller.getRightY())));
+    controller.leftBumper().whileFalse(Commands.run(() -> climber.setRightSpeed(-controller.getRightY())));
 
     //controller.y().whileTrue(Commands.run(() -> arm.updatePIDF()))
     //controller.povUp().whileTrue(new IntakeCommand(intake, arm));
@@ -184,17 +192,18 @@ public class RobotContainer {
 
     buttonBoard.button(1).whileTrue(new Pickup(intake));
     buttonBoard.button(2).whileTrue(new Outtake(intake));
-    buttonBoard.button(3).whileTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
-    buttonBoard.button(4).whileTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
+    buttonBoard.button(3).whileTrue(new RevAndAngle(arm, shooter, Positions.subwoofer, controllerRumble));
+    buttonBoard.button(4).whileTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer, controllerRumble));
     buttonBoard.button(5).onTrue(new Pickup(intake));
-    buttonBoard.button(6).onTrue(new Rest(arm));
-    buttonBoard.button(7).whileTrue(new Amp(arm, shooter));
-    buttonBoard.button(8).whileTrue(new RevAndAngle(arm, shooter, Positions.podium));
+    buttonBoard.button(6).onTrue(new Rest(arm, controllerRumble));
+    buttonBoard.button(7).whileTrue(new Amp(arm, shooter, controllerRumble));
+    buttonBoard.button(8).whileTrue(new RevAndAngle(arm, shooter, Positions.podium, controllerRumble));
     buttonBoard.button(10).whileTrue((Commands.run(() -> music.play())));
     //buttonBoard.button(10).onTrue(Commands.run(() -> arm.activeStop()));
     //buttonBoard.button(11).whileTrue(new Angle(arm, 0.49));
     
   }
+
 
   public Command getTestCommand(){
     return Commands.run(music::play);
@@ -207,33 +216,31 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
 
-    return null;
+    swerveSubsystem.zeroHeading();
 
-  //   swerveSubsystem.zeroHeading();
+    if (autoChoice.getDouble(0.0) == 1.0){
+      return new PathPlannerAuto("3 Ring Center");
+    }
 
-  //   if (autoChoice.getDouble(0.0) == 1.0){
-  //     return new PathPlannerAuto("3 Ring Center");
-  //   }
+    else if (autoChoice.getDouble(0.0) == 2.0){
+      return new PathPlannerAuto("2 Ring Amp");
+    }
 
-  //   else if (autoChoice.getDouble(0.0) == 2.0){
-  //     return new PathPlannerAuto("2 Ring Amp");
-  //   }
+    else if (autoChoice.getDouble(0.0) == 3.0){
+      return new PathPlannerAuto("Shoot");
+    }
 
-  //   else if (autoChoice.getDouble(0.0) == 3.0){
-  //     return new PathPlannerAuto("Shoot");
-  //   }
+    else if (autoChoice.getDouble(0.0) == 4.0){
+      return new PathPlannerAuto("Center Line Amp");
+    }
 
-  //   else if (autoChoice.getDouble(0.0) == 4.0){
-  //     return new PathPlannerAuto("Center Line Amp");
-  //   }
-
-  //   else if (autoChoice.getDouble(0.0) == 5.0){
-  //     return new PathPlannerAuto("Sanju one");
-  //   }
-    
-  //   else if (autoChoice.getDouble(0.0) == 6.0){
-  //     return new PathPlannerAuto("Hogging Source");
-  //   }
-  //   return new PathPlannerAuto("Just Drive");
+    else if (autoChoice.getDouble(0.0) == 5.0){
+      return new PathPlannerAuto("Sanju one");
+    }
+  
+    else if (autoChoice.getDouble(0.0) == 6.0){
+      return new PathPlannerAuto("Hogging Source");
+    }
+    return new PathPlannerAuto("Just Drive");
   }
 }

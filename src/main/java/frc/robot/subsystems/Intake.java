@@ -10,17 +10,16 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.Modes;
 
 public class Intake extends SubsystemBase{
     
     private TalonFX intakeMotor;
-    private int mode; // 0 -> complete manual, 1 -> pressure sensor, 2 -> beam break
 
     private ShuffleboardTab tab = Shuffleboard.getTab("Intake");
 
-    public Intake(int mode){
+    public Intake(){
         intakeMotor = new TalonFX(Constants.Ports.intake);
-        mode = this.mode;
 
         tab.addDouble("Intake Voltage", () -> getVoltage()).withWidget(BuiltInWidgets.kVoltageView).withSize(2, 1).withPosition(0, 0).withProperties(Map.of("Max", 12));
         tab.addBoolean("Has note", () -> NoteManager.hasNote()).withPosition(2, 0);
@@ -32,12 +31,12 @@ public class Intake extends SubsystemBase{
     }
 
     public int getMode(){
-        return mode;
+        return Modes.intakeMode;
     }
 
     public void cycleMode(){
-        mode++;
-        mode%=3;
+        Modes.intakeMode++;
+        Modes.intakeMode%=3;
     }
 
     /**Sets intake to suck in */
