@@ -59,7 +59,7 @@ public class RevAngleLaunch extends Command{
 
         if(arm.isReady()){
             stable++;
-            System.out.println(stable);
+            //System.out.println(stable);
         }
         if (desiredAngle == Positions.amp) shooter.ampRPM();
         else if (rpm != 0) shooter.setRPM(rpm);

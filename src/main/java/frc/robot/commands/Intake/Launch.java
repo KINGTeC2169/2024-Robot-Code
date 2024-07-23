@@ -11,7 +11,7 @@ public class Launch extends Command {
     private Intake intake;
     
 
-    public Launch(Intake intake, XboxController rumble){
+    public Launch(Intake intake){
         this.intake = intake;
         addRequirements(intake);
 

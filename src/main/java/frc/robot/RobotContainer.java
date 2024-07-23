@@ -66,7 +66,7 @@ public class RobotContainer {
   private final Joystick leftStick = new Joystick(Constants.Ports.leftStick);
   private final Joystick rightStick = new Joystick(Constants.Ports.rightStick);
   private final CommandXboxController controller = new CommandXboxController(Constants.Ports.controller);
-  private final XboxController controllerRumble = new XboxController(Constants.Ports.controller);
+  //private final XboxController controllerRumble = new XboxController(Constants.Ports.controller);
   private final CommandXboxController buttonBoard = new CommandXboxController(Constants.Ports.buttons);
 
   //Shuffleboard
@@ -79,7 +79,7 @@ public class RobotContainer {
     // Register Named Commands
     NamedCommands.registerCommand("Ground Pickup", new Pickup(intake));
     NamedCommands.registerCommand("Amp Launch", new RevAngleLaunch(arm, shooter, intake, Positions.amp));
-    NamedCommands.registerCommand("Rest Position", new Rest(arm, controllerRumble));
+    NamedCommands.registerCommand("Rest Position", new Rest(arm));
     NamedCommands.registerCommand("Subwoofer Launch", new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
     NamedCommands.registerCommand("Podium Launch", new RevAngleLaunch(arm, shooter, intake, Positions.podium));
     NamedCommands.registerCommand("Sidesub Launch", new RevAngleLaunch(arm, shooter, intake, Positions.sideSubwoofer));
@@ -150,31 +150,31 @@ public class RobotContainer {
 
     controller.leftTrigger(0.2).onTrue(new Pickup(intake));
     //controller.leftTrigger(0.2).whileFalse(Commands.run(() -> intake.stopTake()));
-    controller.rightTrigger(0.2).whileTrue(new Launch(intake, controllerRumble));
-    controller.rightTrigger(0.2).onFalse(new Rest(arm, controllerRumble));
+    controller.rightTrigger(0.2).whileTrue(new Launch(intake));
+    controller.rightTrigger(0.2).onFalse(new Rest(arm));
 
-    controller.povUp().onTrue(new RevAndAngle(arm, shooter, 0.34, controllerRumble));
-    controller.povDown().onTrue(new Rest(arm, controllerRumble));
+    controller.povUp().onTrue(new RevAndAngle(arm, shooter, 0.34));
+    controller.povDown().onTrue(new Rest(arm));
     controller.x().whileTrue(new Outtake(intake));
     controller.povRight().onTrue(Commands.run(() -> NoteManager.setTrue()));
     controller.povRight().whileFalse(Commands.run(() -> NoteManager.setFalse()));
-    controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer, controllerRumble));
+    controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
     /*controller.a().onTrue(Commands.run(() -> controllerRumble.setRumble(GenericHID.RumbleType.kRightRumble, 0.2)));
     controller.a().onTrue(Commands.run(() -> controllerRumble.setRumble(GenericHID.RumbleType.kLeftRumble, 0.2)));
     controller.b().onTrue(Commands.run(() -> controllerRumble.setRumble(GenericHID.RumbleType.kRightRumble, 0)));
     controller.b().onTrue(Commands.run(() -> controllerRumble.setRumble(GenericHID.RumbleType.kLeftRumble, 0)));
     */
     //controller.x().onTrue(new RevAndAngle(arm, shooter, Arm.aimToArm(LimelightTable.aimShot())));
-    controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer, controllerRumble));
+    controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
     //0.37
     //controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.podium));;
-    controller.b().onTrue(new Amp(arm, shooter, controllerRumble));
+    controller.b().onTrue(new Amp(arm, shooter));
 
     controller.back().whileTrue(new Stuck(arm, shooter));
     controller.start().onTrue(Commands.run(() -> intake.cycleMode()));
 
-    controller.leftBumper().whileFalse(new LetsFlyLeft(climber, -controller.getLeftY()));
-    controller.leftBumper().whileFalse(new LetsFlyRight(climber, -controller.getRightY()));
+    // controller.leftBumper().whileFalse(new LetsFlyLeft(climber, -controller.getLeftY()));
+    // controller.leftBumper().whileFalse(new LetsFlyRight(climber, -controller.getRightY()));
     controller.leftBumper().whileFalse(Commands.run(() -> climber.setLeftSpeed(-controller.getLeftY())));
     controller.leftBumper().whileFalse(Commands.run(() -> climber.setRightSpeed(-controller.getRightY())));
 
@@ -192,12 +192,12 @@ public class RobotContainer {
 
     buttonBoard.button(1).whileTrue(new Pickup(intake));
     buttonBoard.button(2).whileTrue(new Outtake(intake));
-    buttonBoard.button(3).whileTrue(new RevAndAngle(arm, shooter, Positions.subwoofer, controllerRumble));
-    buttonBoard.button(4).whileTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer, controllerRumble));
+    buttonBoard.button(3).whileTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
+    buttonBoard.button(4).whileTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
     buttonBoard.button(5).onTrue(new Pickup(intake));
-    buttonBoard.button(6).onTrue(new Rest(arm, controllerRumble));
-    buttonBoard.button(7).whileTrue(new Amp(arm, shooter, controllerRumble));
-    buttonBoard.button(8).whileTrue(new RevAndAngle(arm, shooter, Positions.podium, controllerRumble));
+    buttonBoard.button(6).onTrue(new Rest(arm));
+    buttonBoard.button(7).whileTrue(new Amp(arm, shooter));
+    buttonBoard.button(8).whileTrue(new RevAndAngle(arm, shooter, Positions.podium));
     buttonBoard.button(10).whileTrue((Commands.run(() -> music.play())));
     //buttonBoard.button(10).onTrue(Commands.run(() -> arm.activeStop()));
     //buttonBoard.button(11).whileTrue(new Angle(arm, 0.49));

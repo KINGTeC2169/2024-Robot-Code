@@ -92,7 +92,7 @@ public class Climber extends SubsystemBase{
         // if(Math.abs(speed)<0.1 && !getLimits()[0]){
         //     leftClimber.set(0);
         // } else {
-            if(Math.abs(speed)<0.08){
+            if(Math.abs(speed)<0.17){
                 leftClimber.set(0);
             }else{
                 leftClimber.set(speed);
@@ -107,7 +107,7 @@ public class Climber extends SubsystemBase{
         // if(Math.abs(speed)<0.1 && !getLimits()[0]){
         //     rightClimber.set(0);
         // } else {
-            if(Math.abs(speed)<0.08){
+            if(Math.abs(speed)<0.17){
                 rightClimber.set(0);
             }else{
                 rightClimber.set(speed);

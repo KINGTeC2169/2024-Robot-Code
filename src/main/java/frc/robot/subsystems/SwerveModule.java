@@ -207,7 +207,7 @@ public class SwerveModule {
      * Sets wheels to X formation
      */
     public void activeStop(int direction) {
-        System.out.println("2\n2\n2\n2\n2\n2\n2\n2");
+        //System.out.println("2\n2\n2\n2\n2\n2\n2\n2");
         SwerveModuleState state = new SwerveModuleState(0, new Rotation2d(0.785398 * direction));
         state = SwerveModuleState.optimize(state, getState().angle);
         driveMotor.set(0);

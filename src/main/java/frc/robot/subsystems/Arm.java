@@ -61,7 +61,7 @@ public class Arm extends SubsystemBase {
         //armPID = new PIDController(55,0.7,1);
         //armForward = new ArmFeedforward(0.15, 0.22, 3.61, 0.01);
         armPID = new PIDController(65,0.7,1);
-        armForward = new ArmFeedforward(0.15,0.5,0);//0.5 DONT CHANGE THIS
+        armForward = new ArmFeedforward(0.15,0.5,3.88);//0.5 DONT CHANGE THIS
         ShuffleboardLayout leftMotor = tab.getLayout("Left Motor", BuiltInLayouts.kList).withPosition(2, 0).withSize(2, 2).withProperties(Map.of("Number of columns", 1, "Number of rows", 2));
         leftMotor.addDouble("Voltage", () -> getVoltage()[0]).withWidget(BuiltInWidgets.kVoltageView).withPosition(0, 1).withProperties(Map.of("Max", 12));
         leftMotor.addDouble("Current", () -> getCurrent()[0]).withWidget(BuiltInWidgets.kDial).withPosition(0, 0).withProperties(Map.of("Max", 5));
@@ -138,7 +138,7 @@ public class Arm extends SubsystemBase {
     public void setShootPos(double position) {
         position = MathUtil.clamp(position, lowerLimit, upperLimit);
         setPosition = position;
-        System.out.println("PID " + armPID.calculate(getPosition(), position) + " FORWARD " + armForward.calculate((position - 0.25)*6.28, 0));
+        //System.out.println("PID " + armPID.calculate(getPosition(), position) + " FORWARD " + armForward.calculate((position - 0.25)*6.28, 0));
         leftArm.setVoltage(armPID.calculate(getPosition(), position) + armForward.calculate((position - 0.25)*6.28, 0));
     }
 

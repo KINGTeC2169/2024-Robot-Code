@@ -13,14 +13,14 @@ public class Amp extends Command {
 
     private Arm arm;
     private Shooter shooter;
-    private XboxController rumble;
+    //private XboxController rumble;
 
-    public Amp(Arm arm, Shooter shooter, XboxController rumble){
+    public Amp(Arm arm, Shooter shooter){
         this.arm = arm;
         addRequirements(arm);
         this.shooter = shooter;
         addRequirements(shooter);
-        this.rumble = rumble;
+        //this.rumble = rumble;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class Amp extends Command {
             arm.setShootPos(Positions.amp);
         }
         if(arm.getPosition() > 0.48){
-            rumble.setRumble(GenericHID.RumbleType.kRightRumble, 0.5);
+            //rumble.setRumble(GenericHID.RumbleType.kRightRumble, 0.5);
         }
     }
 
