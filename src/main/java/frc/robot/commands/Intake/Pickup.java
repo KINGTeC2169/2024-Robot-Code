@@ -45,8 +45,8 @@ public class Pickup extends Command {
     //Returns true if there is a note in the intake
 	public boolean isFinished() {
         //if(intake.getMode() != 0){
-		return NoteManager.hasNote();
+		//return NoteManager.hasNote();
         //}
-        //return false;
+        return false;
 	}
 }

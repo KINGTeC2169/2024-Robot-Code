@@ -39,9 +39,9 @@ public class Launch extends Command {
     @Override
     //Finishes when there is no note in the intake
 	public boolean isFinished() {
-        if(intake.getMode() == 2){
-            return !NoteManager.hasNote();
-        }
+        //if(intake.getMode() == 2){
+        //    return !NoteManager.hasNote();
+        //}
 		return false;
 	}
 }

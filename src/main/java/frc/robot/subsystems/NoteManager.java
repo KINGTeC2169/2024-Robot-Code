@@ -9,13 +9,13 @@ public class NoteManager{
     
     private static DigitalInput beamBreak = new DigitalInput(Ports.beamBreak);
     private static boolean hasNote = false;
-    private static int intakeMode = 2;
+    private static int intakeMode = 1;
 
     /**Returns true if the intake has a note. */
     public static boolean hasNote(){
         //if(intakeMode == 2) 
-        return !beamBreak.get();
-        //return hasNote;
+        //return !beamBreak.get();
+        return hasNote;
     }
 
     public static void setTrue(){

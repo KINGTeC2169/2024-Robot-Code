@@ -24,7 +24,7 @@ public final class Constants {
 
     public static final class Modes {
 
-        public static int intakeMode = 2; // 0 -> complete manual, 1 -> pressure sensor, 2 -> beam break
+        public static int intakeMode = 1; // 0 -> complete manual, 1 -> pressure sensor, 2 -> beam break
 
     }
 

@@ -156,8 +156,8 @@ public class RobotContainer {
     controller.povUp().onTrue(new RevAndAngle(arm, shooter, 0.34));
     controller.povDown().onTrue(new Rest(arm));
     controller.x().whileTrue(new Outtake(intake));
-    controller.povRight().onTrue(Commands.run(() -> NoteManager.setTrue()));
-    controller.povRight().whileFalse(Commands.run(() -> NoteManager.setFalse()));
+    //controller.povRight().onTrue(Commands.run(() -> NoteManager.setTrue()));
+    //controller.povRight().whileFalse(Commands.run(() -> NoteManager.setFalse()));
     controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
     /*controller.a().onTrue(Commands.run(() -> controllerRumble.setRumble(GenericHID.RumbleType.kRightRumble, 0.2)));
     controller.a().onTrue(Commands.run(() -> controllerRumble.setRumble(GenericHID.RumbleType.kLeftRumble, 0.2)));
