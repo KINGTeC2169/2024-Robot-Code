@@ -1,6 +1,5 @@
 package frc.robot.commands.ShootArm;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -13,14 +12,14 @@ public class RevAndAngle extends Command {
     private Arm arm;
     private Shooter shooter;
     private double desiredAngle;
-    private XboxController rumble;
+    //private XboxController rumble;
 
-    public RevAndAngle(Arm arm, Shooter shooter, double angle, XboxController rumble){
+    public RevAndAngle(Arm arm, Shooter shooter, double angle){
         this.arm = arm;
         addRequirements(arm);
         this.shooter = shooter;
         addRequirements(shooter);
-        this.rumble = rumble;
+        //this.rumble = rumble;
         desiredAngle = angle;
     }
 
@@ -37,7 +36,7 @@ public class RevAndAngle extends Command {
             
         }
         if(arm.isReady()){
-            rumble.setRumble(GenericHID.RumbleType.kRightRumble, 0.5);
+            //rumble.setRumble(GenericHID.RumbleType.kRightRumble, 0.5);
         }
     }
 

@@ -10,19 +10,19 @@ import frc.robot.subsystems.Arm;
 public class Rest extends Command {
 
     private Arm arm;
-    private XboxController rumble;
+    //private XboxController rumble;
 
-    public Rest(Arm arm, XboxController rumble){
+    public Rest(Arm arm){
         this.arm = arm;
         addRequirements(arm);
-        this.rumble = rumble;
+        //this.rumble = rumble;
     }
 
     @Override
     //Adds extra delay so the previous command can finish
     public void initialize(){
         Timer.delay(0.05);
-        rumble.setRumble(GenericHID.RumbleType.kRightRumble, 0);
+        //rumble.setRumble(GenericHID.RumbleType.kRightRumble, 0);
     }
 
     @Override

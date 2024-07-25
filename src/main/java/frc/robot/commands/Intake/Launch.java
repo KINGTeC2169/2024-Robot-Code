@@ -1,6 +1,5 @@
 package frc.robot.commands.Intake;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -11,7 +10,7 @@ public class Launch extends Command {
     private Intake intake;
     
 
-    public Launch(Intake intake, XboxController rumble){
+    public Launch(Intake intake){
         this.intake = intake;
         addRequirements(intake);
 
@@ -33,7 +32,7 @@ public class Launch extends Command {
     public void end(boolean interupt) {
         Timer.delay(0.03);
         intake.stopTake();
-        NoteManager.setFalse();
+        //NoteManager.setFalse();
 	}
 
     @Override

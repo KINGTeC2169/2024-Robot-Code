@@ -18,6 +18,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import frc.robot.Constants;
 
@@ -73,6 +74,20 @@ public class SwerveModule {
 
     public void playNote(double hz){
         driveMotor.setControl(new MusicTone(hz));
+    }
+
+    public void testTurnMotor(){
+        System.out.println("Testing Neo (" + turnMotor.getDeviceId() + ")...");
+        turnMotor.set(0.2);
+        Timer.delay(5);
+        System.out.println("Command executed. Continuing...");
+    }
+
+    public void testDriveMotor(){
+        System.out.println("Testing Falcon (" + driveMotor.getDeviceID() + ")...");
+        driveMotor.set(0.2);
+        Timer.delay(5);
+        System.out.println("Command executed. Continuing...");
     }
 
     /**
@@ -207,7 +222,7 @@ public class SwerveModule {
      * Sets wheels to X formation
      */
     public void activeStop(int direction) {
-        System.out.println("2\n2\n2\n2\n2\n2\n2\n2");
+        //System.out.println("2\n2\n2\n2\n2\n2\n2\n2");
         SwerveModuleState state = new SwerveModuleState(0, new Rotation2d(0.785398 * direction));
         state = SwerveModuleState.optimize(state, getState().angle);
         driveMotor.set(0);

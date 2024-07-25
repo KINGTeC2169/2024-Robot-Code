@@ -138,6 +138,26 @@ public class SwerveSubsystem extends SubsystemBase {
         }).start();
     }
 
+    /**Returns front left swerve module */
+    public SwerveModule getFrontLeft(){
+        return frontLeft;
+    }
+
+    /**Returns front right swerve module */
+    public SwerveModule getFrontRight(){
+        return frontRight;
+    }
+
+    /**Returns back left swerve module */
+    public SwerveModule getBackLeft(){
+        return backLeft;
+    }
+
+    /**Returns back right swerve module */
+    public SwerveModule getBackRight(){
+        return backRight;
+    }
+
     /**Returns the field. */
     public Field2d getField() {
         return field;

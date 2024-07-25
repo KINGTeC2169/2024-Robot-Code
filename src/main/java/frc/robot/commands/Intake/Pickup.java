@@ -27,7 +27,7 @@ public class Pickup extends Command {
             if(intake.getRPM() > 1750){
                 started = true;
             } else if (intake.getRPM() < 1500 && started){
-                NoteManager.setTrue();
+                //NoteManager.setTrue();
             }
         }
     }
