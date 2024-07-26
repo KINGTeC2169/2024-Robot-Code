@@ -22,6 +22,7 @@ import frc.robot.Constants.Positions;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.LetsFlyLeft;
 import frc.robot.commands.LetsFlyRight;
+import frc.robot.commands.SelfTest;
 import frc.robot.commands.ShootArm.Stuck;
 import frc.robot.commands.ShootArm.VisionAim;
 import frc.robot.commands.Intake.Launch;
@@ -92,8 +93,8 @@ public class RobotContainer {
     tab.addString("Auto 4.0", () -> "Center Line Amp").withSize(3, 1).withPosition(0, 3);
     tab.addString("Auto 5.0", () -> "Sanju one").withSize(3, 1).withPosition(3, 0);
     tab.addString("Auto 6.0", () -> "Hogging Source").withSize(3, 1).withPosition(3, 1);
-    tab.addString("Auto 0.0", () -> "Just Drive").withSize(3, 1).withPosition(3, 2);
-
+    tab.addString("Auto 7.0", () -> "Music").withSize(3, 1).withPosition(3, 2);
+    tab.addString("Auto 0.0", () -> "Just Drive").withSize(3, 1).withPosition(3, 3);
     swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
 
     () -> leftStick.getY(),
@@ -156,8 +157,9 @@ public class RobotContainer {
     controller.povUp().onTrue(new RevAndAngle(arm, shooter, 0.34));
     controller.povDown().onTrue(new Rest(arm));
     controller.x().whileTrue(new Outtake(intake));
-    //controller.povRight().onTrue(Commands.run(() -> NoteManager.setTrue()));
-    //controller.povRight().whileFalse(Commands.run(() -> NoteManager.setFalse()));
+    controller.povRight().onTrue(Commands.run(() -> NoteManager.setTrue()));
+    
+    controller.povRight().whileFalse(Commands.run(() -> NoteManager.setFalse()));
     controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
     /*controller.a().onTrue(Commands.run(() -> controllerRumble.setRumble(GenericHID.RumbleType.kRightRumble, 0.2)));
     controller.a().onTrue(Commands.run(() -> controllerRumble.setRumble(GenericHID.RumbleType.kLeftRumble, 0.2)));
@@ -206,7 +208,7 @@ public class RobotContainer {
 
 
   public Command getTestCommand(){
-    return Commands.run(music::play);
+    return new SelfTest(swerveSubsystem, shooter, intake, arm);  
   }
 
   /**
@@ -240,6 +242,10 @@ public class RobotContainer {
   
     else if (autoChoice.getDouble(0.0) == 6.0){
       return new PathPlannerAuto("Hogging Source");
+    }
+
+    else if (autoChoice.getDouble(0.0) == 7.0){
+      return Commands.run(music::play);
     }
     return new PathPlannerAuto("Just Drive");
   }

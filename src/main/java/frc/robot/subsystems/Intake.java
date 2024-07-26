@@ -41,7 +41,7 @@ public class Intake extends SubsystemBase{
 
     /**Sets intake to suck in */
     public void inTake() {
-        intakeMotor.set(-0.4);
+        intakeMotor.set(-0.25);
     }
 
     /**Returns the intake motor's rotor velocity in rotations per minute */

@@ -8,15 +8,18 @@ import frc.robot.subsystems.NoteManager;
 public class Pickup extends Command {
     private Intake intake;
     private boolean started;
+    private double localMax;
 
     public Pickup(Intake intake){
         this.intake = intake;
         addRequirements(intake);
+        localMax = 0;
     }
 
     @Override
     public void initialize(){
         started = false;
+        localMax = 0;
     }
 
     @Override
@@ -24,9 +27,8 @@ public class Pickup extends Command {
     public void execute() { 
         intake.inTake();
         if(intake.getMode() == 1){
-            if(intake.getRPM() > 1750){
-                started = true;
-            } else if (intake.getRPM() < 1500 && started){
+            if(intake.getRPM() > localMax) localMax = intake.getRPM();
+            if (intake.getRPM() < localMax-200){
                 NoteManager.setTrue();
             }
         }

@@ -18,6 +18,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import frc.robot.Constants;
 
@@ -73,6 +74,22 @@ public class SwerveModule {
 
     public void playNote(double hz){
         driveMotor.setControl(new MusicTone(hz));
+    }
+
+    public void testTurnMotor(){
+        System.out.println("Testing Neo (" + turnMotor.getDeviceId() + ")...");
+        turnMotor.set(0.2);
+        Timer.delay(4);
+        turnMotor.set(0);
+        System.out.println("Command executed. Continuing...");
+    }
+
+    public void testDriveMotor(){
+        System.out.println("Testing Falcon (" + driveMotor.getDeviceID() + ")...");
+        driveMotor.set(0.2);
+        Timer.delay(4);
+        driveMotor.set(0);
+        System.out.println("Command executed. Continuing...");
     }
 
     /**
