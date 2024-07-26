@@ -35,6 +35,7 @@ public class Pickup extends Command {
     @Override
     //This is a small adjustment of the note in case the beambreak is too slow. It runs the intake backwards for a few milliseconds to make sure the note doesn't touch the shooter wheels.
     public void end(boolean interupt) {
+        //System.out.println("stop");
         intake.stopTake();
         intake.outTake();
         Timer.delay(0.02);
@@ -45,8 +46,8 @@ public class Pickup extends Command {
     //Returns true if there is a note in the intake
 	public boolean isFinished() {
         //if(intake.getMode() != 0){
-		//return NoteManager.hasNote();
+		return NoteManager.hasNote();
         //}
-        return false;
+        //return false;
 	}
 }

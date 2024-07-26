@@ -28,8 +28,9 @@ public class Rest extends Command {
     @Override
     //If the arm is at the amp position, go to rest faster. Otherwise, slowly move the arm to the rest position
     public void execute(){
-        if (arm.getSetPosition() == Positions.amp) arm.setRest(true);
-        else arm.setRest(false);
+        arm.setRest(true);
+        //if (arm.getSetPosition() == Positions.amp) arm.setRest(true);
+        //else arm.setRest(false);
     }
 
     @Override

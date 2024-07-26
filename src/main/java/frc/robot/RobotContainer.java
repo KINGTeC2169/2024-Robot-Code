@@ -190,8 +190,8 @@ public class RobotContainer {
     //controller.povLeft().onTrue(new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
 
 
-    buttonBoard.button(1).whileTrue(new Pickup(intake));
-    buttonBoard.button(2).whileTrue(new Outtake(intake));
+    buttonBoard.button(1).whileTrue(Commands.run(() ->NoteManager.setTrue()));
+    buttonBoard.button(2).whileTrue(Commands.run(() -> NoteManager.setFalse()));
     buttonBoard.button(3).whileTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
     buttonBoard.button(4).whileTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
     buttonBoard.button(5).onTrue(new Pickup(intake));

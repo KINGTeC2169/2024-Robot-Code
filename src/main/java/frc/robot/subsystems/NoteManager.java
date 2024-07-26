@@ -25,4 +25,8 @@ public class NoteManager{
     public static void setFalse(){
         hasNote = false;
     }
+
+    public static void swap(){
+        hasNote = !hasNote;
+    }
 }

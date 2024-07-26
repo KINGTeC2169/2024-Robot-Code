@@ -154,6 +154,6 @@ public final class Constants {
         public static final double subwoofer = 0.3417-0.03;//0.118025; //-0.038;
         public static final double sideSubwoofer = 0.36334-0.03;//0.261; //0.136; // -0.038;
         public static final double podium = 0.39;//0.3877-0.03;//0.15; //-0.038;
-        public static final double amp = 0.5421-0.03;//0.3063; //-0.038;
+        public static final double amp = 0.5421-0.03;//0.3063; //-0.038;+
     }
 }
