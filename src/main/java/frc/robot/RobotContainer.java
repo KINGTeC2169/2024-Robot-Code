@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.SignalLogger;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
@@ -16,6 +17,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import frc.robot.Constants.Positions;
@@ -43,6 +45,8 @@ import frc.robot.subsystems.Shooter;
 
 import frc.robot.subsystems.SwerveSubsystem;
 
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -62,12 +66,25 @@ public class RobotContainer {
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
   private final Music music = new Music(arm,shooter,intake,swerveSubsystem);
 
+  //Single controller
+  private final Joystick joystick = new Joystick(Constants.Ports.leftStick);
+  private final CommandXboxController controller = new CommandXboxController(Constants.Ports.leftStick);
   //Driver Station controllers
+  /* 
   private final Joystick leftStick = new Joystick(Constants.Ports.leftStick);
   private final Joystick rightStick = new Joystick(Constants.Ports.rightStick);
   private final CommandXboxController controller = new CommandXboxController(Constants.Ports.controller);
-  //private final XboxController controllerRumble = new XboxController(Constants.Ports.controller);
-  private final CommandXboxController buttonBoard = new CommandXboxController(Constants.Ports.buttons);
+  private final XboxController controllerRumble = new XboxController(Constants.Ports.controller);
+  private final CommandXboxController buttonBoard = new CommandXboxController(Constants.Ports.buttons);*/
+
+  private final int translationAxis = XboxController.Axis.kLeftY.value;
+  private final int strafeAxis = XboxController.Axis.kLeftY.value;
+  private final int rotationAxis = XboxController.Axis.kRightX.value;
+
+  /*private final JoystickButton button1 = new JoystickButton(joystick, XboxController.Button.kY.value);
+  private final JoystickButton button2 = new JoystickButton(joystick, XboxController.Button.kA.value);
+  private final JoystickButton button3 = new JoystickButton(joystick, XboxController.Button.kB.value);
+  private final JoystickButton button4 = new JoystickButton(joystick, XboxController.Button.kX.value);*/
 
   //Shuffleboard
   private ShuffleboardTab tab = Shuffleboard.getTab("Auto Chooser");
@@ -94,18 +111,33 @@ public class RobotContainer {
     tab.addString("Auto 6.0", () -> "Hogging Source").withSize(3, 1).withPosition(3, 1);
     tab.addString("Auto 0.0", () -> "Just Drive").withSize(3, 1).withPosition(3, 2);
 
-    swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
+    //Driver station
+    /*swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
+      () -> leftStick.getY(),
+      () -> leftStick.getX(),
+      () -> rightStick.getTwist(),
+      () -> rightStick.getRawButton(2),
+      () -> rightStick.getRawButton(1),
+      () -> leftStick.getRawButton(2),
+      () -> leftStick.getRawButton(1)
+		));*/
 
-    () -> leftStick.getY(),
-    () -> leftStick.getX(),
-    () -> rightStick.getTwist(),
-		() -> rightStick.getRawButton(2),
-    () -> rightStick.getRawButton(1),
-    () -> leftStick.getRawButton(2),
-    () -> leftStick.getRawButton(1)
+
+    //Single controller
+    swerveSubsystem.setDefaultCommand(new DriveCommand(swerveSubsystem,
+      () -> joystick.getRawAxis(translationAxis),
+      () -> joystick.getRawAxis(strafeAxis),
+      () -> joystick.getRawAxis(rotationAxis),
+      () -> joystick.getRawButton(0),
+      () -> joystick.getRawButton(1),
+      () -> joystick.getRawButton(2),
+      () -> joystick.getRawButton(3)
 		));
 
-    
+    /*() -> button1.get(),
+      () -> button2.get(),
+      () -> button3.get(),
+      () -> button4.get() */
 
     // Configure the trigger bindings
 
@@ -142,11 +174,11 @@ public class RobotContainer {
     */
 
     //Comp controls:
-
+    /* 
     //controller.getAButton().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
     controller.leftBumper().whileTrue(Commands.run(() -> arm.setVoltage(-controller.getRightY()*2)));
-    controller.rightBumper().onTrue(Commands.run(() -> shooter.setRPM(3000)));
-    controller.rightBumper().onFalse(Commands.run(() -> shooter.setRPM(0)));
+    //controller.rightBumper().onTrue(Commands.run(() -> shooter.setRPM(3000)));
+    //controller.rightBumper().onFalse(Commands.run(() -> shooter.setRPM(0)));
 
     controller.leftTrigger(0.2).onTrue(new Pickup(intake));
     //controller.leftTrigger(0.2).whileFalse(Commands.run(() -> intake.stopTake()));
@@ -159,11 +191,11 @@ public class RobotContainer {
     controller.povRight().onTrue(Commands.run(() -> NoteManager.setTrue()));
     controller.povRight().whileFalse(Commands.run(() -> NoteManager.setFalse()));
     controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
-    /*controller.a().onTrue(Commands.run(() -> controllerRumble.setRumble(GenericHID.RumbleType.kRightRumble, 0.2)));
-    controller.a().onTrue(Commands.run(() -> controllerRumble.setRumble(GenericHID.RumbleType.kLeftRumble, 0.2)));
-    controller.b().onTrue(Commands.run(() -> controllerRumble.setRumble(GenericHID.RumbleType.kRightRumble, 0)));
-    controller.b().onTrue(Commands.run(() -> controllerRumble.setRumble(GenericHID.RumbleType.kLeftRumble, 0)));
-    */
+    //controller.a().onTrue(Commands.run(() -> controllerRumble.setRumble(GenericHID.RumbleType.kRightRumble, 0.2)));
+    //controller.a().onTrue(Commands.run(() -> controllerRumble.setRumble(GenericHID.RumbleType.kLeftRumble, 0.2)));
+    //controller.b().onTrue(Commands.run(() -> controllerRumble.setRumble(GenericHID.RumbleType.kRightRumble, 0)));
+    //controller.b().onTrue(Commands.run(() -> controllerRumble.setRumble(GenericHID.RumbleType.kLeftRumble, 0)));
+    
     //controller.x().onTrue(new RevAndAngle(arm, shooter, Arm.aimToArm(LimelightTable.aimShot())));
     controller.y().onTrue(new RevAndAngle(arm, shooter, Positions.sideSubwoofer));
     //0.37
@@ -172,12 +204,13 @@ public class RobotContainer {
 
     controller.back().whileTrue(new Stuck(arm, shooter));
     controller.start().onTrue(Commands.run(() -> intake.cycleMode()));
-
+     */
     // controller.leftBumper().whileFalse(new LetsFlyLeft(climber, -controller.getLeftY()));
     // controller.leftBumper().whileFalse(new LetsFlyRight(climber, -controller.getRightY()));
-    controller.leftBumper().whileFalse(Commands.run(() -> climber.setLeftSpeed(-controller.getLeftY())));
+    //CLIMBER:
+    /*controller.leftBumper().whileFalse(Commands.run(() -> climber.setLeftSpeed(-controller.getLeftY())));
     controller.leftBumper().whileFalse(Commands.run(() -> climber.setRightSpeed(-controller.getRightY())));
-
+    */
     //controller.y().whileTrue(Commands.run(() -> arm.updatePIDF()))
     //controller.povUp().whileTrue(new IntakeCommand(intake, arm));
     //controller.a().whileTrue(Commands.run(() -> arm.posOne()));
@@ -189,7 +222,8 @@ public class RobotContainer {
     //controller.back().whileTrue(new Launch(intake));
     //controller.povLeft().onTrue(new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
 
-
+    //BUTTON BOARD:
+    /* 
     buttonBoard.button(1).whileTrue(new Pickup(intake));
     buttonBoard.button(2).whileTrue(new Outtake(intake));
     buttonBoard.button(3).whileTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
@@ -201,6 +235,39 @@ public class RobotContainer {
     buttonBoard.button(10).whileTrue((Commands.run(() -> music.play())));
     //buttonBoard.button(10).onTrue(Commands.run(() -> arm.activeStop()));
     //buttonBoard.button(11).whileTrue(new Angle(arm, 0.49));
+    */
+
+    //SysId controls:
+
+    controller.leftBumper().onTrue(Commands.runOnce(SignalLogger::start));
+    controller.rightBumper().onTrue(Commands.runOnce(SignalLogger::stop));
+    /*
+    * Joystick Y = quasistatic forward
+    * Joystick A = quasistatic reverse
+    * Joystick B = dynamic forward
+    * Joystick X = dyanmic reverse
+    */
+    controller.y().whileTrue(swerveSubsystem.sysIdQuasistatic(Direction.kForward));
+    controller.a().whileTrue(swerveSubsystem.sysIdQuasistatic(Direction.kReverse));
+    controller.b().whileTrue(swerveSubsystem.sysIdDynamic(Direction.kForward));
+    controller.x().whileTrue(swerveSubsystem.sysIdDynamic(Direction.kReverse));
+
+    /* 
+    controller.rightBumper().and(controller.povUp()).whileTrue(swerveSubsystem.runDriveQuasiTest(Direction.kForward));
+    controller.rightBumper().and(controller.povLeft()).whileTrue(swerveSubsystem.runDriveQuasiTest(Direction.kReverse));
+
+    controller.rightBumper().and(controller.povDown()).whileTrue(swerveSubsystem.runDriveDynamTest(Direction.kForward));
+    controller.rightBumper().and(controller.povRight()).whileTrue(swerveSubsystem.runDriveDynamTest(Direction.kReverse));
+
+    controller.rightBumper().and(controller.a()).whileTrue(swerveSubsystem.runSteerQuasiTest(Direction.kForward));
+    controller.rightBumper().and(controller.b()).whileTrue(swerveSubsystem.runSteerQuasiTest(Direction.kReverse));
+
+    controller.rightBumper().and(controller.x()).whileTrue(swerveSubsystem.runSteerDynamTest(Direction.kForward));
+    controller.rightBumper().and(controller.y()).whileTrue(swerveSubsystem.runSteerDynamTest(Direction.kReverse));
+    */
+        // Drivetrain needs to be placed against a sturdy wall and test stopped
+        // immediately upon wheel slip
+        //controller.rightBumper().and(controller.back()).whileTrue(m_drivetrain.runDriveSlipTest());
     
   }
 

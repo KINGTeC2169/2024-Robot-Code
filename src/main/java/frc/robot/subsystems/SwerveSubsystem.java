@@ -1,5 +1,9 @@
 package frc.robot.subsystems;
 
+import static edu.wpi.first.units.MutableMeasure.mutable;
+import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.Volts;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -8,25 +12,44 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.math.util.Units.*;
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.units.Distance;
+import edu.wpi.first.units.Measure;
+import edu.wpi.first.units.MutableMeasure;
+import edu.wpi.first.units.Unit;
+import edu.wpi.first.units.Velocity;
+import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
 import frc.robot.Constants.Ports;
 import java.util.Map;
+import java.util.function.Supplier;
 
+import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
+import com.ctre.phoenix6.SignalLogger;
+import com.ctre.phoenix6.controls.VoltageOut;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class SwerveSubsystem extends SubsystemBase {
 
@@ -66,12 +89,37 @@ public class SwerveSubsystem extends SubsystemBase {
     public SwerveDriveKinematics kinematics = DriveConstants.DRIVE_KINEMATICS;
     private final SwerveDriveOdometry odometer;
     public static Field2d field = new Field2d();
+    private final Field2d field2d = new Field2d();
 
     private ShuffleboardTab tab = Shuffleboard.getTab("Swerve");
     private GenericEntry fastSpeed = tab.add("Fast Speed", 1.0).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).withPosition(6, 3).getEntry();
     private GenericEntry mediumSpeed = tab.add("Medium Speed", 0.5).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).withPosition(4, 3).getEntry();
     private GenericEntry slowSpeed = tab.add("Slow Speed", 0.2).withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("Min", 0)).withPosition(2, 3).getEntry();
 
+    private final MutableMeasure<Voltage> m_appliedVoltage = mutable(Volts.of(0));
+    private final MutableMeasure<Distance> m_distance = mutable(Meters.of(0));
+    private final MutableMeasure<Velocity<Distance>> m_velocity = mutable(MetersPerSecond.of(0));
+
+    private final VoltageOut m_voltReq = new VoltageOut(0.0);
+
+    private final SysIdRoutine sysIdRoutine =
+        new SysIdRoutine(
+            new SysIdRoutine.Config(
+            null, // Use default ramp rate (1 V/s)
+                    Volts.of(4), // Reduce dynamic step voltage to 4 to prevent brownout
+                    null, // Use default timeout (10 s)
+                    // Log state with Phoenix SignalLogger class
+                (state) -> SignalLogger.writeString("state", state.toString())
+            ),
+        new SysIdRoutine.Mechanism(
+                (volts) -> this.voltageDrive(volts),
+            null,
+                this
+            )
+        );
+        //(volts) -> frontLeft.getDriveMotor().setControl(m_voltReq.withOutput(volts.in(Volts))),
+      // Create a new SysId routine for characterizing the drive.
+  
     public SwerveSubsystem() {
         odometer = new SwerveDriveOdometry(kinematics, getRotation2d(), getModulePositions(), new Pose2d(0, 0, new Rotation2d(0)));
         
@@ -97,6 +145,8 @@ public class SwerveSubsystem extends SubsystemBase {
 
         tab.addDouble("Robot Heading", () -> getHeading()).withWidget(BuiltInWidgets.kGyro).withSize(3, 3).withPosition(7, 0);
 
+        
+        SmartDashboard.putData("Field", field2d);
         tab.add(field).withPosition(2, 0).withSize(5, 3);
 
         // Configure AutoBuilder last
@@ -222,10 +272,9 @@ public class SwerveSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         odometer.update(getRotation2d(), getModulePositions());
-
         //field.setRobotPose(odometer.getPoseMeters());
         field.setRobotPose(odometer.getPoseMeters().getX(), odometer.getPoseMeters().getY(), odometer.getPoseMeters().getRotation());
-        
+        field2d.setRobotPose(odometer.getPoseMeters());
     }
 
     /**Stops all 4 swerve modules. */
@@ -290,4 +339,77 @@ public class SwerveSubsystem extends SubsystemBase {
         backLeft.playNote(hz);
         backRight.playNote(hz);
     }
+
+    public void voltageDrive(Measure<Voltage> volts){
+        frontLeft.getDriveMotor().setControl(m_voltReq.withOutput(volts.in(Volts)));
+        frontRight.getDriveMotor().setControl(m_voltReq.withOutput(volts.in(Volts)));
+        backLeft.getDriveMotor().setControl(m_voltReq.withOutput(volts.in(Volts)));
+        backRight.getDriveMotor().setControl(m_voltReq.withOutput(volts.in(Volts)));
+    }
+
+    public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+        return sysIdRoutine.quasistatic(direction);
+    }
+
+    public Command sysIdDynamic(SysIdRoutine.Direction direction){
+        return sysIdRoutine.dynamic(direction);
+    }
+
+    /* 
+    private SwerveVoltageRequest driveVoltageRequest = new SwerveVoltageRequest(true);
+
+    private Unit<Voltage> Volts;
+    /*setControl(driveVoltage Request.withVoltage(volts.in(Volts))) 
+
+    
+    private SysIdRoutine m_driveSysIdRoutine = new SysIdRoutine(
+            new SysIdRoutine.Config(null, null, null, ModifiedSignalLogger.logState()),
+            new SysIdRoutine.Mechanism(
+                (Measure<Voltage> volts) -> {
+                voltageDrive(volts.in(Units.Volts));
+            },
+            this::sysidroutine,
+            this));
+
+    private SwerveVoltageRequest steerVoltageRequest = new SwerveVoltageRequest(false);
+
+    private SysIdRoutine m_steerSysIdRoutine = new SysIdRoutine(
+            new SysIdRoutine.Config(null, null, null, ModifiedSignalLogger.logState()),
+            new SysIdRoutine.Mechanism(
+                (Measure<Voltage> volts) -> {
+                voltageDrive(volts.in(Units.Volts));
+            },
+            this::sysidroutine,
+            this));
+
+    public void voltageDrive(double Voltage) {
+        frontLeft.voltageDrive(Voltage);
+        frontRight.voltageDrive(Voltage);
+        backLeft.voltageDrive(Voltage);
+        backRight.voltageDrive(Voltage);
+    }
+                
+    public Command runDriveQuasiTest(Direction direction) {
+        return m_driveSysIdRoutine.quasistatic(direction);
+    }
+
+    public Command runDriveDynamTest(SysIdRoutine.Direction direction) {
+        return m_driveSysIdRoutine.dynamic(direction);
+    }
+
+    public Command runSteerQuasiTest(Direction direction) {
+        return m_steerSysIdRoutine.quasistatic(direction);
+    }
+
+    public Command runSteerDynamTest(SysIdRoutine.Direction direction) {
+        return m_steerSysIdRoutine.dynamic(direction);
+    }
+
+    
+    SysIdRoutine routine = new SysIdRoutine(
+        new SysIdRoutine.Config(),
+        new SysIdRoutine.Mechanism(frontLeft.getDriveVoltage(), null, this)
+    );
+*/
+    
 }

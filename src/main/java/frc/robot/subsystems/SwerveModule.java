@@ -1,9 +1,11 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MusicTone;
+import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -34,6 +36,8 @@ public class SwerveModule {
     private PIDController turningPID;
 
     private CANcoderConfiguration config;
+
+    private VoltageOut driveCharacteriztionControl = new VoltageOut(0);
     
 
     public SwerveModule(int driveMotorID, int turnMotorID, boolean driveMotorReversed, 
@@ -213,4 +217,21 @@ public class SwerveModule {
         driveMotor.set(0);
         turnMotor.set(turningPID.calculate(getTurnPosition(), state.angle.getRadians()));
     }
+
+    public StatusSignal<Double> getDriveVoltage(){
+        return driveMotor.getMotorVoltage();
+    }
+
+    public void voltageDrive(double Volts){
+        driveMotor.setControl(driveCharacteriztionControl.withOutput(Volts));
+    }
+
+    public void setVoltage(double volts){
+        driveMotor.setVoltage(volts);
+    }
+
+    public TalonFX getDriveMotor(){
+        return driveMotor;
+    }
+
 }

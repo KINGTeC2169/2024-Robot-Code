@@ -1,21 +1,42 @@
 {
-  "HALProvider": {
-    "Other Devices": {
-      "window": {
-        "visible": false
+  "NetworkTables": {
+    "retained": {
+      "Shuffleboard": {
+        "Arm": {
+          "open": true
+        },
+        "Limelight": {
+          "open": true
+        },
+        "Swerve": {
+          "open": true
+        },
+        "open": true
       }
-    }
-  },
-  "NTProvider": {
+    },
+    "transitory": {
+      "Shuffleboard": {
+        "Swerve": {
+          "open": true
+        },
+        "Swerve Module": {
+          "open": true
+        },
+        "open": true
+      },
+      "SmartDashboard": {
+        "Field": {
+          "open": true
+        },
+        "open": true
+      }
+    },
     "types": {
       "/FMSInfo": "FMSInfo",
-      "/Shuffleboard/Arm/Arm PID": "PIDController",
-      "/Shuffleboard/Arm/PIDController[1]": "PIDController",
       "/Shuffleboard/Swerve Module/PIDController[2]": "PIDController",
       "/Shuffleboard/Swerve Module/PIDController[3]": "PIDController",
       "/Shuffleboard/Swerve Module/PIDController[4]": "PIDController",
       "/Shuffleboard/Swerve Module/PIDController[5]": "PIDController",
-      "/Shuffleboard/Swerve Module/PIDController[6]": "PIDController",
       "/Shuffleboard/Swerve/Field": "Field2d",
       "/SmartDashboard/Field": "Field2d"
     },
@@ -24,14 +45,7 @@
         "bottom": 1476,
         "height": 8.210550308227539,
         "left": 150,
-        "path": {
-          "arrows": false,
-          "style": "Line"
-        },
         "right": 2961,
-        "target pose": {
-          "style": "Box/Image"
-        },
         "top": 79,
         "width": 16.541748046875,
         "window": {
@@ -51,37 +65,14 @@
       }
     }
   },
-  "NetworkTables": {
-    "Retained Values": {
-      "open": false
-    },
-    "transitory": {
-      "Shuffleboard": {
-        "Shooter": {
-          "open": true
-        },
-        "open": true
-      }
-    }
-  },
   "NetworkTables Info": {
-    "Clients": {
-      "open": true
-    },
     "Connections": {
       "open": true
     },
-    "shuffleboard@2": {
-      "Publishers": {
-        "open": true
-      },
-      "Subscribers": {
-        "open": true
-      },
-      "open": true
-    }
+    "visible": true
   },
-  "NetworkTables View": {
-    "visible": false
+  "NetworkTables Settings": {
+    "mode": "Client (NT4)",
+    "serverTeam": "localhost"
   }
 }
