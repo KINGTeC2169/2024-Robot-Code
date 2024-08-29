@@ -213,6 +213,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     /**Resets the encoders of the 4 swerve modules. */
     public void resetEncoders() {
+        System.out.println("reset");
         frontLeft.resetEncoders();
         frontRight.resetEncoders();
         backRight.resetEncoders();
