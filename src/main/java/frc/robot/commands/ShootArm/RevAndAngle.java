@@ -31,7 +31,7 @@ public class RevAndAngle extends Command {
     //If there is a note in the intake, set the shooter to 4500 rpm and set the arm the the desired position
     public void execute(){
         if(NoteManager.hasNote()){
-            shooter.setRPM(4500);
+            shooter.setRPM(5500);
             arm.setShootPos(desiredAngle);
             
         }

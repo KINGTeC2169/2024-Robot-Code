@@ -36,6 +36,8 @@ public class Arm extends SubsystemBase {
     private PIDController armPID;
     private ArmFeedforward armForward;
 
+    private double difference = 0;
+
     private double setPosition;
     private final double lowerLimit = Positions.rest; 
     private final double upperLimit = Positions.amp+0.05;
@@ -78,6 +80,8 @@ public class Arm extends SubsystemBase {
         tab.addBoolean("Arm Ready", () -> isReady()).withPosition(6, 2).withSize(1, 2);
         tab.addDouble("Converted", () -> aimToArm(armToAim(getPosition())));
         tab.addDouble("MM Position", () -> leftArm.getPosition().getValueAsDouble());
+
+        tab.addDouble("Difference", () -> difference);
     }
 
     /**Part of Music subsystem commands*/
@@ -140,6 +144,7 @@ public class Arm extends SubsystemBase {
         setPosition = position;
         //System.out.println("PID " + armPID.calculate(getPosition(), position) + " FORWARD " + armForward.calculate((position - 0.25)*6.28, 0));
         leftArm.setVoltage(armPID.calculate(getPosition(), position) + armForward.calculate((position - 0.25)*6.28, 0));
+        difference = position - getPosition();
     }
 
     public void superShoot(){

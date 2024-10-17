@@ -24,7 +24,7 @@ public class Shooter extends SubsystemBase {
     private TalonFX shooterBot;
 
     private double topRotation = 1; //24t on flywheel/24t on 
-    private double botRotation = 1.333; //24t on flywheel/18t on motor shaft
+    private double botRotation = 1; //24t on flywheel/18t on motor shaft
 
     private double setpointRPM = 0;
 
@@ -39,7 +39,7 @@ public class Shooter extends SubsystemBase {
 
         //Shooter motor configuration
         var configs = new Slot0Configs();
-        configs.kP = 0.1;
+        configs.kP = 0.25;
         
         shooterTop.getConfigurator().apply(configs,0.050);
         shooterBot.getConfigurator().apply(configs,0.050);
@@ -55,6 +55,7 @@ public class Shooter extends SubsystemBase {
         bottomMotor.addDouble("Bottom Motor RPM", () -> getRPM()[1]).withWidget(BuiltInWidgets.kDial).withProperties(Map.of("Max", 4000));
         bottomMotor.addDouble("Bottom Motor Voltage", () -> getVoltage()[1]).withWidget(BuiltInWidgets.kVoltageView).withProperties(Map.of("Max", 12));
         bottomMotor.addDouble("Bottom Motor Current", () -> getCurrent()[0]).withWidget(BuiltInWidgets.kDial);
+        
 
         tab.addBoolean("Shooter Ready", () -> shooterReady()).withPosition(6, 0);
 
@@ -121,7 +122,7 @@ public class Shooter extends SubsystemBase {
 
     /**Returns true if both shooter motors' rpm is +/- 200 rpm of the desired rpm */
     public boolean shooterReady(){
-        return Math.abs(getShooterRPM()[0] - setpointRPM) < 200 &&  Math.abs(getShooterRPM()[1] - setpointRPM) < 200;
+        return Math.abs(-getRPM()[0] - setpointRPM) < 100 &&  Math.abs(-getRPM()[1] - setpointRPM) < 100;
     }
 
     /**Sets the shooter speed to 0 */

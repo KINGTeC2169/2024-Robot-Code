@@ -65,7 +65,7 @@ public class RevAngleLaunch extends Command{
         else if (rpm != 0) shooter.setRPM(rpm);
         else shooter.shootRPM();
         arm.setShootPos(desiredAngle);
-        if(stable > 5 || timer.hasElapsed(2.6)){
+        if((stable > 5 || timer.hasElapsed(2.6)) && shooter.shooterReady()){
             intake.inTake();
         }
     }
@@ -73,9 +73,12 @@ public class RevAngleLaunch extends Command{
     @Override
     //If the arm is in the amp position, give the note an extra few milliseconds to get out of the shooter. Then stop the intake and shooter.
     public void end(boolean interupt){
-        if (desiredAngle == Positions.amp) Timer.delay(0.07);
+        Timer.delay(0.07);
         intake.stopTake();
         shooter.setRPM(0);
+        arm.setRest(false);
+        while(!arm.restReady()) Timer.delay(0.005);
+        arm.setVoltage(0);
     }
     
     @Override
