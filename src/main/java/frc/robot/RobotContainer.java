@@ -159,7 +159,7 @@ public class RobotContainer {
     controller.povRight().onTrue(Commands.run(() -> NoteManager.setTrue()));
     controller.povRight().whileFalse(Commands.run(() -> NoteManager.setFalse()));
     //controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
-    controller.a().onTrue(new RevAngleLaunch(arm, shooter, intake, Positions.subwoofer));
+    controller.a().onTrue(new RevAndAngle(arm, shooter, Positions.subwoofer));
     /*controller.a().onTrue(Commands.run(() -> controllerRumble.setRumble(GenericHID.RumbleType.kRightRumble, 0.2)));
     controller.a().onTrue(Commands.run(() -> controllerRumble.setRumble(GenericHID.RumbleType.kLeftRumble, 0.2)));
     controller.b().onTrue(Commands.run(() -> controllerRumble.setRumble(GenericHID.RumbleType.kRightRumble, 0)));
